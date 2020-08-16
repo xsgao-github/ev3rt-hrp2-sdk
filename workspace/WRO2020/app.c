@@ -456,8 +456,6 @@ void wall_follow_with_tasks(distance,steer){
     ev3_motor_reset_counts(right_motor);
     ev3_motor_reset_counts(a_motor);
     ev3_motor_reset_counts(d_motor);
-    int dashes = 0;
-    int isWhite = 1;
     int lastDash = 0;
     int snowIndex = 0;
     int isTurning = 0;
@@ -487,22 +485,14 @@ void wall_follow_with_tasks(distance,steer){
             int color_4_index += 1;
             int next_color_4_task[3] = allTasks[pos.street][0][color_4_index];
         }
-        /*if(ev3_color_sensor_get_reflect(color_sensor2) > 60 && isWhite == 0 && wheelDistance > lastDash + 3){
-            isWhite = 1;
-            ev3_speaker_play_tone(NOTE_C5, 100);
-
-            dashes += 1;
+        if(ev3_color_sensor_get_reflect(color_sensor2) > 75 && pos.dash % 2 == 0 && wheelDistance > lastDash + 3){
+            pos.dash += 1;
             lastDash = wheelDistance;
         }
-        if(ev3_color_sensor_get_reflect(color_sensor2) < 60 && isWhite == 1 && wheelDistance > lastDash + 3){
-            isWhite = 0;
-            ev3_speaker_play_tone(NOTE_C4, 100);
-
+        if(ev3_color_sensor_get_reflect(color_sensor2) < 15 && pos.dash % 2 == 1 && wheelDistance > lastDash + 3){
             lastDash = wheelDistance;
-            dashes += 1;
-        }*/
-        //float error = ev3_color_sensor_get_reflect(color_sensor2) - ev3_color_sensor_get_reflect(color_sensor3);
-
+            pos.dash += 1;
+        }
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         ev3_motor_steer(left_motor, right_motor, 15, steer);
         tslp_tsk(1);
