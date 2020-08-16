@@ -373,6 +373,11 @@ void main_task(intptr_t unused) {
 
     readCode();
     // TODO run2020
+    run2020();
+}
+
+void run2020(){
+    
 }
 
 void readCode() {
