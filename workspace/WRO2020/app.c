@@ -468,22 +468,22 @@ void wall_follow_with_tasks(distance,steer){
         if(wheelDistance >= next_a_motor_task[1] && a_motor_index < 6){
             ev3_motor_rotate(a_motor,next_a_motor_task[2] * -1,50,false);
             ev3_speaker_play_tone(NOTE_C5, 60);
-            int a_motor_index += 1;
-            int next_a_motor_task[3] = allTasks[pos.street][1][a_motor_index];
+            a_motor_index += 1;
+            next_a_motor_task[3] = allTasks[pos.street][1][a_motor_index];
         }
         if(wheelDistance >= next_d_motor_task[0] && d_motor_index < 6){
             ev3_motor_rotate(a_motor,next_d_motor_task[2],50,false);
         }
         if(wheelDistance >= next_d_motor_task[1] && d_motor_index < 6){
             ev3_motor_rotate(a_motor,next_d_motor_task[2] * -1,50,false);
-            int d_motor_index += 1;
-            int next_d_motor_task[3] = allTasks[pos.street][2][d_motor_index];
+            d_motor_index += 1;
+            next_d_motor_task[3] = allTasks[pos.street][2][d_motor_index];
         }
         if(wheelDistance >= next_color_4_task[0] && color_4_index < 6){
             bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
             assert(val);
-            int color_4_index += 1;
-            int next_color_4_task[3] = allTasks[pos.street][0][color_4_index];
+            color_4_index += 1;
+            next_color_4_task[3] = allTasks[pos.street][0][color_4_index];
         }
         if(ev3_color_sensor_get_reflect(color_sensor2) > 75 && pos.dash % 2 == 0 && wheelDistance > lastDash + 3){
             pos.dash += 1;
