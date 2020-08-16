@@ -12,9 +12,20 @@
 #define BLUEMATERIAL 1
 #define BLACKMATERIAL 2
 
+void run2020();
+void runBlueStreet();
+void runGreenStreet();
+void runYellowStreet();
+void runRedStreet();
+void wall_follow_with_tasks();
 void readCode();
-static void button_clicked_handler();
-void display_values();
+void init();
+void display_sensors();
+void readColorCode();
+void execute_moving_the_robot_based_on_the_color_code();
+void wallFollow();
+void linePID();
+void button_clicked_handler();
 
 /*
 * street:
@@ -42,6 +53,398 @@ typedef struct {
 	int facing;
 } position;
 
+typedef struct {
+
+{
+	/* data */
+};
+
+int allTasks[4][3][7][3] = {
+    //blue road
+    {
+        //color_4
+        {
+            //index 0
+            {
+                0,0,0
+            },
+            //index 1
+            {
+                0,0,0
+            },
+            //index 2
+            {
+                0,0,0
+            },
+            //index 3
+            {
+                0,0,0
+            },
+            //index 4
+            {
+                0,0,0
+            },
+            //index 5
+            {
+                0,0,0
+            },
+            //index 6
+            {
+                0,0,0
+            },
+        },
+        //a_motor
+        {
+            //index 0
+            {
+                0,0,0
+            },
+            //index 1
+            {
+                0,0,0
+            },
+            //index 2
+            {
+                0,0,0
+            },
+            //index 3
+            {
+                0,0,0
+            },
+            //index 4
+            {
+                0,0,0
+            },
+            //index 5
+            {
+                0,0,0
+            },
+            //index 6
+            {
+                0,0,0
+            },
+        },
+        //d_motor
+        {
+            //index 0
+            {
+                0,0,0
+            },
+            //index 1
+            {
+                0,0,0
+            },
+            //index 2
+            {
+                0,0,0
+            },
+            //index 3
+            {
+                0,0,0
+            },
+            //index 4
+            {
+                0,0,0
+            },
+            //index 5
+            {
+                0,0,0
+            },
+            //index 6
+            {
+                0,0,0
+            },
+        },
+    },
+    //green road
+    {
+        //color_4
+        {
+            //index 0
+            {
+                0,0,0
+            },
+            //index 1
+            {
+                0,0,0
+            },
+            //index 2
+            {
+                0,0,0
+            },
+            //index 3
+            {
+                0,0,0
+            },
+            //index 4
+            {
+                0,0,0
+            },
+            //index 5
+            {
+                0,0,0
+            },
+            //index 6
+            {
+                0,0,0
+            },
+        },
+        //a_motor
+        {
+            //index 0
+            {
+                0,0,0
+            },
+            //index 1
+            {
+                0,0,0
+            },
+            //index 2
+            {
+                0,0,0
+            },
+            //index 3
+            {
+                0,0,0
+            },
+            //index 4
+            {
+                0,0,0
+            },
+            //index 5
+            {
+                0,0,0
+            },
+            //index 6
+            {
+                0,0,0
+            },
+        },
+        //d_motor
+        {
+            //index 0
+            {
+                0,0,0
+            },
+            //index 1
+            {
+                0,0,0
+            },
+            //index 2
+            {
+                0,0,0
+            },
+            //index 3
+            {
+                0,0,0
+            },
+            //index 4
+            {
+                0,0,0
+            },
+            //index 5
+            {
+                0,0,0
+            },
+            //index 6
+            {
+                0,0,0
+            },
+        },
+    },
+    //yellow road
+    {
+        //color_4
+        {
+            //index 0
+            {
+                0,0,0
+            },
+            //index 1
+            {
+                0,0,0
+            },
+            //index 2
+            {
+                0,0,0
+            },
+            //index 3
+            {
+                0,0,0
+            },
+            //index 4
+            {
+                0,0,0
+            },
+            //index 5
+            {
+                0,0,0
+            },
+            //index 6
+            {
+                0,0,0
+            },
+        },
+        //a_motor
+        {
+            //index 0
+            {
+                0,0,0
+            },
+            //index 1
+            {
+                0,0,0
+            },
+            //index 2
+            {
+                0,0,0
+            },
+            //index 3
+            {
+                0,0,0
+            },
+            //index 4
+            {
+                0,0,0
+            },
+            //index 5
+            {
+                0,0,0
+            },
+            //index 6
+            {
+                0,0,0
+            },
+        },
+        //d_motor
+        {
+            //index 0
+            {
+                0,0,0
+            },
+            //index 1
+            {
+                0,0,0
+            },
+            //index 2
+            {
+                0,0,0
+            },
+            //index 3
+            {
+                0,0,0
+            },
+            //index 4
+            {
+                0,0,0
+            },
+            //index 5
+            {
+                0,0,0
+            },
+            //index 6
+            {
+                0,0,0
+            },
+        },
+    },
+    //red road
+    {
+        //color_4
+        {
+            //index 0
+            {
+                0,0,0
+            },
+            //index 1
+            {
+                0,0,0
+            },
+            //index 2
+            {
+                0,0,0
+            },
+            //index 3
+            {
+                0,0,0
+            },
+            //index 4
+            {
+                0,0,0
+            },
+            //index 5
+            {
+                0,0,0
+            },
+            //index 6
+            {
+                0,0,0
+            },
+        },
+        //a_motor
+        {
+            //index 0
+            {
+                0,0,0
+            },
+            //index 1
+            {
+                0,0,0
+            },
+            //index 2
+            {
+                0,0,0
+            },
+            //index 3
+            {
+                0,0,0
+            },
+            //index 4
+            {
+                0,0,0
+            },
+            //index 5
+            {
+                0,0,0
+            },
+            //index 6
+            {
+                0,0,0
+            },
+        },
+        //d_motor
+        {
+            //index 0
+            {
+                0,0,0
+            },
+            //index 1
+            {
+                0,0,0
+            },
+            //index 2
+            {
+                0,0,0
+            },
+            //index 3
+            {
+                0,0,0
+            },
+            //index 4
+            {
+                0,0,0
+            },
+            //index 5
+            {
+                0,0,0
+            },
+            //index 6
+            {
+                0,0,0
+            },
+        },
+    },
+}
 static int tasks[4] = {0, 0, 0, 0};
 
 extern void	main_task(intptr_t exinf);
