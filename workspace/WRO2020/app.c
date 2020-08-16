@@ -406,14 +406,23 @@ int allTasks[4][3][7][3] = {
             },
         },
     },
-}
+};
 
 int color_4_index = 0;
-int next_color_4_task[3] = allTasks[pos.street][0][color_4_index];
+int next_color_4_task[3] = {0,0,0};
+next_color_4_task[0] = allTasks[pos.street][0][color_4_index][0];
+next_color_4_task[1] = allTasks[pos.street][0][color_4_index][1];
+next_color_4_task[2] = allTasks[pos.street][0][color_4_index][2];
 int a_motor_index = 0;
-int next_a_motor_task[3] = allTasks[pos.street][1][a_motor_index];
+int next_a_motor_task[3] = {0,0,0};
+next_a_motor_task[0] = allTasks[pos.street][0][a_motor_index][0];
+next_a_motor_task[1] = allTasks[pos.street][0][a_motor_index][1];
+next_a_motor_task[2] = allTasks[pos.street][0][a_motor_index][2];
 int d_motor_index = 0;
-int next_d_motor_task[3] = allTasks[pos.street][2][s_motor_index];
+int next_d_motor_task[3] = {0,0,0};
+next_d_motor_task[0] = allTasks[pos.street][0][d_motor_index][0];
+next_d_motor_task[1] = allTasks[pos.street][0][d_motor_index][1];
+next_d_motor_task[2] = allTasks[pos.street][0][d_motor_index][2];
 
 
 void main_task(intptr_t unused) {
@@ -451,7 +460,7 @@ void runRedStreet(){
     pos.street = YELLOW_STREET;
 }
 
-void wall_follow_with_tasks(distance,steer){
+void wall_follow_with_tasks(float distance,int steer){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_reset_counts(a_motor);
@@ -460,7 +469,18 @@ void wall_follow_with_tasks(distance,steer){
     int snowIndex = 0;
     int isTurning = 0;
     float wheelDistance = 0;
+    color_4_index = 0;
+    a_motor_index = 0;
+    d_motor_index = 0;
     while (wheelDistance < distance) {
+        if(wheelDistance >= next_color_4_task[0] && color_4_index < 6){
+            bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
+            assert(val);
+            color_4_index += 1;
+            for(int i = 0;i < 3;i++){
+                next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
+            }
+        }
         if(wheelDistance >= next_a_motor_task[0] && a_motor_index < 6){
             ev3_motor_rotate(a_motor,next_a_motor_task[2],50,false);
             ev3_speaker_play_tone(NOTE_C4, 60);
@@ -469,7 +489,9 @@ void wall_follow_with_tasks(distance,steer){
             ev3_motor_rotate(a_motor,next_a_motor_task[2] * -1,50,false);
             ev3_speaker_play_tone(NOTE_C5, 60);
             a_motor_index += 1;
-            next_a_motor_task[3] = allTasks[pos.street][1][a_motor_index];
+            for(int i = 0;i < 3;i++){
+                next_a_motor_task[i] = allTasks[pos.street][1][a_motor_index][i];
+            }
         }
         if(wheelDistance >= next_d_motor_task[0] && d_motor_index < 6){
             ev3_motor_rotate(a_motor,next_d_motor_task[2],50,false);
@@ -477,13 +499,9 @@ void wall_follow_with_tasks(distance,steer){
         if(wheelDistance >= next_d_motor_task[1] && d_motor_index < 6){
             ev3_motor_rotate(a_motor,next_d_motor_task[2] * -1,50,false);
             d_motor_index += 1;
-            next_d_motor_task[3] = allTasks[pos.street][2][d_motor_index];
-        }
-        if(wheelDistance >= next_color_4_task[0] && color_4_index < 6){
-            bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
-            assert(val);
-            color_4_index += 1;
-            next_color_4_task[3] = allTasks[pos.street][0][color_4_index];
+            for(int i = 0;i < 3;i++){
+                next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
+            }
         }
         if(ev3_color_sensor_get_reflect(color_sensor2) > 75 && pos.dash % 2 == 0 && wheelDistance > lastDash + 3){
             pos.dash += 1;
@@ -875,67 +893,12 @@ void execute_moving_the_robot_based_on_the_color_code(){
     }
 }
 
-void wallFollow(int distance,int snow[6][3],int steer){
-    ev3_motor_reset_counts(left_motor);
-    ev3_motor_reset_counts(right_motor);
-    ev3_motor_reset_counts(a_motor);
-    ev3_motor_reset_counts(d_motor);
-    int dashes = 0;
-    int isWhite = 1;
-    int lastDash = 0;
-    int snowIndex = 0;
-    int isTurning = 0;
-    float wheelDistance = 0;
-    while (wheelDistance < distance) {
-        if(wheelDistance >= snow[snowIndex][0] - snow[snowIndex][2] && isTurning == 0 && snowIndex < 6){
-            isTurning = 1;
-            ev3_motor_rotate(a_motor,snow[snowIndex][1],50,false);
-            ev3_speaker_play_tone(NOTE_C4, 60);
-            if(snowIndex == 6){
-
-            }
-            else{
-                snowIndex = snowIndex + 1;
-            }
-        }
-        if(isTurning == 1 && wheelDistance >= snow[snowIndex - 1][0] + snow[snowIndex - 1][2]){
-            isTurning = 0;
-            ev3_motor_rotate(a_motor,snow[snowIndex - 1][1] * -1,50,false);
-            ev3_speaker_play_tone(NOTE_C5, 60);
-        }
-        /*if(ev3_color_sensor_get_reflect(color_sensor2) > 60 && isWhite == 0 && wheelDistance > lastDash + 3){
-            isWhite = 1;
-            ev3_speaker_play_tone(NOTE_C5, 100);
-
-            dashes += 1;
-            lastDash = wheelDistance;
-        }
-        if(ev3_color_sensor_get_reflect(color_sensor2) < 60 && isWhite == 1 && wheelDistance > lastDash + 3){
-            isWhite = 0;
-            ev3_speaker_play_tone(NOTE_C4, 100);
-
-            lastDash = wheelDistance;
-            dashes += 1;
-        }*/
-        //float error = ev3_color_sensor_get_reflect(color_sensor2) - ev3_color_sensor_get_reflect(color_sensor3);
-
-        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
-        ev3_motor_steer(left_motor, right_motor, 15, steer);
-        tslp_tsk(1);
-        bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
-        assert(val);
-    }
-    ev3_motor_steer(left_motor, right_motor, 0, 0);
-    return;
-}
 
 void linePID(int distance){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_reset_counts(a_motor);
     ev3_motor_reset_counts(d_motor);
-    int snowIndex = 0;
-    int isTurning = 0;
     float wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2;
     float lasterror = 0, integral = 0;
     while (wheelDistance < distance) {
