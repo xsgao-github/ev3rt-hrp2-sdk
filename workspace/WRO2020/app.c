@@ -377,6 +377,29 @@ void main_task(intptr_t unused) {
 }
 
 void run2020(){
+    //road1
+    int road = 0;
+    if(pos.street == YELLOW_STREET){
+        if(tasks[GREEN_STREET] == REMOVESNOW){
+            runGreenStreet();
+            road += 1;
+        }
+        
+    }
+    else if(pos.street == RED_STREET){
+        
+    }
+}
+void runBlueStreet(){
+    
+}
+void runGreenStreet(){
+    
+}
+void runYellowStreet(){
+    
+}
+void runRedStreet(){
     
 }
 
