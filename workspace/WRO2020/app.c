@@ -425,7 +425,8 @@ int next_d_motor_task[3] = {0,0,0};
 void main_task(intptr_t unused) {
     init();
 
-    readCode();
+    readColorCode();
+    //readCode();
     // TODO run2020
     run2020();
 }
@@ -436,13 +437,14 @@ void run2020(){
     if(pos.street == RED_STREET){
         if(tasks[GREEN_STREET] == REMOVESNOW){
             runGreenStreet();
-            road += 1;
         }
 
     }
     else if(pos.street == YELLOW_STREET){
         
     }
+    //road2
+
 }
 void runBlueStreet(){
     pos.street = YELLOW_STREET;
@@ -668,14 +670,14 @@ void init() {
     ev3_lcd_set_font(EV3_FONT_MEDIUM);
 
     // reset snow/car collector
-    ev3_motor_set_power(a_motor, -100);
-    tslp_tsk(1500);
-    ev3_motor_rotate(a_motor, 500, 50, true);
+    //ev3_motor_set_power(a_motor, -100);
+    //tslp_tsk(1500);
+    //ev3_motor_rotate(a_motor, 500, 50, true);
 
     // reset abrasive material dispenser
-    ev3_motor_set_power(d_motor, 100);
-    tslp_tsk(1500);
-    ev3_motor_stop(d_motor, true);
+    //ev3_motor_set_power(d_motor, 100);
+    //tslp_tsk(1500);
+    //ev3_motor_stop(d_motor, true);
 
     // wait for button press
     ev3_lcd_draw_string("Press OK to run", 14, 45);
@@ -766,7 +768,7 @@ void readColorCode(){
             detected[0] = 1;
             ev3_speaker_play_tone(NOTE_A4, 60);
         }
-        /*else if(rgb4.r > 55 && isReading < 2 && wheelDistance > 35 && readIndex > 0){
+        else if(rgb4.r > 55 && isReading < 2 && wheelDistance > 35 && readIndex > 0){
             isReading = 50;
             detected[readIndex] = wheelDistance;
             readIndex += 1;
@@ -783,10 +785,10 @@ void readColorCode(){
             detected[readIndex] = wheelDistance;
             readIndex += 1;
             ev3_speaker_play_tone(NOTE_C5, 60);
-        }*/
-        //else if(isReading > 1){
-            //isReading = isReading - 1;
-        //}
+        }
+        else if(isReading > 1){
+            isReading = isReading - 1;
+        }
         int sddsfsd = round((detected[1] - 31) / 5);
         int sddsfsd2 = round((detected[2] - 31) / 5);
         values[sddsfsd] = 1;
