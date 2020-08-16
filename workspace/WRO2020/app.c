@@ -21,6 +21,12 @@ rgb_raw_t rgb1;
 rgb_raw_t rgb4;
 position pos = {-1, -1, -1, 0, 0};
 
+
+//STREET
+//COLOR4 or AMOTOR or DMOTOR
+//INDEX + 7th SPACER
+//DATA + DATA + DATA
+
 int allTasks[4][3][7][3] = {
     //blue
     {
@@ -410,19 +416,10 @@ int allTasks[4][3][7][3] = {
 
 int color_4_index = 0;
 int next_color_4_task[3] = {0,0,0};
-next_color_4_task[0] = allTasks[pos.street][0][color_4_index][0];
-next_color_4_task[1] = allTasks[pos.street][0][color_4_index][1];
-next_color_4_task[2] = allTasks[pos.street][0][color_4_index][2];
 int a_motor_index = 0;
 int next_a_motor_task[3] = {0,0,0};
-next_a_motor_task[0] = allTasks[pos.street][0][a_motor_index][0];
-next_a_motor_task[1] = allTasks[pos.street][0][a_motor_index][1];
-next_a_motor_task[2] = allTasks[pos.street][0][a_motor_index][2];
 int d_motor_index = 0;
 int next_d_motor_task[3] = {0,0,0};
-next_d_motor_task[0] = allTasks[pos.street][0][d_motor_index][0];
-next_d_motor_task[1] = allTasks[pos.street][0][d_motor_index][1];
-next_d_motor_task[2] = allTasks[pos.street][0][d_motor_index][2];
 
 
 void main_task(intptr_t unused) {
@@ -472,6 +469,15 @@ void wall_follow_with_tasks(float distance,int steer){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
+    for(int i = 0;i < 3;i++){
+        next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
+    }
+    for(int i = 0;i < 3;i++){
+        next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
+    }
+    for(int i = 0;i < 3;i++){
+        next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
+    }
     while (wheelDistance < distance) {
         if(wheelDistance >= next_color_4_task[0] && color_4_index < 6){
             bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
@@ -846,7 +852,7 @@ void execute_moving_the_robot_based_on_the_color_code(){
     }
     if(tasks[2] == 0 && tasks[3] == 0 && pos.street == 2){
         int snowValues[6][3] = {{17,-300},{121,-300},{139,0},{1000,0},{1000,0},{1000,0}};
-        wallFollow(160,snowValues);
+        //wallFollow(160,snowValues);
     }
     //red
     if(tasks[0] == 0 && tasks[1] == 0 && pos.street == 3){
@@ -866,7 +872,7 @@ void execute_moving_the_robot_based_on_the_color_code(){
     }
     if(tasks[2] == 0 && tasks[3] == 0 && pos.street == 3){
         int snowValues[6][3] = {{25,350,5},{70,275,10},{97,350,6},{1000,0,0},{1000,0,0},{1000,0,0}};
-        wallFollow(136,snowValues,3);
+        //wallFollow(136,snowValues,3);
         ev3_motor_rotate(a_motor,500,50,true);
         ev3_motor_steer(left_motor,right_motor,-15,0);
         tslp_tsk(1000);
@@ -881,7 +887,7 @@ void execute_moving_the_robot_based_on_the_color_code(){
         ev3_motor_rotate(a_motor,-500,50,true);
         tslp_tsk(1000);
         int snowValues1[6][3] = {{23,500,10},{1000,0,0},{1000,0,0},{1000,0,0},{1000,0,0},{1000,0,0}};
-        wallFollow(60,snowValues1,0);
+        //wallFollow(60,snowValues1,0);
         ev3_motor_steer(left_motor,right_motor,20,0);
         tslp_tsk(1600);
         ev3_motor_steer(left_motor,right_motor,0,0);
@@ -889,7 +895,7 @@ void execute_moving_the_robot_based_on_the_color_code(){
         tslp_tsk(2400);
         ev3_motor_steer(left_motor,right_motor,0,0);
         int snowValues2[6][3] = {{20,500,5},{1000,0,0},{1000,0,0},{1000,0,0},{1000,0,0},{1000,0,0}};
-        wallFollow(160,snowValues2,3);
+        //wallFollow(160,snowValues2,3);
     }
 }
 
