@@ -445,12 +445,25 @@ void runBlueStreet(){
     
 }
 void runGreenStreet(){
-    if (pos.facing = -180) {
-        ev3_motor_steer(left_motor, right_motor, 20, 45);
-        tslp_tsk(900);
-        ev3_motor_steer(left_motor, right_motor, 0, 0);
-        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   //yay 2020 collumns!
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
+    ev3_motor_steer(left_motor, right_motor, 80, 0);
+    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 1000) {
+        display_sensors();
     }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
+    ev3_motor_steer(left_motor, right_motor, -20, 0);
+    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) > -100) {
+        display_sensors();
+    }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    ev3_motor_steer(left_motor, right_motor, 50, -45);
+    tslp_tsk(1200);
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+
 }
 void runYellowStreet(){
     

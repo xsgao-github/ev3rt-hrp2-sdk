@@ -16,8 +16,6 @@
 #define A_MOTOR 1
 #define D_MOTOR 2
 
-
-
 void run2020();
 void runBlueStreet();
 void runGreenStreet();
@@ -58,12 +56,6 @@ typedef struct {
 	int dash;
 	int facing;
 } position;
-
-typedef struct {
-
-{
-	/* data */
-};
 
 static int tasks[4] = {0, 0, 0, 0};
 
