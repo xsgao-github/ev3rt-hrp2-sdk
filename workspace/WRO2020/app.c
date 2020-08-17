@@ -439,9 +439,10 @@ void main_task(intptr_t unused) {
 
     //readCode();
     // TODO run2020
-    pos.street = RED_STREET;
-    tasks[GREEN_STREET] = REMOVESNOW;
-    pos.facing = -180;
+    //pos.street = RED_STREET;
+    //tasks[GREEN_STREET] = REMOVESNOW;
+    //pos.facing = -180;
+    readColorCode();
     run2020();
 }
 
@@ -489,7 +490,6 @@ void runGreenStreet(){
     a_motor_index = 0;
     d_motor_index = 0;
     pos.street = GREEN_STREET;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   //yay 2020 collumns!
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 30, 1);
@@ -541,7 +541,8 @@ void wall_follow_with_tasks(int distance,int steer){
     ev3_motor_reset_counts(d_motor);
     int lastDash = 0;
     int snowIndex = 0;
-    int isTurning = 0;
+    int isTurningA = 0;
+    int isTurningD = 0;
     float wheelDistance = 0;
     ev3_motor_steer(left_motor,right_motor,10,steer);
     for(int i = 0;i < 3;i++){
@@ -562,19 +563,19 @@ void wall_follow_with_tasks(int distance,int steer){
                 next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
             }
         }
-        if(wheelDistance > next_a_motor_task[0] && a_motor_index < 6 && isTurning == 0){
+        if(wheelDistance > next_a_motor_task[0] && a_motor_index < 6 && isTurningA == 0){
             ev3_motor_rotate(a_motor,next_a_motor_task[2],50,false);
             ev3_speaker_play_tone(NOTE_C4, 60);
-            isTurning = 0;
+            isTurningA = 1;
         }
-        if(wheelDistance > next_a_motor_task[1] && a_motor_index < 6 && isTurning == 1){
+        if(wheelDistance > next_a_motor_task[1] && a_motor_index < 6 && isTurningA == 1){
             ev3_motor_rotate(a_motor,next_a_motor_task[2] * -1,50,false);
             ev3_speaker_play_tone(NOTE_C5, 60);
             a_motor_index += 1;
             for(int i = 0;i < 3;i++){
                 next_a_motor_task[i] = allTasks[pos.street][1][a_motor_index][i];
             }
-            isTurning = 1;
+            isTurningA = 0;
         }
         if(wheelDistance > next_d_motor_task[0] && d_motor_index < 6){
             ev3_motor_rotate(a_motor,next_d_motor_task[2],50,false);
