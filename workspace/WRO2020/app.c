@@ -90,11 +90,11 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                0,0,0
+,                0,00
             },
             //index 1
             {
-                0,0,0
+                ,0,0
             },
             //index 2
             {
@@ -417,10 +417,13 @@ int next_d_motor_task[3] = allTasks[pos.street][0][s_motor_index];
 
 
 void main_task(intptr_t unused) {
-    init();
+    //init();
 
-    readCode();
+    //readCode();
     // TODO run2020
+    pos.street = YELLOW_STREET;
+    tasks[GREEN_STREET] = REMOVESNOW;
+    pos.facing = -180;
     run2020();
 }
 
@@ -442,7 +445,12 @@ void runBlueStreet(){
     
 }
 void runGreenStreet(){
-    
+    if (pos.facing = -180) {
+        ev3_motor_steer(left_motor, right_motor, 20, 45);
+        tslp_tsk(900);
+        ev3_motor_steer(left_motor, right_motor, 0, 0);
+        
+    }
 }
 void runYellowStreet(){
     
