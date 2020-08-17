@@ -323,15 +323,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                0,0,0
+                25,350,5
             },
             //index 1
             {
-                0,0,0
+                70,275,10
             },
             //index 2
             {
-                0,0,0
+                97,350,6
             },
             //index 3
             {
@@ -433,19 +433,37 @@ void main_task(intptr_t unused) {
 }
 
 void run2020(){
-    //road1
     int road = 0;
-    if(pos.street == RED_STREET){
-        if(tasks[GREEN_STREET] == REMOVESNOW){
-            runGreenStreet();
+    //road1
+    while(road < 2){
+        if(pos.street == RED_STREET){
+            if(tasks[GREEN_STREET] == REMOVESNOW){
+                road += 1;
+                runGreenStreet();
+            }
+            else if(tasks[RED_STREET] == REMOVESNOW){
+                road += 1;
+                runRedStreet();
+            }
+            else{
+                runRedStreet();
+            }
         }
-
+        else if(pos.street == YELLOW_STREET){
+            if(tasks[BLUE_STREET] == REMOVESNOW){
+                road += 1;
+                runBlueStreet();
+            }
+            else if(tasks[YELLOW_STREET] == REMOVESNOW){
+                road += 1;
+                runYellowStreet();
+            }
+            else{
+                runYellowStreet();
+            }
+        }
     }
-    else if(pos.street == YELLOW_STREET){
-        
-    }
-    //road2
-
+    
 }
 void runBlueStreet(){
     pos.street = YELLOW_STREET;
@@ -457,6 +475,7 @@ void runYellowStreet(){
     pos.street = RED_STREET;
 }
 void runRedStreet(){
+
     pos.street = YELLOW_STREET;
 }
 
