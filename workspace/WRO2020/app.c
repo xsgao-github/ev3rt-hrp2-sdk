@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <string.h>
+#include <math.h>
 
 #define DEBUG
 
@@ -16,6 +17,17 @@
 
 // define motors and sensors
 const int color_sensor1 = EV3_PORT_2, color_sensor2 = EV3_PORT_2, color_sensor3 = EV3_PORT_3, color_sensor4 = EV3_PORT_4, left_motor = EV3_PORT_B, right_motor = EV3_PORT_C, a_motor = EV3_PORT_A, d_motor = EV3_PORT_D;
+
+// declare methods
+void run2020();
+void runBlueStreet();
+void runGreenStreet();
+void runYellowStreet();
+void runRedStreet();
+void wall_follow_with_tasks();
+void readCode();
+static void button_clicked_handler();
+void display_values();
 
 rgb_raw_t rgb1;
 rgb_raw_t rgb4;
@@ -34,93 +46,93 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
         //a_motor
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
         //d_motor
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
     },
@@ -130,93 +142,93 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
         //a_motor
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
         //d_motor
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
     },
@@ -226,93 +238,93 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
         //a_motor
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
         //d_motor
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
     },
@@ -322,93 +334,93 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
         //a_motor
         {
             //index 0
             {
-                0,0,0
+                37,50,350
             },
             //index 1
             {
-                0,0,0
+                79,100,275
             },
             //index 2
             {
-                0,0,0
+                106,119,350
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
         //d_motor
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
     },
@@ -425,63 +437,126 @@ int next_d_motor_task[3] = {0,0,0};
 void main_task(intptr_t unused) {
     init();
 
-    readColorCode();
     //readCode();
     // TODO run2020
+    //pos.street = RED_STREET;
+    //tasks[GREEN_STREET] = REMOVESNOW;
+    //pos.facing = -180;
+    readColorCode();
     run2020();
 }
 
 void run2020(){
-    //road1
     int road = 0;
-    if(pos.street == RED_STREET){
-        if(tasks[GREEN_STREET] == REMOVESNOW){
-            runGreenStreet();
+    //road1
+    while(road < 2){
+        if(pos.street == RED_STREET){
+            if(tasks[GREEN_STREET] == REMOVESNOW){
+                road += 1;
+                runGreenStreet();
+            }
+            else if(tasks[RED_STREET] == REMOVESNOW){
+                road += 1;
+                runRedStreet();
+            }
+            else{
+                runRedStreet();
+            }
         }
-
+        else if(pos.street == YELLOW_STREET){
+            if(tasks[BLUE_STREET] == REMOVESNOW){
+                road += 1;
+                runBlueStreet();
+            }
+            else if(tasks[YELLOW_STREET] == REMOVESNOW){
+                road += 1;
+                runYellowStreet();
+            }
+            else{
+                runYellowStreet();
+            }
+        }
     }
-    else if(pos.street == YELLOW_STREET){
-        
-    }
-    //road2
-
+    
 }
 void runBlueStreet(){
+    color_4_index = 0;
+    a_motor_index = 0;
+    d_motor_index = 0;
     pos.street = YELLOW_STREET;
 }
 void runGreenStreet(){
-    pos.street = RED_STREET;
+    color_4_index = 0;
+    a_motor_index = 0;
+    d_motor_index = 0;
+    pos.street = GREEN_STREET;
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
+    ev3_motor_steer(left_motor, right_motor, 30, 1);
+    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 1000) {
+        display_sensors();
+    }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    tslp_tsk(250);
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
+    ev3_motor_steer(left_motor, right_motor, -20, 0);
+    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) > -50) {
+        display_sensors();
+    }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    tslp_tsk(250);
+    ev3_motor_steer(left_motor, right_motor, 10, -45);
+    tslp_tsk(3400);
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    tslp_tsk(250);
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
+    ev3_motor_steer(left_motor, right_motor, 20, 0);
+    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 80) {
+        display_sensors();
+    }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    linePID(30);
+    //dispense stuff
 }
 void runYellowStreet(){
+    color_4_index = 0;
+    a_motor_index = 0;
+    d_motor_index = 0;
     pos.street = RED_STREET;
 }
 void runRedStreet(){
+    color_4_index = 0;
+    a_motor_index = 0;
+    d_motor_index = 0;
+    wall_follow_with_tasks(136,3);
     pos.street = YELLOW_STREET;
 }
 
-void wall_follow_with_tasks(float distance,int steer){
+void wall_follow_with_tasks(int distance,int steer){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_reset_counts(a_motor);
     ev3_motor_reset_counts(d_motor);
     int lastDash = 0;
     int snowIndex = 0;
-    int isTurning = 0;
+    int isTurningA = 0;
+    char lcdstr[100];
+    int isTurningD = 0;
     float wheelDistance = 0;
-    color_4_index = 0;
-    a_motor_index = 0;
-    d_motor_index = 0;
+    ev3_motor_steer(left_motor,right_motor,10,steer);
     for(int i = 0;i < 3;i++){
         next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
     }
     for(int i = 0;i < 3;i++){
-        next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
+        next_a_motor_task[i] = allTasks[pos.street][1][a_motor_index][i];
     }
     for(int i = 0;i < 3;i++){
-        next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
+        next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
     }
     while (wheelDistance < distance) {
-        if(wheelDistance >= next_color_4_task[0] && color_4_index < 6){
+        if(wheelDistance > next_color_4_task[0] && color_4_index < 6){
             bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
             assert(val);
             color_4_index += 1;
@@ -489,22 +564,24 @@ void wall_follow_with_tasks(float distance,int steer){
                 next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
             }
         }
-        if(wheelDistance >= next_a_motor_task[0] && a_motor_index < 6){
+        if(wheelDistance > next_a_motor_task[0] && a_motor_index < 6 && isTurningA == 0){
             ev3_motor_rotate(a_motor,next_a_motor_task[2],50,false);
             ev3_speaker_play_tone(NOTE_C4, 60);
+            isTurningA = 1;
         }
-        if(wheelDistance >= next_a_motor_task[1] && a_motor_index < 6){
+        if(wheelDistance > next_a_motor_task[1] && a_motor_index < 6 && isTurningA == 1){
             ev3_motor_rotate(a_motor,next_a_motor_task[2] * -1,50,false);
             ev3_speaker_play_tone(NOTE_C5, 60);
             a_motor_index += 1;
             for(int i = 0;i < 3;i++){
                 next_a_motor_task[i] = allTasks[pos.street][1][a_motor_index][i];
             }
+            isTurningA = 0;
         }
-        if(wheelDistance >= next_d_motor_task[0] && d_motor_index < 6){
+        if(wheelDistance > next_d_motor_task[0] && d_motor_index < 6){
             ev3_motor_rotate(a_motor,next_d_motor_task[2],50,false);
         }
-        if(wheelDistance >= next_d_motor_task[1] && d_motor_index < 6){
+        if(wheelDistance > next_d_motor_task[1] && d_motor_index < 6){
             ev3_motor_rotate(a_motor,next_d_motor_task[2] * -1,50,false);
             d_motor_index += 1;
             for(int i = 0;i < 3;i++){
@@ -522,6 +599,8 @@ void wall_follow_with_tasks(float distance,int steer){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         ev3_motor_steer(left_motor, right_motor, 15, steer);
         tslp_tsk(1);
+        sprintf(lcdstr, "%d, %d   %d", next_a_motor_task[0],next_a_motor_task[1],next_a_motor_task[2]);
+        ev3_lcd_draw_string(lcdstr, 0, 45);
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     return;
@@ -537,13 +616,13 @@ void readCode() {
     ev3_motor_reset_counts(EV3_PORT_C);
     ev3_motor_steer(left_motor, right_motor, 30, 1);
     while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < 250) {
-        display_values();
+        display_sensors();
     }
 
     // detect line
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     while (rgb4.g > 30 && rgb4.b > 25) {
-        display_values();
+        display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     if (rgb4.g < 30) {
@@ -556,7 +635,7 @@ void readCode() {
     ev3_motor_reset_counts(EV3_PORT_C);
     ev3_motor_steer(left_motor, right_motor, -10, 0);
     while (((abs(ev3_motor_get_counts(EV3_PORT_B)) + abs(ev3_motor_get_counts(EV3_PORT_C))) / 2) < 20) {
-        display_values();
+        display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
 
@@ -569,7 +648,7 @@ void readCode() {
     for (index = 0; index < 4; index++) {
         // read instructions
         while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((index+1) * 55)) {
-            display_values();
+            display_sensors();
         }
         if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 25) {
             bit1 = 1;
@@ -577,7 +656,7 @@ void readCode() {
             bit1 = 0;
         }
         while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((index + 2) * 55)) {
-            display_values();
+            display_sensors();
         }
         if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 25) {
             bit2 = 1;
@@ -604,7 +683,7 @@ void readCode() {
     // detect line
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     while (ev3_color_sensor_get_reflect(color_sensor3) > 20) {
-        display_values();
+        display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     tslp_tsk(5);
@@ -616,14 +695,14 @@ void readCode() {
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 10, 0);
     while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < 140) {
-        display_values();
+        display_sensors();
     }
     ev3_motor_rotate(right_motor, -90, 15, true);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, -10, 0);
     while (((abs(ev3_motor_get_counts(EV3_PORT_B)) + abs(ev3_motor_get_counts(EV3_PORT_C))) / 2) < 10) {
-        display_values();
+        display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     */
@@ -693,7 +772,7 @@ void init() {
     ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
 }
 
-void display_values() {
+void display_sensors() {
     // declare variables
     char msg[100];
     int value;
@@ -751,8 +830,9 @@ void readColorCode(){
     float values[8] = {0,0,0,0,0,0,0,0};
     int isReading = 0;
     int i = 0;
+    char lcdstr[100];
     while(wheelDistance < 30){
-        ev3_motor_steer(left_motor,right_motor,30,5);
+        ev3_motor_steer(left_motor,right_motor,15,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
     }
     while(wheelDistance < 35){
@@ -775,16 +855,19 @@ void readColorCode(){
             isReading = 50;
             i = round((wheelDistance - 31) / 5);
             values[i] = 1;
+            ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.g > 55 && isReading < 2){
             isReading = 50;
             i = round((wheelDistance - 31) / 5);
             values[i] = 1;
+            ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.b > 55 && isReading < 2){
             isReading = 50;
             i = round((wheelDistance - 31) / 5);
             values[i] = 1;
+            ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(isReading > 1){
             isReading = isReading - 1;
@@ -812,14 +895,21 @@ void readColorCode(){
     pos.distance = wheelDistance;
     pos.dash = 0;
     pos.facing = 0;
-    ev3_motor_steer(left_motor,right_motor,15,0);
-    tslp_tsk(1400);
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2 * (3.1415926535 * 9.5) / 360;
-    pos.distance = wheelDistance;
-    ev3_motor_reset_counts(left_motor);
-    ev3_motor_reset_counts(right_motor);
-    wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2 * (3.1415926535 * 9.5) / 360;
+    ev3_motor_steer(left_motor, right_motor, 10, 1);
+    while (ev3_color_sensor_get_reflect(color_sensor3) > 20) {
+    }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    //ev3_motor_steer(left_motor,right_motor,15,0);
+    //tslp_tsk(1400);
+    //ev3_motor_steer(left_motor,right_motor,0,0);
+    //wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2 * (3.1415926535 * 9.5) / 360;
+    //pos.distance = wheelDistance;
+    //ev3_motor_reset_counts(left_motor);
+    //ev3_motor_reset_counts(right_motor);
+    //wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2 * (3.1415926535 * 9.5) / 360;
+    
+    sprintf(lcdstr, "%d, %d", pos.street, tasks[BLUE_STREET]);
+    ev3_lcd_draw_string(lcdstr, 0, 15);
 }
 
 void execute_moving_the_robot_based_on_the_color_code(){
@@ -888,7 +978,6 @@ void execute_moving_the_robot_based_on_the_color_code(){
     }
 }
 
-
 void linePID(int distance){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
@@ -929,3 +1018,76 @@ static void button_clicked_handler(intptr_t button) {
         break;
     }
 }
+/*
+
+// task_4: read_color
+// task_a: cm, rotation_1, rotation_2
+// task_d: cm, rotation_1, rotation_2
+
+// all_tasks contains all tasks for all threets, some tasks will be wiped our after reading codes
+all_tasks[street][motor][index][task];
+all_tasks[4     ][3    ][6 / 3][3   ];
+
+street_tasks = all_tasks[street];
+c4_tasks = street_tasks[street];
+a_tasks = street_tasks[street];
+d_tasks = street_tasks[street];
+c4_task_index = 0;
+a_task_index = 0;
+d_task_index = 0;
+
+void main() {
+	init();
+
+	read_tasks();
+	
+	while (1) {
+		if (street = YELLOW) {
+			while (follow_wall()) { // turn, follow_wall, turn, go_to_line
+				do_tasks();
+			}
+			street = RED; // can be GREEN based on route plan
+		} else if (street = RED) {
+			while (follow_wall()) { // push_snow, back, turn, follow_wall (pick up abrasive material if applies), turn, go_to_line
+				do_tasks();
+			}
+			street = YELLOW; // can be BLUE based on route plan
+		} else if (street = BLUE) {
+			// follow wall, sharp turn
+			while (follow_line()) { // turn, go_to_line
+				do_tasks();
+			}
+			street = YELLOW;
+		} else if (street = BLUE) {
+			// follow wall, sharp turn
+			while (follow_line()) { // turn, go_to_line
+				do_tasks();
+			}
+			stree = RED;
+		}
+	}
+}
+
+void read_tasks() {
+	// read code 
+	// wipe out tasks no longer needed
+	// plan route
+}
+
+void do_tasks() {
+	if (distance between c4_tasks[cm_1] and c4_tasks[cm_2]) {
+		do_4_task();
+		// move to next task
+		c4_task_index++;
+	}
+	if (distance > a_tasks[a_task_index][cm]) {
+		do_a_task();
+		a_task_index++;
+	}
+	if (distance > d_tasks[d_task_index][cm]) {
+		do_d_task();
+		d_task_index++;
+	}
+}
+
+*/
