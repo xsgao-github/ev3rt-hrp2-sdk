@@ -285,7 +285,6 @@ void linePID(int distance){
         if(ev3_motor_get_counts(a_motor) > 490){
             ev3_motor_reset_counts(a_motor);
             ev3_motor_rotate(a_motor,-500,13,false);
-            
         }
         if(ev3_motor_get_counts(a_motor) < -490){
             ev3_motor_reset_counts(a_motor);
