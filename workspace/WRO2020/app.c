@@ -354,15 +354,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                25,350,5
+                45,30000,350
             },
             //index 1
             {
-                70,275,10
+                60,80,275
             },
             //index 2
             {
-                97,350,6
+                91,103,350
             },
             //index 3
             {
@@ -511,7 +511,7 @@ void wall_follow_with_tasks(int distance,int steer){
         next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
     }
     while (wheelDistance < distance) {
-        if(wheelDistance >= next_color_4_task[0] && color_4_index < 6){
+        if(wheelDistance > next_color_4_task[0] && color_4_index < 6){
             bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
             assert(val);
             color_4_index += 1;
@@ -519,22 +519,24 @@ void wall_follow_with_tasks(int distance,int steer){
                 next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
             }
         }
-        if(wheelDistance >= next_a_motor_task[0] && a_motor_index < 6){
+        if(wheelDistance > next_a_motor_task[0] && a_motor_index < 6 && isTurning == 0){
             ev3_motor_rotate(a_motor,next_a_motor_task[2],50,false);
             ev3_speaker_play_tone(NOTE_C4, 60);
+            isTurning = 0;
         }
-        if(wheelDistance >= next_a_motor_task[1] && a_motor_index < 6){
+        if(wheelDistance > next_a_motor_task[1] && a_motor_index < 6 && isTurning == 1){
             ev3_motor_rotate(a_motor,next_a_motor_task[2] * -1,50,false);
             ev3_speaker_play_tone(NOTE_C5, 60);
             a_motor_index += 1;
             for(int i = 0;i < 3;i++){
                 next_a_motor_task[i] = allTasks[pos.street][1][a_motor_index][i];
             }
+            isTurning = 1;
         }
-        if(wheelDistance >= next_d_motor_task[0] && d_motor_index < 6){
+        if(wheelDistance > next_d_motor_task[0] && d_motor_index < 6){
             ev3_motor_rotate(a_motor,next_d_motor_task[2],50,false);
         }
-        if(wheelDistance >= next_d_motor_task[1] && d_motor_index < 6){
+        if(wheelDistance > next_d_motor_task[1] && d_motor_index < 6){
             ev3_motor_rotate(a_motor,next_d_motor_task[2] * -1,50,false);
             d_motor_index += 1;
             for(int i = 0;i < 3;i++){
@@ -552,6 +554,9 @@ void wall_follow_with_tasks(int distance,int steer){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         ev3_motor_steer(left_motor, right_motor, 15, steer);
         tslp_tsk(1);
+        char lcdstr[100];
+        sprintf(lcdstr, "%d, %d   %d", next_a_motor_task[0],next_a_motor_task[1],next_a_motor_task[2]);
+        ev3_lcd_draw_string(lcdstr, 0, 45);
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     return;
