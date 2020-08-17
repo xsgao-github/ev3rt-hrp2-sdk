@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <string.h>
+#include <math.h>
 
 #define DEBUG
 
@@ -751,8 +752,9 @@ void readColorCode(){
     float values[8] = {0,0,0,0,0,0,0,0};
     int isReading = 0;
     int i = 0;
+    char lcdstr[100];
     while(wheelDistance < 30){
-        ev3_motor_steer(left_motor,right_motor,30,5);
+        ev3_motor_steer(left_motor,right_motor,15,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
     }
     while(wheelDistance < 35){
@@ -775,16 +777,19 @@ void readColorCode(){
             isReading = 50;
             i = round((wheelDistance - 31) / 5);
             values[i] = 1;
+            ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.g > 55 && isReading < 2){
             isReading = 50;
             i = round((wheelDistance - 31) / 5);
             values[i] = 1;
+            ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.b > 55 && isReading < 2){
             isReading = 50;
             i = round((wheelDistance - 31) / 5);
             values[i] = 1;
+            ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(isReading > 1){
             isReading = isReading - 1;
@@ -820,6 +825,9 @@ void readColorCode(){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2 * (3.1415926535 * 9.5) / 360;
+    
+    sprintf(lcdstr, "%d, %d", tasks[GREEN_STREET], tasks[BLUE_STREET]);
+    ev3_lcd_draw_string(lcdstr, 0, 15);
 }
 
 void execute_moving_the_robot_based_on_the_color_code(){

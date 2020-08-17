@@ -12,20 +12,9 @@
 #define BLUEMATERIAL 1
 #define BLACKMATERIAL 2
 
-void run2020();
-void runBlueStreet();
-void runGreenStreet();
-void runYellowStreet();
-void runRedStreet();
-void wall_follow_with_tasks();
 void readCode();
-void init();
-void display_sensors();
-void readColorCode();
-void execute_moving_the_robot_based_on_the_color_code();
-void wallFollow();
-void linePID();
-void button_clicked_handler();
+static void button_clicked_handler();
+void display_values();
 
 /*
 * street:
@@ -52,12 +41,6 @@ typedef struct {
 	int dash;
 	int facing;
 } position;
-
-typedef struct {
-
-{
-	/* data */
-};
 
 static int tasks[4] = {0, 0, 0, 0};
 
