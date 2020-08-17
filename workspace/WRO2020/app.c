@@ -323,15 +323,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                25,350,5
+                0,0,0
             },
             //index 1
             {
-                70,275,10
+                0,0,0
             },
             //index 2
             {
-                97,350,6
+                0,0,0
             },
             //index 3
             {
@@ -354,15 +354,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                0,0,0
+                25,350,5
             },
             //index 1
             {
-                0,0,0
+                70,275,10
             },
             //index 2
             {
-                0,0,0
+                97,350,6
             },
             //index 3
             {
@@ -491,7 +491,7 @@ void runRedStreet(){
     pos.street = YELLOW_STREET;
 }
 
-void wall_follow_with_tasks(float distance,int steer){
+void wall_follow_with_tasks(int distance,int steer){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_reset_counts(a_motor);
@@ -859,7 +859,7 @@ void readColorCode(){
     //ev3_motor_reset_counts(right_motor);
     //wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2 * (3.1415926535 * 9.5) / 360;
     
-    sprintf(lcdstr, "%d, %d", tasks[GREEN_STREET], tasks[BLUE_STREET]);
+    sprintf(lcdstr, "%d, %d", pos.street, tasks[BLUE_STREET]);
     ev3_lcd_draw_string(lcdstr, 0, 15);
 }
 
