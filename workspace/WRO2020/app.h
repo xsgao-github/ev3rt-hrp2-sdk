@@ -16,16 +16,6 @@
 #define A_MOTOR 1
 #define D_MOTOR 2
 
-void run2020();
-void runBlueStreet();
-void runGreenStreet();
-void runYellowStreet();
-void runRedStreet();
-void wall_follow_with_tasks();
-void readCode();
-static void button_clicked_handler();
-void display_values();
-
 /*
 * street:
 * RED, YELLOW, GREEN, or BLUE
