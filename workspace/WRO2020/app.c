@@ -18,6 +18,17 @@
 // define motors and sensors
 const int color_sensor1 = EV3_PORT_2, color_sensor2 = EV3_PORT_2, color_sensor3 = EV3_PORT_3, color_sensor4 = EV3_PORT_4, left_motor = EV3_PORT_B, right_motor = EV3_PORT_C, a_motor = EV3_PORT_A, d_motor = EV3_PORT_D;
 
+// declare methods
+void run2020();
+void runBlueStreet();
+void runGreenStreet();
+void runYellowStreet();
+void runRedStreet();
+void wall_follow_with_tasks();
+void readCode();
+static void button_clicked_handler();
+void display_values();
+
 rgb_raw_t rgb1;
 rgb_raw_t rgb4;
 position pos = {-1, -1, -1, 0, 0};
@@ -426,9 +437,11 @@ int next_d_motor_task[3] = {0,0,0};
 void main_task(intptr_t unused) {
     init();
 
-    readColorCode();
     //readCode();
     // TODO run2020
+    pos.street = RED_STREET;
+    tasks[GREEN_STREET] = REMOVESNOW;
+    pos.facing = -180;
     run2020();
 }
 
@@ -475,7 +488,37 @@ void runGreenStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
-    pos.street = RED_STREET;
+    pos.street = GREEN_STREET;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   //yay 2020 collumns!
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
+    ev3_motor_steer(left_motor, right_motor, 30, 1);
+    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 1000) {
+        display_sensors();
+    }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    tslp_tsk(250);
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
+    ev3_motor_steer(left_motor, right_motor, -20, 0);
+    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) > -50) {
+        display_sensors();
+    }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    tslp_tsk(250);
+    ev3_motor_steer(left_motor, right_motor, 10, -45);
+    tslp_tsk(3400);
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    tslp_tsk(250);
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
+    ev3_motor_steer(left_motor, right_motor, 20, 0);
+    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 80) {
+        display_sensors();
+    }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    linePID(30);
+    //dispense stuff
 }
 void runYellowStreet(){
     color_4_index = 0;
@@ -933,7 +976,6 @@ void execute_moving_the_robot_based_on_the_color_code(){
         //wallFollow(160,snowValues2,3);
     }
 }
-
 
 void linePID(int distance){
     ev3_motor_reset_counts(left_motor);

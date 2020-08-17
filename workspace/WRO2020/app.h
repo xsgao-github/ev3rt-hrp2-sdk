@@ -12,9 +12,9 @@
 #define BLUEMATERIAL 1
 #define BLACKMATERIAL 2
 
-void readCode();
-static void button_clicked_handler();
-void display_values();
+#define COLOR_4 0
+#define A_MOTOR 1
+#define D_MOTOR 2
 
 /*
 * street:
@@ -32,7 +32,7 @@ void display_values();
 * (Only applicable for streets RED and YELLOW) Dashes from the start of the section, with a dash being a black line
 * 
 * facing:
-* direction in degrees of where the robot is facing, 0 being the same as when it started, and ranges from -180 to 179.
+* direction in degrees of where the robot is facing, 0 being facing the wall with the dispensers and snow depot, and ranges from -180 to 179.
 */
 typedef struct {
 	int street;
