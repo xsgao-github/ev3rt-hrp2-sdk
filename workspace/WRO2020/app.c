@@ -748,85 +748,72 @@ void display_values() {
 
 void readColorCode(){
     float wheelDistance = 0;
-    float detected[3] = {0,0,0};//1 = red, 2 = yellow
     float values[8] = {0,0,0,0,0,0,0,0};
-    int instructions[4] = {0,0,0,0};
-    int readIndex = 0;
     int isReading = 0;
-    ev3_motor_steer(left_motor,right_motor,10,5);
-    while(wheelDistance < 70){
+    int i = 0;
+    while(wheelDistance < 30){
+        ev3_motor_steer(left_motor,right_motor,30,5);
+        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
+    }
+    while(wheelDistance < 35){
+        ev3_motor_steer(left_motor,right_motor,10,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
         assert(val);
-        if(readIndex == 0 && rgb4.g > 40 && rgb4.r > 40 && wheelDistance > 30 && wheelDistance < 35){
-            readIndex += 1;
-            detected[0] = 2;
-            ev3_speaker_play_tone(NOTE_A6, 60);
+        if(rgb4.g > 40 && rgb4.r > 40){
+            pos.street = YELLOW_STREET;
         }
-        else if(readIndex == 0 && rgb4.r > 45 && wheelDistance > 30 && wheelDistance < 35){
-            readIndex += 1;
-            detected[0] = 1;
-            ev3_speaker_play_tone(NOTE_A4, 60);
+        else if(rgb4.r > 45){
+            pos.street = RED_STREET;
         }
-        else if(rgb4.r > 55 && isReading < 2 && wheelDistance > 35 && readIndex > 0){
+    }
+    while(wheelDistance < 71){
+        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
+        bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
+        assert(val);
+        if(rgb4.r > 55 && isReading < 2){
             isReading = 50;
-            detected[readIndex] = wheelDistance;
-            readIndex += 1;
-            ev3_speaker_play_tone(NOTE_C5, 60);
+            i = round((wheelDistance - 31) / 5);
+            values[i] = 1;
         }
-        else if(rgb4.g > 55 && isReading < 2 && wheelDistance > 35 && readIndex > 0){
+        else if(rgb4.g > 55 && isReading < 2){
             isReading = 50;
-            detected[readIndex] = wheelDistance;
-            readIndex += 1;
-            ev3_speaker_play_tone(NOTE_C5, 60);
+            i = round((wheelDistance - 31) / 5);
+            values[i] = 1;
         }
-        else if(rgb4.b > 55 && isReading < 2 && wheelDistance > 35 && readIndex > 0){
+        else if(rgb4.b > 55 && isReading < 2){
             isReading = 50;
-            detected[readIndex] = wheelDistance;
-            readIndex += 1;
-            ev3_speaker_play_tone(NOTE_C5, 60);
+            i = round((wheelDistance - 31) / 5);
+            values[i] = 1;
         }
         else if(isReading > 1){
             isReading = isReading - 1;
         }
-        int sddsfsd = round((detected[1] - 31) / 5);
-        int sddsfsd2 = round((detected[2] - 31) / 5);
-        values[sddsfsd] = 1;
-        values[sddsfsd2] = 1;
-        for(int i = 0; i < 7; i +=2){
-            if(values[i] == 0){
-                if(values[i + 1] == 0){
-                    instructions[i/2] = 0;
-                    tasks[i/2] = 0;
-                }
-                else{
-                    instructions[i/2] = 1;
-                    tasks[i/2] = 1;
-                }
-            }
-            else{
-                if(values[i + 1] == 0){
-                    instructions[i/2] = 2;
-                    tasks[i/2] = 2;
-                }
-                else{
-                }
-            }
-        }
-        if(detected[0] = 2){
-            pos.street = 2;
-        }
-        if(detected[0] = 1){
-            pos.street = 3;
-        }
-        pos.section = 1;
-        pos.distance = wheelDistance;
-        pos.dash = 0;
-        pos.facing = 0;
         tslp_tsk(10);
     }
+    for(int i = 0; i < 7; i +=2){
+        if(values[i] == 0){
+            if(values[i + 1] == 0){
+                tasks[i/2] = 0;
+            }
+            else{
+                tasks[i/2] = 1;
+            }
+        }
+        else{
+            if(values[i + 1] == 0){
+                tasks[i/2] = 2;
+            }
+            else{
+            }
+        }
+    }
+    pos.section = 1;
+    pos.distance = wheelDistance;
+    pos.dash = 0;
+    pos.facing = 0;
     ev3_motor_steer(left_motor,right_motor,15,0);
-    tslp_tsk(1500);
+    tslp_tsk(1400);
     ev3_motor_steer(left_motor,right_motor,0,0);
     wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2 * (3.1415926535 * 9.5) / 360;
     pos.distance = wheelDistance;
