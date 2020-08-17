@@ -46,93 +46,93 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
         //a_motor
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
         //d_motor
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
     },
@@ -142,93 +142,93 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
         //a_motor
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
         //d_motor
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
     },
@@ -238,93 +238,93 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
         //a_motor
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
         //d_motor
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
     },
@@ -334,93 +334,93 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
         //a_motor
         {
             //index 0
             {
-                45,30000,350
+                37,50,350
             },
             //index 1
             {
-                60,80,275
+                79,100,275
             },
             //index 2
             {
-                91,103,350
+                106,119,350
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
         //d_motor
         {
             //index 0
             {
-                0,0,0
+                1000,0,0
             },
             //index 1
             {
-                0,0,0
+                1000,0,0
             },
             //index 2
             {
-                0,0,0
+                1000,0,0
             },
             //index 3
             {
-                0,0,0
+                1000,0,0
             },
             //index 4
             {
-                0,0,0
+                1000,0,0
             },
             //index 5
             {
-                0,0,0
+                1000,0,0
             },
             //index 6
             {
-                0,0,0
+                1000,0,0
             },
         },
     },
@@ -542,6 +542,7 @@ void wall_follow_with_tasks(int distance,int steer){
     int lastDash = 0;
     int snowIndex = 0;
     int isTurningA = 0;
+    char lcdstr[100];
     int isTurningD = 0;
     float wheelDistance = 0;
     ev3_motor_steer(left_motor,right_motor,10,steer);
@@ -549,10 +550,10 @@ void wall_follow_with_tasks(int distance,int steer){
         next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
     }
     for(int i = 0;i < 3;i++){
-        next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
+        next_a_motor_task[i] = allTasks[pos.street][1][a_motor_index][i];
     }
     for(int i = 0;i < 3;i++){
-        next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
+        next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
     }
     while (wheelDistance < distance) {
         if(wheelDistance > next_color_4_task[0] && color_4_index < 6){
@@ -598,7 +599,6 @@ void wall_follow_with_tasks(int distance,int steer){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         ev3_motor_steer(left_motor, right_motor, 15, steer);
         tslp_tsk(1);
-        char lcdstr[100];
         sprintf(lcdstr, "%d, %d   %d", next_a_motor_task[0],next_a_motor_task[1],next_a_motor_task[2]);
         ev3_lcd_draw_string(lcdstr, 0, 45);
     }
