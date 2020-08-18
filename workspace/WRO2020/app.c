@@ -26,8 +26,12 @@ void runYellowStreet();
 void runRedStreet();
 void wall_follow_with_tasks();
 void readCode();
+void init();
+void display_sensors();
+void readColorCode();
+void execute_moving_the_robot_based_on_the_color_code();
+void linePID();
 static void button_clicked_handler();
-void display_values();
 
 rgb_raw_t rgb1;
 rgb_raw_t rgb4;
