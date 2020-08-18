@@ -1104,7 +1104,7 @@ void color4PID(int distance,int tasksNum4,int tasksNumA,int tasksNumD){
         assert(val);
         float error = (rgb4.r + rgb4.g + rgb4.b) / 3 - 30;
         integral = error + integral * 0.5;
-        float steer = 0.04 * error + 0 * integral + 0 * (error - lasterror);
+        float steer = 1 * error + 0 * integral + 0 * (error - lasterror);
         ev3_motor_steer(left_motor, right_motor, 10, steer);
         lasterror = error;  
         tslp_tsk(1);
