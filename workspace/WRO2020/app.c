@@ -533,7 +533,7 @@ void runGreenStreet(){
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, -20, 0);
     tslp_tsk(100);
-    ev3_motor_steer(left_motor, right_motor, 10, -45)
+    ev3_motor_steer(left_motor, right_motor, 10, -45);
     tslp_tsk(900);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     linePID(40); // IDK WHAT TO PUT heRE MEASURE THE MAT
@@ -549,7 +549,9 @@ void runRedStreet(){
     a_motor_index = 0;
     d_motor_index = 0;
     wall_follow_with_tasks(163,3,0,3,0);
-    ev3_motor_rotate(a_motor,500,50,true);
+    ev3_motor_set_power(a_motor,50);
+    tslp_tsk(500);
+    ev3_motor_set_power(a_motor,0);
     ev3_motor_steer(left_motor,right_motor,-15,0);
     tslp_tsk(750);
     ev3_motor_steer(left_motor,right_motor,0,0);
@@ -559,9 +561,7 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,-15,0);
     tslp_tsk(900);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_set_power(a_motor,50);
-    tslp_tsk(500);
-    ev3_motor_set_power(a_motor,0);
+    ev3_motor_rotate(a_motor,-500,50,true);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     float wheelDistance = 0;
