@@ -446,7 +446,7 @@ void main_task(intptr_t unused) {
     pos.street = RED_STREET;
     tasks[GREEN_STREET] = REMOVESNOW;
     pos.facing = -180;
-    readColorCode();
+    readCode();
     run2020();
 }
 
@@ -532,7 +532,7 @@ void runGreenStreet(){
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, -20, 0);
     tslp_tsk(100);
-    ev3_motor_steer(left_motor, right_motor, 10, -45)
+    ev3_motor_steer(left_motor, right_motor, 10, -45);
     tslp_tsk(900);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     linePID(40); // IDK WHAT TO PUT heRE MEASURE THE MAT
