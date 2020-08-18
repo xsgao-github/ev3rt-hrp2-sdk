@@ -444,9 +444,9 @@ void main_task(intptr_t unused) {
 
     //readCode();
     // TODO run2020
-    pos.street = RED_STREET;
-    tasks[GREEN_STREET] = REMOVESNOW;
-    pos.facing = -180;
+    //pos.street = RED_STREET;
+    //tasks[GREEN_STREET] = REMOVESNOW;
+    //pos.facing = -180;
     readColorCode();
     run2020();
 }
@@ -569,7 +569,7 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,15,0);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
     }
-    color4PID(163,0,2,0);
+    color4PID(60,0,1,0);
     pos.street = YELLOW_STREET;
 }
 
