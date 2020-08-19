@@ -578,7 +578,7 @@ void runRedStreet(){
     }
     color4PID(60,1,0);
     ev3_motor_steer(left_motor,right_motor,30,0);
-    tslp_tsk(900);
+    tslp_tsk(800);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,30,-45);
     tslp_tsk(650);
