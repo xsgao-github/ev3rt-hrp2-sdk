@@ -445,7 +445,7 @@ int next_d_motor_task[3] = {0,0,0};
 
 void main_task(intptr_t unused) {
     init();
-    //readCode();
+    readCode();
     //readColorCode();
     //run2020();
     runGreenStreet();
@@ -499,7 +499,7 @@ void runGreenStreet(){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 40, 1);
-    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 650) {
+    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 615) {
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
@@ -507,7 +507,7 @@ void runGreenStreet(){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, -20, 0);
-    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) > -50) {
+    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) > -15) {
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
@@ -522,6 +522,7 @@ void runGreenStreet(){
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     linePID(30);
+                        tslp_tsk(99999999);
     //dispense stuff
     linePID(55);
     //dispense moar stoooof
@@ -632,16 +633,16 @@ void readCode() {
     } else {
         pos.street = YELLOW_STREET;
     }
-    tslp_tsk(5);
+    tslp_tsk(10);
     ev3_motor_reset_counts(EV3_PORT_B);
     ev3_motor_reset_counts(EV3_PORT_C);
     ev3_motor_steer(left_motor, right_motor, -10, 0);
-    while (((abs(ev3_motor_get_counts(EV3_PORT_B)) + abs(ev3_motor_get_counts(EV3_PORT_C))) / 2) < 40) {
+    while (((abs(ev3_motor_get_counts(EV3_PORT_B)) + abs(ev3_motor_get_counts(EV3_PORT_C))) / 2) < 20) {
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
 
-    tslp_tsk(5);
+    tslp_tsk(10);
     // record instructions
     ev3_motor_reset_counts(EV3_PORT_B);
     ev3_motor_reset_counts(EV3_PORT_C);
@@ -649,10 +650,12 @@ void readCode() {
     int index;
     for (index = 0; index < 4; index++) {
         // read instructions
-        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((index+1) * 55)) {
+        bit1 = 0;
+        bit2 = 0;
+        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((index + 1) * 55)) {
             display_sensors();
         }
-        if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 25) {
+        if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 30) {
             bit1 = 1;
         } else {
             bit1 = 0;
@@ -660,7 +663,7 @@ void readCode() {
         while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((index + 2) * 55)) {
             display_sensors();
         }
-        if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 25) {
+        if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 30) {
             bit2 = 1;
         } else {
             bit2 = 0;
@@ -813,7 +816,7 @@ void linePID(int distance){
     ev3_motor_reset_counts(d_motor);
     float wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2;
     float lasterror = 0, integral = 0;
-    while (wheelDistance < distance) {
+    while (wheelDistance < (distance*((3.1415926535*9.5)/360))) {
         if(ev3_motor_get_counts(a_motor) > 490){
             ev3_motor_reset_counts(a_motor);
             ev3_motor_rotate(a_motor,-500,13,false);
@@ -826,7 +829,7 @@ void linePID(int distance){
         wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2;
         float error = ev3_color_sensor_get_reflect(color_sensor2) - ev3_color_sensor_get_reflect(color_sensor3);
         integral = error + integral * 0.5;
-        float steer = 1 * error + 0.5 * integral + 0.25 * (error - lasterror);
+        float steer = 0.4 * error + 0.25 * integral + 0.25 * (error - lasterror);
         ev3_motor_steer(left_motor, right_motor, 30, steer);
         lasterror = error;  
         display_sensors();
@@ -1100,14 +1103,15 @@ void init() {
     ev3_lcd_set_font(EV3_FONT_MEDIUM);
 
     // reset snow/car collector
-    //ev3_motor_set_power(a_motor, -100);
-    //tslp_tsk(1500);
+    ev3_motor_set_power(a_motor, -100);
+    tslp_tsk(1500);
+    ev3_motor_stop(a_motor, false);
     //ev3_motor_rotate(a_motor, 500, 50, true);
 
     // reset abrasive material dispenser
-    //ev3_motor_set_power(d_motor, 100);
-    //tslp_tsk(1500);
-    //ev3_motor_stop(d_motor, true);
+    ev3_motor_set_power(d_motor, 100);
+    tslp_tsk(1500);
+    ev3_motor_stop(d_motor, true);
 
     // wait for button press
     ev3_lcd_draw_string("Press OK to run", 14, 45);
