@@ -26,13 +26,13 @@ void runYellowStreet();
 void runRedStreet();
 void readCode();
 void readColorCode();
-void linePID();
-void color4PID();
-void wall_follow_with_tasks();
-void execute_tasks();
+void linePID(int distance);
+void color4PID(int distance,int tasksNumA,int tasksNumD);
+void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,int tasksNumD);
+void execute_tasks(float distance);
 void init();
 void display_sensors();
-static void button_clicked_handler();
+static void button_clicked_handler(intptr_t button);
 
 //declare global variables
 rgb_raw_t rgb1;
@@ -1047,7 +1047,7 @@ void do_tasks() {
 
 */
 
-void execute_task(float distance) {
+void execute_tasks(float distance) {
     display_sensors();
     //declare/define variables
     int a_degrees;
