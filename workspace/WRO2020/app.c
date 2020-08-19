@@ -33,6 +33,7 @@ void execute_moving_the_robot_based_on_the_color_code();
 void linePID();
 void color4PID();
 static void button_clicked_handler();
+void execute_tasks();
 
 rgb_raw_t rgb1;
 rgb_raw_t rgb4;
@@ -113,15 +114,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                1000,0,0
+                30,0,600
             },
             //index 1
             {
-                1000,0,0
+                80,0,900
             },
             //index 2
             {
-                1000,0,0
+                110,0,1200
             },
             //index 3
             {
@@ -209,15 +210,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                1000,0,0
+                30,0,600
             },
             //index 1
             {
-                1000,0,0
+                80,0,900
             },
             //index 2
             {
-                1000,0,0
+                110,0,1200
             },
             //index 3
             {
@@ -444,11 +445,11 @@ void main_task(intptr_t unused) {
 
     //readCode();
     // TODO run2020
+    //readCode();
     //pos.street = RED_STREET;
     //tasks[GREEN_STREET] = REMOVESNOW;
-    //pos.facing = -180;
-    readColorCode();
-    run2020();
+    //run2020();
+    runGreenStreet();
 }
 
 void run2020(){
@@ -495,10 +496,11 @@ void runGreenStreet(){
     a_motor_index = 0;
     d_motor_index = 0;
     pos.street = GREEN_STREET;
+
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 40, 1);
-    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 1000) {
+    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 650) {
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
@@ -511,9 +513,7 @@ void runGreenStreet(){
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     tslp_tsk(250);
-    ev3_motor_steer(left_motor, right_motor, 10, -45);
-    tslp_tsk(3400);
-    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    ev3_motor_rotate(right_motor, 320, 30, true);
     tslp_tsk(250);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
@@ -526,17 +526,22 @@ void runGreenStreet(){
     //dispense stuff
     linePID(55);
     //dispense moar stoooof
-        ev3_motor_steer(left_motor, right_motor, 20, 0);
-    while (((ev3_color_sensor_get_reflect(color_sensor2) + ev3_color_sensor_get_reflect(color_sensor3)) / 2) < 80) {
+    ev3_motor_steer(left_motor, right_motor, 10, 0);
+    while (((ev3_color_sensor_get_reflect(color_sensor2) + ev3_color_sensor_get_reflect(color_sensor3)) / 2) < 100) {
         display_sensors();
     }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, -20, 0);
     tslp_tsk(100);
-    ev3_motor_steer(left_motor, right_motor, 10, -45);
-    tslp_tsk(900);
+    ev3_motor_rotate(right_motor, 210, 20, true);
+    linePID(38);
+    ev3_motor_steer(left_motor, right_motor, 10, 0);
+    while (((ev3_color_sensor_get_reflect(color_sensor2) + ev3_color_sensor_get_reflect(color_sensor3)) / 2) < 80) {
+        display_sensors();
+    }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    linePID(40);
+    linePID(38);
 }
 void runYellowStreet(){
     color_4_index = 0;
@@ -1057,10 +1062,10 @@ void linePID(int distance){
         wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2;
         float error = ev3_color_sensor_get_reflect(color_sensor2) - ev3_color_sensor_get_reflect(color_sensor3);
         integral = error + integral * 0.5;
-        float steer = 0.04 * error + 0.5 * integral + 0.25 * (error - lasterror);
+        float steer = 0.4 * error + 0.5 * integral + 0.25 * (error - lasterror);
         ev3_motor_steer(left_motor, right_motor, 30, steer);
         lasterror = error;  
-        tslp_tsk(1);
+        display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     return;
@@ -1210,3 +1215,11 @@ void do_tasks() {
 }
 
 */
+
+void execute_tasks() {
+    //declare variables
+    int street;
+    //locate the street
+    street = pos.street;
+    }
+}
