@@ -370,19 +370,19 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                37,50,350
+                35,50,350
             },
             //index 1
             {
-                79,100,275
+                77,100,275
             },
             //index 2
             {
-                115,130,350
+                112,130,350
             },
             //index 3
             {
-                15,30,300
+                10,30,400
             },
             //index 4
             {
@@ -552,14 +552,14 @@ void runRedStreet(){
     ev3_motor_set_power(a_motor,50);
     tslp_tsk(500);
     ev3_motor_set_power(a_motor,0);
-    ev3_motor_steer(left_motor,right_motor,-15,0);
-    tslp_tsk(750);
+    ev3_motor_steer(left_motor,right_motor,-30,0);
+    tslp_tsk(375);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,-15,90);
-    tslp_tsk(800);
+    ev3_motor_steer(left_motor,right_motor,-30,90);
+    tslp_tsk(400);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,-15,0);
-    tslp_tsk(900);
+    ev3_motor_steer(left_motor,right_motor,-30,0);
+    tslp_tsk(450);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_set_power(a_motor,-50);
     tslp_tsk(500);
@@ -572,11 +572,11 @@ void runRedStreet(){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
     }
     color4PID(60,1,0);
-    ev3_motor_steer(left_motor,right_motor,15,0);
-    tslp_tsk(1800);
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,15,-45);
+    ev3_motor_steer(left_motor,right_motor,30,0);
     tslp_tsk(900);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,30,-45);
+    tslp_tsk(750);
     ev3_motor_steer(left_motor,right_motor,0,0);
     pos.street = YELLOW_STREET;
 }
@@ -593,7 +593,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     int tasksLeft4 = tasksNum4;
     int tasksLeftA = tasksNumA;
     int tasksLeftD = tasksNumD;
-    ev3_motor_steer(left_motor,right_motor,20,steer);
+    ev3_motor_steer(left_motor,right_motor,25,steer);
     for(int i = 0;i < 3;i++){
         next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
     }
