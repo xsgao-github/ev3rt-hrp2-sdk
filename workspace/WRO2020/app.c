@@ -274,11 +274,11 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                50,67,400
+                53,67,400
             },
             //index 1
             {
-                115,130,275
+                110,130,275
             },
             //index 2
             {
@@ -548,6 +548,10 @@ void runYellowStreet(){
     a_motor_index = 0;
     d_motor_index = 0;
     wall_follow_with_tasks(163,3,0,3,0);
+    ev3_motor_steer(left_motor,right_motor,30,-45);
+    tslp_tsk(650);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    wall_follow_with_tasks(80,3,0,0,0);
     pos.street = RED_STREET;
 }
 void runRedStreet(){
