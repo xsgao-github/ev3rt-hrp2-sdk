@@ -274,7 +274,7 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                1000,0,0
+                47,62,300
             },
             //index 1
             {
@@ -542,6 +542,7 @@ void runYellowStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
+    wall_follow_with_tasks(163,3,0,3,0);
     pos.street = RED_STREET;
 }
 void runRedStreet(){
@@ -1065,6 +1066,7 @@ void linePID(int distance){
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     return;
 }
+
 void color4PID(int distance,int tasksNumA,int tasksNumD){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
