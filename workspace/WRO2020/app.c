@@ -29,7 +29,6 @@ void readCode();
 void init();
 void display_sensors();
 void readColorCode();
-void execute_moving_the_robot_based_on_the_color_code();
 void linePID();
 void color4PID();
 static void button_clicked_handler();
@@ -448,8 +447,9 @@ void main_task(intptr_t unused) {
     //readCode();
     //pos.street = RED_STREET;
     //tasks[GREEN_STREET] = REMOVESNOW;
-    //run2020();
-    runGreenStreet();
+    readColorCode();
+    run2020();
+    //runGreenStreet();
 }
 
 void run2020(){
@@ -660,7 +660,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         ev3_motor_steer(left_motor, right_motor, 15, steer);
         tslp_tsk(1);
-        sprintf(lcdstr, "%d, %d   %d", next_a_motor_task[0],next_a_motor_task[1],next_a_motor_task[2]);
+        sprintf(lcdstr, "%d", pos.street);
         ev3_lcd_draw_string(lcdstr, 0, 45);
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
@@ -964,83 +964,8 @@ void readColorCode(){
     while (ev3_color_sensor_get_reflect(color_sensor3) > 20) {
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    //ev3_motor_steer(left_motor,right_motor,15,0);
-    //tslp_tsk(1400);
-    //ev3_motor_steer(left_motor,right_motor,0,0);
-    //wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2 * (3.1415926535 * 9.5) / 360;
-    //pos.distance = wheelDistance;
-    //ev3_motor_reset_counts(left_motor);
-    //ev3_motor_reset_counts(right_motor);
-    //wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2 * (3.1415926535 * 9.5) / 360;
-    
     sprintf(lcdstr, "%d, %d", pos.street, tasks[BLUE_STREET]);
     ev3_lcd_draw_string(lcdstr, 0, 15);
-}
-
-void execute_moving_the_robot_based_on_the_color_code(){
-    //0:b,1:g,2:y,3:r
-    if(tasks[0] == 0 && tasks[1] == 0 && pos.street == 2){
-        
-    }
-    if(tasks[0] == 0 && tasks[2] == 0 && pos.street == 2){
-        
-    }
-    if(tasks[0] == 0 && tasks[3] == 0 && pos.street == 2){
-        
-    }
-    if(tasks[1] == 0 && tasks[2] == 0 && pos.street == 2){
-        
-    }
-    if(tasks[1] == 0 && tasks[3] == 0 && pos.street == 2){
-        
-    }
-    if(tasks[2] == 0 && tasks[3] == 0 && pos.street == 2){
-        int snowValues[6][3] = {{17,-300},{121,-300},{139,0},{1000,0},{1000,0},{1000,0}};
-        //wallFollow(160,snowValues);
-    }
-    //red
-    if(tasks[0] == 0 && tasks[1] == 0 && pos.street == 3){
-
-    }
-    if(tasks[0] == 0 && tasks[2] == 0 && pos.street == 3){
-        
-    }
-    if(tasks[0] == 0 && tasks[3] == 0 && pos.street == 3){
-        
-    }
-    if(tasks[1] == 0 && tasks[2] == 0 && pos.street == 3){
-        
-    }
-    if(tasks[1] == 0 && tasks[3] == 0 && pos.street == 3){
-        
-    }
-    if(tasks[2] == 0 && tasks[3] == 0 && pos.street == 3){
-        int snowValues[6][3] = {{25,350,5},{70,275,10},{97,350,6},{1000,0,0},{1000,0,0},{1000,0,0}};
-        //wallFollow(136,snowValues,3);
-        ev3_motor_rotate(a_motor,500,50,true);
-        ev3_motor_steer(left_motor,right_motor,-15,0);
-        tslp_tsk(1000);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        tslp_tsk(1050);
-        ev3_motor_steer(left_motor,right_motor,-15,90);
-        tslp_tsk(900);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        ev3_motor_steer(left_motor,right_motor,-15,0);
-        tslp_tsk(900);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        ev3_motor_rotate(a_motor,-500,50,true);
-        tslp_tsk(1000);
-        int snowValues1[6][3] = {{23,500,10},{1000,0,0},{1000,0,0},{1000,0,0},{1000,0,0},{1000,0,0}};
-        //wallFollow(60,snowValues1,0);
-        ev3_motor_steer(left_motor,right_motor,20,0);
-        tslp_tsk(1600);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        ev3_motor_steer(left_motor,right_motor,10,-45);
-        tslp_tsk(2400);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        int snowValues2[6][3] = {{20,500,5},{1000,0,0},{1000,0,0},{1000,0,0},{1000,0,0},{1000,0,0}};
-        //wallFollow(160,snowValues2,3);
-    }
 }
 
 void linePID(int distance){
