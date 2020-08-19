@@ -382,7 +382,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                10,30,400
+                10,25,300
             },
             //index 4
             {
@@ -536,7 +536,7 @@ void runGreenStreet(){
     ev3_motor_steer(left_motor, right_motor, 10, -45);
     tslp_tsk(900);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    linePID(40); // IDK WHAT TO PUT heRE MEASURE THE MAT
+    linePID(40);
 }
 void runYellowStreet(){
     color_4_index = 0;
@@ -555,8 +555,8 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,-30,0);
     tslp_tsk(375);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,-30,90);
-    tslp_tsk(400);
+    ev3_motor_steer(left_motor,right_motor,-15,90);
+    tslp_tsk(800);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,-30,0);
     tslp_tsk(450);
@@ -576,7 +576,11 @@ void runRedStreet(){
     tslp_tsk(900);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,30,-45);
-    tslp_tsk(750);
+    tslp_tsk(650);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor, right_motor, 15, 5);
+    while (ev3_color_sensor_get_reflect(color_sensor3) > 20) {
+    }
     ev3_motor_steer(left_motor,right_motor,0,0);
     pos.street = YELLOW_STREET;
 }
@@ -882,15 +886,15 @@ void readColorCode(){
     int isReading = 0;
     int i = 0;
     char lcdstr[100];
-    while(wheelDistance < 25){
+    while(wheelDistance < 20){
         ev3_motor_steer(left_motor,right_motor,25,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
     }
-    while(wheelDistance < 30){
+    while(wheelDistance < 25){
         ev3_motor_steer(left_motor,right_motor,15,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
     }
-    while(wheelDistance < 35){
+    while(wheelDistance < 31){
         ev3_motor_steer(left_motor,right_motor,10,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
