@@ -569,10 +569,9 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,15,0);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
     }
-    color4PID(60,0,1,0);
+    color4PID(60,1,0);
     pos.street = YELLOW_STREET;
 }
-
 void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,int tasksNumD){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
@@ -1052,7 +1051,7 @@ void linePID(int distance){
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     return;
 }
-void color4PID(int distance,int tasksNum4,int tasksNumA,int tasksNumD){
+void color4PID(int distance,int tasksNumA,int tasksNumD){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_reset_counts(a_motor);
@@ -1061,12 +1060,8 @@ void color4PID(int distance,int tasksNum4,int tasksNumA,int tasksNumD){
     int isTurningD = 0;
     char lcdstr[100];
     float wheelDistance = 0;
-    int tasksLeft4 = tasksNum4;
     int tasksLeftA = tasksNumA;
     int tasksLeftD = tasksNumD;
-    for(int i = 0;i < 3;i++){
-        next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
-    }
     for(int i = 0;i < 3;i++){
         next_a_motor_task[i] = allTasks[pos.street][1][a_motor_index][i];
     }
