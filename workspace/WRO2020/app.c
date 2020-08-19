@@ -29,7 +29,6 @@ void readCode();
 void init();
 void display_sensors();
 void readColorCode();
-void execute_moving_the_robot_based_on_the_color_code();
 void linePID();
 void color4PID();
 static void button_clicked_handler();
@@ -278,7 +277,7 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                1000,0,0
+                47,62,300
             },
             //index 1
             {
@@ -451,8 +450,9 @@ void main_task(intptr_t unused) {
     //readCode();
     //pos.street = RED_STREET;
     //tasks[GREEN_STREET] = REMOVESNOW;
-    //run2020();
-    runGreenStreet();
+    readColorCode();
+    run2020();
+    //runGreenStreet();
 }
 
 void run2020(){
@@ -550,6 +550,7 @@ void runYellowStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
+    wall_follow_with_tasks(163,3,0,3,0);
     pos.street = RED_STREET;
 }
 void runRedStreet(){
@@ -662,7 +663,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         ev3_motor_steer(left_motor, right_motor, 15, steer);
         tslp_tsk(1);
-        sprintf(lcdstr, "%d, %d   %d", next_a_motor_task[0],next_a_motor_task[1],next_a_motor_task[2]);
+        sprintf(lcdstr, "%d", pos.street);
         ev3_lcd_draw_string(lcdstr, 0, 45);
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
@@ -966,15 +967,6 @@ void readColorCode(){
     while (ev3_color_sensor_get_reflect(color_sensor3) > 20) {
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    //ev3_motor_steer(left_motor,right_motor,15,0);
-    //tslp_tsk(1400);
-    //ev3_motor_steer(left_motor,right_motor,0,0);
-    //wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2 * (3.1415926535 * 9.5) / 360;
-    //pos.distance = wheelDistance;
-    //ev3_motor_reset_counts(left_motor);
-    //ev3_motor_reset_counts(right_motor);
-    //wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2 * (3.1415926535 * 9.5) / 360;
-    
     sprintf(lcdstr, "%d, %d", pos.street, tasks[BLUE_STREET]);
     ev3_lcd_draw_string(lcdstr, 0, 15);
 }
