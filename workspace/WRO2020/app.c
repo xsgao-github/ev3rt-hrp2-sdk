@@ -1047,7 +1047,7 @@ void do_tasks() {
 
 */
 
-void execute_tasks(float distance) {
+void execute_task(float distance) {
     display_sensors();
     //declare/define variables
     int a_degrees;
@@ -1061,7 +1061,7 @@ void execute_tasks(float distance) {
 
     //check for a_motor task, if true, execute task
     a_degrees = allTasks[pos.street][A_MOTOR][a_motor_index][2];
-    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && a_turning = 0) {
+    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && a_turning == 0) {
         //execute part 1 of task
         ev3_motor_rotate(a_motor, a_degrees, 50, false);
         a_turning = 1;
