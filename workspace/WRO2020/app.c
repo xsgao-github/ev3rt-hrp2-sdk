@@ -382,7 +382,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                20,30,300
+                15,30,300
             },
             //index 4
             {
@@ -561,7 +561,9 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,-15,0);
     tslp_tsk(900);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_rotate(a_motor,-500,50,true);
+    ev3_motor_set_power(a_motor,-50);
+    tslp_tsk(500);
+    ev3_motor_set_power(a_motor,0);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     float wheelDistance = 0;
@@ -610,7 +612,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             isTurningA = 1;
         }
         if(wheelDistance > next_a_motor_task[1] && tasksLeftA > 0 && isTurningA == 1){
-            ev3_motor_rotate(a_motor,next_a_motor_task[2] * -1,50,false);
+            ev3_motor_set_power(a_motor,-50);
             a_motor_index += 1;
             for(int i = 0;i < 3;i++){
                 next_a_motor_task[i] = allTasks[pos.street][1][a_motor_index][i];
@@ -619,11 +621,11 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             tasksLeftA -= 1;
         }
         if(wheelDistance > next_d_motor_task[0] && tasksLeft4 > 0 && isTurningD == 0){
-            ev3_motor_rotate(a_motor,next_d_motor_task[2],50,false);
+            ev3_motor_rotate(d_motor,next_d_motor_task[2],50,false);
             isTurningD = 1;
         }
         if(wheelDistance > next_d_motor_task[1] && tasksLeft4 > 0 && isTurningD == 1){
-            ev3_motor_rotate(a_motor,next_d_motor_task[2] * -1,50,false);
+            ev3_motor_set_power(d_motor,-50);
             d_motor_index += 1;
             for(int i = 0;i < 3;i++){
                 next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
@@ -1077,7 +1079,7 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
             isTurningA = 1;
         }
         if(wheelDistance > next_a_motor_task[1] && tasksLeftA > 0 && isTurningA == 1){
-            ev3_motor_rotate(a_motor,next_a_motor_task[2] * -1,50,false);
+            ev3_motor_set_power(a_motor,-50);
             a_motor_index += 1;
             for(int i = 0;i < 3;i++){
                 next_a_motor_task[i] = allTasks[pos.street][1][a_motor_index][i];
@@ -1085,12 +1087,12 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
             isTurningA = 0;
             tasksLeftA -= 1;
         }
-        if(wheelDistance > next_d_motor_task[0] && tasksLeft4 > 0 && isTurningD == 0){
-            ev3_motor_rotate(a_motor,next_d_motor_task[2],50,false);
+        if(wheelDistance > next_d_motor_task[0] && tasksLeftD > 0 && isTurningD == 0){
+            ev3_motor_rotate(d_motor,next_d_motor_task[2],50,false);
             isTurningD = 1;
         }
-        if(wheelDistance > next_d_motor_task[1] && tasksLeft4 > 0 && isTurningD == 1){
-            ev3_motor_rotate(a_motor,next_d_motor_task[2] * -1,50,false);
+        if(wheelDistance > next_d_motor_task[1] && tasksLeftD > 0 && isTurningD == 1){
+            ev3_motor_set_power(d_motor,-50);
             d_motor_index += 1;
             for(int i = 0;i < 3;i++){
                 next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
