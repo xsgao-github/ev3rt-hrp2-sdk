@@ -445,8 +445,8 @@ int next_d_motor_task[3] = {0,0,0};
 
 void main_task(intptr_t unused) {
     init();
-    readCode();
-    //readColorCode();
+    //readCode();
+    readColorCode();
     //run2020();
     runGreenStreet();
 }
@@ -655,7 +655,7 @@ void readCode() {
         while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((index + 1) * 55)) {
             display_sensors();
         }
-        if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 30) {
+        if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
             bit1 = 1;
         } else {
             bit1 = 0;
@@ -663,7 +663,7 @@ void readCode() {
         while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((index + 2) * 55)) {
             display_sensors();
         }
-        if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 30) {
+        if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
             bit2 = 1;
         } else {
             bit2 = 0;
@@ -672,7 +672,7 @@ void readCode() {
         // decode instructions
         if (bit1 == 1) {
             if (bit2 == 1) {
-                ev3_motor_steer(left_motor, left_motor, 0, 0);
+                tasks[index] = -1;
             } else {
                 tasks[index] = BLACKMATERIAL;
             }
@@ -1102,16 +1102,12 @@ void init() {
     // Configure brick
     ev3_lcd_set_font(EV3_FONT_MEDIUM);
 
-    // reset snow/car collector
+    // reset snow/car collector and abrasive material spreader
     ev3_motor_set_power(a_motor, -100);
-    tslp_tsk(1500);
-    ev3_motor_stop(a_motor, false);
-    //ev3_motor_rotate(a_motor, 500, 50, true);
-
-    // reset abrasive material dispenser
     ev3_motor_set_power(d_motor, 100);
     tslp_tsk(1500);
-    ev3_motor_stop(d_motor, true);
+    ev3_motor_stop(a_motor, false);
+    ev3_motor_stop(d_motor, false);
 
     // wait for button press
     ev3_lcd_draw_string("Press OK to run", 14, 45);
