@@ -278,7 +278,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 1
             {
-                110,130,275
+                110,131,275
             },
             //index 2
             {
@@ -551,7 +551,21 @@ void runYellowStreet(){
     ev3_motor_steer(left_motor,right_motor,30,-45);
     tslp_tsk(650);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    wall_follow_with_tasks(80,3,0,0,0);
+    wall_follow_with_tasks(85,3,0,0,0);
+    ev3_motor_steer(left_motor,right_motor,30,-45);
+    tslp_tsk(650);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor, right_motor, 15, 5);
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
+    float wheelDistance = 0;
+    ev3_motor_steer(left_motor,right_motor,15,0);
+    while(wheelDistance < 50){
+        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
+    }
+    while (ev3_color_sensor_get_reflect(color_sensor3) > 20) {
+    }
+    ev3_motor_steer(left_motor,right_motor,0,0);
     pos.street = RED_STREET;
 }
 void runRedStreet(){
