@@ -730,11 +730,14 @@ void readColorCode(){
         ev3_motor_steer(left_motor,right_motor,15,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
     }
-    while(wheelDistance < 31){
-        ev3_motor_steer(left_motor,right_motor,10,5);
+    while(wheelDistance < 310000){
+        //ev3_motor_steer(left_motor,right_motor,10,5);
+        ev3_motor_steer(left_motor,right_motor,0,0);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
         assert(val);
+        sprintf(lcdstr, "%d, %d", rgb4.r, rgb4.g);
+        ev3_lcd_draw_string(lcdstr, 0, 15);
         if(rgb4.g > 40 && rgb4.r > 40){
             pos.street = YELLOW_STREET;
         }
@@ -750,19 +753,19 @@ void readColorCode(){
             isReading = 50;
             i = round((wheelDistance - 31) / 5);
             values[i] = 1;
-            ev3_speaker_play_tone(NOTE_C4,50);
+            ev3_speaker_play_tone(NOTE_C5,50);
         }
         else if(rgb4.g > 55 && isReading < 2){
             isReading = 50;
             i = round((wheelDistance - 31) / 5);
             values[i] = 1;
-            ev3_speaker_play_tone(NOTE_C4,50);
+            ev3_speaker_play_tone(NOTE_C5,50);
         }
         else if(rgb4.b > 55 && isReading < 2){
             isReading = 50;
             i = round((wheelDistance - 31) / 5);
             values[i] = 1;
-            ev3_speaker_play_tone(NOTE_C4,50);
+            ev3_speaker_play_tone(NOTE_C5,50);
         }
         else if(isReading > 1){
             isReading = isReading - 1;
