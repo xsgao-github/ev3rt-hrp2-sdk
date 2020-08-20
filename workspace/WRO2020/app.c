@@ -45,7 +45,7 @@ position pos = {-1, -1, -1, 0, 0};
 * Index 4 - data:
 * ---------------COLOR_4-[distance at read (cm), null, null]
 * ---------------A_MOTOR-[distance at execute (cm), distance at return (cm), degrees to rotate]
-* ---------------D_MOTOR-[distance at execute (cm), null, degrees to rotate]
+* ---------------D_MOTOR-[distance at execute (cm), degrees to rotate, abrasive type]
 */
 int allTasks[4][3][7][3] = {
     //blue
@@ -1115,9 +1115,9 @@ void execute_tasks(float distance) {
         }
     }
 
-    //check for d_motor task, execute task if task is to dispense material and back is loaded and it is time
+    //check for d_motor task, execute task if task is to dispense material and back is loaded and it is time and it is the correct material
     d_degrees = allTasks[pos.street][D_MOTOR][d_motor_index][2];
-    if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_turning == 0 && tasks[pos.street] != REMOVESNOW) {
+    if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_turning == 0 && tasks[pos.street] == back_loaded) {
         //execute part 1 of task
         ev3_motor_rotate(d_motor, d_degrees, 100, false);
         d_turning = 1;
@@ -1128,6 +1128,9 @@ void execute_tasks(float distance) {
             d_motor_index++;
         }
     }
+
+    //check for color_4 task, execute if it is time
+    if (distance > allTasks[pos.street][COLOR_4][color_4_index][0])
 }
 
 void init() {
@@ -1146,12 +1149,12 @@ void init() {
     ev3_sensor_config(color_sensor4, HT_NXT_COLOR_SENSOR);
     
     // Set up sensors
-    //ev3_color_sensor_get_reflect(color_sensor2);
-    //ev3_color_sensor_get_reflect(color_sensor3);
-    //bool_t val1 = ht_nxt_color_sensor_measure_rgb(color_sensor1, &rgb1);
-    //assert(val1);
-    //bool_t val4 = ht_nxt_color_sensor_measure_rgb(color_sensor4, &rgb4);
-    //assert(val4);
+    ev3_color_sensor_get_reflect(color_sensor2);
+    ev3_color_sensor_get_reflect(color_sensor3);
+    bool_t val1 = ht_nxt_color_sensor_measure_rgb(color_sensor1, &rgb1);
+    assert(val1);
+    bool_t val4 = ht_nxt_color_sensor_measure_rgb(color_sensor4, &rgb4);
+    assert(val4);
 
     // Configure brick
     ev3_lcd_set_font(EV3_FONT_MEDIUM);
