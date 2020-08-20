@@ -459,10 +459,12 @@ void run2020(){
             if(tasks[GREEN_STREET] == REMOVESNOW){
                 road += 1;
                 runGreenStreet();
+                tasks[GREEN_STREET] = TASKDONE;
             }
             else if(tasks[RED_STREET] == REMOVESNOW){
                 road += 1;
                 runRedStreet();
+                tasks[RED_STREET] = TASKDONE;
             }
             else{
                 runRedStreet();
@@ -472,10 +474,12 @@ void run2020(){
             if(tasks[BLUE_STREET] == REMOVESNOW){
                 road += 1;
                 runBlueStreet();
+                tasks[BLUE_STREET] = TASKDONE;
             }
             else if(tasks[YELLOW_STREET] == REMOVESNOW){
                 road += 1;
                 runYellowStreet();
+                tasks[YELLOW_STREET] = TASKDONE;
             }
             else{
                 runYellowStreet();
@@ -483,6 +487,49 @@ void run2020(){
         }
     }
     
+    if(pos.street = RED_STREET){
+        color_4_index = 1;
+        a_motor_index = 1;
+        d_motor_index = 1;
+        wall_follow_with_tasks(163,3,0,1,0);
+        ev3_motor_set_power(a_motor,50);
+        tslp_tsk(500);
+        ev3_motor_set_power(a_motor,0);
+        ev3_motor_steer(left_motor,right_motor,-30,0);
+        tslp_tsk(300);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_steer(left_motor,right_motor,-15,90);
+        tslp_tsk(800);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_steer(left_motor,right_motor,-30,0);
+        tslp_tsk(450);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_set_power(a_motor,-50);
+        tslp_tsk(500);
+        ev3_motor_set_power(a_motor,0);
+        ev3_motor_reset_counts(left_motor);
+        ev3_motor_reset_counts(right_motor);
+        float wheelDistance = 0;
+        while(wheelDistance < 15){
+            ev3_motor_steer(left_motor,right_motor,15,0);
+            wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
+        }
+        color4PID(60,0,0);
+        ev3_motor_steer(left_motor,right_motor,30,0);
+        tslp_tsk(800);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_steer(left_motor,right_motor,30,-45);
+        tslp_tsk(650);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_steer(left_motor, right_motor, 15, 5);
+        while (ev3_color_sensor_get_reflect(color_sensor3) > 20) {
+        }
+        ev3_motor_steer(left_motor,right_motor,0,0);
+    }
+    else if(pos.street = YELLOW_STREET){
+        
+    }
+
 }
 void runBlueStreet(){
     color_4_index = 0;
@@ -578,7 +625,7 @@ void runRedStreet(){
     tslp_tsk(500);
     ev3_motor_set_power(a_motor,0);
     ev3_motor_steer(left_motor,right_motor,-30,0);
-    tslp_tsk(375);
+    tslp_tsk(300);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,-15,90);
     tslp_tsk(800);
@@ -734,12 +781,15 @@ void readColorCode(){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
         assert(val);
-        if(rgb4.g > 40 && rgb4.r > 40){
+        sprintf(lcdstr, "%d, %d, %d", rgb4.r, rgb4.g, rgb4.b);
+        ev3_lcd_draw_string(lcdstr, 0, 15);
+        if(rgb4.g > 40 && rgb4.r > 40 && rgb4.b < 30){
             pos.street = YELLOW_STREET;
         }
-        else if(rgb4.r > 45){
+        else if(rgb4.r > 45 && rgb4.b < 30){
             pos.street = RED_STREET;
         }
+
     }
     while(wheelDistance < 71){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
@@ -1069,7 +1119,7 @@ void execute_tasks(float distance) {
 
     //check for d_motor task, execute task if task is to dispense material and back is loaded and it is time
     d_degrees = allTasks[pos.street][D_MOTOR][d_motor_index][2];
-    if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_turning == 0 && tasks[pos.street] != REMOVESNOW && ) {
+    if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_turning == 0 && tasks[pos.street] != REMOVESNOW) {
         //execute part 1 of task
         ev3_motor_rotate(d_motor, d_degrees, 100, false);
         d_turning = 1;
@@ -1098,23 +1148,23 @@ void init() {
     ev3_sensor_config(color_sensor4, HT_NXT_COLOR_SENSOR);
     
     // Set up sensors
-    ev3_color_sensor_get_reflect(color_sensor2);
-    ev3_color_sensor_get_reflect(color_sensor3);
+    //ev3_color_sensor_get_reflect(color_sensor2);
+    //ev3_color_sensor_get_reflect(color_sensor3);
     //bool_t val1 = ht_nxt_color_sensor_measure_rgb(color_sensor1, &rgb1);
     //assert(val1);
-    bool_t val4 = ht_nxt_color_sensor_measure_rgb(color_sensor4, &rgb4);
-    assert(val4);
+    //bool_t val4 = ht_nxt_color_sensor_measure_rgb(color_sensor4, &rgb4);
+    //assert(val4);
 
     // Configure brick
     ev3_lcd_set_font(EV3_FONT_MEDIUM);
-    ev3_speaker_set_volume(100);
+    ev3_speaker_set_volume(10);
 
     // reset snow/car collector and abrasive material spreader
-    ev3_motor_set_power(a_motor, -100);
-    ev3_motor_set_power(d_motor, 100);
-    tslp_tsk(1500);
-    ev3_motor_stop(a_motor, false);
-    ev3_motor_stop(d_motor, false);
+    //ev3_motor_set_power(a_motor, -100);
+    //ev3_motor_set_power(d_motor, 100);
+    //tslp_tsk(1500);
+    //ev3_motor_stop(a_motor, false);
+    //ev3_motor_stop(d_motor, false);
 
     // wait for button press
     ev3_lcd_draw_string("Press OK to run", 14, 45);
