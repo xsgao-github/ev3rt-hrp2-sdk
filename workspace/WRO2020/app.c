@@ -448,8 +448,7 @@ void main_task(intptr_t unused) {
     readCode();
     //readColorCode();
     //run2020();
-    //runGreenStreet();
-    linePID(84);
+    runGreenStreet();
 }
 
 void run2020(){
