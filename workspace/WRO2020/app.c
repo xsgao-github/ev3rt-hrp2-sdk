@@ -730,18 +730,17 @@ void readColorCode(){
         ev3_motor_steer(left_motor,right_motor,15,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
     }
-    while(wheelDistance < 310000){
-        //ev3_motor_steer(left_motor,right_motor,10,5);
-        ev3_motor_steer(left_motor,right_motor,0,0);
+    while(wheelDistance < 31){
+        ev3_motor_steer(left_motor,right_motor,10,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
         assert(val);
-        sprintf(lcdstr, "%d, %d", rgb4.r, rgb4.g);
+        sprintf(lcdstr, "%d, %d, %d", rgb4.r, rgb4.g, rgb4.b);
         ev3_lcd_draw_string(lcdstr, 0, 15);
-        if(rgb4.g > 40 && rgb4.r > 40){
+        if(rgb4.g > 40 && rgb4.r > 40 && rgb4.b < 20){
             pos.street = YELLOW_STREET;
         }
-        else if(rgb4.r > 45){
+        else if(rgb4.r > 45 && rgb4.b < 20){
             pos.street = RED_STREET;
         }
     }
@@ -753,19 +752,19 @@ void readColorCode(){
             isReading = 50;
             i = round((wheelDistance - 31) / 5);
             values[i] = 1;
-            ev3_speaker_play_tone(NOTE_C5,50);
+            ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.g > 55 && isReading < 2){
             isReading = 50;
             i = round((wheelDistance - 31) / 5);
             values[i] = 1;
-            ev3_speaker_play_tone(NOTE_C5,50);
+            ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.b > 55 && isReading < 2){
             isReading = 50;
             i = round((wheelDistance - 31) / 5);
             values[i] = 1;
-            ev3_speaker_play_tone(NOTE_C5,50);
+            ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(isReading > 1){
             isReading = isReading - 1;
@@ -1102,23 +1101,23 @@ void init() {
     ev3_sensor_config(color_sensor4, HT_NXT_COLOR_SENSOR);
     
     // Set up sensors
-    ev3_color_sensor_get_reflect(color_sensor2);
-    ev3_color_sensor_get_reflect(color_sensor3);
+    //ev3_color_sensor_get_reflect(color_sensor2);
+    //ev3_color_sensor_get_reflect(color_sensor3);
     //bool_t val1 = ht_nxt_color_sensor_measure_rgb(color_sensor1, &rgb1);
     //assert(val1);
-    bool_t val4 = ht_nxt_color_sensor_measure_rgb(color_sensor4, &rgb4);
-    assert(val4);
+    //bool_t val4 = ht_nxt_color_sensor_measure_rgb(color_sensor4, &rgb4);
+    //assert(val4);
 
     // Configure brick
     ev3_lcd_set_font(EV3_FONT_MEDIUM);
-    ev3_speaker_set_volume(100);
+    ev3_speaker_set_volume(10);
 
     // reset snow/car collector and abrasive material spreader
-    ev3_motor_set_power(a_motor, -100);
-    ev3_motor_set_power(d_motor, 100);
-    tslp_tsk(1500);
-    ev3_motor_stop(a_motor, false);
-    ev3_motor_stop(d_motor, false);
+    //ev3_motor_set_power(a_motor, -100);
+    //ev3_motor_set_power(d_motor, 100);
+    //tslp_tsk(1500);
+    //ev3_motor_stop(a_motor, false);
+    //ev3_motor_stop(d_motor, false);
 
     // wait for button press
     ev3_lcd_draw_string("Press OK to run", 14, 45);
