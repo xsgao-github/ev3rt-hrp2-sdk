@@ -11,6 +11,7 @@
 #define REMOVESNOW 0
 #define BLUEMATERIAL 1
 #define BLACKMATERIAL 2
+#define TASKDONE 3
 
 #define COLOR_4 0
 #define A_MOTOR 1
