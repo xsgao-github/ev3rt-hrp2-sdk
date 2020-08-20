@@ -781,9 +781,7 @@ void readColorCode(){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
         assert(val);
-        sprintf(lcdstr, "%d, %d, %d", rgb4.r, rgb4.g, rgb4.b);
-        ev3_lcd_draw_string(lcdstr, 0, 15);
-        if(rgb4.g > 40 && rgb4.r > 40 && rgb4.b < 30){
+        if(rgb4.g > 40 && rgb4.r > 40){
             pos.street = YELLOW_STREET;
         }
         else if(rgb4.r > 45 && rgb4.b < 30){
