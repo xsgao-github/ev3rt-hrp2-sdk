@@ -445,11 +445,11 @@ int back_loaded = 0; // false, BLUEMATERIAL, BLACKMATERIAL
 
 void main_task(intptr_t unused) {
     init();
-    readCode();
-    //readColorCode();
-    //run2020();
+    //readCode();
+    readColorCode();
+    run2020();
     //runGreenStreet();
-    linePID(84);
+    //linePID(84);
 }
 
 void run2020(){
@@ -1070,7 +1070,7 @@ void execute_tasks(float distance) {
 
     //check for d_motor task, execute task if task is to dispense material and back is loaded and it is time
     d_degrees = allTasks[pos.street][D_MOTOR][d_motor_index][2];
-    if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_turning == 0 && tasks[pos.street] != REMOVESNOW && ) {
+    if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_turning == 0 && tasks[pos.street] != REMOVESNOW) {
         //execute part 1 of task
         ev3_motor_rotate(d_motor, d_degrees, 100, false);
         d_turning = 1;
