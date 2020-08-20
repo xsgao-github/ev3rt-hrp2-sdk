@@ -1159,10 +1159,10 @@ void init() {
 
     // reset snow/car collector and abrasive material spreader
     //ev3_motor_set_power(a_motor, -100);
-    //ev3_motor_set_power(d_motor, 100);
-    //tslp_tsk(1500);
+    ev3_motor_set_power(d_motor, 100);
+    tslp_tsk(1500);
     //ev3_motor_stop(a_motor, false);
-    //ev3_motor_stop(d_motor, false);
+    ev3_motor_stop(d_motor, false);
 
     // wait for button press
     ev3_lcd_draw_string("Press OK to run", 14, 45);
