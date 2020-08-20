@@ -1151,8 +1151,8 @@ void init() {
     // Set up sensors
     ev3_color_sensor_get_reflect(color_sensor2);
     ev3_color_sensor_get_reflect(color_sensor3);
-    bool_t val1 = ht_nxt_color_sensor_measure_rgb(color_sensor1, &rgb1);
-    assert(val1);
+    //bool_t val1 = ht_nxt_color_sensor_measure_rgb(color_sensor1, &rgb1);
+    //assert(val1);
     bool_t val4 = ht_nxt_color_sensor_measure_rgb(color_sensor4, &rgb4);
     assert(val4);
 
