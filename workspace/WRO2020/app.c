@@ -463,11 +463,10 @@ int back_loaded = 0; // false, BLUEMATERIAL, BLACKMATERIAL
 
 void main_task(intptr_t unused) {
     init();
-    //readCode();
-    readColorCode();
-    run2020();
-    //runGreenStreet();
-    //linePID(84);
+    readCode();
+    //readColorCode();
+    //run2020();
+    runGreenStreet();
 }
 
 void run2020(){
@@ -800,9 +799,7 @@ void readColorCode(){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
         assert(val);
-        sprintf(lcdstr, "%d, %d, %d", rgb4.r, rgb4.g, rgb4.b);
-        ev3_lcd_draw_string(lcdstr, 0, 15);
-        if(rgb4.g > 40 && rgb4.r > 40 && rgb4.b < 30){
+        if(rgb4.g > 40 && rgb4.r > 40){
             pos.street = YELLOW_STREET;
         }
         else if(rgb4.r > 45 && rgb4.b < 30){
@@ -1183,10 +1180,10 @@ void init() {
 
     // reset snow/car collector and abrasive material spreader
     //ev3_motor_set_power(a_motor, -100);
-    //ev3_motor_set_power(d_motor, 100);
-    //tslp_tsk(1500);
+    ev3_motor_set_power(d_motor, 100);
+    tslp_tsk(1500);
     //ev3_motor_stop(a_motor, false);
-    //ev3_motor_stop(d_motor, false);
+    ev3_motor_stop(d_motor, false);
 
     // wait for button press
     ev3_lcd_draw_string("Press OK to run", 14, 45);
