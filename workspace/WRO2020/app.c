@@ -441,6 +441,24 @@ int a_turning = 0;
 int d_motor_index = 0;
 int next_d_motor_task[3] = {0,0,0};
 int d_turning = 0;
+int carTasks[4][3] = {
+    //blue
+    {
+        0,0,0
+    },
+    //green
+    {
+        0,0,0
+    },
+    //yellow
+    {
+        0,0,0
+    },
+    //red
+    {
+        0,0,0
+    },
+};
 int back_loaded = 0; // false, BLUEMATERIAL, BLACKMATERIAL
 
 void main_task(intptr_t unused) {
@@ -967,6 +985,9 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             tasksNum4 -= 1;
             bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
             assert(val);
+            if(rgb4.g < 30 && rgb4.r < 30 && rgb4.b < 30){
+                carTasks[pos.street][color_4_index] = 1;
+            }
             color_4_index += 1;
             for(int i = 0;i < 3;i++){
                 next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
@@ -1009,7 +1030,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         ev3_motor_steer(left_motor, right_motor, 15, steer);
         tslp_tsk(1);
-        sprintf(lcdstr, "%d", pos.street);
+        sprintf(lcdstr, "%d,%d", carTasks[3][0], carTasks[3][1]);
         ev3_lcd_draw_string(lcdstr, 0, 45);
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
