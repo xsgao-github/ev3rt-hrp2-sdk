@@ -143,7 +143,7 @@ int mostTasks[4][3][7][3] = {
                 1000,0,0
             },
         },
-        //car_motor
+        //car_car
         {
             //index 0
             {
@@ -270,7 +270,7 @@ int mostTasks[4][3][7][3] = {
                 1000,0,0
             },
         },
-        //car_motor
+        //car_car
         {
             //index 0
             {
@@ -397,7 +397,7 @@ int mostTasks[4][3][7][3] = {
                 1000,0,0
             },
         },
-        //car_motor
+        //car_car
         {
             //index 0
             {
@@ -524,7 +524,7 @@ int mostTasks[4][3][7][3] = {
                 1000,0,0
             },
         },
-        //car_motor
+        //car_car
         {
             //index 0
             {
@@ -557,6 +557,28 @@ int mostTasks[4][3][7][3] = {
         },
     },
 };
+int carTasks[4] = {
+    //blue
+    {
+        //car
+        0
+    },
+    //green
+    {
+        //car
+        0
+    },
+    //yellow
+    {
+        //car
+        0
+    },
+    //red
+    {
+        //car
+        0
+    },
+};
 int color_4_index = 0;
 int next_color_4_task[3] = {0,0,0};
 int a_motor_index = 0;
@@ -565,36 +587,6 @@ int a_turning = 0;
 int d_motor_index = 0;
 int next_d_motor_task[3] = {0,0,0};
 int d_turning = 0;
-int streetTasks[4][2] = {
-    //blue
-    {
-        //car
-        0,
-        //abrasive
-        0,
-    },
-    //green
-    {
-        //car
-        0,
-        //abrasive
-        0,
-    },
-    //yellow
-    {
-        //car
-        0,
-        //abrasive
-        0,
-    },
-    //red
-    {
-        //car
-        0,
-        //abrasive
-        0,
-    },
-};
 int back_loaded = 0; // false, BLUEMATERIAL, BLACKMATERIAL
 
 void main_task(intptr_t unused) {
@@ -1010,7 +1002,7 @@ void linePID(int distance){
     float wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2;
     float lasterror = 0, integral = 0;
     while (wheelDistance < distance) {
-        //execute_tasks(wheelDistance);
+        execute_tasks(wheelDistance);
         //if(ev3_motor_get_counts(a_motor) > 490){
         //    ev3_motor_reset_counts(a_motor);
         //    ev3_motor_rotate(a_motor,-500,13,false);
@@ -1122,7 +1114,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
             assert(val);
             if(rgb4.g < 30 && rgb4.r < 30 && rgb4.b < 30){
-                streetTasks[pos.street][0] = color_4_index + 1;
+                carTasks[pos.street][0] = color_4_index + 1;
             }
             color_4_index += 1;
             for(int i = 0;i < 3;i++){
@@ -1142,11 +1134,11 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             isTurningA = 0;
             tasksLeftA -= 1;
         }
-        if(wheelDistance > next_d_motor_task[0] && tasksLeft4 > 0 && isTurningD == 0 && streetTasks[pos.street][1] == 1){
+        if(wheelDistance > next_d_motor_task[0] && tasksLeft4 > 0 && isTurningD == 0 && carTasks[pos.street][1] == 1){
             ev3_motor_rotate(d_motor,next_d_motor_task[2],50,false);
             isTurningD = 1;
         }
-        if(wheelDistance > next_d_motor_task[1] && tasksLeft4 > 0 && isTurningD == 1 && streetTasks[pos.street][1] == 1){
+        if(wheelDistance > next_d_motor_task[1] && tasksLeft4 > 0 && isTurningD == 1 && carTasks[pos.street][1] == 1){
             ev3_motor_set_power(d_motor,-50);
             d_motor_index += 1;
             for(int i = 0;i < 3;i++){
@@ -1166,7 +1158,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         ev3_motor_steer(left_motor, right_motor, 15, steer);
         tslp_tsk(1);
-        sprintf(lcdstr, "%d,", streetTasks[3][0]);
+        sprintf(lcdstr, "%d,", carTasks[3][0]);
         ev3_lcd_draw_string(lcdstr, 0, 45);
         sprintf(lcdstr, "%d,   %d,   %d,", rgb4.r,rgb4.g,rgb4.b);
         ev3_lcd_draw_string(lcdstr, 0, 90);
@@ -1251,6 +1243,7 @@ void do_tasks() {
 
 void execute_tasks(float distance) {
     display_sensors();
+
     //declare/define variables
     int a_degrees;
     int d_degrees;
