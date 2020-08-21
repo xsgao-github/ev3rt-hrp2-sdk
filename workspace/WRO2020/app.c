@@ -143,6 +143,37 @@ int allTasks[4][3][7][3] = {
                 1000,0,0
             },
         },
+        //car_motor
+        {
+            //index 0
+            {
+                35,50,350
+            },
+            //index 1
+            {
+                77,100,275
+            },
+            //index 2
+            {
+                112,130,350
+            },
+            //index 3
+            {
+                1000,0,0
+            },
+            //index 4
+            {
+                1000,0,0
+            },
+            //index 5
+            {
+                1000,0,0
+            },
+            //index 6
+            {
+                1000,0,0
+            },
+        },
     },
     //green
     {
@@ -221,6 +252,37 @@ int allTasks[4][3][7][3] = {
             //index 2
             {
                 110,0,1200
+            },
+            //index 3
+            {
+                1000,0,0
+            },
+            //index 4
+            {
+                1000,0,0
+            },
+            //index 5
+            {
+                1000,0,0
+            },
+            //index 6
+            {
+                1000,0,0
+            },
+        },
+        //car_motor
+        {
+            //index 0
+            {
+                35,50,350
+            },
+            //index 1
+            {
+                77,100,275
+            },
+            //index 2
+            {
+                112,130,350
             },
             //index 3
             {
@@ -335,6 +397,37 @@ int allTasks[4][3][7][3] = {
                 1000,0,0
             },
         },
+        //car_motor
+        {
+            //index 0
+            {
+                35,50,350
+            },
+            //index 1
+            {
+                77,100,275
+            },
+            //index 2
+            {
+                112,130,350
+            },
+            //index 3
+            {
+                1000,0,0
+            },
+            //index 4
+            {
+                1000,0,0
+            },
+            //index 5
+            {
+                1000,0,0
+            },
+            //index 6
+            {
+                1000,0,0
+            },
+        },
     },
     //red
     {
@@ -413,6 +506,37 @@ int allTasks[4][3][7][3] = {
             //index 2
             {
                 1000,0,0
+            },
+            //index 3
+            {
+                1000,0,0
+            },
+            //index 4
+            {
+                1000,0,0
+            },
+            //index 5
+            {
+                1000,0,0
+            },
+            //index 6
+            {
+                1000,0,0
+            },
+        },
+        //car_motor
+        {
+            //index 0
+            {
+                35,50,350
+            },
+            //index 1
+            {
+                77,100,275
+            },
+            //index 2
+            {
+                112,130,350
             },
             //index 3
             {
@@ -995,7 +1119,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             bool_t val = ht_nxt_color_sensor_measure_rgb(color_sensor4,  &rgb4);
             assert(val);
             if(rgb4.g < 30 && rgb4.r < 30 && rgb4.b < 30){
-                streetTasks[pos.street] = color_4_index;
+                streetTasks[pos.street][0] = color_4_index;
             }
             color_4_index += 1;
             for(int i = 0;i < 3;i++){
@@ -1015,11 +1139,11 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             isTurningA = 0;
             tasksLeftA -= 1;
         }
-        if(wheelDistance > next_d_motor_task[0] && tasksLeft4 > 0 && isTurningD == 0){
+        if(wheelDistance > next_d_motor_task[0] && tasksLeft4 > 0 && isTurningD == 0 && streetTasks[pos.street][1] = 1){
             ev3_motor_rotate(d_motor,next_d_motor_task[2],50,false);
             isTurningD = 1;
         }
-        if(wheelDistance > next_d_motor_task[1] && tasksLeft4 > 0 && isTurningD == 1){
+        if(wheelDistance > next_d_motor_task[1] && tasksLeft4 > 0 && isTurningD == 1 && streetTasks[pos.street][1] = 1;){
             ev3_motor_set_power(d_motor,-50);
             d_motor_index += 1;
             for(int i = 0;i < 3;i++){
