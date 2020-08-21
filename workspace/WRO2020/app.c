@@ -147,15 +147,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                35,50,350
+                1000,0,0
             },
             //index 1
             {
-                77,100,275
+                1000,0,0
             },
             //index 2
             {
-                112,130,350
+                1000,0,0
             },
             //index 3
             {
@@ -435,11 +435,11 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                1000,0,0
+                22,0,0
             },
             //index 1
             {
-                1000,0,0
+                85,0,0
             },
             //index 2
             {
@@ -774,7 +774,7 @@ void runRedStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
-    wall_follow_with_tasks(163,3,0,3,0);
+    wall_follow_with_tasks(163,3,2,3,0);
     ev3_motor_set_power(a_motor,50);
     tslp_tsk(500);
     ev3_motor_set_power(a_motor,0);
