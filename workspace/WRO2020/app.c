@@ -116,15 +116,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,0,600
+                30,0,-600
             },
             //index 1
             {
-                80,0,900
+                80,0,-900
             },
             //index 2
             {
-                110,0,1200
+                110,0,-1200
             },
             //index 3
             {
@@ -445,7 +445,7 @@ int back_loaded = 0; // false, BLUEMATERIAL, BLACKMATERIAL
 
 void main_task(intptr_t unused) {
     init();
-    readCode();
+    //readCode();
     //readColorCode();
     //run2020();
     runGreenStreet();
@@ -866,7 +866,7 @@ void linePID(int distance){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         float error = ev3_color_sensor_get_reflect(color_sensor2) - ev3_color_sensor_get_reflect(color_sensor3);
         integral = error + integral * 0.5;
-        float steer = 0.25 * error + 0.02 * integral + 0.1 * (error - lasterror);
+        float steer = 0.05 * error + 0.2 * integral + 0.2 * (error - lasterror);
         ev3_motor_steer(left_motor, right_motor, 30, steer);
         lasterror = error;  
         display_sensors();
@@ -1130,7 +1130,9 @@ void execute_tasks(float distance) {
     }
 
     //check for color_4 task, execute if it is time
-    if (distance > allTasks[pos.street][COLOR_4][color_4_index][0])
+    if (distance > allTasks[pos.street][COLOR_4][color_4_index][0]) {
+        // TODO: check for cars
+    }
 }
 
 void init() {
