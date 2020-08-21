@@ -592,9 +592,9 @@ int back_loaded = 0; // false, BLUEMATERIAL, BLACKMATERIAL
 void main_task(intptr_t unused) {
     init();
     //readCode();
-    //readColorCode();
-    //run2020();
-    runGreenStreet();
+    readColorCode();
+    run2020();
+    //runWreenStreet();
 }
 
 void run2020(){
