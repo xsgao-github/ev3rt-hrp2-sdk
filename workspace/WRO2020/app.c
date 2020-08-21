@@ -435,7 +435,7 @@ int mostTasks[4][3][7][3] = {
         {
             //index 0
             {
-                22,0,0
+                22000,0,0
             },
             //index 1
             {
@@ -1162,6 +1162,8 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
         ev3_lcd_draw_string(lcdstr, 0, 45);
         sprintf(lcdstr, "%d,   %d,   %d,", rgb4.r,rgb4.g,rgb4.b);
         ev3_lcd_draw_string(lcdstr, 0, 90);
+        sprintf(lcdstr, "%d", next_color_4_task[0]);
+        ev3_lcd_draw_string(lcdstr, 0, 105);
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     return;
