@@ -729,8 +729,6 @@ void runGreenStreet(){
     tslp_tsk(250);
     ev3_motor_steer(left_motor, right_motor, -10, 0);
     tslp_tsk(250);
-                            ev3_motor_steer(left_motor, right_motor, 0, 0);
-                            tslp_tsk(99999);
     ev3_motor_rotate(right_motor, 210, 20, true);
     linePID(38);
     ev3_motor_steer(left_motor, right_motor, 10, 0);
@@ -995,6 +993,7 @@ void readColorCode(){
 }
 
 void linePID(int distance){
+    execute_tasks();
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_reset_counts(a_motor);
