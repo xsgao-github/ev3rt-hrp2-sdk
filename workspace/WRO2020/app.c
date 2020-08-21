@@ -583,6 +583,7 @@ void runGreenStreet(){
     tslp_tsk(250);
     ev3_motor_steer(left_motor, right_motor, -10, 0);
     tslp_tsk(250);
+                            tslp_tsk(99999);
     ev3_motor_rotate(right_motor, 210, 20, true);
     linePID(38);
     ev3_motor_steer(left_motor, right_motor, 10, 0);
@@ -864,7 +865,7 @@ void linePID(int distance){
         //    ev3_motor_reset_counts(a_motor);
         //    ev3_motor_rotate(a_motor,500,13,false);
         //}
-        wheelDistance = ((ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360));
+        wheelDistance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 9.5) / 360));
         float error = ev3_color_sensor_get_reflect(color_2) - ev3_color_sensor_get_reflect(color_3);
         integral = error + integral * 0.4;
         float steer = 0.065 * error + 0.35 * integral + 4.75 * (error - lasterror);
