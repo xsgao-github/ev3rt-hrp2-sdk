@@ -435,7 +435,7 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                50,0,0
+                25,0,0
             },
             //index 1
             {
@@ -1092,7 +1092,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     int isTurningA = 0;
     int isTurningD = 0;
     char lcdstr[100];
-    float wheelDistance = 0;
+    float wheelDistance = -100;
     int tasksLeft4 = tasksNum4;
     int tasksLeftA = tasksNumA;
     int tasksLeftD = tasksNumD;
@@ -1106,6 +1106,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     for(int i = 0;i < 3;i++){
         next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
     }
+    tslp_tsk(1000);
     while (wheelDistance < distance) {
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
             tasksNum4 -= 1;
