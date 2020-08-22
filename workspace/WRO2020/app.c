@@ -771,6 +771,7 @@ void runYellowStreet(){
     ev3_motor_steer(left_motor,right_motor,0,0);
     pos.street = RED_STREET;
 }
+//
 void runRedStreet(){
     color_4_index = 0;
     a_motor_index = 0;
