@@ -893,7 +893,7 @@ void readColorCode(){
         ev3_motor_steer(left_motor,right_motor,15,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
     }
-    while(wheelDistance < 28){
+    while(wheelDistance < 27){
         ev3_motor_steer(left_motor,right_motor,10,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
@@ -906,25 +906,25 @@ void readColorCode(){
             pos.street = RED_STREET;
         }
     }
-    while(wheelDistance < 65){
+    while(wheelDistance < 64){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
         assert(val);
         if(rgb4.r > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance - 28) / 4);
+            i = round((wheelDistance - 27) / 4.5);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.g > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance - 28) / 4);
+            i = round((wheelDistance - 27) / 4.5);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.b > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance - 28) / 4);
+            i = round((wheelDistance - 27) / 4.5);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
@@ -1086,6 +1086,8 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
                 ev3_speaker_play_tone(NOTE_C5,60);
                 carDetected[pos.street] = color_4_index + 1;
             }
+            sprintf(lcdstr, "%d,  %d,  %d,  ", rgb4.r, rgb4.g, rgb4.b);
+            ev3_lcd_draw_string(lcdstr, 0, 45);
             color_4_index += 1;
             for(int i = 0;i < 3;i++){
                 next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
