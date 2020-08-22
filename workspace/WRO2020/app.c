@@ -17,7 +17,7 @@
 
 // define motors and sensors
 const int color_1 = EV3_PORT_2, color_2 = EV3_PORT_2, color_3 = EV3_PORT_3, color_4 = EV3_PORT_4, left_motor = EV3_PORT_B, right_motor = EV3_PORT_C, a_motor = EV3_PORT_A, d_motor = EV3_PORT_D;
-position pos = {-1, -1, -1, 0, 0};
+position pos = {-1, 0};
 // declare methods
 void run2020();
 void runBlueStreet();
