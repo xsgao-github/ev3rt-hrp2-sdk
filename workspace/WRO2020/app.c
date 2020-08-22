@@ -937,13 +937,15 @@ void readColorCode(){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
         assert(val);
-        if(rgb4.g > 40 && rgb4.r > 40){
+
+        if(rgb4.g > 40 && rgb4.r > 40 && rgb4.b < 40){
             pos.street = YELLOW_STREET;
         }
-        else if(rgb4.r > 45 && rgb4.b < 30){
+        else if(rgb4.r > 40 && rgb4.b < 40 && rgb4.g < 40){
             pos.street = RED_STREET;
         }
-
+        sprintf(lcdstr, "%d,   %d,   %d,", rgb4.r,rgb4.g,rgb4.b);
+        ev3_lcd_draw_string(lcdstr, 0, 45);
     }
     while(wheelDistance < 71){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
@@ -1105,20 +1107,22 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     int tasksLeft4 = tasksNum4;
     int tasksLeftA = tasksNumA;
     int tasksLeftD = tasksNumD;
-    for(int i = 0;i < 3;i++){
+    int i = 0;
+    for(i = 0;i < 3;i++){
         next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
     }
-    for(int i = 0;i < 3;i++){
+    for(i = 0;i < 3;i++){
         next_a_motor_task[i] = allTasks[pos.street][1][a_motor_index][i];
     }
-    for(int i = 0;i < 3;i++){
+    for(i = 0;i < 3;i++){
         next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
     }
     sprintf(lcdstr, "%d", next_color_4_task[0]);
     ev3_lcd_draw_string(lcdstr, 0, 105);
     sprintf(lcdstr, "%d", color_4_index);
     ev3_lcd_draw_string(lcdstr, 0, 90);
-    tslp_tsk(10000000000);
+    sprintf(lcdstr, "%d", pos.street);
+    ev3_lcd_draw_string(lcdstr, 0, 75);
     ev3_motor_steer(left_motor,right_motor,25,steer);
     while (wheelDistance < distance) {
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
