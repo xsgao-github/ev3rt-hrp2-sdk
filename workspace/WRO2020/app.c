@@ -949,18 +949,16 @@ void readCode() {
     tslp_tsk(5);
 
     // display things in a very medium font
-    ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
     char lcdstr[100];
     sprintf(lcdstr, "%d, %d", tasks[BLUE_STREET], tasks[GREEN_STREET]);
     ev3_lcd_draw_string(lcdstr, 0, 15);
     sprintf(lcdstr, "%d, %d", tasks[YELLOW_STREET], tasks[RED_STREET]);
     ev3_lcd_draw_string(lcdstr, 0, 30);
-
-    // record position
-    pos.section = 1;
-    pos.distance = 51;
-    pos.dash = 0;
-    pos.facing = 0;
+    if (current_Street == RED_STREET) {
+        ev3_lcd_draw_string("RED_STREET", 0, 45);
+    } else if (current_Street == YELLOW_STREET) {
+        ev3_lcd_draw_string("YELLOW_STREET", 0, 45);
+    }
 }
 
 void readColorCode(){
