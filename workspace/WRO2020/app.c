@@ -619,7 +619,7 @@ void runGreenStreet(){
     tslp_tsk(250);
     ev3_motor_rotate(right_motor, 220, 20, true);
     tslp_tsk(250);
-    ev3_motor_steer(left_motor, right_motor, 10, 5);
+    ev3_motor_steer(left_motor, right_motor, 20, 5);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
