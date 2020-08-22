@@ -433,29 +433,89 @@ int allTasks[4][3][7][3] = {
         },
     },
 };
-int carTasks[4] = {
+int carTasks[4][3] = {
     //blue
     {
         //car
-        0
-        //
-    },
+        0,0,0
     //green
     {
         //car
-        0
+        0,0,0
     },
     //yellow
     {
         //car
-        0
+        0,0,0
     },
     //red
     {
         //car
-        0
+        0,0,0
     },
 };
+int carArray[4][3][3] = {
+    //blue
+    {
+        //car 1
+        {
+            0,0,0
+        },
+        //car 2
+        {
+            0,0,0
+        },
+        //car 3
+        {
+            0,0,0
+        },
+    },
+    //green
+    {
+        //car 1
+        {
+            0,0,0
+        },
+        //car 2
+        {
+            0,0,0
+        },
+        //car 3
+        {
+            0,0,0
+        },
+    },
+    //yellow
+    {
+        //car 1
+        {
+            0,0,0
+        },
+        //car 2
+        {
+            0,0,0
+        },
+        //car 3
+        {
+            0,0,0
+        },
+    },
+    //red
+    {
+        //car 1
+        {
+            0,0,0
+        },
+        //car 2
+        {
+            0,0,0
+        },
+        //car 3
+        {
+            0,0,0
+        },
+    },
+}
 int color_4_index = 0;
 int next_color_4_task[3] = {0,0,0};
 int a_motor_index = 0;
@@ -548,6 +608,7 @@ void run2020(){
         while (ev3_color_sensor_get_reflect(color_3) > 20) {
         }
         ev3_motor_steer(left_motor,right_motor,0,0);
+        pos.street = YELLOW_STREET;
     }
     else if(pos.street = YELLOW_STREET){
         
