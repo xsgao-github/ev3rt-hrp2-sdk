@@ -902,7 +902,7 @@ void readColorCode(){
         if(rgb4.g > 40 && rgb4.r > 40 && rgb4.b < 40){
             pos.street = YELLOW_STREET;
         }
-        else if(rgb4.r > 40 && rgb4.b < 40 && rgb4.g < 40){
+        else if(rgb4.r > 40 && rgb4.b < 40 && rgb4.g < 30){
             pos.street = RED_STREET;
         }
     }
