@@ -696,7 +696,6 @@ void runGreenStreet(){
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    tslp_tsk(250);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, -20, 0);
@@ -720,31 +719,35 @@ void runGreenStreet(){
     linePID(55);
     //dispense moar stoooof
     */
-    linePID(95);
+    linePID(86);
     ev3_motor_rotate(right_motor, 10, 20, true);
     ev3_motor_steer(left_motor, right_motor, 10, -1);
     while (ev3_color_sensor_get_reflect(color_2) > 20) {
         display_sensors();
     }
-    tslp_tsk(250);
     ev3_motor_steer(left_motor, right_motor, -10, 0);
     tslp_tsk(250);
     ev3_motor_rotate(right_motor, 210, 20, true);
+    tslp_tsk(250);
     linePID(38);
     ev3_motor_steer(left_motor, right_motor, 10, 0);
     while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 40) {
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    tslp_tsk(250);
     ev3_motor_rotate(left_motor, 200, 10, false);
     ev3_motor_rotate(right_motor, 200, 10, true);
+    tslp_tsk(250);
+    ev3_motor_rotate(right_motor, 110, 20, true);
+    tslp_tsk(250);
     ev3_motor_steer(left_motor, right_motor, 10, 5);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
         display_sensors();
     }
+    tslp_tsk(100);
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
 }
 void runYellowStreet(){
     color_4_index = 0;
@@ -857,7 +860,7 @@ void readCode() {
         // read instructions
         bit1 = 0;
         bit2 = 0;
-        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < (i * 55)) {
+        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < (i * 60)) {
             display_sensors();
         }
         if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
@@ -867,7 +870,7 @@ void readCode() {
             bit1 = 0;
             ev3_speaker_play_tone(NOTE_C4, 50);
         }
-        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((i + 1) * 55)) {
+        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((i + 1) * 60)) {
             display_sensors();
         }
         if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
@@ -881,7 +884,7 @@ void readCode() {
         // decode instructions
         if (bit1 == 1) {
             if (bit2 == 1) {
-                ev3_speaker_play_tone(500, 50);
+                ev3_speaker_play_tone(NOTE_G6, -1);
             } else {
                 tasks[i] = BLACKMATERIAL;
             }
