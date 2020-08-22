@@ -456,7 +456,6 @@ int carTasks[4] = {
         0
     },
 };
-//subtitle
 int color_4_index = 0;
 int next_color_4_task[3] = {0,0,0};
 int a_motor_index = 0;
@@ -877,7 +876,7 @@ void readColorCode(){
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    sprintf(lcdstr, "%d, %d", pos.street, tasks[BLUE_STREET]);
+    sprintf(lcdstr, "%d, %d", pos.street, tasks[GREEN_STREET]);
     ev3_lcd_draw_string(lcdstr, 0, 15);
 }
 
