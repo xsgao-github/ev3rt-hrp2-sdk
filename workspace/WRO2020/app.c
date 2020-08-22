@@ -1108,12 +1108,6 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     for(i = 0;i < 3;i++){
         next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
     }
-    sprintf(lcdstr, "%d", next_color_4_task[0]);
-    ev3_lcd_draw_string(lcdstr, 0, 105);
-    sprintf(lcdstr, "%d", color_4_index);
-    ev3_lcd_draw_string(lcdstr, 0, 90);
-    sprintf(lcdstr, "%d", pos.street);
-    ev3_lcd_draw_string(lcdstr, 0, 75);
     ev3_motor_steer(left_motor,right_motor,25,steer);
     while (wheelDistance < distance) {
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
@@ -1165,8 +1159,6 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         ev3_motor_steer(left_motor, right_motor, 15, steer);
         tslp_tsk(1);
-        bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
-        assert(val);
         sprintf(lcdstr, "%d,", carTasks[3]);
         ev3_lcd_draw_string(lcdstr, 0, 45);
         sprintf(lcdstr, "%d,   %d,   %d,", rgb4.r,rgb4.g,rgb4.b);
