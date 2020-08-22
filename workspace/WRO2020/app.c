@@ -912,6 +912,7 @@ void readColorCode(){
     while(rgb4.g > 30 && rgb4.b > 25){
         colorid_t color3color = ev3_color_sensor_get_color(color_3);
         sprintf(lcdstr, "Color: %-7s", color3color);
+	    ev3_lcd_draw_string(lcdstr, 0, 15);
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     if(rgb4.g < 30){
