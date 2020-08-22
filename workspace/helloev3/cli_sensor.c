@@ -415,6 +415,7 @@ typedef enum {
 	COL_AMBIENT = 1,
 	COL_COLOR   = 2,
     COL_RGBRAW  = 4,
+	COL_COMPARE = 8,
 } COLOR_SENSOR_MODES;
 
 static
@@ -435,6 +436,7 @@ void test_color_sensor(sensor_port_t port) {
 		{ .key = '2', .title = "Ambient", .exinf = COL_AMBIENT },
 		{ .key = '3', .title = "Color", .exinf = COL_COLOR },
 		{ .key = '4', .title = "RGB", .exinf = COL_RGBRAW },
+		{ .key = '5', .title = "Comparison", .exinf = COL_COMPARE },
 		{ .key = 'Q', .title = "Cancel", .exinf = -1 },
 	};
 
@@ -469,7 +471,11 @@ void test_color_sensor(sensor_port_t port) {
 		ev3_lcd_draw_string("Test Sensor", (EV3_LCD_WIDTH - strlen("Test Sensor") * MENU_FONT_WIDTH) / 2, 0);
 		sprintf(msgbuf, "Type: Color");
 		ev3_lcd_draw_string(msgbuf, 0, MENU_FONT_HEIGHT * 1);
-		sprintf(msgbuf, "Port: %c", '1' + port);
+		if (cme_mode->exinf == COL_COMPARE) {
+			sprintf(msgbuf, "Port: 2 & 3");
+		} else {
+			sprintf(msgbuf, "Port: %c", '1' + port);
+		}
 		ev3_lcd_draw_string(msgbuf, 0, MENU_FONT_HEIGHT * 2);
 		switch (cme_mode->exinf) {
 		case COL_REFLECT:
@@ -510,6 +516,15 @@ void test_color_sensor(sensor_port_t port) {
 				ev3_lcd_draw_string(msgbuf, 0, MENU_FONT_HEIGHT * 4);
 				sprintf(msgbuf, "Blue:  %-4d", val.b);
 				ev3_lcd_draw_string(msgbuf, 0, MENU_FONT_HEIGHT * 5);
+				tslp_tsk(10);
+			});
+			break;
+		case COL_COMPARE:
+			VIEW_SENSOR({
+				uint8_t val2 = ev3_color_sensor_get_reflect(EV3_PORT_2);
+				uint8_t val3 = ev3_color_sensor_get_reflect(EV3_PORT_3);
+				sprintf(msgbuf, "Compare: %-4d  %-4d", val2, val3);
+				ev3_lcd_draw_string(msgbuf, 0, MENU_FONT_HEIGHT * 3);
 				tslp_tsk(10);
 			});
 			break;
