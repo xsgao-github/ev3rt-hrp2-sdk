@@ -1114,7 +1114,6 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     ev3_lcd_draw_string(lcdstr, 0, 90);
     sprintf(lcdstr, "%d", pos.street);
     ev3_lcd_draw_string(lcdstr, 0, 75);
-    tslp_tsk(10000000000);
     ev3_motor_steer(left_motor,right_motor,25,steer);
     while (wheelDistance < distance) {
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
