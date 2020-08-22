@@ -435,7 +435,7 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                50,0,0
+                25,0,0
             },
             //index 1
             {
@@ -592,9 +592,9 @@ int back_loaded = 0; // false, BLUEMATERIAL, BLACKMATERIAL
 void main_task(intptr_t unused) {
     init();
     //readCode();
-    //readColorCode();
-    //run2020();
-    runGreenStreet();
+    readColorCode();
+    run2020();
+    //runWreenStreet();
 }
 
 void run2020(){
@@ -1092,7 +1092,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     int isTurningA = 0;
     int isTurningD = 0;
     char lcdstr[100];
-    float wheelDistance = 0;
+    float wheelDistance = -100;
     int tasksLeft4 = tasksNum4;
     int tasksLeftA = tasksNumA;
     int tasksLeftD = tasksNumD;
@@ -1106,6 +1106,9 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     for(int i = 0;i < 3;i++){
         next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
     }
+    sprintf(lcdstr, "%d", next_color_4_task[0]);
+    ev3_lcd_draw_string(lcdstr, 0, 105);
+    tslp_tsk(1000);
     while (wheelDistance < distance) {
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
             tasksNum4 -= 1;
@@ -1156,6 +1159,8 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 9.5) / 360);
         ev3_motor_steer(left_motor, right_motor, 15, steer);
         tslp_tsk(1);
+        bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
+        assert(val);
         sprintf(lcdstr, "%d,", carTasks[3]);
         ev3_lcd_draw_string(lcdstr, 0, 45);
         sprintf(lcdstr, "%d,   %d,   %d,", rgb4.r,rgb4.g,rgb4.b);

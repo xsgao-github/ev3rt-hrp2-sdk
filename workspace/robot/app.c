@@ -64,13 +64,102 @@ void main_task(intptr_t unused) {
 
 	robot_add_back_button_on_clicked();
 
+	ev3_lcd_set_font(EV3_FONT_MEDIUM);
+	ev3_speaker_set_volume(100);
+
+	// setting up PID values
+	float k[4] = {1, 0, 0, 30.0};
+	float step[4] = {0.05, 0.01, 0.01, 5.0};
+	int line_num = 0;
+
+	ev3_lcd_fill_rect(0, 0, EV3_LCD_WIDTH, EV3_LCD_HEIGHT, EV3_LCD_WHITE);
+
+	ev3_lcd_draw_string("Kp = ", 15, 10);
+	ev3_lcd_draw_string("Ki = ", 15, 40);
+	ev3_lcd_draw_string("Kd = ", 15, 70);
+	ev3_lcd_draw_string("Sp = ", 15, 100);
+	for (int i = 0; i < 4; i++) {
+		sprintf(lcdstr, "%.2f  ", k[i]);
+		ev3_lcd_draw_string(lcdstr, 65, 10 + i * 30);
+	}
+	ev3_lcd_draw_string(">", 5, 10);
+
+	while (1) {
+		if (ev3_button_is_pressed(LEFT_BUTTON)) {
+			get_tim(&stop1);
+			while (ev3_button_is_pressed(LEFT_BUTTON)) {
+				get_tim(&stop2);
+				if (stop2 - stop1 > 200) {
+					k[line_num] -= step[line_num];
+					if (k[line_num] < 0) {
+						k[line_num] = 0.0;
+					}
+					sprintf(lcdstr, "%.2f  ", k[line_num]);
+					ev3_lcd_draw_string(lcdstr, 65, line_num * 30 + 10);
+					get_tim(&stop1);
+				}
+			}
+			k[line_num] -= step[line_num];
+			if (k[line_num] < 0) {
+				k[line_num] = 0.0;
+			}
+			sprintf(lcdstr, "%.2f  ", k[line_num]);
+			ev3_lcd_draw_string(lcdstr, 65, line_num * 30 + 10);
+		}
+
+		if (ev3_button_is_pressed(RIGHT_BUTTON)) {
+			get_tim(&stop1);
+			while (ev3_button_is_pressed(RIGHT_BUTTON)) {
+				get_tim(&stop2);
+				if (stop2 - stop1 > 200) {
+					k[line_num] += step[line_num];
+					sprintf(lcdstr, "%.2f  ", k[line_num]);
+					ev3_lcd_draw_string(lcdstr, 65, line_num * 30 + 10);
+					get_tim(&stop1);
+				}
+			}
+			k[line_num] += step[line_num];
+			sprintf(lcdstr, "%.2f  ", k[line_num]);
+			ev3_lcd_draw_string(lcdstr, 65, line_num * 30 + 10);
+		}
+
+		if (ev3_button_is_pressed(UP_BUTTON)) {
+			while (ev3_button_is_pressed(UP_BUTTON));
+			line_num--;
+			if (line_num < 0) {
+				line_num = 0;
+			}
+
+			for (int i = 0; i < 4; i++) {
+				ev3_lcd_draw_string(" ", 5, i * 30 + 10);
+			}
+			ev3_lcd_draw_string(">", 5, line_num * 30 + 10);
+		}
+
+		if (ev3_button_is_pressed(DOWN_BUTTON)) {
+			while (ev3_button_is_pressed(DOWN_BUTTON));
+			line_num++;
+			if (line_num > 3) {
+				line_num = 3;
+			}
+
+			for (int i = 0; i < 4; i++) {
+				ev3_lcd_draw_string(" ", 5, i * 30 + 10);
+			}
+			ev3_lcd_draw_string(">", 5, line_num * 30 + 10);
+		}
+
+		if (ev3_button_is_pressed(ENTER_BUTTON)) {
+			while (ev3_button_is_pressed(ENTER_BUTTON));
+			break;
+		}
+	}
+
 	ev3_motor_config(EV3_PORT_B, LARGE_MOTOR);
 	ev3_motor_config(EV3_PORT_C, LARGE_MOTOR);
 	ev3_sensor_config(EV3_PORT_2, COLOR_SENSOR);
 	ev3_sensor_config(EV3_PORT_3, COLOR_SENSOR);
 	//ev3_sensor_config(EV3_PORT_4, HT_NXT_COLOR_SENSOR);
-	ev3_lcd_set_font(EV3_FONT_MEDIUM);
-	ev3_speaker_set_volume(100);
 
 	ev3_motor_reset_counts(EV3_PORT_B);
 	ev3_motor_reset_counts(EV3_PORT_C);
@@ -81,82 +170,17 @@ void main_task(intptr_t unused) {
 	ercd = get_tim(&start_time);
 	assert(ercd == E_OK);
 
-	// setting up PID values
-	float k[3] = {1, 0, 0};	
-	float step[3] = {0.05, 0.01, 0.01};
-	int line_num = 0;
-
-	ev3_lcd_fill_rect(0, 0, EV3_LCD_WIDTH, EV3_LCD_HEIGHT, EV3_LCD_WHITE);
-
-	ev3_lcd_draw_string("Kp = ", 15, 10);
-	ev3_lcd_draw_string("Ki = ", 15, 50);
-	ev3_lcd_draw_string("Kd = ", 15, 90);
-	for (int i = 0; i < 3; i++) {
-		sprintf(lcdstr, "%.2f  ", k[i]);
-		ev3_lcd_draw_string(lcdstr, 65, 10 + i * 40);
-	}
-	ev3_lcd_draw_string(">", 5, 10);
-
-	while (1) {
-		if (ev3_button_is_pressed(LEFT_BUTTON)) {
-			while (ev3_button_is_pressed(LEFT_BUTTON));
-			k[line_num] -= step[line_num];
-			if (k[line_num] < 0) {
-				k[line_num] = 0.0;
-			}
-			sprintf(lcdstr, "%.2f  ", k[line_num]);
-			ev3_lcd_draw_string(lcdstr, 65, line_num * 40 + 10);
-		}
-
-		if (ev3_button_is_pressed(RIGHT_BUTTON)) {
-			while (ev3_button_is_pressed(RIGHT_BUTTON));
-			k[line_num] += step[line_num];
-			sprintf(lcdstr, "%.2f  ", k[line_num]);
-			ev3_lcd_draw_string(lcdstr, 65, line_num * 40 + 10);
-		}
-
-		if (ev3_button_is_pressed(UP_BUTTON)) {
-			while (ev3_button_is_pressed(UP_BUTTON));
-			line_num--;
-			if (line_num < 0) {
-				line_num = 0;
-			}
-
-			for (int i = 0; i < 3; i++) {
-				ev3_lcd_draw_string(" ", 5, i * 40 + 10);
-			}
-			ev3_lcd_draw_string(">", 5, line_num * 40 + 10);
-		}
-
-		if (ev3_button_is_pressed(DOWN_BUTTON)) {
-			while (ev3_button_is_pressed(DOWN_BUTTON));
-			line_num++;
-			if (line_num > 2) {
-				line_num = 2;
-			}
-
-			for (int i = 0; i < 3; i++) {
-				ev3_lcd_draw_string(" ", 5, i * 40 + 10);
-			}
-			ev3_lcd_draw_string(">", 5, line_num * 40 + 10);
-		}
-
-		if (ev3_button_is_pressed(ENTER_BUTTON)) {
-			while (ev3_button_is_pressed(ENTER_BUTTON));
-			break;
-		}
-	}
-
 	// PID line follower
 	FILE* fp = fopen("/ev3rt/log/robot.log", "w");
 
 	float kp = k[0], ki = k[1], kd = k[2];
+	float speed = k[3];
     float error = 0, last_error = 0, integral = 0, steer = 0;
     while (ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C) < 7200) {
         error = ev3_color_sensor_get_reflect(EV3_PORT_2) - ev3_color_sensor_get_reflect(EV3_PORT_3);
         integral = error + integral * ki;
         steer = kp * error + ki * integral + kd * (error - last_error);
-        ev3_motor_steer(EV3_PORT_B, EV3_PORT_C, 20, steer);
+        ev3_motor_steer(EV3_PORT_B, EV3_PORT_C, speed, steer);
         last_error = error;
 
 		//ercd = get_tim(&stop1);
@@ -404,5 +428,3 @@ void main_task(intptr_t unused) {
 	tslp_tsk(10000);
 	exit(0);
 }
-
-
