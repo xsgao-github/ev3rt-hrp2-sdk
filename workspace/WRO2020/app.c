@@ -592,9 +592,9 @@ int back_loaded = 0; // false, BLUEMATERIAL, BLACKMATERIAL
 void main_task(intptr_t unused) {
     init();
     //readCode();
-    readColorCode();
-    run2020();
-    //runWreenStreet();
+    //readColorCode();
+    //run2020();
+    runGreenStreet();
 }
 
 void run2020(){
@@ -720,7 +720,7 @@ void runGreenStreet(){
     linePID(55);
     //dispense moar stoooof
     */
-    linePID(88);
+    linePID(95);
     ev3_motor_rotate(right_motor, 10, 20, true);
     ev3_motor_steer(left_motor, right_motor, 10, -1);
     while (ev3_color_sensor_get_reflect(color_2) > 20) {
@@ -732,7 +732,7 @@ void runGreenStreet(){
     ev3_motor_rotate(right_motor, 210, 20, true);
     linePID(38);
     ev3_motor_steer(left_motor, right_motor, 10, 0);
-    while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) < 80) {
+    while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 40) {
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
@@ -1013,7 +1013,7 @@ void linePID(int distance){
         wheelDistance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 9.5) / 360));
         float error = ev3_color_sensor_get_reflect(color_2) - ev3_color_sensor_get_reflect(color_3);
         integral = error + integral * 0.6;
-        float steer = 0.035 * error + 0.35 * integral + 3.5 * (error - lasterror);
+        float steer = 0.03 * error + 0.3 * integral + 4.5 * (error - lasterror);
         ev3_motor_steer(left_motor, right_motor, 30, steer);
         lasterror = error;  
         display_sensors();
