@@ -85,12 +85,15 @@ static void robot_trigger_trip_event() {
 static void robot_back_button_clicked_handler(intptr_t button) {
     switch(button) {
     case BACK_BUTTON:
-		ev3_motor_stop(EV3_PORT_A, true);
-		ev3_motor_stop(EV3_PORT_B, true);
-		ev3_motor_stop(EV3_PORT_C, true);
-		ev3_motor_stop(EV3_PORT_C, true);
-        exit(-1);
-        break;
+		ev3_lcd_fill_rect(0, 0, EV3_LCD_WIDTH, EV3_LCD_HEIGHT, EV3_LCD_WHITE);
+		ev3_lcd_draw_string("program cancelled", 5, 50);
+
+		ev3_motor_stop(EV3_PORT_A, false);
+		ev3_motor_stop(EV3_PORT_B, false);
+		ev3_motor_stop(EV3_PORT_C, false);
+		ev3_motor_stop(EV3_PORT_D, false);
+
+        exit(0);
     }
 }
 

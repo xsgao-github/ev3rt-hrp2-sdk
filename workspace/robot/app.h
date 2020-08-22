@@ -1,7 +1,7 @@
 /*
  * Target dependent definition
  */
-#include "target_test.h"
+//#include "target_test.h"
 
 /*
  * Definition of priority of each task
