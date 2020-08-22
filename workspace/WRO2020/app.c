@@ -591,10 +591,10 @@ int back_loaded = 0; // false, BLUEMATERIAL, BLACKMATERIAL
 
 void main_task(intptr_t unused) {
     init();
-    //readCode();
-    readColorCode();
-    run2020();
-    //runWreenStreet();
+    readCode();
+    //readColorCode();
+    //run2020();
+    runGreenStreet();
 }
 
 void run2020(){
@@ -736,6 +736,15 @@ void runGreenStreet(){
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
+    tslp_tsk(250);
+    ev3_motor_rotate(left_motor, 200, 10, false);
+    ev3_motor_rotate(right_motor, 200, 10, true);
+    ev3_motor_steer(left_motor, right_motor, 10, 5);
+    tslp_tsk(1000);
+    ev3_motor_steer(left_motor, right_motor, 10, 1);
+    while (ev3_color_sensor_get_reflect(color_3) > 20) {
+        display_sensors();
+    }
 }
 void runYellowStreet(){
     color_4_index = 0;
@@ -1394,6 +1403,9 @@ void display_sensors() {
     value = ev3_color_sensor_get_reflect(color_3);
     sprintf(msg, "L: %d  ", value);
     ev3_lcd_draw_string(msg, 10*7, 15*7.5);
+}
+void runWreenStreet() {
+    ev3_motor_steer(a_motor, a_motor, 100, 0);
 }
 
 static void button_clicked_handler(intptr_t button) {
