@@ -957,10 +957,7 @@ void readCode() {
     ev3_lcd_draw_string(lcdstr, 0, 30);
 
     // record position
-    pos.section = 1;
-    pos.distance = 51;
     pos.dash = 0;
-    pos.facing = 0;
 }
 
 void readColorCode(){
@@ -1032,10 +1029,7 @@ void readColorCode(){
             }
         }
     }
-    pos.section = 1;
-    pos.distance = wheelDistance;
     pos.dash = 0;
-    pos.facing = 0;
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
