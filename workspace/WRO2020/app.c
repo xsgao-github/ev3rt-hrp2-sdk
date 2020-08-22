@@ -910,6 +910,8 @@ void readColorCode(){
     }
     ev3_motor_steer(left_motor, right_motor, 15, 5);
     while(rgb4.g > 30 && rgb4.b > 25){
+        colorid_t color3color = ev3_color_sensor_get_color(color_3);
+        sprintf(lcdstr, "Color: %-7s", color3color);
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     if(rgb4.g < 30){
@@ -918,6 +920,7 @@ void readColorCode(){
     else{
         pos.street = YELLOW_STREET;
     }
+    ev3_motor_steer(left_motor, right_motor, 10, 5);
     while(wheelDistance < 64){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
