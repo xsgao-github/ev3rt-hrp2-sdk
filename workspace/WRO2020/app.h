@@ -17,8 +17,11 @@
 #define A_MOTOR 1
 #define D_MOTOR 2
 
-int Tasks[4] = {-1, -1, -1, -1};
-int current_Street = -1;
+int tasks[4] = {-1, -1, -1, -1};
+typedef struct {
+int street;
+int dash;
+} position;
 
 extern void	main_task(intptr_t exinf);
 #endif /* TOPPERS_MACRO_ONLY */
