@@ -125,7 +125,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 2
             {
-                110,0,-1200
+                30,0,-1200
             },
             //index 3
             {
@@ -221,7 +221,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 2
             {
-                110,0,-1200
+                30,0,-1200
             },
             //index 3
             {
@@ -568,13 +568,13 @@ void run2020(){
     int j = 0;
     //road1
     while(road < 2){
-        if(pos.street == RED_STREET){
-            if(tasks[GREEN_STREET] == REMOVESNOW){
+        if (pos.street == RED_STREET){
+            if (tasks[GREEN_STREET] == REMOVESNOW){
                 road += 1;
                 runGreenStreet();
                 tasks[GREEN_STREET] = TASKDONE;
             }
-            else if(tasks[RED_STREET] == REMOVESNOW){
+            else if (tasks[RED_STREET] == REMOVESNOW){
                 road += 1;
                 runRedStreet();
                 tasks[RED_STREET] = TASKDONE;
@@ -583,13 +583,13 @@ void run2020(){
                 runRedStreet();
             }
         }
-        else if(pos.street == YELLOW_STREET){
-            if(tasks[BLUE_STREET] == REMOVESNOW){
+        else if (pos.street == YELLOW_STREET){
+            if (tasks[BLUE_STREET] == REMOVESNOW){
                 road += 1;
                 runBlueStreet();
                 tasks[BLUE_STREET] = TASKDONE;
             }
-            else if(tasks[YELLOW_STREET] == REMOVESNOW){
+            else if (tasks[YELLOW_STREET] == REMOVESNOW){
                 road += 1;
                 runYellowStreet();
                 tasks[YELLOW_STREET] = TASKDONE;
@@ -599,12 +599,12 @@ void run2020(){
             }
         }
     }
-    for(i = 0;i < 3;i++){
-        for(j = 0;j < 3;j++){
+    for (i = 0;i < 3;i++){
+        for (j = 0;j < 3;j++){
             carTasks[i][j] = carArray[i][carDetected[i]][j];
         }
     }
-    if(pos.street = RED_STREET){
+    if (pos.street = RED_STREET){
         color_4_index = 1;
         a_motor_index = 1;
         d_motor_index = 1;
@@ -627,7 +627,7 @@ void run2020(){
         ev3_motor_reset_counts(left_motor);
         ev3_motor_reset_counts(right_motor);
         float wheelDistance = 0;
-        while(wheelDistance < 15){
+        while (wheelDistance < 15){
             ev3_motor_steer(left_motor,right_motor,15,0);
             wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
         }
@@ -644,7 +644,7 @@ void run2020(){
         ev3_motor_steer(left_motor,right_motor,0,0);
         pos.street = YELLOW_STREET;
     }
-    else if(pos.street = YELLOW_STREET){
+    else if (pos.street = YELLOW_STREET){
         
     }
 
@@ -1294,6 +1294,8 @@ void execute_tasks(float distance) {
     if (distance > allTasks[pos.street][COLOR_4][color_4_index][0]) {
         // TODO: check for cars
     }
+
+
 }
 
 void init() {
