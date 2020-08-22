@@ -909,10 +909,11 @@ void readColorCode(){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
     }
     ev3_motor_steer(left_motor, right_motor, 15, 5);
-    while(rgb4.g > 30 && rgb4.b > 25){
+    while(1){
         colorid_t color3color = ev3_color_sensor_get_color(color_3);
         sprintf(lcdstr, "Color: %-7s", color3color);
-	    ev3_lcd_draw_string(lcdstr, 0, 15);
+	    ev3_lcd_draw_string(lcdstr, 0, 45);
+        tslp_tsk(10);
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     if(rgb4.g < 30){
