@@ -37,6 +37,9 @@ static void button_clicked_handler(intptr_t button);
 //declare global variables
 rgb_raw_t rgb1;
 rgb_raw_t rgb4;
+int tasks[4] = {-1, -1, -1, -1};
+int current_Street = -1;
+int current_Dash = -1;
 /*
 * All task directions written to here
 * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
@@ -434,7 +437,7 @@ int allTasks[4][3][7][3] = {
     },
 };
 /*
-* [Description] DONE: Maitian
+* car
 * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
 * Index 2 - data:
 * ---------------[distance at execute (cm), distance at return (cm), degrees to rotate]
@@ -561,7 +564,6 @@ void main_task(intptr_t unused) {
     readColorCode();
     run2020();
     //runGreenStreet();
-    
 }
 
 void run2020(){
@@ -1030,10 +1032,7 @@ void readColorCode(){
             }
         }
     }
-    pos.section = 1;
-    pos.distance = wheelDistance;
-    pos.dash = 0;
-    pos.facing = 0;
+    current_Dash = 0;
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
@@ -1220,13 +1219,13 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             isTurningD = 0;
             tasksLeftD -= 1;
         }
-        if(ev3_color_sensor_get_reflect(color_2) > 75 && pos.dash % 2 == 0 && wheelDistance > lastDash + 3){
-            pos.dash += 1;
+        if(ev3_color_sensor_get_reflect(color_2) > 75 && current_Dash % 2 == 0 && wheelDistance > lastDash + 3){
+            current_Dash += 1;
             lastDash = wheelDistance;
         }
-        if(ev3_color_sensor_get_reflect(color_2) < 15 && pos.dash % 2 == 1 && wheelDistance > lastDash + 3){
+        if(ev3_color_sensor_get_reflect(color_2) < 15 && current_Dash % 2 == 1 && wheelDistance > lastDash + 3){
             lastDash = wheelDistance;
-            pos.dash += 1;
+            current_Dash += 1;
         }
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
         ev3_motor_steer(left_motor, right_motor, 15, steer);

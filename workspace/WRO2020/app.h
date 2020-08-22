@@ -17,7 +17,6 @@
 #define A_MOTOR 1
 #define D_MOTOR 2
 
-int tasks[4] = {-1, -1, -1, -1};
 typedef struct {
 int street;
 int dash;
