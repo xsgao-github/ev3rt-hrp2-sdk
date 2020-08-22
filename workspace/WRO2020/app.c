@@ -468,10 +468,10 @@ int back_loaded = 0; // false, BLUEMATERIAL, BLACKMATERIAL
 
 void main_task(intptr_t unused) {
     init();
-    //readCode();
-    readColorCode();
-    run2020();
-    //runGreenStreet();
+    readCode();
+    //readColorCode();
+    //run2020();
+    runGreenStreet();
 }
 
 void run2020(){
@@ -603,22 +603,23 @@ void runGreenStreet(){
     while (ev3_color_sensor_get_reflect(color_2) > 20) {
         display_sensors();
     }
+    tslp_tsk(250);
     ev3_motor_steer(left_motor, right_motor, -10, 0);
     tslp_tsk(250);
     ev3_motor_rotate(right_motor, 210, 20, true);
     tslp_tsk(250);
     linePID(38);
-    ev3_motor_steer(left_motor, right_motor, 10, 0);
-    while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 30) {
-        display_sensors();
-    }
-    ev3_motor_steer(left_motor, right_motor, 0, 0);
-    ev3_motor_rotate(left_motor, 200, 20, false);
-    ev3_motor_rotate(right_motor, 200, 20, true);
+    //ev3_motor_steer(left_motor, right_motor, 10, 0);
+    //while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 30) {
+    //    display_sensors();
+    //}
+    //ev3_motor_steer(left_motor, right_motor, 0, 0);
+    ev3_motor_rotate(left_motor, 150, 20, false);
+    ev3_motor_rotate(right_motor, 150, 20, true);
     tslp_tsk(250);
-    ev3_motor_rotate(right_motor, 110, 20, true);
+    ev3_motor_rotate(right_motor, 220, 20, true);
     tslp_tsk(250);
-    ev3_motor_steer(left_motor, right_motor, 10, 5);
+    ev3_motor_steer(left_motor, right_motor, 20, 5);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
@@ -626,6 +627,7 @@ void runGreenStreet(){
     }
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
+    pos.street = RED_STREET;
 }
 void runYellowStreet(){
     color_4_index = 0;
