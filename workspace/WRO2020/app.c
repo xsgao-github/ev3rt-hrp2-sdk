@@ -17,7 +17,7 @@
 
 // define motors and sensors
 const int color_1 = EV3_PORT_2, color_2 = EV3_PORT_2, color_3 = EV3_PORT_3, color_4 = EV3_PORT_4, left_motor = EV3_PORT_B, right_motor = EV3_PORT_C, a_motor = EV3_PORT_A, d_motor = EV3_PORT_D;
-position pos = {-1, -1, -1, 0, 0};
+position pos = {-1, 0};
 // declare methods
 void run2020();
 void runBlueStreet();
@@ -954,9 +954,9 @@ void readCode() {
     ev3_lcd_draw_string(lcdstr, 0, 15);
     sprintf(lcdstr, "%d, %d", tasks[YELLOW_STREET], tasks[RED_STREET]);
     ev3_lcd_draw_string(lcdstr, 0, 30);
-    if (current_Street == RED_STREET) {
+    if (pos.street == RED_STREET) {
         ev3_lcd_draw_string("RED_STREET", 0, 45);
-    } else if (current_Street == YELLOW_STREET) {
+    } else if (pos.street == YELLOW_STREET) {
         ev3_lcd_draw_string("YELLOW_STREET", 0, 45);
     }
 }
