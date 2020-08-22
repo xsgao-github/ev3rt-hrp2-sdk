@@ -1021,10 +1021,10 @@ void linePID(int distance){
         //    ev3_motor_reset_counts(a_motor);
         //    ev3_motor_rotate(a_motor,500,13,false);
         //}
-        wheelDistance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 9.5) / 360));
+        wheelDistance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.5) / 360));
         float error = ev3_color_sensor_get_reflect(color_2) - ev3_color_sensor_get_reflect(color_3);
         integral = error + integral * 0.6;
-        float steer = 0.03 * error + 0.3 * integral + 4.5 * (error - lasterror);
+        float steer = 0.03 * error + 0.25 * integral + 4.2 * (error - lasterror);
         ev3_motor_steer(left_motor, right_motor, 30, steer);
         lasterror = error;  
         display_sensors();
@@ -1409,9 +1409,6 @@ void display_sensors() {
     value = ev3_color_sensor_get_reflect(color_3);
     sprintf(msg, "L: %d  ", value);
     ev3_lcd_draw_string(msg, 10*7, 15*7.5);
-}
-void runWreenStreet() {
-    ev3_motor_steer(a_motor, a_motor, 100, 0);
 }
 
 static void button_clicked_handler(intptr_t button) {
