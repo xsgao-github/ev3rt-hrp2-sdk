@@ -28,7 +28,7 @@ void readCode();
 void readColorCode();
 void linePID(int distance);
 void color4PID(int distance,int tasksNumA,int tasksNumD);
-void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,int tasksNumD);
+void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,int tasksNumD,int doCar);
 void execute_tasks(float distance);
 void init();
 void display_sensors();
@@ -515,6 +515,16 @@ int carArray[4][3][3] = {
             0,0,0
         },
     },
+};
+int carDetected[4]{
+    //blue
+    0,
+    //green
+    0,
+    //yellow
+    0,
+    //red
+    0,
 }
 int color_4_index = 0;
 int next_color_4_task[3] = {0,0,0};
@@ -536,6 +546,8 @@ void main_task(intptr_t unused) {
 
 void run2020(){
     int road = 0;
+    int i = 0;
+    int j = 0;
     //road1
     while(road < 2){
         if(pos.street == RED_STREET){
@@ -569,12 +581,16 @@ void run2020(){
             }
         }
     }
-    
+    for(i = 0;i < 3;i++){
+        for(j = 0;j < 3;j++){
+            carTasks[i][j] = carArray[i][carDetected[i][j];
+        }
+    }
     if(pos.street = RED_STREET){
         color_4_index = 1;
         a_motor_index = 1;
         d_motor_index = 1;
-        wall_follow_with_tasks(163,3,0,1,0);
+        wall_follow_with_tasks(163,3,0,1,0,1);
         ev3_motor_set_power(a_motor,50);
         tslp_tsk(500);
         ev3_motor_set_power(a_motor,0);
@@ -694,11 +710,11 @@ void runYellowStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
-    wall_follow_with_tasks(145,3,0,3,0);
+    wall_follow_with_tasks(145,3,0,3,0,0);
     ev3_motor_steer(left_motor,right_motor,30,-45);
     tslp_tsk(581);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    wall_follow_with_tasks(76,3,0,0,0);
+    wall_follow_with_tasks(76,3,0,0,0,0);
     ev3_motor_steer(left_motor,right_motor,30,-45);
     tslp_tsk(581);
     ev3_motor_steer(left_motor,right_motor,0,0);
@@ -719,7 +735,7 @@ void runRedStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
-    wall_follow_with_tasks(145,3,2,3,0);
+    wall_follow_with_tasks(145,3,2,3,0,0);
     ev3_motor_set_power(a_motor,50);
     tslp_tsk(447);
     ev3_motor_set_power(a_motor,0);
@@ -1039,7 +1055,7 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
     return;
 }
 
-void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,int tasksNumD){
+void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,int tasksNumD, int doCar){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_reset_counts(a_motor);
@@ -1069,7 +1085,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
             assert(val);
             if(rgb4.g < 30 && rgb4.r < 30 && rgb4.b < 30){
-                carTasks[pos.street] = color_4_index + 1;
+                carDetected[pos.street] = color_4_index + 1;
             }
             color_4_index += 1;
             for(int i = 0;i < 3;i++){
@@ -1088,6 +1104,14 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             }
             isTurningA = 0;
             tasksLeftA -= 1;
+        }
+        if(wheelDistance > carTasks[pos.street][0] && doCar && isTurningA == 0){
+            ev3_motor_rotate(a_motor,carTasks[pos.street][2],50,false);
+            isTurningA = 1;
+        }
+        if(wheelDistance > carTasks[pos.street][1] && doCar && isTurningA == 1){
+            ev3_motor_set_power(a_motor,-50);
+            isTurningA = 0;
         }
         if(wheelDistance > next_a_motor_task[0] && tasksLeftA > 0 && isTurningA == 0){
             ev3_motor_rotate(a_motor,next_a_motor_task[2],50,false);
