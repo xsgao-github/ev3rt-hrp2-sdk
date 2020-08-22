@@ -748,20 +748,17 @@ void runRedStreet(){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
     }
     ev3_motor_steer(left_motor,right_motor,-30,0);
-    tslp_tsk(350);
+    tslp_tsk(220);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_set_power(a_motor,-50);
     tslp_tsk(800);
     ev3_motor_set_power(a_motor,0);
-    ev3_motor_steer(left_motor,right_motor,-15,90);
-    tslp_tsk(800);
+    ev3_motor_steer(left_motor,right_motor,-15,65);
+    tslp_tsk(1250);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,-30,0);
     tslp_tsk(402);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_reset_counts(left_motor);
-    ev3_motor_reset_counts(right_motor);
-    wheelDistance = 0;
     color4PID(75,1,0);
     ev3_motor_steer(left_motor,right_motor,30,0);
     tslp_tsk(715);
