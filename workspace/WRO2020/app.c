@@ -437,7 +437,8 @@ int allTasks[4][3][7][3] = {
 /*
 * [Description] TODO: Maitian
 * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
-* Index 2 - TODO: Maitian
+* Index 2 - data:
+* ---------------[distance at execute (cm), distance at return (cm), degrees to rotate]
 */
 int carTasks[4][3] = {
     //blue
@@ -464,8 +465,9 @@ int carTasks[4][3] = {
 /*
 * [Description] TODO: Maitian
 * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
-* Index 2 - TODO: Maitian
-* Index 3 - TODO: Maitian
+* Index 2 - Car [Car 1 is car on other side, Car 2 is first car, Car 3 is second car]
+* Index 3 - data:
+* ---------------[distance at execute (cm), distance at return (cm), degrees to rotate]
 */
 int carArray[4][3][3] = {
     //blue
@@ -530,8 +532,8 @@ int carArray[4][3][3] = {
     },
 };
 /*
-* If a car is detected, TRUE or FALSE
-* Index 1 - Car detected [false, true]
+* Position at where the car was detected
+* Index 1 - Car detected [0,1,2]
 */
 int carDetected[4] = {
     //blue
@@ -906,22 +908,15 @@ void readColorCode(){
         ev3_motor_steer(left_motor,right_motor,25,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
     }
-    while(wheelDistance < 22){
-        ev3_motor_steer(left_motor,right_motor,15,5);
-        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
+    ev3_motor_steer(left_motor, right_motor, 15, 5);
+    while(rgb4.g > 30 && rgb4.b > 25){
     }
-    while(wheelDistance < 27){
-        ev3_motor_steer(left_motor,right_motor,10,5);
-        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
-        bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
-        assert(val);
-
-        if(rgb4.g > 40 && rgb4.r > 40 && rgb4.b < 40){
-            pos.street = YELLOW_STREET;
-        }
-        else if(rgb4.r > 40 && rgb4.b < 40 && rgb4.g < 30){
-            pos.street = RED_STREET;
-        }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    if(rgb4.g < 30){
+        pos.street = RED_STREET;
+    }
+    else{
+        pos.street = YELLOW_STREET;
     }
     while(wheelDistance < 64){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
