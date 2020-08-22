@@ -38,8 +38,7 @@ static void button_clicked_handler(intptr_t button);
 rgb_raw_t rgb1;
 rgb_raw_t rgb4;
 int tasks[4] = {-1, -1, -1, -1};
-int current_Street = -1;
-int current_Dash = -1;
+position pos = {-1, -1};
 /*
 * All task directions written to here
 * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
@@ -956,9 +955,9 @@ void readCode() {
     ev3_lcd_draw_string(lcdstr, 0, 15);
     sprintf(lcdstr, "%d, %d", tasks[YELLOW_STREET], tasks[RED_STREET]);
     ev3_lcd_draw_string(lcdstr, 0, 30);
-    if (current_Street == RED_STREET) {
+    if (pos.street == RED_STREET) {
         ev3_lcd_draw_string("RED_STREET", 0, 45);
-    } else if (current_Street == YELLOW_STREET) {
+    } else if (pos.street == YELLOW_STREET) {
         ev3_lcd_draw_string("YELLOW_STREET", 0, 45);
     }
 }
@@ -1032,7 +1031,7 @@ void readColorCode(){
             }
         }
     }
-    current_Dash = 0;
+    pos.dash = 0;
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
@@ -1219,13 +1218,13 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             isTurningD = 0;
             tasksLeftD -= 1;
         }
-        if(ev3_color_sensor_get_reflect(color_2) > 75 && current_Dash % 2 == 0 && wheelDistance > lastDash + 3){
-            current_Dash += 1;
+        if(ev3_color_sensor_get_reflect(color_2) > 75 && pos.dash % 2 == 0 && wheelDistance > lastDash + 3){
+            pos.dash += 1;
             lastDash = wheelDistance;
         }
-        if(ev3_color_sensor_get_reflect(color_2) < 15 && current_Dash % 2 == 1 && wheelDistance > lastDash + 3){
+        if(ev3_color_sensor_get_reflect(color_2) < 15 && pos.dash % 2 == 1 && wheelDistance > lastDash + 3){
             lastDash = wheelDistance;
-            current_Dash += 1;
+            pos.dash += 1;
         }
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
         ev3_motor_steer(left_motor, right_motor, 15, steer);
