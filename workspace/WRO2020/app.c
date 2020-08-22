@@ -39,6 +39,7 @@ rgb_raw_t rgb1;
 rgb_raw_t rgb4;
 position pos = {-1, -1, -1, 0, 0};
 /*
+* All task directions written to here
 * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
 * Index 2 - Sensor/Motor [COLOR_4, A_MOTOR, D_MOTOR]
 * Index 3 - index of task (0-5), with 7th spacer 6
@@ -212,15 +213,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,0,600
+                30,0,-600
             },
             //index 1
             {
-                80,0,900
+                80,0,-900
             },
             //index 2
             {
-                110,0,1200
+                110,0,-1200
             },
             //index 3
             {
@@ -433,6 +434,11 @@ int allTasks[4][3][7][3] = {
         },
     },
 };
+/*
+* [Description] TODO: Maitian
+* Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
+* Index 2 - TODO: Maitian
+*/
 int carTasks[4][3] = {
     //blue
     {
@@ -455,6 +461,12 @@ int carTasks[4][3] = {
         0,0,0
     },
 };
+/*
+* [Description] TODO: Maitian
+* Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
+* Index 2 - TODO: Maitian
+* Index 3 - TODO: Maitian
+*/
 int carArray[4][3][3] = {
     //blue
     {
@@ -517,6 +529,10 @@ int carArray[4][3][3] = {
         },
     },
 };
+/*
+* If a car is detected, TRUE or FALSE
+* Index 1 - Car detected [false, true]
+*/
 int carDetected[4] = {
     //blue
     0,
@@ -527,6 +543,7 @@ int carDetected[4] = {
     //red
     0,
 };
+
 int color_4_index = 0;
 int next_color_4_task[3] = {0,0,0};
 int a_motor_index = 0;
