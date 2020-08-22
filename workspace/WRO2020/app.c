@@ -907,7 +907,7 @@ void linePID(int distance){
         wheelDistance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.5) / 360));
         float error = ev3_color_sensor_get_reflect(color_2) - ev3_color_sensor_get_reflect(color_3);
         integral = error + integral * 0.6;
-        float steer = 0.03 * error + 0.25 * integral + 4.2 * (error - lasterror);
+        float steer = 0.035 * error + 0.25 * integral + 4 * (error - lasterror);
         ev3_motor_steer(left_motor, right_motor, 30, steer);
         lasterror = error;  
         display_sensors();
