@@ -1105,7 +1105,6 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     int tasksLeft4 = tasksNum4;
     int tasksLeftA = tasksNumA;
     int tasksLeftD = tasksNumD;
-    ev3_motor_steer(left_motor,right_motor,25,steer);
     for(int i = 0;i < 3;i++){
         next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
     }
@@ -1117,7 +1116,10 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     }
     sprintf(lcdstr, "%d", next_color_4_task[0]);
     ev3_lcd_draw_string(lcdstr, 0, 105);
-    tslp_tsk(1000);
+    sprintf(lcdstr, "%d", color_4_index);
+    ev3_lcd_draw_string(lcdstr, 0, 90);
+    tslp_tsk(10000000000);
+    ev3_motor_steer(left_motor,right_motor,25,steer);
     while (wheelDistance < distance) {
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
             tasksNum4 -= 1;
