@@ -36,8 +36,8 @@ static void button_clicked_handler(intptr_t button);
 //declare global variables
 rgb_raw_t rgb1;
 rgb_raw_t rgb4;
-int tasks[4] = {-1, -1, -1, -1};
 position pos = {-1, -1};
+int tasks[4] = {-1, -1, -1, -1};
 /*
 * All task directions written to here
 * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
