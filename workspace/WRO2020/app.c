@@ -558,10 +558,10 @@ int back_loaded = 0; // false, BLUEMATERIAL, BLACKMATERIAL
 
 void main_task(intptr_t unused) {
     init();
-    readCode();
-    //readColorCode();
-    //run2020();
-    runBlueStreet();
+    //readCode();
+    readColorCode();
+    run2020();
+    //runBlueStreet();
 }
 
 void run2020(){
@@ -831,7 +831,7 @@ void runRedStreet(){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
     }
     ev3_motor_steer(left_motor,right_motor,-30,0);
-    tslp_tsk(250);
+    tslp_tsk(300);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_set_power(a_motor,-50);
     tslp_tsk(800);
@@ -1179,7 +1179,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             tasksNum4 -= 1;
             bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
             assert(val);
-            if(rgb4.g < 40 && rgb4.r < 30 && rgb4.b < 40){
+            if(rgb4.g < 40 && rgb4.r < 40 && rgb4.b < 40){
                 ev3_speaker_play_tone(NOTE_C5,60);
                 carDetected[pos.street] = color_4_index + 1;
             }
