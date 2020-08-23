@@ -386,7 +386,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                24,40,300
+                9,40,300
             },
             //index 4
             {
@@ -843,7 +843,14 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,-30,0);
     tslp_tsk(402);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    color4PID(75,1,0);
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
+    wheelDistance = 0;
+    while(wheelDistance < 15){
+        ev3_motor_steer(left_motor,right_motor,15,0);
+        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
+    }
+    color4PID(60,1,0);
     ev3_motor_steer(left_motor,right_motor,30,0);
     tslp_tsk(550);
     ev3_motor_steer(left_motor,right_motor,0,0);
@@ -1165,6 +1172,9 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     }
     ev3_motor_steer(left_motor,right_motor,25,steer);
     while (wheelDistance < distance) {
+        if(isTurningA && ev3_motor_get_power == 0){
+            ev3_motor_set_power(a_motor,0);
+        }
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
             ev3_speaker_play_tone(NOTE_C4,60);
             tasksNum4 -= 1;
