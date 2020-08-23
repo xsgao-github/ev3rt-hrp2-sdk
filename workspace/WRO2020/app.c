@@ -1172,7 +1172,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     }
     ev3_motor_steer(left_motor,right_motor,25,steer);
     while (wheelDistance < distance) {
-        if(isTurningA && ev3_motor_get_power(a_motor) == 0){
+        if(isTurningA && ev3_motor_get_power(a_motor) == 0 && wheelDistance > next_a_motor_task[1] - 1){
             ev3_motor_set_power(a_motor,0);
         }
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
