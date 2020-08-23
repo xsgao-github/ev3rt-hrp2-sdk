@@ -848,7 +848,7 @@ void runRedStreet(){
     tslp_tsk(650);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,30,-45);
-    tslp_tsk(581);
+    tslp_tsk(650);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor, right_motor, 15, 5);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
@@ -971,18 +971,27 @@ void readColorCode(){
         ev3_motor_steer(left_motor,right_motor,25,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
     }
-    ev3_motor_steer(left_motor, right_motor, 15, 5);
-    while(1){
-        colorid_t color3color = ev3_color_sensor_get_color(color_3);
-        sprintf(lcdstr, "Color: %-7s", color3color);
+    ev3_motor_steer(left_motor, right_motor, 7, 5);
+    colorid_t color3color = 6;
+    while(color3color == 6){
+        color3color = ev3_color_sensor_get_color(color_3);
+        sprintf(lcdstr, "Color: %d", color3color);
 	    ev3_lcd_draw_string(lcdstr, 0, 45);
         tslp_tsk(10);
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    if(rgb4.g < 30){
+    int x = 0;
+    while(x < 50){
+        color3color = ev3_color_sensor_get_color(color_3);
+        sprintf(lcdstr, "Color: %d", color3color);
+        ev3_lcd_draw_string(lcdstr, 0, 45);
+        x += 1;
+        tslp_tsk(10);
+    }
+    if(color3color == 5){
         pos.street = RED_STREET;
     }
-    else{
+    if(color3color == 4){
         pos.street = YELLOW_STREET;
     }
     ev3_motor_steer(left_motor, right_motor, 10, 5);
@@ -1034,6 +1043,8 @@ void readColorCode(){
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
+    sprintf(lcdstr, "Color: %d", color3color);
+	ev3_lcd_draw_string(lcdstr, 0, 45);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
 }
 
