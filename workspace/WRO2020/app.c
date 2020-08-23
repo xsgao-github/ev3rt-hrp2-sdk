@@ -1154,6 +1154,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     ev3_motor_reset_counts(d_motor);
     int lastDash = 0;
     int isTurningA = 0;
+    int a_motorStopped = 0;
     int isTurningD = 0;
     char lcdstr[100];
     float wheelDistance = -100;
@@ -1172,9 +1173,10 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     }
     ev3_motor_steer(left_motor,right_motor,25,steer);
     while (wheelDistance < distance) {
-        if(isTurningA == 1 && ev3_motor_get_power(a_motor) == 0 && ev3_motor_get_counts(a_motor) < 10){
+        if(isTurningA == 1 && ev3_motor_get_power(a_motor) == 0 && ev3_motor_get_counts(a_motor) < 10 && a_motorStopped == 0){
             ev3_motor_stop(a_motor,false);
             ev3_speaker_play_tone(NOTE_A5,60);
+            a_motorStopped = 1;
         }
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
             ev3_speaker_play_tone(NOTE_C4,60);
@@ -1194,6 +1196,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
         }
         if(wheelDistance > next_a_motor_task[0] && tasksLeftA > 0 && isTurningA == 0){
             ev3_motor_reset_counts(a_motor);
+            a_motorStopped = 0;
             ev3_speaker_play_tone(NOTE_A4,60);
             ev3_motor_rotate(a_motor,next_a_motor_task[2],50,false);
             isTurningA = 1;
