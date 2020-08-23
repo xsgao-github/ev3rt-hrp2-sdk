@@ -36,8 +36,8 @@ static void button_clicked_handler(intptr_t button);
 //declare global variables
 rgb_raw_t rgb1;
 rgb_raw_t rgb4;
-int tasks[4] = {-1, -1, -1, -1};
 position pos = {-1, -1};
+int tasks[4] = {-1, -1, -1, -1};
 /*
 * All task directions written to here
 * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
@@ -660,7 +660,7 @@ void runBlueStreet(){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 40, 1);
-    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 615) {
+    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 1015) {
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
@@ -710,9 +710,9 @@ void runBlueStreet(){
     tslp_tsk(250);
     ev3_motor_rotate(right_motor, 220, 20, true);
     tslp_tsk(250);
-    ev3_motor_steer(left_motor, right_motor, 20, 5);
-    tslp_tsk(1000);
-    ev3_motor_steer(left_motor, right_motor, 10, 1);
+    //ev3_motor_steer(left_motor, right_motor, 20, 5);
+    //tslp_tsk(1000);
+    ev3_motor_steer(left_motor, right_motor, 10, 5);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
         display_sensors();
     }
