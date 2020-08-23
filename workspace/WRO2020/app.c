@@ -833,9 +833,9 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,-30,0);
     tslp_tsk(275);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_rotate(a_motor,-50,100,true);
+    ev3_motor_rotate(a_motor,200,-50,true);
     ev3_motor_steer(left_motor,right_motor,-15,70);
-    tslp_tsk(900);
+    tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_set_power(a_motor,-50);
     tslp_tsk(700);
@@ -1172,7 +1172,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     }
     ev3_motor_steer(left_motor,right_motor,25,steer);
     while (wheelDistance < distance) {
-        if(isTurningA && ev3_motor_get_power == 0){
+        if(isTurningA && ev3_motor_get_power(a_motor) == 0){
             ev3_motor_set_power(a_motor,0);
         }
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
