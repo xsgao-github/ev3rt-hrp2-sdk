@@ -17,6 +17,7 @@
 
 // define motors and sensors
 const int color_1 = EV3_PORT_2, color_2 = EV3_PORT_2, color_3 = EV3_PORT_3, color_4 = EV3_PORT_4, left_motor = EV3_PORT_B, right_motor = EV3_PORT_C, a_motor = EV3_PORT_A, d_motor = EV3_PORT_D;
+
 // declare methods
 void run2020();
 void runBlueStreet();
@@ -39,7 +40,7 @@ rgb_raw_t rgb4;
 position pos = {-1, -1};
 int tasks[4] = {-1, -1, -1, -1};
 /*
-* All task directions written to here
+*  All task directions written to here
 * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
 * Index 2 - Sensor/Motor [COLOR_4, A_MOTOR, D_MOTOR]
 * Index 3 - index of task (0-5), with 7th spacer 6
@@ -86,15 +87,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                1000,0,0
+                17,23,350
             },
             //index 1
             {
-                1000,0,0
+                23,30,0
             },
             //index 2
             {
-                1000,0,0
+                52,59,190
             },
             //index 3
             {
@@ -435,34 +436,6 @@ int allTasks[4][3][7][3] = {
     },
 };
 /*
-* car
-* Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
-* Index 2 - data:
-* ---------------[distance at execute (cm), distance at return (cm), degrees to rotate]
-*/
-int carTasks[4][3] = {
-    //blue
-    {
-        //car
-        0,0,0
-    },
-    //green
-    {
-        //car
-        0,0,0
-    },
-    //yellow
-    {
-        //car
-        0,0,0
-    },
-    //red
-    {
-        //car
-        0,0,0
-    },
-};
-/*
 * [Description] DONE: Maitian
 * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
 * Index 2 - Car [Car 1 is car on other side, Car 2 is first car, Car 3 is second car]
@@ -555,6 +528,7 @@ int d_motor_index = 0;
 int next_d_motor_task[3] = {0,0,0};
 int d_turning = 0;
 int back_loaded = 0; // false, BLUEMATERIAL, BLACKMATERIAL
+int car_motor_index = 0;
 
 void main_task(intptr_t unused) {
     init();
@@ -655,7 +629,7 @@ void runBlueStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
-    pos.street = BLUE_STREET;
+    pos.street = YELLOW_STREET;
 
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
@@ -680,13 +654,21 @@ void runBlueStreet(){
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    /*
-    linePID(30);
-    //dispense stuff
+    pos.street = BLUE_STREET;
+    //linePID(86);
     linePID(55);
-    //dispense moar stoooof
-    */
-    linePID(86);
+    if ( true && carDetected[BLUE_STREET] == 1) {
+        ev3_speaker_play_tone(NOTE_G6, 1000000000);
+    } else {
+        ev3_motor_rotate(right_motor, 40);
+        ev3_motor_steer(left_motor, right_motor, 20, 0);
+        ev3_motor_reset_counts(left_motor);
+        ev3_motor_reset_counts(right_motor);
+        while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 140) {
+            display_sensors();
+            execute_tasks((((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.5) / 360)), true);
+        }
+    }
     ev3_motor_rotate(right_motor, 10, 20, true);
     ev3_motor_steer(left_motor, right_motor, 10, -1);
     while (ev3_color_sensor_get_reflect(color_2) > 20) {
@@ -716,14 +698,13 @@ void runBlueStreet(){
     }
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-
     pos.street = YELLOW_STREET;
 }
 void runGreenStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
-    pos.street = GREEN_STREET;
+    pos.street = RED_STREET;
 
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
@@ -751,12 +732,7 @@ void runGreenStreet(){
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    /*
-    linePID(30);
-    //dispense stuff
-    linePID(55);
-    //dispense moar stoooof
-    */
+    pos.street = GREEN_STREET;
     linePID(86);
     ev3_motor_rotate(right_motor, 10, 20, true);
     ev3_motor_steer(left_motor, right_motor, 10, -1);
@@ -871,7 +847,7 @@ void readCode() {
 
     // detect line
     ev3_motor_steer(left_motor, right_motor, 10, 1);
-    while (rgb4.b > 20) {
+    while (rgb4.g > 30 && rgb4.b > 20) {
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
@@ -1139,6 +1115,9 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
     return;
 }
 
+/**
+* \param
+*/
 void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,int tasksNumD, int doCar){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
@@ -1245,81 +1224,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     return;
 }
 
-/*
-
-// task_4: read_color
-// task_a: cm, rotation_1, rotation_2
-// task_d: cm, rotation_1, rotation_2
-
-// all_tasks contains all tasks for all threets, some tasks will be wiped our after reading codes
-all_tasks[street][motor][index][task];
-all_tasks[4     ][3    ][6 / 3][3   ];
-
-street_tasks = all_tasks[street];
-c4_tasks = street_tasks[street];
-a_tasks = street_tasks[street];
-d_tasks = street_tasks[street];
-c4_task_index = 0;
-a_task_index = 0;
-d_task_index = 0;
-
-void main() {
-	init();
-
-	read_tasks();
-	
-	while (1) {
-		if (street = YELLOW) {
-			while (follow_wall()) { // turn, follow_wall, turn, go_to_line
-				do_tasks();
-			}
-			street = RED; // can be GREEN based on route plan
-		} else if (street = RED) {
-			while (follow_wall()) { // push_snow, back, turn, follow_wall (pick up abrasive material if applies), turn, go_to_line
-				do_tasks();
-			}
-			street = YELLOW; // can be BLUE based on route plan
-		} else if (street = BLUE) {
-			// follow wall, sharp turn
-			while (follow_line()) { // turn, go_to_line
-				do_tasks();
-			}
-			street = YELLOW;
-		} else if (street = BLUE) {
-			// follow wall, sharp turn
-			while (follow_line()) { // turn, go_to_line
-				do_tasks();
-			}
-			stree = RED;
-		}
-	}
-}
-
-void read_tasks() {
-	// read code 
-	// wipe out tasks no longer needed
-	// plan route
-}
-
-void do_tasks() {
-	if (distance between c4_tasks[cm_1] and c4_tasks[cm_2]) {
-		do_4_task();
-		// move to next task
-		c4_task_index++;
-	}
-	if (distance > a_tasks[a_task_index][cm]) {
-		do_a_task();
-		a_task_index++;
-	}
-	if (distance > d_tasks[d_task_index][cm]) {
-		do_d_task();
-		d_task_index++;
-	}
-}
-
-*/
-
-void execute_tasks(float distance) {
+void execute_tasks(float distance, int doCar) {
     display_sensors();
 
     //declare/define variables
@@ -1330,7 +1235,7 @@ void execute_tasks(float distance) {
     if (abs(ev3_motor_get_power(a_motor)) < 2) {
         a_turning = 0;
     }
-    if (abs(ev3_motor_get_power(d_motor_index)) < 2) {
+    if (abs(ev3_motor_get_power(d_motor)) < 2) {
         d_turning = 0;
     }
 
@@ -1367,7 +1272,10 @@ void execute_tasks(float distance) {
         // TODO: check for cars
     }
 
+    //check for car_motor task, execute if doCar is true and it is time
+    if (distance > carArray[pos.street][car_motor_index][0] && doCar) {
 
+    }
 }
 
 void init() {
