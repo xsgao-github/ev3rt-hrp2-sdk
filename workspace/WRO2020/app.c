@@ -26,10 +26,10 @@ void runYellowStreet();
 void runRedStreet();
 void readCode();
 void readColorCode();
-void linePID(int distance);
+void linePID_with_tasks(int distance);
 void color4PID(int distance,int tasksNumA,int tasksNumD);
 void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,int tasksNumD,int doCar);
-void execute_tasks(float distance);
+void execute_tasks(float distance, int doCar);
 void init();
 void display_sensors();
 static void button_clicked_handler(intptr_t button);
@@ -40,14 +40,14 @@ rgb_raw_t rgb4;
 position pos = {-1, -1};
 int tasks[4] = {-1, -1, -1, -1};
 /*
-*  All task directions written to here
-* Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
-* Index 2 - Sensor/Motor [COLOR_4, A_MOTOR, D_MOTOR]
-* Index 3 - index of task (0-5), with 7th spacer 6
-* Index 4 - data:
-* ---------------COLOR_4-[distance at read (cm), null, null]
-* ---------------A_MOTOR-[distance at execute (cm), distance at return (cm), degrees to rotate]
-* ---------------D_MOTOR-[distance at execute (cm), degrees to rotate, abrasive type]
+ *  All task directions written to here
+ * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
+ * Index 2 - Sensor/Motor [COLOR_4, A_MOTOR, D_MOTOR]
+ * Index 3 - index of task (0-5), with 7th spacer 6
+ * Index 4 - data:
+ * ---------------COLOR_4-[distance at read (cm), null, null]
+ * ---------------A_MOTOR-[distance at execute (cm), distance at return (cm), degrees to rotate]
+ * ---------------D_MOTOR-[distance at execute (cm), degrees to rotate, abrasive type]
 */
 int allTasks[4][3][7][3] = {
     //blue
@@ -436,11 +436,11 @@ int allTasks[4][3][7][3] = {
     },
 };
 /*
-* [Description] DONE: Maitian
-* Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
-* Index 2 - Car [Car 1 is car on other side, Car 2 is first car, Car 3 is second car]
-* Index 3 - data:
-* ---------------[distance at execute (cm), distance at return (cm), degrees to rotate]
+ * [Description] DONE: Maitian
+ * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
+ * Index 2 - Car [Car 1 is car on other side, Car 2 is first car, Car 3 is second car]
+ * Index 3 - data:
+ * ---------------[distance at execute (cm), distance at return (cm), degrees to rotate]
 */
 int carArray[4][3][3] = {
     //blue
@@ -505,8 +505,8 @@ int carArray[4][3][3] = {
     },
 };
 /*
-* Position at where the car was detected
-* Index 1 - Car detected [0,1,2]
+ * Position at where the car was detected
+ * Index 1 - Car detected [0,1,2]
 */
 int carDetected[4] = {
     //blue
@@ -656,8 +656,8 @@ void runBlueStreet(){
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     pos.street = BLUE_STREET;
-    //linePID(86);
-    linePID(55);
+    //linePID_with_tasks(86);
+    linePID_with_tasks(55);
     if ( true && carDetected[BLUE_STREET] == 1) {
         ev3_speaker_play_tone(NOTE_G6, 1000000000);
     } else {
@@ -680,7 +680,7 @@ void runBlueStreet(){
     tslp_tsk(250);
     ev3_motor_rotate(right_motor, 210, 20, true);
     tslp_tsk(250);
-    linePID(38);
+    linePID_with_tasks(38);
     //ev3_motor_steer(left_motor, right_motor, 10, 0);
     //while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 30) {
     //    display_sensors();
@@ -734,7 +734,7 @@ void runGreenStreet(){
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     pos.street = GREEN_STREET;
-    linePID(86);
+    linePID_with_tasks(86);
     ev3_motor_rotate(right_motor, 10, 20, true);
     ev3_motor_steer(left_motor, right_motor, 10, -1);
     while (ev3_color_sensor_get_reflect(color_2) > 20) {
@@ -745,7 +745,7 @@ void runGreenStreet(){
     tslp_tsk(250);
     ev3_motor_rotate(right_motor, 210, 20, true);
     tslp_tsk(250);
-    linePID(38);
+    linePID_with_tasks(38);
     //ev3_motor_steer(left_motor, right_motor, 10, 0);
     //while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 30) {
     //    display_sensors();
@@ -1033,7 +1033,11 @@ void readColorCode(){
     ev3_motor_steer(left_motor, right_motor, 0, 0);
 }
 
-void linePID(int distance){
+/**
+ * \brief follows a solid line using a PID and does tasks
+ * \param distance Distance in cm
+*/
+void linePID_with_tasks(int distance){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_reset_counts(a_motor);
@@ -1064,6 +1068,12 @@ void linePID(int distance){
     return;
 }
 
+/**
+ * \brief follows a line using Color_4 and does tasks
+ * \param distance Distance in cm
+ * \param tasksA amount of tasks for A_Motor
+ * \param tasksD amount of tasks for D_Motor
+*/
 void color4PID(int distance,int tasksNumA,int tasksNumD){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
@@ -1123,7 +1133,13 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
 }
 
 /**
-* \param
+ * \brief follows a wall with a wall follower and does tasks
+ * \param distance Distance in cm
+ * \param steer Steer amount, ranging from 0 to 100
+ * \param tasks4 amount of tasks for Color_4
+ * \param tasksA amount of tasks for A_Motor
+ * \param tasksD amount of tasks for D_Motor
+ * \param doCar
 */
 void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,int tasksNumD, int doCar){
     ev3_motor_reset_counts(left_motor);
@@ -1240,6 +1256,11 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     return;
 }
 
+/**
+ * \brief executes tasks
+ * \param distance Distance of robot travelled (cm)
+ * \param doCar Do we do car collection or not?
+*/
 void execute_tasks(float distance, int doCar) {
     display_sensors();
 
