@@ -861,7 +861,11 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,15,-45);
     tslp_tsk(787);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    color4PID(53,1,0);
+    //color4PID(53,1,0);
+    while(wheelDistance < 53){
+        ev3_motor_steer(left_motor,right_motor,15,0);
+        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
+    }
     ev3_motor_steer(left_motor, right_motor, 10, 5);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
