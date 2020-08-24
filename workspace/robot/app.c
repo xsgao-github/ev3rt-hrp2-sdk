@@ -72,8 +72,15 @@ void main_task(intptr_t unused) {
 	float step[4] = {0.05, 0.01, 0.01, 5.0};
 	int line_num = 0;
 
+	ev3_motor_config(EV3_PORT_B, LARGE_MOTOR);
+	ev3_motor_config(EV3_PORT_C, LARGE_MOTOR);
+	ev3_sensor_config(EV3_PORT_2, COLOR_SENSOR);
+	ev3_sensor_config(EV3_PORT_3, COLOR_SENSOR);
+	//ev3_sensor_config(EV3_PORT_4, HT_NXT_COLOR_SENSOR);
+
 	ev3_lcd_fill_rect(0, 0, EV3_LCD_WIDTH, EV3_LCD_HEIGHT, EV3_LCD_WHITE);
 
+	/*
 	ev3_lcd_draw_string("Kp = ", 15, 10);
 	ev3_lcd_draw_string("Ki = ", 15, 40);
 	ev3_lcd_draw_string("Kd = ", 15, 70);
@@ -155,12 +162,6 @@ void main_task(intptr_t unused) {
 		}
 	}
 
-	ev3_motor_config(EV3_PORT_B, LARGE_MOTOR);
-	ev3_motor_config(EV3_PORT_C, LARGE_MOTOR);
-	ev3_sensor_config(EV3_PORT_2, COLOR_SENSOR);
-	ev3_sensor_config(EV3_PORT_3, COLOR_SENSOR);
-	//ev3_sensor_config(EV3_PORT_4, HT_NXT_COLOR_SENSOR);
-
 	ev3_motor_reset_counts(EV3_PORT_B);
 	ev3_motor_reset_counts(EV3_PORT_C);
 	ev3_color_sensor_get_reflect(EV3_PORT_2);
@@ -189,6 +190,18 @@ void main_task(intptr_t unused) {
         tslp_tsk(1);
     }
 	fclose(fp);
+	*/
+
+	// test ev3_motor_get_power()
+	ev3_motor_rotate(EV3_PORT_B, 720, 10, false);
+	while (1) {
+		sprintf(lcdstr, "morot power = %02d", ev3_motor_get_power(EV3_PORT_B));
+		ev3_lcd_draw_string(lcdstr, 5, 40);
+		tslp_tsk(200);
+		if (ev3_motor_get_power(EV3_PORT_B) == 0) {
+			exit(0);
+		}
+	}
 	
 	/*
 	// turn robot in arc, r = 30
