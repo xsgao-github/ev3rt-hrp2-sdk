@@ -560,10 +560,10 @@ int car_motor_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    readCode();
-    //readColorCode();
-    //run2020();
-    runBlueStreet();
+    //readCode();
+    readColorCode();
+    run2020();
+    //runBlueStreet();
 }
 
 void run2020(){
@@ -853,12 +853,11 @@ void runRedStreet(){
     tslp_tsk(400);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,15,45);
-    tslp_tsk(800);
+    tslp_tsk(700);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,15,-45);
-    tslp_tsk(900);
+    tslp_tsk(787);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    tslp_tsk(1000000);
     color4PID(60,1,0);
     ev3_motor_steer(left_motor,right_motor,30,0);
     tslp_tsk(550);
@@ -1012,29 +1011,28 @@ void readColorCode(){
     if(color3color == 4){
         pos.street = YELLOW_STREET;
     }
-    wheelDistance = 0;
-    ev3_motor_reset_counts(left_motor);
-    ev3_motor_reset_counts(right_motor);
+    sprintf(lcdstr, "%f3", wheelDistance);
+    ev3_lcd_draw_string(lcdstr, 0, 105);
     ev3_motor_steer(left_motor, right_motor, 10, 5);
-    while(wheelDistance < 38){
+    while(wheelDistance < 59){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
         assert(val);
         if(rgb4.r > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance + 2) / 4.5);
+            i = round((wheelDistance + 23) / 4.5);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.g > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance + 2) / 4.5);
+            i = round((wheelDistance + 23) / 4.5);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.b > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance + 2) / 4.5);
+            i = round((wheelDistance + 23) / 4.5);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
