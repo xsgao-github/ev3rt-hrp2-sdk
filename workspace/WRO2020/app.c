@@ -1071,7 +1071,7 @@ void linePID_with_tasks(int distance){
     float wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2;
     float lasterror = 0, integral = 0;
     while (wheelDistance < distance) {
-        execute_tasks(wheelDistance);
+        execute_tasks(wheelDistance,true);
         //if(ev3_motor_get_counts(a_motor) > 490){
         //    ev3_motor_reset_counts(a_motor);
         //    ev3_motor_rotate(a_motor,-500,13,false);
