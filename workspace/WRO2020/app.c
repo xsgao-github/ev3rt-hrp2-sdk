@@ -99,11 +99,11 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                1000,0,0
+                1,7,0
             },
             //index 4
             {
-                1000,0,0
+                15,17,0
             },
             //index 5
             {
@@ -560,10 +560,10 @@ int car_motor_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    //readCode();
-    readColorCode();
-    run2020();
-    //runBlueStreet();
+    readCode();
+    //readColorCode();
+    //run2020();
+    runBlueStreet();
 }
 
 void run2020(){
@@ -684,7 +684,8 @@ void runBlueStreet(){
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     pos.street = BLUE_STREET;
     //linePID_with_tasks(86);
-    linePID_with_tasks(55);
+    linePID_with_tasks(62);
+    tslp_tsk(1000000000);
     if ( true && carDetected[BLUE_STREET] == 1) {
         ev3_speaker_play_tone(NOTE_G6, 1000000000);
     } else {
@@ -692,10 +693,10 @@ void runBlueStreet(){
         ev3_motor_steer(left_motor, right_motor, 20, 0);
         ev3_motor_reset_counts(left_motor);
         ev3_motor_reset_counts(right_motor);
-        while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 140) {
-            display_sensors();
-            execute_tasks((((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.5) / 360)), true);
+        while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 100) {
+            execute_tasks((((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.5) / 360)), false);
         }
+        ev3_motor_steer(left_motor, right_motor, 0, 0);
     }
     ev3_motor_rotate(right_motor, 10, 20, true);
     ev3_motor_steer(left_motor, right_motor, 10, -1);
@@ -1378,7 +1379,7 @@ void init() {
     // wait for button press
     ev3_lcd_draw_string("Press OK to run", 14, 45);
     ev3_lcd_fill_rect(77, 87, 24, 20, EV3_LCD_BLACK);
-    ev3_lcd_fill_rect(79, 89, 20, 1, EV3_LCD_WHITE);
+    //ev3_lcd_fill_rect(79, 89, 20, 1, EV3_LCD_WHITE);
     ev3_lcd_draw_string("OK", 79, 90);
     while (1) {
         if (ev3_button_is_pressed(ENTER_BUTTON)) {
@@ -1445,10 +1446,13 @@ void display_sensors() {
 static void button_clicked_handler(intptr_t button) {
     switch(button) {
     case BACK_BUTTON:
+            ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
+            ev3_lcd_draw_string("Stopping Program", 2, 60);
             ev3_motor_stop(left_motor, false);
             ev3_motor_stop(right_motor, false);
             ev3_motor_stop(a_motor, false);
             ev3_motor_stop(d_motor, false);
+            ev3_lcd_draw_string("Program  Stopped", 2, 60);
         exit(0);
         break;
     }
