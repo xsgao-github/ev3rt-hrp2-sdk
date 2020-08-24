@@ -1020,19 +1020,19 @@ void readColorCode(){
         assert(val);
         if(rgb4.r > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance + 23) / 4.5);
+            i = round((wheelDistance - 21) / 4.5);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.g > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance + 23) / 4.5);
+            i = round((wheelDistance - 21) / 4.5);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.b > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance + 23) / 4.5);
+            i = round((wheelDistance - 21) / 4.5);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
@@ -1057,15 +1057,19 @@ void readColorCode(){
             else{
             }
         }
-        sprintf(lcdstr, "         %d", values[i]);
-        ev3_lcd_draw_string(lcdstr, 0, 15 * i);
-        sprintf(lcdstr, "         %d", values[i + 1]);
-        ev3_lcd_draw_string(lcdstr, 0, 15 * i + 15);
     }
     pos.dash = 0;
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
+    sprintf(lcdstr, "         %d", tasks[0]);
+    ev3_lcd_draw_string(lcdstr, 0, 15);
+    sprintf(lcdstr, "         %d", tasks[1]);
+    ev3_lcd_draw_string(lcdstr, 0, 15 * 2);
+    sprintf(lcdstr, "         %d", tasks[2]);
+    ev3_lcd_draw_string(lcdstr, 0, 15 * 3);
+    sprintf(lcdstr, "         %d", tasks[3]);
+    ev3_lcd_draw_string(lcdstr, 0, 15 * 4);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
 }
 
