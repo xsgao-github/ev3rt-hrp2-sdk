@@ -660,7 +660,7 @@ void runBlueStreet(){
     if ( true && carDetected[BLUE_STREET] == 1) {
         ev3_speaker_play_tone(NOTE_G6, 1000000000);
     } else {
-        ev3_motor_rotate(right_motor, 40);
+        //ev3_motor_rotate(right_motor, 40);
         ev3_motor_steer(left_motor, right_motor, 20, 0);
         ev3_motor_reset_counts(left_motor);
         ev3_motor_reset_counts(right_motor);
