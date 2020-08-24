@@ -29,7 +29,7 @@ void readColorCode();
 void linePID(int distance);
 void color4PID(int distance,int tasksNumA,int tasksNumD);
 void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,int tasksNumD,int doCar);
-void execute_tasks(float distance);
+void execute_tasks(float distance,int doCar);
 void init();
 void display_sensors();
 static void button_clicked_handler(intptr_t button);
