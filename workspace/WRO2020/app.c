@@ -1057,13 +1057,15 @@ void readColorCode(){
             else{
             }
         }
+        sprintf(lcdstr, "         %d", values[i]);
+        ev3_lcd_draw_string(lcdstr, 0, 15 * i);
+        sprintf(lcdstr, "         %d", values[i + 1]);
+        ev3_lcd_draw_string(lcdstr, 0, 15 * i + 15);
     }
     pos.dash = 0;
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
-    sprintf(lcdstr, "Color: %d", color3color);
-	ev3_lcd_draw_string(lcdstr, 0, 45);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
 }
 
