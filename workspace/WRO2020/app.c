@@ -849,12 +849,16 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,-30,0);
     tslp_tsk(402);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,15,0);
+    tslp_tsk(400);
+    ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,15,45);
-    tslp_tsk(200);
+    tslp_tsk(800);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,15,-45);
-    tslp_tsk(200);
+    tslp_tsk(900);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    tslp_tsk(1000000);
     color4PID(60,1,0);
     ev3_motor_steer(left_motor,right_motor,30,0);
     tslp_tsk(550);
@@ -975,11 +979,13 @@ void readCode() {
 
 void readColorCode(){
     float wheelDistance = 0;
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
     float values[8] = {0,0,0,0,0,0,0,0};
     int isReading = 0;
     int i = 0;
     char lcdstr[100];
-    while(wheelDistance < 18){
+    while(wheelDistance < 21){
         ev3_motor_steer(left_motor,right_motor,25,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
     }
@@ -1006,26 +1012,29 @@ void readColorCode(){
     if(color3color == 4){
         pos.street = YELLOW_STREET;
     }
+    wheelDistance = 0;
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 10, 5);
-    while(wheelDistance < 64){
+    while(wheelDistance < 38){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.5) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
         assert(val);
         if(rgb4.r > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance - 27) / 4.5);
+            i = round((wheelDistance + 2) / 4.5);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.g > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance - 27) / 4.5);
+            i = round((wheelDistance + 2) / 4.5);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.b > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance - 27) / 4.5);
+            i = round((wheelDistance + 2) / 4.5);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
