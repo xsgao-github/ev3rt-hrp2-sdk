@@ -436,7 +436,7 @@ int allTasks[4][3][7][3] = {
     },
 };
 /*
-* car
+* where car?
 * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
 * Index 2 - data:
 * ---------------[distance at execute (cm), distance at return (cm), degrees to rotate]
@@ -464,7 +464,7 @@ int carTasks[4][3] = {
     },
 };
 /*
- * [Description] DONE: Maitian
+ * how to get car?
  * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
  * Index 2 - Car [Car 1 is car on other side, Car 2 is first car, Car 3 is second car]
  * Index 3 - data:
