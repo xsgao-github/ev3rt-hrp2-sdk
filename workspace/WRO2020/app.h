@@ -8,7 +8,7 @@
 #define YELLOW_STREET 2
 #define RED_STREET 3
 
-#define REMOVESNOW 0
+#define COLLECTSNOW 0
 #define BLUEMATERIAL 1
 #define BLACKMATERIAL 2
 
