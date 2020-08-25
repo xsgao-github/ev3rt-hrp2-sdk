@@ -26,7 +26,7 @@ void runYellowStreet();
 void runRedStreet();
 void readCode();
 void readColorCode();
-void linePID_with_tasks(int distance);
+void linePID_with_tasks(int distance, int doCar);
 void color4PID(int distance,int tasksNumA,int tasksNumD);
 void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,int tasksNumD,int doCar);
 void execute_tasks(float distance, int doCar);
@@ -38,9 +38,14 @@ static void button_clicked_handler(intptr_t button);
 rgb_raw_t rgb1;
 rgb_raw_t rgb4;
 position pos = {-1, -1};
-int tasks[4] = {-1, -1, -1, -1};
 /*
- *  All task directions written to here
+ * instructions for robot
+ * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
+ * Index 2 - Task or Taskdone
+*/
+int tasks[4][2] = {{-1, 0}, {-1, 0}, {-1, 0}, {-1, 0}};
+/*
+ * All task directions written to here
  * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
  * Index 2 - Sensor/Motor [COLOR_4, A_MOTOR, D_MOTOR]
  * Index 3 - index of task (0-5), with 7th spacer 6
@@ -574,30 +579,30 @@ void run2020(){
     //road1
     while(road < 2){
         if (pos.street == RED_STREET){
-            if (tasks[GREEN_STREET] == REMOVESNOW){
+            if (tasks[GREEN_STREET][0] == REMOVESNOW){
                 road += 1;
                 runGreenStreet();
-                tasks[GREEN_STREET] = TASKDONE;
+                tasks[GREEN_STREET][1] = 1;
             }
-            else if (tasks[RED_STREET] == REMOVESNOW){
+            else if (tasks[RED_STREET][0] == REMOVESNOW){
                 road += 1;
                 runRedStreet();
-                tasks[RED_STREET] = TASKDONE;
+                tasks[RED_STREET][1] = 1;
             }
             else{
                 runRedStreet();
             }
         }
         else if (pos.street == YELLOW_STREET){
-            if (tasks[BLUE_STREET] == REMOVESNOW){
+            if (tasks[BLUE_STREET][0] == REMOVESNOW){
                 road += 1;
                 runBlueStreet();
-                tasks[BLUE_STREET] = TASKDONE;
+                tasks[BLUE_STREET][1] = 1;
             }
-            else if (tasks[YELLOW_STREET] == REMOVESNOW){
+            else if (tasks[YELLOW_STREET][0] == REMOVESNOW){
                 road += 1;
                 runYellowStreet();
-                tasks[YELLOW_STREET] = TASKDONE;
+                tasks[YELLOW_STREET][1] = TASKDONE;
             }
             else{
                 runYellowStreet();
@@ -628,7 +633,7 @@ void runBlueStreet(){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 40, 1);
-    wall_follow_with_tasks(76, 1, 1, 2, 0, false);
+    wall_follow_with_tasks(77, 1, 1, 2, 0, false);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     tslp_tsk(100);
     ev3_motor_reset_counts(left_motor);
@@ -650,8 +655,8 @@ void runBlueStreet(){
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     pos.street = BLUE_STREET;
     tslp_tsk(100);
-    //linePID_with_tasks(86);
-    linePID_with_tasks(62);
+    //linePID_with_tasks(86, false);
+    linePID_with_tasks(60, (round_index != 0 && tasks[BLUE_STREET][0] == 0));
     if (round_index != 0 && carDetected[BLUE_STREET] == 1) {
         ev3_speaker_play_tone(NOTE_G6, 1000000000);
     } else {
@@ -905,13 +910,13 @@ void readCode() {
             if (bit2 == 1) {
                 ev3_speaker_play_tone(NOTE_G6, -1);
             } else {
-                tasks[i] = BLACKMATERIAL;
+                tasks[i][0] = BLACKMATERIAL;
             }
         } else {
             if (bit2 == 1) {
-                tasks[i] = BLUEMATERIAL;
+                tasks[i][0] = BLUEMATERIAL;
             } else {
-                tasks[i] = REMOVESNOW;
+                tasks[i][0] = REMOVESNOW;
             }
         }
     }
@@ -927,9 +932,9 @@ void readCode() {
 
     // display things in a very medium font
     char lcdstr[100];
-    sprintf(lcdstr, "%d, %d", tasks[BLUE_STREET], tasks[GREEN_STREET]);
+    sprintf(lcdstr, "%d, %d", tasks[BLUE_STREET][0], tasks[GREEN_STREET][0]);
     ev3_lcd_draw_string(lcdstr, 0, 15);
-    sprintf(lcdstr, "%d, %d", tasks[YELLOW_STREET], tasks[RED_STREET]);
+    sprintf(lcdstr, "%d, %d", tasks[YELLOW_STREET][0], tasks[RED_STREET][0]);
     ev3_lcd_draw_string(lcdstr, 0, 30);
     if (pos.street == RED_STREET) {
         ev3_lcd_draw_string("RED_STREET", 0, 45);
@@ -1039,7 +1044,7 @@ void readColorCode(){
  * \brief follows a solid line using a PID and does tasks
  * \param distance Distance in cm
 */
-void linePID_with_tasks(int distance){
+void linePID_with_tasks(int distance, int doCar){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_reset_counts(a_motor);
@@ -1047,7 +1052,7 @@ void linePID_with_tasks(int distance){
     float wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2;
     float lasterror = 0, integral = 0;
     while (wheelDistance < distance) {
-        execute_tasks(wheelDistance,true);
+        execute_tasks(wheelDistance, doCar);
         //if(ev3_motor_get_counts(a_motor) > 490){
         //    ev3_motor_reset_counts(a_motor);
         //    ev3_motor_rotate(a_motor,-500,13,false);
@@ -1283,7 +1288,7 @@ void execute_tasks(float distance, int doCar) {
 
     //check for a_motor task, execute task if task is to collect snow and it is time
     a_degrees = allTasks[pos.street][A_MOTOR][a_motor_index][2];
-    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && a_turning == 0 && tasks[pos.street] == REMOVESNOW) {
+    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && a_turning == 0 && tasks[pos.street][0] == REMOVESNOW) {
         //execute part 1 of task
         ev3_motor_rotate(a_motor, a_degrees, 50, false);
         a_turning = 1;
@@ -1297,7 +1302,7 @@ void execute_tasks(float distance, int doCar) {
 
     //check for d_motor task, execute task if task is to dispense material and back is loaded and it is time and it is the correct material
     d_degrees = allTasks[pos.street][D_MOTOR][d_motor_index][1];
-    if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_turning == 0 && tasks[pos.street] == back_loaded) {
+    if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_turning == 0 && tasks[pos.street][0] == back_loaded) {
         //execute part 1 of task
         ev3_motor_rotate(d_motor, d_degrees, 100, false);
         d_turning = 1;
