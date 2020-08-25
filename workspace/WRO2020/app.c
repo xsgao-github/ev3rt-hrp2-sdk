@@ -1141,7 +1141,7 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
  * \brief follows a wall with a wall follower and does tasks
  * \param distance Distance in cm
  * \param steer Steer amount, ranging from 0 to 100
- * \param tasks4 amount of tasks for Color_4
+ * \param tasksNum4 amount of tasks for Color_4
  * \param tasksA amount of tasks for A_Motor
  * \param tasksD amount of tasks for D_Motor
  * \param doCar
