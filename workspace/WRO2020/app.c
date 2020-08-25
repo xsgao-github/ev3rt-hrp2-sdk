@@ -1142,7 +1142,7 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
  * \param distance Distance in cm
  * \param steer Steer amount, ranging from 0 to 100
  * \param tasksNum4 amount of tasks for Color_4
- * \param tasksA amount of tasks for A_Motor
+ * \param tasksNumA amount of tasks for A_Motor
  * \param tasksD amount of tasks for D_Motor
  * \param doCar
 */
