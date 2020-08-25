@@ -566,10 +566,13 @@ int round_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    readCode();
-    //readColorCode();
-    //run2020();
-    runBlueStreet();
+    init();
+    init();
+    init();
+    //readCode();
+    readColorCode();
+    run2020();
+    //runBlueStreet();
 }
 
 void run2020(){
