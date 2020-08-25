@@ -602,7 +602,7 @@ void run2020(){
             else if (tasks[YELLOW_STREET][0] == REMOVESNOW){
                 road += 1;
                 runYellowStreet();
-                tasks[YELLOW_STREET][1] = TASKDONE;
+                tasks[YELLOW_STREET][1] = 1;
             }
             else{
                 runYellowStreet();
@@ -1029,13 +1029,13 @@ void readColorCode(){
     ev3_motor_steer(left_motor, right_motor, 10, 5);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
-    sprintf(lcdstr, "         %d", tasks[0]);
+    sprintf(lcdstr, "         %d", tasks[0][0]);
     ev3_lcd_draw_string(lcdstr, 0, 15);
-    sprintf(lcdstr, "         %d", tasks[1]);
+    sprintf(lcdstr, "         %d", tasks[1][0]);
     ev3_lcd_draw_string(lcdstr, 0, 15 * 2);
-    sprintf(lcdstr, "         %d", tasks[2]);
+    sprintf(lcdstr, "         %d", tasks[2][0]);
     ev3_lcd_draw_string(lcdstr, 0, 15 * 3);
-    sprintf(lcdstr, "         %d", tasks[3]);
+    sprintf(lcdstr, "         %d", tasks[3][0]);
     ev3_lcd_draw_string(lcdstr, 0, 15 * 4);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
 }
