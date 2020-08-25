@@ -773,7 +773,7 @@ void runYellowStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
-    wall_follow_with_tasks(147,3,0,3,0,0);
+    wall_follow_with_tasks(140,3,0,3,0,0);
     ev3_motor_steer(left_motor,right_motor,30,-45);
     tslp_tsk(700);
     ev3_motor_steer(left_motor,right_motor,0,0);
