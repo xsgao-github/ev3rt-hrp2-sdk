@@ -436,7 +436,7 @@ int allTasks[4][3][7][3] = {
     },
 };
 /*
-* Tasks for current 
+* Tasks for current randomization.
 * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
 * Index 2 - data:
 * ---------------[distance at execute (cm), distance at return (cm), degrees to rotate]
