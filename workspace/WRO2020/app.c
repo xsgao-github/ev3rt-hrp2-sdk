@@ -1073,7 +1073,7 @@ void linePID_with_tasks(int distance){
 /**
  * \brief follows a line using Color_4 and does tasks
  * \param distance Distance in cm
- * \param tasksA amount of tasks for A_Motor
+ * \param tasksNumA amount of tasks for A_Motor
  * \param tasksD amount of tasks for D_Motor
 */
 void color4PID(int distance,int tasksNumA,int tasksNumD){
