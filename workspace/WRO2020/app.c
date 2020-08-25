@@ -1170,7 +1170,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     }
     for(i = 0;i < 3;i++){
         next_a_motor_task[i] = allTasks[pos.street][1][a_motor_index][i];
-    } 
+    }
     for(i = 0;i < 3;i++){
         next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
     }
