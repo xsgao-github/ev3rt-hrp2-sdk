@@ -556,20 +556,20 @@ int color_4_index = 0;
 int next_color_4_task[3] = {0,0,0};
 int a_motor_index = 0;
 int next_a_motor_task[3] = {0,0,0};
-int a_turning = 0;
+int a_turning = false;
 int d_motor_index = 0;
 int next_d_motor_task[3] = {0,0,0};
-int d_turning = 0;
-int back_loaded = 0; // false, BLUEMATERIAL, BLACKMATERIAL
+int d_turning = false;
+int back_loaded = false; // false, BLUEMATERIAL, BLACKMATERIAL
 int car_motor_index = 0;
 int round_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    //readCode();
-    readColorCode();
-    run2020();
-    //runBlueStreet();
+    readCode();
+    //readColorCode();
+    //run2020();
+    runBlueStreet();
 }
 
 void run2020(){
@@ -579,12 +579,12 @@ void run2020(){
     //road1
     while(road < 2){
         if (pos.street == RED_STREET){
-            if (tasks[GREEN_STREET][0] == REMOVESNOW){
+            if (tasks[GREEN_STREET][0] == COLLECTSNOW){
                 road += 1;
                 runGreenStreet();
                 tasks[GREEN_STREET][1] = 1;
             }
-            else if (tasks[RED_STREET][0] == REMOVESNOW){
+            else if (tasks[RED_STREET][0] == COLLECTSNOW){
                 road += 1;
                 runRedStreet();
                 tasks[RED_STREET][1] = 1;
@@ -594,12 +594,12 @@ void run2020(){
             }
         }
         else if (pos.street == YELLOW_STREET){
-            if (tasks[BLUE_STREET][0] == REMOVESNOW){
+            if (tasks[BLUE_STREET][0] == COLLECTSNOW){
                 road += 1;
                 runBlueStreet();
                 tasks[BLUE_STREET][1] = 1;
             }
-            else if (tasks[YELLOW_STREET][0] == REMOVESNOW){
+            else if (tasks[YELLOW_STREET][0] == COLLECTSNOW){
                 road += 1;
                 runYellowStreet();
                 tasks[YELLOW_STREET][1] = 1;
@@ -656,17 +656,16 @@ void runBlueStreet(){
     pos.street = BLUE_STREET;
     tslp_tsk(100);
     //linePID_with_tasks(86, false);
-    linePID_with_tasks(60, (round_index != 0 && tasks[BLUE_STREET][0] == 0));
+    linePID_with_tasks(60, (round_index != 0 && tasks[BLUE_STREET][0] == COLLECTSNOW));
     if (round_index != 0 && carDetected[BLUE_STREET] == 1) {
         ev3_speaker_play_tone(NOTE_G6, 1000000000);
     } else {
         tslp_tsk(100);
-        ev3_motor_rotate(right_motor, 80, 20, true);
-        tslp_tsk(1000000000);
+        ev3_motor_rotate(right_motor, 60, 20, true);
         ev3_motor_reset_counts(left_motor);
         ev3_motor_reset_counts(right_motor);
         ev3_motor_steer(left_motor, right_motor, 20, 0);
-        while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 100) {
+        while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 320) {
             execute_tasks((((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360)), false);
         }
         ev3_motor_steer(left_motor, right_motor, 0, 0);
@@ -916,7 +915,7 @@ void readCode() {
             if (bit2 == 1) {
                 tasks[i][0] = BLUEMATERIAL;
             } else {
-                tasks[i][0] = REMOVESNOW;
+                tasks[i][0] = COLLECTSNOW;
             }
         }
     }
@@ -1288,7 +1287,7 @@ void execute_tasks(float distance, int doCar) {
 
     //check for a_motor task, execute task if task is to collect snow and it is time
     a_degrees = allTasks[pos.street][A_MOTOR][a_motor_index][2];
-    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && a_turning == 0 && tasks[pos.street][0] == REMOVESNOW) {
+    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && a_turning == 0 && tasks[pos.street][0] == COLLECTSNOW) {
         //execute part 1 of task
         ev3_motor_rotate(a_motor, a_degrees, 50, false);
         a_turning = 1;
