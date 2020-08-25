@@ -1011,15 +1011,15 @@ void readColorCode(){
     for(int i = 0; i < 7; i += 2){
         if(values[i] == 0){
             if(values[i + 1] == 0){
-                tasks[i/2] = 0;
+                tasks[i/2][0] = 0;
             }
             else{
-                tasks[i/2] = 1;
+                tasks[i/2][0] = 1;
             }
         }
         else{
             if(values[i + 1] == 0){
-                tasks[i/2] = 2;
+                tasks[i/2][0] = 2;
             }
             else{
             }
