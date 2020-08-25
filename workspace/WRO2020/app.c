@@ -665,13 +665,13 @@ void runBlueStreet(){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 40, 1);
-    wall_follow_with_tasks(77, 1, 1, 2, 0, false);
+    wall_follow_with_tasks(76, 1, 1, 2, 0, false);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     tslp_tsk(100);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, -20, 0);
-    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) > -50) {
+    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) > -150) {
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
@@ -1345,7 +1345,7 @@ void execute_tasks(float distance, int doCar) {
             //execute part 2 of task
             ev3_motor_rotate(a_motor, -a_degrees, 50, false);
             a_turning = 1;
-            a_motor_index++;
+            a_motor_index += 1;
         }
     }
 
@@ -1359,7 +1359,7 @@ void execute_tasks(float distance, int doCar) {
             //execute part 2 of task
             ev3_motor_rotate(d_motor, -d_degrees, 100, false);
             d_turning = 1;
-            d_motor_index++;
+            d_motor_index += 1;
         }
     }
 
