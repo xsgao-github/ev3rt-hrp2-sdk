@@ -566,9 +566,6 @@ int round_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    init();
-    init();
-    init();
     //readCode();
     readColorCode();
     run2020();
