@@ -602,7 +602,7 @@ void run2020(){
             else if (tasks[YELLOW_STREET][0] == REMOVESNOW){
                 road += 1;
                 runYellowStreet();
-                tasks[YELLOW_STREET][1] = TASKDONE;
+                tasks[YELLOW_STREET][1] = 1;
             }
             else{
                 runYellowStreet();
