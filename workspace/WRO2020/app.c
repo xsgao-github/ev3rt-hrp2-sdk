@@ -687,13 +687,12 @@ void runBlueStreet(){
     //    display_sensors();
     //}
     //ev3_motor_steer(left_motor, right_motor, 0, 0);
-    ev3_motor_rotate(left_motor, 150, 20, false);
-    ev3_motor_rotate(right_motor, 150, 20, true);
+    ev3_motor_rotate(left_motor, 20, 10, true);
+    ev3_motor_rotate(left_motor, 160, 20, false);
+    ev3_motor_rotate(right_motor, 160, 20, true);
     tslp_tsk(100);
-    ev3_motor_rotate(right_motor, 220, 20, true);
+    ev3_motor_rotate(right_motor, 230, 20, true);
     tslp_tsk(100);
-    //ev3_motor_steer(left_motor, right_motor, 20, 5);
-    //tslp_tsk(1000);
     ev3_motor_steer(left_motor, right_motor, 10, 5);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
         display_sensors();
@@ -765,7 +764,6 @@ void runGreenStreet(){
     }
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-
     pos.street = RED_STREET;
 }
 void runYellowStreet(){
@@ -1051,7 +1049,7 @@ void linePID_with_tasks(int distance, int doCar){
     ev3_motor_reset_counts(right_motor);
     ev3_motor_reset_counts(a_motor);
     ev3_motor_reset_counts(d_motor);
-    float wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2;
+    float wheelDistance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360));
     float lasterror = 0, integral = 0;
     while (wheelDistance < distance) {
         execute_tasks(wheelDistance, doCar);
