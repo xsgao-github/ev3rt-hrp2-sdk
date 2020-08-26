@@ -656,8 +656,19 @@ void runBlueStreet(){
     pos.street = BLUE_STREET;
     tslp_tsk(100);
     if (round_index != 0 && carDetected[BLUE_STREET] == 1) {
-        //linePID_with_tasks(86, false);
-        ev3_speaker_play_tone(NOTE_G6, 1000000000);
+        linePID_with_tasks(86, false);
+        tslp_tsk(100);
+        ev3_motor_rotate(right_motor, 10, 20, true);
+        ev3_motor_steer(left_motor, right_motor, 10, -1);
+        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+            display_sensors();
+        }
+        tslp_tsk(250);
+        ev3_motor_steer(left_motor, right_motor, -10, 0);
+        tslp_tsk(250);
+        ev3_motor_rotate(right_motor, 190, 20, true);
+        tslp_tsk(100);
+        linePID_with_tasks(32, (round_index != 0 && tasks[BLUE_STREET][0] == 0));
     } else {
         linePID_with_tasks(60, (round_index != 0 && tasks[BLUE_STREET][0] == COLLECTSNOW));
         tslp_tsk(100);
@@ -669,19 +680,19 @@ void runBlueStreet(){
             execute_tasks((((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360)), false);
         }
         ev3_motor_steer(left_motor, right_motor, 0, 0);
+        tslp_tsk(100);
+        ev3_motor_rotate(right_motor, 10, 20, true);
+        ev3_motor_steer(left_motor, right_motor, 10, -1);
+        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+            display_sensors();
+        }
+        tslp_tsk(250);
+        ev3_motor_steer(left_motor, right_motor, -10, 0);
+        tslp_tsk(250);
+        ev3_motor_rotate(right_motor, 190, 20, true);
+        tslp_tsk(100);
+        linePID_with_tasks(32, (round_index != 0 && tasks[BLUE_STREET][0] == 0));
     }
-    tslp_tsk(100);
-    ev3_motor_rotate(right_motor, 10, 20, true);
-    ev3_motor_steer(left_motor, right_motor, 10, -1);
-    while (ev3_color_sensor_get_reflect(color_2) > 20) {
-        display_sensors();
-    }
-    tslp_tsk(250);
-    ev3_motor_steer(left_motor, right_motor, -10, 0);
-    tslp_tsk(250);
-    ev3_motor_rotate(right_motor, 190, 20, true);
-    tslp_tsk(100);
-    linePID_with_tasks(32, (round_index != 0 && tasks[BLUE_STREET][0] == 0));
     //ev3_motor_steer(left_motor, right_motor, 10, 0);
     //while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 30) {
     //    display_sensors();
