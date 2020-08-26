@@ -288,11 +288,11 @@ int allTasks[4][3][7][3] = {
             },
             //index 1
             {
-                8,19,275
+                8,18,275
             },
             //index 2
             {
-                30,43,450
+                30,37,450
             },
             //index 3
             {
@@ -782,19 +782,31 @@ void runYellowStreet(){
     a_motor_index = 0;
     d_motor_index = 0;
     wall_follow_with_tasks(90,3,0,1,0,0,25);
-    wall_follow_with_tasks(55,3,0,2,0,0,10);
+    wall_follow_with_tasks(42,3,0,2,0,0,10);
     ev3_motor_steer(left_motor,right_motor,30,-45);
+    tslp_tsk(600);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,30,0);
     tslp_tsk(800);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    wall_follow_with_tasks(76,3,0,0,0,0,25);
     ev3_motor_steer(left_motor,right_motor,30,-45);
-    tslp_tsk(700);
+    tslp_tsk(200);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor, right_motor, 15, 5);
+    wall_follow_with_tasks(35,3,0,0,0,0,35);
+    ev3_motor_steer(left_motor,right_motor,15,0);
+    while (ev3_color_sensor_get_reflect(color_3) > 20) {
+    }
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,30,0);
+    tslp_tsk(350);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,30,-45);
+    tslp_tsk(750);
+    ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     float wheelDistance = 0;
-    ev3_motor_steer(left_motor,right_motor,15,0);
+    ev3_motor_steer(left_motor,right_motor,15,3);
     while(wheelDistance < 44){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
     }
@@ -832,7 +844,7 @@ void runRedStreet(){
     tslp_tsk(402);
     ev3_motor_steer(left_motor,right_motor,0,0);
     wall_follow_with_tasks(60,0,0,1,0,0,25);
-    ev3_motor_steer(left_motor, right_motor, 10, 5);
+    ev3_motor_steer(left_motor, right_motor, 15, 3);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
     ev3_motor_steer(left_motor,right_motor,30,0);
@@ -841,7 +853,7 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,30,-45);
     tslp_tsk(700);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor, right_motor, 15, 5);
+    ev3_motor_steer(left_motor, right_motor, 15, 3);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
     ev3_motor_steer(left_motor,right_motor,0,0);
