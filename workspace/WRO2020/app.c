@@ -288,7 +288,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 1
             {
-                98,110,275
+                98,109,275
             },
             //index 2
             {
@@ -566,15 +566,11 @@ int round_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    init();
-    init();
-    init();
     //readCode();
     readColorCode();
     run2020();
     //runBlueStreet();
 }
-
 void run2020(){
     int road = 0;
     int i = 0;
