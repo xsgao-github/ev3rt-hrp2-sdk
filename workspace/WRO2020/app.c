@@ -812,10 +812,10 @@ void runRedStreet(){
     ev3_motor_rotate(a_motor,200,-50,true);
     ev3_motor_steer(left_motor,right_motor,-15,70);
     ev3_motor_rotate(a_motor,100,-50,false);
-    tslp_tsk(1000);
+    tslp_tsk(1100);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_set_power(a_motor,-50);
-    tslp_tsk(800);
+    tslp_tsk(700);
     ev3_motor_set_power(a_motor,0);
     ev3_motor_steer(left_motor,right_motor,-30,0);
     tslp_tsk(402);
