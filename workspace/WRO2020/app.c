@@ -566,10 +566,10 @@ int round_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    //readCode();
-    readColorCode();
-    run2020();
-    //runBlueStreet();
+    readCode();
+    //readColorCode();
+    //run2020();
+    runBlueStreet();
 }
 void run2020(){
     int road = 0;
@@ -654,11 +654,11 @@ void runBlueStreet(){
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     pos.street = BLUE_STREET;
     tslp_tsk(100);
-    //linePID_with_tasks(86, false);
-    linePID_with_tasks(60, (round_index != 0 && tasks[BLUE_STREET][0] == COLLECTSNOW));
     if (round_index != 0 && carDetected[BLUE_STREET] == 1) {
+        //linePID_with_tasks(86, false);
         ev3_speaker_play_tone(NOTE_G6, 1000000000);
     } else {
+        linePID_with_tasks(60, (round_index != 0 && tasks[BLUE_STREET][0] == COLLECTSNOW));
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 60, 20, true);
         ev3_motor_reset_counts(left_motor);
@@ -678,7 +678,7 @@ void runBlueStreet(){
     tslp_tsk(250);
     ev3_motor_steer(left_motor, right_motor, -10, 0);
     tslp_tsk(250);
-    ev3_motor_rotate(right_motor, 150, 20, true);
+    ev3_motor_rotate(right_motor, 190, 20, true);
     tslp_tsk(100);
     linePID_with_tasks(32, (round_index != 0 && tasks[BLUE_STREET][0] == 0));
     //ev3_motor_steer(left_motor, right_motor, 10, 0);
@@ -1100,7 +1100,7 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
     float lasterror = 0, integral = 0;
     while (wheelDistance < distance) {
         if(wheelDistance > next_a_motor_task[0] && tasksLeftA > 0 && isTurningA == 0){
-            ev3_motor_rotate(a_motor,next_a_motor_task[2],80,false);
+            ev3_motor_rotate(a_motor,next_a_motor_task[2],0,false);
             isTurningA = 1;
         }
         if(wheelDistance > next_a_motor_task[1] && tasksLeftA > 0 && isTurningA == 1){
@@ -1415,12 +1415,12 @@ static void button_clicked_handler(intptr_t button) {
     switch(button) {
     case BACK_BUTTON:
             ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
-            ev3_lcd_draw_string("Stopping Program", 2, 60);
+            ev3_lcd_draw_string("Stopping Program", 10, 60);
             ev3_motor_stop(left_motor, false);
             ev3_motor_stop(right_motor, false);
             ev3_motor_stop(a_motor, false);
             ev3_motor_stop(d_motor, false);
-            ev3_lcd_draw_string("Program  Stopped", 2, 60);
+            ev3_lcd_draw_string("Program  Stopped", 10, 60);
         exit(0);
         break;
     }
