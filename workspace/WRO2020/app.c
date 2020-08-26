@@ -1045,6 +1045,8 @@ void readColorCode(){
  * \param distance Distance in cm
 */
 void linePID_with_tasks(int distance, int doCar){
+    ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
+
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_reset_counts(a_motor);
@@ -1258,7 +1260,16 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
  * \param doCar Do we do car collection or not?
 */
 void execute_tasks(float distance, int doCar) {
-    display_sensors();
+    //display_sensors();
+    char lcdstr[100];
+    sprintf(lcdstr, "a_turning: %d", a_turning);
+    ev3_lcd_draw_string(lcdstr, 0, 0);
+    sprintf(lcdstr, "d_turning: %d", d_turning);
+    ev3_lcd_draw_string(lcdstr, 0, 15);
+    sprintf(lcdstr, "a_index: %d", a_motor_index);
+    ev3_lcd_draw_string(lcdstr, 0, 45);
+    sprintf(lcdstr, "d_index: %d", d_motor_index);
+    ev3_lcd_draw_string(lcdstr, 0, 60);
 
     //declare/define variables
     int a_degrees;
