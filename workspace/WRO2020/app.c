@@ -288,11 +288,11 @@ int allTasks[4][3][7][3] = {
             },
             //index 1
             {
-                98,109,275
+                8,19,275
             },
             //index 2
             {
-                120,133,450
+                30,43,450
             },
             //index 3
             {
@@ -772,8 +772,8 @@ void runYellowStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
-    wall_follow_with_tasks(100,3,0,1,0,0,25);
-    wall_follow_with_tasks(40,3,0,2,0,0,10);
+    wall_follow_with_tasks(90,3,0,1,0,0,25);
+    wall_follow_with_tasks(50,3,0,2,0,0,10);
     ev3_motor_steer(left_motor,right_motor,30,-45);
     tslp_tsk(700);
     ev3_motor_steer(left_motor,right_motor,0,0);
@@ -798,7 +798,7 @@ void runRedStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
-    wall_follow_with_tasks(128,3,2,3,0,0);
+    wall_follow_with_tasks(128,3,2,3,0,0,25);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     float wheelDistance = 0;
@@ -822,7 +822,7 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,-30,0);
     tslp_tsk(402);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    wall_follow_with_tasks(60,0,0,1,0,0);
+    wall_follow_with_tasks(60,0,0,1,0,0,25);
     ev3_motor_steer(left_motor, right_motor, 10, 5);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
@@ -1189,6 +1189,8 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             assert(val);
             if(rgb4.g < 40 && rgb4.r < 40 && rgb4.b < 40){
                 ev3_speaker_play_tone(NOTE_C5,60);
+            sprintf(lcdstr, "hi");
+            ev3_lcd_draw_string(lcdstr, 0, 60);
                 carDetected[pos.street] = color_4_index + 1;
             }
             sprintf(lcdstr, "%d,  %d,  %d,  ", rgb4.r, rgb4.g, rgb4.b);
@@ -1280,7 +1282,7 @@ void execute_tasks(float distance, int doCar) {
         a_turning = 1;
         if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][1]) {
             //execute part 2 of task
-            ev3_motor_rotate(a_motor, -a_degrees, 80, false);
+            ev3_motor_rotate(a_motor, -1 * a_degrees, 80, false);
             a_turning = 1;
             a_motor_index += 1;
         }
