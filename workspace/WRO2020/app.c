@@ -20,10 +20,10 @@ const int color_1 = EV3_PORT_2, color_2 = EV3_PORT_2, color_3 = EV3_PORT_3, colo
 
 // declare methods
 void run2020();
-void runBlueStreet();
-void runGreenStreet();
-void runYellowStreet();
-void runRedStreet();
+void runBlueStreet(int doCar);
+void runGreenStreet(int doCar);
+void runYellowStreet(int doCar);
+void runRedStreet(int doCar);
 void readCode();
 void readColorCode();
 void linePID_with_tasks(int distance, int doCar);
@@ -568,8 +568,8 @@ void main_task(intptr_t unused) {
     init();
     //readCode();
     readColorCode();
-    run2020();
-    //runBlueStreet();
+    //run2020();
+    runRedStreet(1);
 }
 
 void run2020(){
@@ -581,31 +581,31 @@ void run2020(){
         if (pos.street == RED_STREET){
             if (tasks[GREEN_STREET][0] == COLLECTSNOW){
                 road += 1;
-                runGreenStreet();
+                runGreenStreet(0);
                 tasks[GREEN_STREET][1] = 1;
             }
             else if (tasks[RED_STREET][0] == COLLECTSNOW){
                 road += 1;
-                runRedStreet();
+                runRedStreet(0);
                 tasks[RED_STREET][1] = 1;
             }
             else{
-                runRedStreet();
+                runRedStreet(0);
             }
         }
         else if (pos.street == YELLOW_STREET){
             if (tasks[BLUE_STREET][0] == COLLECTSNOW){
                 road += 1;
-                runBlueStreet();
+                runBlueStreet(0);
                 tasks[BLUE_STREET][1] = 1;
             }
             else if (tasks[YELLOW_STREET][0] == COLLECTSNOW){
                 road += 1;
-                runYellowStreet();
+                runYellowStreet(0);
                 tasks[YELLOW_STREET][1] = 1;
             }
             else{
-                runYellowStreet();
+                runYellowStreet(0);
             }
         }
     }
@@ -616,6 +616,7 @@ void run2020(){
         }
     }
     if (pos.street = RED_STREET){
+        runRedStreet(1);
         pos.street = YELLOW_STREET;
     }
     else if (pos.street = YELLOW_STREET){
@@ -624,7 +625,7 @@ void run2020(){
     round_index += 1;
 
 }
-void runBlueStreet(){
+void runBlueStreet(int doCar){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -701,7 +702,7 @@ void runBlueStreet(){
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     pos.street = YELLOW_STREET;
 }
-void runGreenStreet(){
+void runGreenStreet(int doCar){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -766,7 +767,7 @@ void runGreenStreet(){
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     pos.street = RED_STREET;
 }
-void runYellowStreet(){
+void runYellowStreet(int doCar){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -804,7 +805,7 @@ void runYellowStreet(){
     ev3_motor_steer(left_motor,right_motor,0,0);
     pos.street = RED_STREET;
 }
-void runRedStreet(){
+void runRedStreet(int doCar){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
