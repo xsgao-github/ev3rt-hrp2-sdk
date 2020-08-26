@@ -687,13 +687,12 @@ void runBlueStreet(){
     //    display_sensors();
     //}
     //ev3_motor_steer(left_motor, right_motor, 0, 0);
-    ev3_motor_rotate(left_motor, 150, 20, false);
-    ev3_motor_rotate(right_motor, 150, 20, true);
+    ev3_motor_rotate(left_motor, 20, 10, true);
+    ev3_motor_rotate(left_motor, 160, 20, false);
+    ev3_motor_rotate(right_motor, 160, 20, true);
     tslp_tsk(100);
-    ev3_motor_rotate(right_motor, 220, 20, true);
+    ev3_motor_rotate(right_motor, 230, 20, true);
     tslp_tsk(100);
-    //ev3_motor_steer(left_motor, right_motor, 20, 5);
-    //tslp_tsk(1000);
     ev3_motor_steer(left_motor, right_motor, 10, 5);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
         display_sensors();
@@ -765,7 +764,6 @@ void runGreenStreet(){
     }
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-
     pos.street = RED_STREET;
 }
 void runYellowStreet(){
@@ -1045,11 +1043,13 @@ void readColorCode(){
  * \param distance Distance in cm
 */
 void linePID_with_tasks(int distance, int doCar){
+    ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
+
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_reset_counts(a_motor);
     ev3_motor_reset_counts(d_motor);
-    float wheelDistance = ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2;
+    float wheelDistance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360));
     float lasterror = 0, integral = 0;
     while (wheelDistance < distance) {
         execute_tasks(wheelDistance, doCar);
@@ -1260,7 +1260,16 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
  * \param doCar Do we do car collection or not?
 */
 void execute_tasks(float distance, int doCar) {
-    display_sensors();
+    //display_sensors();
+    char lcdstr[100];
+    sprintf(lcdstr, "a_turning: %d", a_turning);
+    ev3_lcd_draw_string(lcdstr, 0, 0);
+    sprintf(lcdstr, "d_turning: %d", d_turning);
+    ev3_lcd_draw_string(lcdstr, 0, 15);
+    sprintf(lcdstr, "a_index: %d", a_motor_index);
+    ev3_lcd_draw_string(lcdstr, 0, 45);
+    sprintf(lcdstr, "d_index: %d", d_motor_index);
+    ev3_lcd_draw_string(lcdstr, 0, 60);
 
     //declare/define variables
     int a_degrees;
