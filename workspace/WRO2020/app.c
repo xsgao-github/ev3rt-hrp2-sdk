@@ -567,7 +567,7 @@ int round_index = 0;
 void main_task(intptr_t unused) {
     init();
     readColorCode();
-    carDetected[3]
+    carDetected[3] = 1;
     for (i = 0;i < 3;i++){
         for (j = 0;j < 3;j++){
             carTasks[i][j] = carArray[i][carDetected[i]][j];
@@ -857,7 +857,7 @@ void doCarRedStreet(){
     a_motor_index = 2;
     d_motor_index = 0;
     wall_follow_with_tasks(128,3,0,1,0,1,25);
-    ev3_motor_reset_counts(left_motor);
+    /*ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     float wheelDistance = 0;
     ev3_motor_set_power(a_motor,50);
@@ -893,7 +893,7 @@ void doCarRedStreet(){
     ev3_motor_steer(left_motor, right_motor, 15, 3);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
-    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,0,0);*/
     pos.street = YELLOW_STREET;
 }
 
