@@ -1247,6 +1247,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     int isTurningA = 0;
     int a_motorStopped = 0;
     int isTurningD = 0;
+    int d_motorStopped = 0;
     char lcdstr[100];
     float wheelDistance = -100;
     int tasksLeft4 = tasksNum4;
@@ -1269,6 +1270,11 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             ev3_motor_stop(a_motor,false);
             ev3_speaker_play_tone(NOTE_A5,60);
             a_motorStopped = 1;
+        }
+        if(ev3_motor_get_power(d_motor) == 0 && ev3_motor_get_counts(d_motor) < 10 && d_motorStopped == 0){
+            ev3_motor_stop(d_motor,false);
+            ev3_speaker_play_tone(NOTE_A5,60);
+            d_motorStopped = 1;
         }
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
             ev3_speaker_play_tone(NOTE_C4,60);
@@ -1326,6 +1332,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             }
             isTurningD = 0;
             tasksLeftD -= 1;
+            d_motorStopped = 0;
         }
         if(ev3_color_sensor_get_reflect(color_2) > 75 && pos.dash % 2 == 0 && wheelDistance > lastDash + 3){
             pos.dash += 1;
