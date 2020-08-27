@@ -571,8 +571,8 @@ void main_task(intptr_t unused) {
     int j = 0;
     readColorCode();
     carDetected[3] = 1;
-    for (i = 0;i < 3;i++){
-        for (j = 0;j < 3;j++){
+    for (i = 0;i < 4;i++){
+        for (j = 0;j < 4;j++){
             carTasks[i][j] = carArray[i][carDetected[i]][j];
         }
     }
