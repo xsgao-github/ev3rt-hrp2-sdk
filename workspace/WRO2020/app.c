@@ -529,7 +529,7 @@ int carArray[4][3][3] = {
         },
         //car 2
         {
-            5,20,-1
+            0,20,-1
         },
         //car 3
         {
@@ -566,7 +566,7 @@ int round_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    /*
+    ///*
     char lcdstr[100];
     int i = 0;
     int j = 0;
@@ -581,7 +581,7 @@ void main_task(intptr_t unused) {
     sprintf(lcdstr, "%d  %d  %d", carTasks[3][0],carTasks[3][1],carTasks[3][2]);
     ev3_lcd_draw_string(lcdstr, 0, 0);
     doCarRedStreet();
-    */
+    //*/
     /*
     readCode();
     runBlueStreet();
@@ -886,46 +886,21 @@ void runRedStreet(){
 }
 void doCarRedStreet(){
     color_4_index = 0;
-    a_motor_index = 1;
+    a_motor_index = 0;
     d_motor_index = 0;
-    wall_follow_with_tasks(128,3,0,1,0,1,25);
-    /*ev3_motor_reset_counts(left_motor);
-    ev3_motor_reset_counts(right_motor);
-    float wheelDistance = 0;
-    ev3_motor_set_power(a_motor,50);
-    tslp_tsk(800);
-    ev3_motor_set_power(a_motor,0);
-    ev3_motor_steer(left_motor, right_motor, 10, 5);
-    while (ev3_color_sensor_get_reflect(color_3) > 20) {
-    }
-    ev3_motor_steer(left_motor,right_motor,-30,0);
-    tslp_tsk(300);
+    wall_follow_with_tasks(128,3,0,0,0,1,25);
+    ev3_motor_steer(left_motor,right_motor,-30,90);
+    tslp_tsk(200);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_rotate(a_motor,200,-50,true);
-    ev3_motor_steer(left_motor,right_motor,-15,70);
-    ev3_motor_rotate(a_motor,100,-50,false);
-    tslp_tsk(1075);
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_set_power(a_motor,-50);
-    tslp_tsk(700);
-    ev3_motor_set_power(a_motor,0);
-    ev3_motor_steer(left_motor,right_motor,-30,0);
-    tslp_tsk(402);
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    wall_follow_with_tasks(60,0,0,1,0,0,25);
-    ev3_motor_steer(left_motor, right_motor, 15, 3);
-    while (ev3_color_sensor_get_reflect(color_3) > 20) {
-    }
     ev3_motor_steer(left_motor,right_motor,30,0);
-    tslp_tsk(450);
+    tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,30,-45);
-    tslp_tsk(700);
+    ev3_motor_steer(left_motor,right_motor,-30,0);
+    tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor, right_motor, 15, 3);
-    while (ev3_color_sensor_get_reflect(color_3) > 20) {
-    }
-    ev3_motor_steer(left_motor,right_motor,0,0);*/
+    ev3_motor_steer(left_motor,right_motor,-30,-90);
+    tslp_tsk(200);
+    ev3_motor_steer(left_motor,right_motor,0,0);
     pos.street = YELLOW_STREET;
 }
 
