@@ -1291,7 +1291,12 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             tasksLeftA -= 1;
         }
         if(wheelDistance > carTasks[pos.street][0] && doCar && isTurningA == 0 && carDone == false){
-            ev3_motor_rotate(a_motor,carTasks[pos.street][2],80,false);
+            if(carTasks[pos.street][2] == -1){
+                ev3_motor_set_power(a_motor,80);
+            }
+            else{
+                ev3_motor_rotate(a_motor,carTasks[pos.street][2],80,false);
+            }
             isTurningA = 1;
         }
         if(wheelDistance > carTasks[pos.street][1] && doCar && isTurningA == 1 && carDone == false){
