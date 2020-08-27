@@ -587,6 +587,7 @@ void main_task(intptr_t unused) {
     runBlueStreet();
     */
     readCode();
+    pos.street = BLUE_STREET;
     float distance;
     while (true) {
         distance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360));
