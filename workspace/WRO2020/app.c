@@ -26,7 +26,7 @@ void runYellowStreet();
 void runRedStreet();
 void readCode();
 void readColorCode();
-void linePID_with_tasks(int distance, int doCar);
+void linePID_with_tasks(int distance, int speed,int doCar);
 void color4PID(int distance,int tasksNumA,int tasksNumD);
 void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,int tasksNumD,int doCar,int speed);
 void execute_tasks(float distance, int doCar);
