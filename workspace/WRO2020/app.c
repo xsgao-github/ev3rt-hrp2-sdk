@@ -575,6 +575,9 @@ void main_task(intptr_t unused) {
             carTasks[i][j] = carArray[i][carDetected[i]][j];
         }
     }
+    pos.street = RED_STREET;
+    sprintf(lcdstr, "%d  %d  %d", carTasks[3][0],carTasks[3][1],carTasks[3][2]);
+    ev3_lcd_draw_string(lcdstr, 0, 0);
     doCarRedStreet();
 }
 
@@ -1281,9 +1284,10 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
         if(wheelDistance > carTasks[pos.street][0] && doCar && isTurningA == 0){
             ev3_motor_rotate(a_motor,carTasks[pos.street][2],80,false);
             isTurningA = 1;
+            a_motorStopped = 0;
         }
         if(wheelDistance > carTasks[pos.street][1] && doCar && isTurningA == 1){
-            ev3_motor_set_power(a_motor,-80);
+            ev3_motor_set_power(a_motor,-50);
             isTurningA = 0;
         }
         if(wheelDistance > next_d_motor_task[0] && tasksLeft4 > 0 && isTurningD == 0 && back_loaded){
