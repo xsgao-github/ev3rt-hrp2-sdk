@@ -556,10 +556,8 @@ int color_4_index = 0;
 int next_color_4_task[3] = {0,0,0};
 int a_motor_index = 0;
 int next_a_motor_task[3] = {0,0,0};
-int a_turning = false;
 int d_motor_index = 0;
 int next_d_motor_task[3] = {0,0,0};
-int d_turning = false;
 int back_loaded = false; // false, BLUEMATERIAL, BLACKMATERIAL
 int car_motor_index = 0;
 int round_index = 0;
@@ -699,8 +697,8 @@ void runBlueStreet(){
     //}
     //ev3_motor_steer(left_motor, right_motor, 0, 0);
     ev3_motor_rotate(left_motor, 20, 10, true);
-    ev3_motor_rotate(left_motor, 160, 20, false);
-    ev3_motor_rotate(right_motor, 160, 20, true);
+    ev3_motor_rotate(left_motor, 150, 20, false);
+    ev3_motor_rotate(right_motor, 150, 20, true);
     tslp_tsk(100);
     ev3_motor_rotate(right_motor, 230, 20, true);
     tslp_tsk(100);
@@ -1090,8 +1088,7 @@ void linePID_with_tasks(int distance, int doCar){
         integral = error + integral * 0.6;
         float steer = 0.035 * error + 0.25 * integral + 4 * (error - lasterror);
         ev3_motor_steer(left_motor, right_motor, 30, steer);
-        lasterror = error;  
-        display_sensors();
+        lasterror = error;
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     tslp_tsk(5);
@@ -1284,51 +1281,32 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
 */
 void execute_tasks(float distance, int doCar) {
     //display_sensors();
+    tslp_tsk(5);
     char lcdstr[100];
-    sprintf(lcdstr, "a_turning: %d", a_turning);
-    ev3_lcd_draw_string(lcdstr, 0, 0);
-    sprintf(lcdstr, "d_turning: %d", d_turning);
-    ev3_lcd_draw_string(lcdstr, 0, 15);
     sprintf(lcdstr, "a_index: %d", a_motor_index);
     ev3_lcd_draw_string(lcdstr, 0, 45);
     sprintf(lcdstr, "d_index: %d", d_motor_index);
     ev3_lcd_draw_string(lcdstr, 0, 60);
 
-    //declare/define variables
-    int a_degrees;
-    int d_degrees;
-
-    //check if motors are moving
-    if (abs(ev3_motor_get_power(a_motor)) == 0) {
-        a_turning = 0;
-    }
-    if (abs(ev3_motor_get_power(d_motor)) == 0) {
-        d_turning = 0;
-    }
-
     //check for a_motor task, execute task if task is to collect snow and it is time
-    a_degrees = allTasks[pos.street][A_MOTOR][a_motor_index][2];
-    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && a_turning == 0 && tasks[pos.street][0] == COLLECTSNOW) {
+    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && (abs(ev3_motor_get_power(a_motor))) == 0 && tasks[pos.street][0] == COLLECTSNOW) {
         //execute part 1 of task
-        ev3_motor_rotate(a_motor, a_degrees, 80, false);
-        a_turning = 1;
+        ev3_motor_rotate(a_motor, allTasks[pos.street][A_MOTOR][a_motor_index][2], 80, false);
         if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][1]) {
             //execute part 2 of task
-            ev3_motor_rotate(a_motor, -1 * a_degrees, 80, false);
-            a_turning = 1;
+            ev3_motor_rotate(a_motor, -allTasks[pos.street][A_MOTOR][a_motor_index][2], 80, false);
             a_motor_index += 1;
         }
     }
 
     //check for d_motor task, execute task if task is to dispense material and back is loaded and it is time and it is the correct material
-    d_degrees = allTasks[pos.street][D_MOTOR][d_motor_index][1];
-    if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_turning == 0 && tasks[pos.street][0] == back_loaded) {
+    if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && (abs(ev3_motor_get_power(d_motor))) == 0 && tasks[pos.street][0] == back_loaded) {
         //execute part 1 of task
-        ev3_motor_rotate(d_motor, d_degrees, 100, false);
+        ev3_motor_rotate(d_motor, allTasks[pos.street][D_MOTOR][d_motor_index][1], 100, false);
         d_turning = 1;
         if (d_turning == 0) {
             //execute part 2 of task
-            ev3_motor_rotate(d_motor, -d_degrees, 100, false);
+            ev3_motor_rotate(d_motor, -allTasks[pos.street][D_MOTOR][d_motor_index][1], 100, false);
             d_turning = 1;
             d_motor_index += 1;
         }
@@ -1348,6 +1326,7 @@ void execute_tasks(float distance, int doCar) {
 void init() {
     // Register button handlers
     ev3_button_set_on_clicked(BACK_BUTTON, button_clicked_handler, BACK_BUTTON);
+    ev3_button_set_on_clicked(DOWN_BUTTON, button_clicked_handler, -1);
     
     // Configure motors
     ev3_motor_config(left_motor, LARGE_MOTOR);
@@ -1449,14 +1428,21 @@ void display_sensors() {
 static void button_clicked_handler(intptr_t button) {
     switch(button) {
     case BACK_BUTTON:
-            ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
-            ev3_lcd_draw_string("Stopping Program", 10, 60);
-            ev3_motor_stop(left_motor, false);
-            ev3_motor_stop(right_motor, false);
-            ev3_motor_stop(a_motor, false);
-            ev3_motor_stop(d_motor, false);
-            ev3_lcd_draw_string("Program  Stopped", 10, 60);
+        ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
+        ev3_lcd_draw_string("Stopping Program", 10, 60);
+        ev3_motor_stop(left_motor, false);
+        ev3_motor_stop(right_motor, false);
+        ev3_motor_stop(a_motor, false);
+        ev3_motor_stop(d_motor, false);
+        ev3_lcd_draw_string("Program  Stopped", 10, 60);
         exit(0);
+        break;
+    case -1:
+        ev3_motor_stop(left_motor, false);
+        ev3_motor_stop(right_motor, false);
+        ev3_motor_stop(a_motor, false);
+        ev3_motor_stop(d_motor, false);
+        exit(2);
         break;
     }
 }
