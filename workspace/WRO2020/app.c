@@ -582,10 +582,16 @@ void main_task(intptr_t unused) {
     ev3_lcd_draw_string(lcdstr, 0, 0);
     doCarRedStreet();
     */
-    ///*
+    /*
     readCode();
     runBlueStreet();
-    //*/
+    */
+    readCode();
+    float distance;
+    while (true) {
+        distance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360));
+        execute_tasks(distance, false);
+    }
 }
 
 void run2020(){
@@ -1378,7 +1384,7 @@ void execute_tasks(float distance, int doCar) {
         d_task_running = 1;
     }
     //execute part 2 of task
-    if ((abs(ev3_motor_get_power(d_motor))) == 0) {
+    if ((abs(ev3_motor_get_power(d_motor))) == 0 && d_task_running == 1) {
         ev3_motor_rotate(d_motor, -1*allTasks[pos.street][D_MOTOR][d_motor_index][1], 100, false);
         d_task_running = 0;
         d_motor_index += 1;
@@ -1424,10 +1430,10 @@ void init() {
     ev3_speaker_set_volume(10);
 
     // reset snow/car collector and abrasive material spreader
-    //ev3_motor_set_power(a_motor, -100);
+    ev3_motor_set_power(a_motor, -100);
     ev3_motor_set_power(d_motor, 100);
     tslp_tsk(1500);
-    //ev3_motor_stop(a_motor, false);
+    ev3_motor_stop(a_motor, false);
     ev3_motor_stop(d_motor, false);
 
     // wait for button press
@@ -1506,6 +1512,7 @@ static void button_clicked_handler(intptr_t button) {
         ev3_motor_stop(right_motor, false);
         ev3_motor_stop(a_motor, false);
         ev3_motor_stop(d_motor, false);
+        ev3_led_set_color(LED_RED);
         ev3_lcd_draw_string("Program  Stopped", 10, 60);
         exit(0);
         break;
@@ -1514,6 +1521,7 @@ static void button_clicked_handler(intptr_t button) {
         ev3_motor_stop(right_motor, false);
         ev3_motor_stop(a_motor, false);
         ev3_motor_stop(d_motor, false);
+        ev3_led_set_color(LED_ORANGE);
         exit(2);
         break;
     }
