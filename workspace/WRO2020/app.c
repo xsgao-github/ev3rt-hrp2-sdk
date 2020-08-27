@@ -529,7 +529,7 @@ int carArray[4][3][3] = {
         },
         //car 2
         {
-            30,60,300
+            5,20,-1
         },
         //car 3
         {
@@ -1309,7 +1309,12 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             tasksLeftA -= 1;
         }
         if(wheelDistance > carTasks[pos.street][0] && doCar && isTurningA == 0 && carDone == 0){
-            ev3_motor_rotate(a_motor,carTasks[pos.street][2],80,false);
+            if(carTasks[pos.street][2] == -1){
+                ev3_motor_set_power(a_motor,80);
+            }
+            else{
+                ev3_motor_rotate(a_motor,carTasks[pos.street][2],80,false);
+            }
             ev3_speaker_play_tone(NOTE_C5,60);
             isTurningA = 1;
         }
