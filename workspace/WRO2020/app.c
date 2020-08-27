@@ -555,8 +555,10 @@ int carDetected[4] = {
 int color_4_index = 0;
 int next_color_4_task[3] = {0,0,0};
 int a_motor_index = 0;
+int a_task_running = false;
 int next_a_motor_task[3] = {0,0,0};
 int d_motor_index = 0;
+int d_task_running = false;
 int next_d_motor_task[3] = {0,0,0};
 int back_loaded = false; // false, BLUEMATERIAL, BLACKMATERIAL
 int car_motor_index = 0;
@@ -899,11 +901,11 @@ void readCode() {
     ev3_motor_reset_counts(EV3_PORT_C);
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     int i;
-    for (i = 1; i < 5; i++) {
+    for (i = 0; i < 4; i++) {
         // read instructions
         bit1 = 0;
         bit2 = 0;
-        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < (i * 58)) {
+        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((i + 1) * 60)) {
             display_sensors();
         }
         if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
@@ -913,7 +915,7 @@ void readCode() {
             bit1 = 0;
             ev3_speaker_play_tone(NOTE_C4, 50);
         }
-        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((i + 1) * 58)) {
+        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((i + 2) * 60)) {
             display_sensors();
         }
         if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
@@ -1289,27 +1291,29 @@ void execute_tasks(float distance, int doCar) {
     ev3_lcd_draw_string(lcdstr, 0, 60);
 
     //check for a_motor task, execute task if task is to collect snow and it is time
-    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && (abs(ev3_motor_get_power(a_motor))) == 0 && tasks[pos.street][0] == COLLECTSNOW) {
-        //execute part 1 of task
+    //execute part 1 of task
+    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && a_task_running == 0 && tasks[pos.street][0] == COLLECTSNOW) {
         ev3_motor_rotate(a_motor, allTasks[pos.street][A_MOTOR][a_motor_index][2], 80, false);
-        if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][1]) {
-            //execute part 2 of task
-            ev3_motor_rotate(a_motor, -allTasks[pos.street][A_MOTOR][a_motor_index][2], 80, false);
-            a_motor_index += 1;
-        }
+        a_task_running = 1;
+    }
+    //execute part 2 of task
+    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][1] && a_task_running == 1 && tasks[pos.street][0] == COLLECTSNOW) {
+        ev3_motor_rotate(a_motor, -1*allTasks[pos.street][A_MOTOR][a_motor_index][2], 80, false);
+        a_task_running = 0;
+        a_motor_index += 1;
     }
 
     //check for d_motor task, execute task if task is to dispense material and back is loaded and it is time and it is the correct material
-    if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && (abs(ev3_motor_get_power(d_motor))) == 0 && tasks[pos.street][0] == back_loaded) {
-        //execute part 1 of task
+    //execute part 1 of task
+    if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_task_running == 0 && tasks[pos.street][0] == back_loaded) {
         ev3_motor_rotate(d_motor, allTasks[pos.street][D_MOTOR][d_motor_index][1], 100, false);
-        d_turning = 1;
-        if (d_turning == 0) {
-            //execute part 2 of task
-            ev3_motor_rotate(d_motor, -allTasks[pos.street][D_MOTOR][d_motor_index][1], 100, false);
-            d_turning = 1;
-            d_motor_index += 1;
-        }
+        d_task_running = 1;
+    }
+    //execute part 2 of task
+    if ((abs(ev3_motor_get_power(d_motor))) == 0) {
+        ev3_motor_rotate(d_motor, -1*allTasks[pos.street][D_MOTOR][d_motor_index][1], 100, false);
+        d_task_running = 0;
+        d_motor_index += 1;
     }
 
     //check for color_4 task, execute if it is time
