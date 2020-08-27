@@ -579,7 +579,7 @@ void main_task(intptr_t unused) {
     pos.street = RED_STREET;
     sprintf(lcdstr, "%d  %d  %d", carTasks[3][0],carTasks[3][1],carTasks[3][2]);
     ev3_lcd_draw_string(lcdstr, 0, 0);
-    //doCarRedStreet();
+    doCarRedStreet();
 }
 
 void run2020(){
@@ -1232,6 +1232,7 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     int tasksLeftA = tasksNumA;
     int tasksLeftD = tasksNumD;
     int i = 0;
+    int carDone = 0;
     for(i = 0;i < 3;i++){
         next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
     }
@@ -1282,14 +1283,15 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             isTurningA = 0;
             tasksLeftA -= 1;
         }
-        if(wheelDistance > carTasks[pos.street][0] && doCar && isTurningA == 0){
+        if(wheelDistance > carTasks[pos.street][0] && doCar && isTurningA == 0 && carDone = false){
             ev3_motor_rotate(a_motor,carTasks[pos.street][2],80,false);
             isTurningA = 1;
             a_motorStopped = 0;
         }
-        if(wheelDistance > carTasks[pos.street][1] && doCar && isTurningA == 1){
+        if(wheelDistance > carTasks[pos.street][1] && doCar && isTurningA == 1 && carDone = false){
             ev3_motor_set_power(a_motor,-50);
             isTurningA = 0;
+            carDone = 1;
         }
         if(wheelDistance > next_d_motor_task[0] && tasksLeft4 > 0 && isTurningD == 0 && back_loaded){
             ev3_motor_rotate(d_motor,next_d_motor_task[2],80,false);
