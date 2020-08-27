@@ -529,7 +529,7 @@ int carArray[4][3][3] = {
         },
         //car 2
         {
-            50,60,300
+            30,60,300
         },
         //car 3
         {
@@ -879,7 +879,7 @@ void runRedStreet(){
 }
 void doCarRedStreet(){
     color_4_index = 0;
-    a_motor_index = 2;
+    a_motor_index = 1;
     d_motor_index = 0;
     wall_follow_with_tasks(128,3,0,1,0,1,25);
     /*ev3_motor_reset_counts(left_motor);
@@ -1277,8 +1277,6 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             assert(val);
             if(rgb4.g < 40 && rgb4.r < 40 && rgb4.b < 40){
                 ev3_speaker_play_tone(NOTE_C5,60);
-            sprintf(lcdstr, "hi");
-            ev3_lcd_draw_string(lcdstr, 0, 60);
                 carDetected[pos.street] = color_4_index + 1;
             }
             sprintf(lcdstr, "%d,  %d,  %d,  ", rgb4.r, rgb4.g, rgb4.b);
@@ -1304,13 +1302,15 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             isTurningA = 0;
             tasksLeftA -= 1;
         }
-        if(wheelDistance > carTasks[pos.street][0] && doCar && isTurningA == 0 && carDone = false){
+        if(wheelDistance > carTasks[pos.street][0] && doCar && isTurningA == 0 && carDone == 0){
             ev3_motor_rotate(a_motor,carTasks[pos.street][2],80,false);
+            ev3_speaker_play_tone(NOTE_C5,60);
             isTurningA = 1;
             a_motorStopped = 0;
         }
-        if(wheelDistance > carTasks[pos.street][1] && doCar && isTurningA == 1 && carDone = false){
+        if(wheelDistance > carTasks[pos.street][1] && doCar && isTurningA == 1 && carDone == 0){
             ev3_motor_set_power(a_motor,-50);
+            ev3_speaker_play_tone(NOTE_C5,60);
             isTurningA = 0;
             carDone = 1;
         }
