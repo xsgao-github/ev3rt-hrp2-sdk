@@ -881,9 +881,18 @@ void doCarRedStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
-    //wall_follow_with_tasks(128,3,0,0,0,1,25);
-    ev3_motor_steer(left_motor,right_motor,-30,45);
+    wall_follow_with_tasks(128,3,0,0,0,1,25);
+    ev3_motor_steer(left_motor,right_motor,-30,90);
+    tslp_tsk(200);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,30,0);
     tslp_tsk(1000);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,-30,0);
+    tslp_tsk(1000);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,-30,-90);
+    tslp_tsk(200);
     ev3_motor_steer(left_motor,right_motor,0,0);
     pos.street = YELLOW_STREET;
 }
