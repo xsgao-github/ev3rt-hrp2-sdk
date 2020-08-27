@@ -566,6 +566,7 @@ int round_index = 0;
 
 void main_task(intptr_t unused) {
     init();
+    char lcdstr[100];
     int i = 0;
     int j = 0;
     readColorCode();
@@ -578,7 +579,7 @@ void main_task(intptr_t unused) {
     pos.street = RED_STREET;
     sprintf(lcdstr, "%d  %d  %d", carTasks[3][0],carTasks[3][1],carTasks[3][2]);
     ev3_lcd_draw_string(lcdstr, 0, 0);
-    doCarRedStreet();
+    //doCarRedStreet();
 }
 
 void run2020(){
