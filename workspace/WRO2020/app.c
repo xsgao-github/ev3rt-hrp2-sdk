@@ -1306,13 +1306,13 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             ev3_motor_rotate(a_motor,carTasks[pos.street][2],80,false);
             ev3_speaker_play_tone(NOTE_C5,60);
             isTurningA = 1;
-            a_motorStopped = 0;
         }
         if(wheelDistance > carTasks[pos.street][1] && doCar && isTurningA == 1 && carDone == 0){
             ev3_motor_set_power(a_motor,-50);
             ev3_speaker_play_tone(NOTE_C5,60);
             isTurningA = 0;
             carDone = 1;
+            a_motorStopped = 0;
         }
         if(wheelDistance > next_d_motor_task[0] && tasksLeft4 > 0 && isTurningD == 0 && back_loaded){
             ev3_motor_rotate(d_motor,next_d_motor_task[2],80,false);
