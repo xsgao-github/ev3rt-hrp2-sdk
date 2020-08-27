@@ -26,7 +26,7 @@ void runYellowStreet();
 void runRedStreet();
 void readCode();
 void readColorCode();
-void linePID_with_tasks(int distance, int doCar);
+void linePID_with_tasks(int distance, int speed, int doCar);
 void color4PID(int distance,int tasksNumA,int tasksNumD);
 void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,int tasksNumD,int doCar,int speed);
 void execute_tasks(float distance, int doCar);
@@ -1304,12 +1304,12 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             isTurningA = 0;
             tasksLeftA -= 1;
         }
-        if(wheelDistance > carTasks[pos.street][0] && doCar && isTurningA == 0 && carDone = false){
+        if(wheelDistance > carTasks[pos.street][0] && doCar && isTurningA == 0 && carDone == false){
             ev3_motor_rotate(a_motor,carTasks[pos.street][2],80,false);
             isTurningA = 1;
             a_motorStopped = 0;
         }
-        if(wheelDistance > carTasks[pos.street][1] && doCar && isTurningA == 1 && carDone = false){
+        if(wheelDistance > carTasks[pos.street][1] && doCar && isTurningA == 1 && carDone == false){
             ev3_motor_set_power(a_motor,-50);
             isTurningA = 0;
             carDone = 1;
