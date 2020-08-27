@@ -566,6 +566,7 @@ int round_index = 0;
 
 void main_task(intptr_t unused) {
     init();
+    int i = 0;
     readColorCode();
     carDetected[3] = 1;
     for (i = 0;i < 3;i++){
