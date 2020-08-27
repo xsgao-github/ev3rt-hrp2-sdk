@@ -123,15 +123,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,0,-600
+                30,0,600
             },
             //index 1
             {
-                80,0,-900
+                80,0,900
             },
             //index 2
             {
-                30,0,-1200
+                30,0,1200
             },
             //index 3
             {
@@ -219,15 +219,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,0,-600
+                30,0,600
             },
             //index 1
             {
-                80,0,-900
+                80,0,900
             },
             //index 2
             {
-                30,0,-1200
+                30,0,1200
             },
             //index 3
             {
@@ -565,8 +565,8 @@ int car_motor_index = 0;
 int round_index = 0;
 
 void main_task(intptr_t unused) {
-    /*
     init();
+    /*
     char lcdstr[100];
     int i = 0;
     int j = 0;
@@ -669,10 +669,12 @@ void runBlueStreet(){
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
+    a_motor_index = 0;
+    d_motor_index = 0;
     pos.street = BLUE_STREET;
     tslp_tsk(100);
-    if (round_index != 0 && carDetected[BLUE_STREET] == 1) {
-        linePID_with_tasks(86, false);
+    if (round_index != 0 && carDetected[BLUE_STREET] == 1 && tasks[BLUE_STREET][0] == COLLECTSNOW) {
+        linePID_with_tasks(86, 25, false);
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 10, 20, true);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
@@ -684,9 +686,9 @@ void runBlueStreet(){
         tslp_tsk(250);
         ev3_motor_rotate(right_motor, 190, 20, true);
         tslp_tsk(100);
-        linePID_with_tasks(32, (round_index != 0 && tasks[BLUE_STREET][0] == 0));
+        linePID_with_tasks(32, 25, true);
     } else {
-        linePID_with_tasks(60, (round_index != 0 && tasks[BLUE_STREET][0] == COLLECTSNOW));
+        linePID_with_tasks(60, 25, false);
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 60, 20, true);
         ev3_motor_reset_counts(left_motor);
@@ -707,7 +709,7 @@ void runBlueStreet(){
         tslp_tsk(250);
         ev3_motor_rotate(right_motor, 190, 20, true);
         tslp_tsk(100);
-        linePID_with_tasks(32, (round_index != 0 && tasks[BLUE_STREET][0] == 0));
+        linePID_with_tasks(32, 25, false);
     }
     //ev3_motor_steer(left_motor, right_motor, 10, 0);
     //while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 30) {
@@ -761,7 +763,7 @@ void runGreenStreet(){
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     pos.street = GREEN_STREET;
-    linePID_with_tasks(86, (round_index != 0 && tasks[BLUE_STREET][0] == 0));
+    linePID_with_tasks(86, 25, (round_index != 0 && tasks[BLUE_STREET][0] == 0));
     ev3_motor_rotate(right_motor, 10, 20, true);
     ev3_motor_steer(left_motor, right_motor, 10, -1);
     while (ev3_color_sensor_get_reflect(color_2) > 20) {
@@ -772,7 +774,7 @@ void runGreenStreet(){
     tslp_tsk(250);
     ev3_motor_rotate(right_motor, 210, 20, true);
     tslp_tsk(100);
-    linePID_with_tasks(38, (round_index != 0 && tasks[BLUE_STREET][0] == 0));
+    linePID_with_tasks(38, 25, (round_index != 0 && tasks[BLUE_STREET][0] == 0));
     //ev3_motor_steer(left_motor, right_motor, 10, 0);
     //while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 30) {
     //    display_sensors();
@@ -1124,8 +1126,10 @@ void readColorCode(){
 /**
  * \brief follows a solid line using a PID and does tasks
  * \param distance Distance in cm
+ * \param speed speed abs (recommended 25 with tasks, 30 without)
+ * \param doCar is it a car-collecting road?
 */
-void linePID_with_tasks(int distance, int doCar){
+void linePID_with_tasks(int distance, int speed, int doCar){
     ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
 
     ev3_motor_reset_counts(left_motor);
@@ -1149,7 +1153,7 @@ void linePID_with_tasks(int distance, int doCar){
         float error = ev3_color_sensor_get_reflect(color_2) - ev3_color_sensor_get_reflect(color_3);
         integral = error + integral * 0.6;
         float steer = 0.035 * error + 0.25 * integral + 4 * (error - lasterror);
-        ev3_motor_steer(left_motor, right_motor, 30, steer);
+        ev3_motor_steer(left_motor, right_motor, speed, steer);
         lasterror = error;
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
@@ -1231,7 +1235,8 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
  * \param tasksNum4 amount of tasks for Color_4
  * \param tasksNumA amount of tasks for A_Motor
  * \param tasksNumD amount of tasks for D_Motor
- * \param doCar
+ * \param doCar is it a car-collecting road?
+ * \param speed speed abs (recommended 25 with tasks, 30 without, sometimes 15)
 */
 void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,int tasksNumD, int doCar, int speed){
     ev3_motor_reset_counts(left_motor);
