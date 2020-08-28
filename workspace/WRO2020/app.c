@@ -904,18 +904,6 @@ void doCarRedStreet(){
                 wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
                 tslp_tsk(1);
             }
-            ev3_motor_steer(left_motor,right_motor,-30,90);
-            tslp_tsk(200);
-            ev3_motor_steer(left_motor,right_motor,0,0);
-            ev3_motor_steer(left_motor,right_motor,30,0);
-            tslp_tsk(1000);
-            ev3_motor_steer(left_motor,right_motor,0,0);
-            ev3_motor_steer(left_motor,right_motor,-30,0);
-            tslp_tsk(1000);
-            ev3_motor_steer(left_motor,right_motor,0,0);
-            ev3_motor_steer(left_motor,right_motor,-30,90);
-            tslp_tsk(200);
-            ev3_motor_steer(left_motor,right_motor,0,0);
             break;
         case 2:
             ev3_motor_set_power(a_motor,80);
@@ -927,20 +915,26 @@ void doCarRedStreet(){
                 wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
                 tslp_tsk(1);
             }
-            ev3_motor_steer(left_motor,right_motor,-30,90);
-            tslp_tsk(200);
-            ev3_motor_steer(left_motor,right_motor,0,0);
-            ev3_motor_steer(left_motor,right_motor,30,0);
-            tslp_tsk(1000);
-            ev3_motor_steer(left_motor,right_motor,0,0);
-            ev3_motor_steer(left_motor,right_motor,-30,0);
-            tslp_tsk(1000);
-            ev3_motor_steer(left_motor,right_motor,0,0);
-            ev3_motor_steer(left_motor,right_motor,-30,90);
-            tslp_tsk(200);
-            ev3_motor_steer(left_motor,right_motor,0,0);
             break;
     }
+    ev3_motor_steer(left_motor,right_motor,-30,90);
+    tslp_tsk(200);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,30,0);
+    tslp_tsk(1000);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,-30,0);
+    tslp_tsk(1000);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,-30,90);
+    tslp_tsk(200);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,-15,0);
+    tslp_tsk(400);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,30,0);
+    tslp_tsk(2000);
+    ev3_motor_steer(left_motor,right_motor,0,0);
     pos.street = YELLOW_STREET;
 }
 
