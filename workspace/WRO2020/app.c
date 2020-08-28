@@ -824,10 +824,10 @@ void doCarRedStreet(){
     tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,-30,90);
-    tslp_tsk(200);
+    tslp_tsk(300);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,-15,0);
-    tslp_tsk(400);
+    ev3_motor_steer(left_motor,right_motor,-10,0);
+    tslp_tsk(750);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,30,0);
     tslp_tsk(2000);
