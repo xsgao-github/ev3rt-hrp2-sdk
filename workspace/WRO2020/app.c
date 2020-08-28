@@ -480,7 +480,7 @@ void main_task(intptr_t unused) {
     int i = 0;
     int j = 0;
     readColorCode();
-    carDetected[3] = 2;
+    carDetected[3] = 0;
     pos.street = RED_STREET;
     doCarRedStreet();
     //*/
@@ -812,8 +812,9 @@ void doCarRedStreet(){
             ev3_motor_set_power(a_motor,80);
             ev3_motor_steer(left_motor,right_motor,25,3);
             while(wheelDistance < 128){
-                if(wheelDistance > 20){
+                if(wheelDistance > 20 && taskIndex == 0){
                     ev3_motor_set_power(a_motor,-80);
+                    taskIndex = 1;
                 }
                 wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
                 tslp_tsk(1);
@@ -823,8 +824,13 @@ void doCarRedStreet(){
             ev3_motor_set_power(a_motor,80);
             ev3_motor_steer(left_motor,right_motor,25,3);
             while(wheelDistance < 128){
-                if(wheelDistance > 120){
+                if(wheelDistance > 20 && taskIndex == 0){
                     ev3_motor_set_power(a_motor,-80);
+                    taskIndex = 1;
+                }
+                if(wheelDistance > 90 && taskIndex == 1){
+                    ev3_motor_set_power(a_motor,-80);
+                    taskIndex = 2;
                 }
                 wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
                 tslp_tsk(1);
