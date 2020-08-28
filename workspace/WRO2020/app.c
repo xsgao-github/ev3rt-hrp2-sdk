@@ -446,97 +446,6 @@ int allTasks[4][3][7][3] = {
 * Index 2 - data:
 * ---------------[distance at execute (cm), distance at return (cm), degrees to rotate]
 */
-int carTasks[4][3] = {
-    //blue
-    {
-        //car
-        0,0,0
-    },
-    //green
-    {
-        //car
-        0,0,0
-    },
-    //yellow
-    {
-        //car
-        0,0,0
-    },
-    //red
-    {
-        //car
-        0,0,0
-    },
-};
-/*
- * how to get car?
- * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
- * Index 2 - Car [Car 1 is car on other side, Car 2 is first car, Car 3 is second car]
- * Index 3 - data:
- * ---------------[distance at execute (cm), distance at return (cm), degrees to rotate]
-*/
-int carArray[4][3][3] = {
-    //blue
-    {
-        //car 1
-        {
-            0,0,0
-        },
-        //car 2
-        {
-            0,0,0
-        },
-        //car 3
-        {
-            0,0,0
-        },
-    },
-    //green
-    {
-        //car 1
-        {
-            0,0,0
-        },
-        //car 2
-        {
-            0,0,0
-        },
-        //car 3
-        {
-            0,0,0
-        },
-    },
-    //yellow
-    {
-        //car 1
-        {
-            0,0,0
-        },
-        //car 2
-        {
-            0,0,0
-        },
-        //car 3
-        {
-            0,0,0
-        },
-    },
-    //red
-    {
-        //car 1
-        {
-            0,0,0
-        },
-        //car 2
-        {
-            0,20,-1
-        },
-        //car 3
-        {
-            0,0,0
-        },
-    },
-};
 /*
  * Position at where the car was detected
  * Index 1 - Car detected [0,1,2]
@@ -571,15 +480,8 @@ void main_task(intptr_t unused) {
     int i = 0;
     int j = 0;
     readColorCode();
-    carDetected[3] = 1;
-    for (i = 0;i < 4;i++){
-        for (j = 0;j < 4;j++){
-            carTasks[i][j] = carArray[i][carDetected[i]][j];
-        }
-    }
+    carDetected[3] = 2;
     pos.street = RED_STREET;
-    sprintf(lcdstr, "%d  %d  %d", carTasks[3][0],carTasks[3][1],carTasks[3][2]);
-    ev3_lcd_draw_string(lcdstr, 0, 0);
     doCarRedStreet();
     //*/
     /*
@@ -633,11 +535,6 @@ void run2020(){
         }
     }
     round_index += 1;
-    for (i = 0;i < 3;i++){
-        for (j = 0;j < 3;j++){
-            carTasks[i][j] = carArray[i][carDetected[i]][j];
-        }
-    }
     if (pos.street = RED_STREET){
         pos.street = YELLOW_STREET;
     }
