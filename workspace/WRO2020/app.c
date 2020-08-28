@@ -885,10 +885,30 @@ void runRedStreet(){
     pos.street = YELLOW_STREET;
 }
 void doCarRedStreet(){
-    color_4_index = 0;
-    a_motor_index = 0;
-    d_motor_index = 0;
-    wall_follow_with_tasks(128,3,0,0,0,1,25);
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
+    ev3_motor_reset_counts(a_motor);
+    ev3_motor_reset_counts(d_motor);
+    float wheelDistance = -100;
+    int taskIndex = 0;
+    switch(carDetected[pos.street]){
+        case 0:
+            break;
+        case 1:
+            ev3_motor_set_power(a_motor,80);
+            ev3_motor_steer(left_motor,right_motor,25,3);
+            while(wheelDistance < 128){
+                if(wheelDistance > 20){
+                    ev3_motor_set_power(a_motor,-80);
+                }
+                wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
+                tslp_tsk(1);
+            }
+            break;
+        case 2:
+            break;
+    }
+    //wall_follow_with_tasks(128,3,0,0,0,1,25);
     ev3_motor_steer(left_motor,right_motor,-30,90);
     tslp_tsk(200);
     ev3_motor_steer(left_motor,right_motor,0,0);
@@ -1289,22 +1309,6 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             }
             isTurningA = 0;
             tasksLeftA -= 1;
-        }
-        if(wheelDistance > carTasks[pos.street][0] && doCar && isTurningA == 0 && carDone == false){
-            if(carTasks[pos.street][2] == -1){
-                ev3_motor_set_power(a_motor,80);
-            }
-            else{
-                ev3_motor_rotate(a_motor,carTasks[pos.street][2],80,false);
-            }
-            isTurningA = 1;
-        }
-        if(wheelDistance > carTasks[pos.street][1] && doCar && isTurningA == 1 && carDone == false){
-            ev3_motor_set_power(a_motor,-50);
-            ev3_speaker_play_tone(NOTE_C5,60);
-            isTurningA = 0;
-            carDone = 1;
-            a_motorStopped = 0;
         }
         if(wheelDistance > next_d_motor_task[0] && tasksLeft4 > 0 && isTurningD == 0 && back_loaded){
             ev3_motor_rotate(d_motor,next_d_motor_task[2],80,false);
