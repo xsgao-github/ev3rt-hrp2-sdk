@@ -790,6 +790,23 @@ void doCarRedStreet(){
     int taskIndex = 0;
     switch(carDetected[pos.street]){
         case 0:
+            ev3_motor_set_power(a_motor,80);
+            ev3_motor_steer(left_motor,right_motor,25,3);
+            while(wheelDistance < 70){
+                wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
+                tslp_tsk(1);
+            }
+            ev3_motor_steer(left_motor,right_motor,0,0);
+            ev3_motor_reset_counts(left_motor);
+            ev3_motor_reset_counts(right_motor);
+            /*wheelDistance = 0;
+            while(wheelDistance < 128){
+                if(wheelDistance > 20){
+                    ev3_motor_set_power(a_motor,-80);
+                }
+                wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
+                tslp_tsk(1);
+            }*/
             break;
         case 1:
             ev3_motor_set_power(a_motor,80);
