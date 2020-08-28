@@ -475,7 +475,7 @@ int round_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    ///*
+    /*
     char lcdstr[100];
     int i = 0;
     int j = 0;
@@ -483,18 +483,20 @@ void main_task(intptr_t unused) {
     carDetected[3] = 2;
     pos.street = RED_STREET;
     doCarRedStreet();
+    */
+    ///*
+    readCode();
+    runBlueStreet();
     //*/
     /*
     readCode();
-    runBlueStreet();
+    pos.street = BLUE_STREET;
+    float distance;
+    while (true) {
+        distance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360));
+        execute_tasks(distance, false);
+    }
     */
-    //readCode();
-    //pos.street = BLUE_STREET;
-    //float distance;
-    //while (true) {
-        //distance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360));
-        //execute_tasks(distance, false);
-    //}
 }
 
 void run2020(){
