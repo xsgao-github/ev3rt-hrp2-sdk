@@ -830,7 +830,20 @@ void doCarRedStreet(){
     tslp_tsk(750);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,30,0);
-    tslp_tsk(2000);
+    tslp_tsk(2500);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor, right_motor, 15, 3);
+    while (ev3_color_sensor_get_reflect(color_3) > 20) {
+    }
+    ev3_motor_steer(left_motor,right_motor,30,0);
+    tslp_tsk(450);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,30,-45);
+    tslp_tsk(700);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor, right_motor, 15, 3);
+    while (ev3_color_sensor_get_reflect(color_3) > 20) {
+    }
     ev3_motor_steer(left_motor,right_motor,0,0);
     pos.street = YELLOW_STREET;
 }
