@@ -876,47 +876,62 @@ void runRedStreet(){
     pos.street = YELLOW_STREET;
 }
 void doCarRedStreet(){
-    color_4_index = 0;
-    a_motor_index = 2;
-    d_motor_index = 0;
-    wall_follow_with_tasks(128,3,0,1,0,1,25);
-    /*ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
-    float wheelDistance = 0;
-    ev3_motor_set_power(a_motor,50);
-    tslp_tsk(800);
-    ev3_motor_set_power(a_motor,0);
-    ev3_motor_steer(left_motor, right_motor, 10, 5);
-    while (ev3_color_sensor_get_reflect(color_3) > 20) {
+    ev3_motor_reset_counts(a_motor);
+    ev3_motor_reset_counts(d_motor);
+    float wheelDistance = -100;
+    int taskIndex = 0;
+    switch(carDetected[pos.street]){
+        case 0:
+            break;
+        case 1:
+            ev3_motor_set_power(a_motor,80);
+            ev3_motor_steer(left_motor,right_motor,25,3);
+            while(wheelDistance < 128){
+                if(wheelDistance > 20){
+                    ev3_motor_set_power(a_motor,-80);
+                }
+                wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
+                tslp_tsk(1);
+            }
+            ev3_motor_steer(left_motor,right_motor,-30,90);
+            tslp_tsk(200);
+            ev3_motor_steer(left_motor,right_motor,0,0);
+            ev3_motor_steer(left_motor,right_motor,30,0);
+            tslp_tsk(1000);
+            ev3_motor_steer(left_motor,right_motor,0,0);
+            ev3_motor_steer(left_motor,right_motor,-30,0);
+            tslp_tsk(1000);
+            ev3_motor_steer(left_motor,right_motor,0,0);
+            ev3_motor_steer(left_motor,right_motor,-30,90);
+            tslp_tsk(200);
+            ev3_motor_steer(left_motor,right_motor,0,0);
+            break;
+        case 2:
+            ev3_motor_set_power(a_motor,80);
+            ev3_motor_steer(left_motor,right_motor,25,3);
+            while(wheelDistance < 128){
+                if(wheelDistance > 120){
+                    ev3_motor_set_power(a_motor,-80);
+                }
+                wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
+                tslp_tsk(1);
+            }
+            ev3_motor_steer(left_motor,right_motor,-30,90);
+            tslp_tsk(200);
+            ev3_motor_steer(left_motor,right_motor,0,0);
+            ev3_motor_steer(left_motor,right_motor,30,0);
+            tslp_tsk(1000);
+            ev3_motor_steer(left_motor,right_motor,0,0);
+            ev3_motor_steer(left_motor,right_motor,-30,0);
+            tslp_tsk(1000);
+            ev3_motor_steer(left_motor,right_motor,0,0);
+            ev3_motor_steer(left_motor,right_motor,-30,90);
+            tslp_tsk(200);
+            ev3_motor_steer(left_motor,right_motor,0,0);
+            break;
     }
-    ev3_motor_steer(left_motor,right_motor,-30,0);
-    tslp_tsk(300);
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_rotate(a_motor,200,-50,true);
-    ev3_motor_steer(left_motor,right_motor,-15,70);
-    ev3_motor_rotate(a_motor,100,-50,false);
-    tslp_tsk(1075);
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_set_power(a_motor,-50);
-    tslp_tsk(700);
-    ev3_motor_set_power(a_motor,0);
-    ev3_motor_steer(left_motor,right_motor,-30,0);
-    tslp_tsk(402);
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    wall_follow_with_tasks(60,0,0,1,0,0,25);
-    ev3_motor_steer(left_motor, right_motor, 15, 3);
-    while (ev3_color_sensor_get_reflect(color_3) > 20) {
-    }
-    ev3_motor_steer(left_motor,right_motor,30,0);
-    tslp_tsk(450);
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,30,-45);
-    tslp_tsk(700);
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor, right_motor, 15, 3);
-    while (ev3_color_sensor_get_reflect(color_3) > 20) {
-    }
-    ev3_motor_steer(left_motor,right_motor,0,0);*/
     pos.street = YELLOW_STREET;
 }
 
