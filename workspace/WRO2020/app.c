@@ -952,11 +952,11 @@ void doCarYellowStreet(){
             ev3_motor_set_power(a_motor,80);
             ev3_motor_steer(left_motor,right_motor,25,3);
             while(wheelDistance < 132){
-                if(wheelDistance > 95 && taskIndex == 0){
+                if(wheelDistance > 105 && taskIndex == 0){
                     ev3_motor_set_power(a_motor,-80);
                     taskIndex = 1;
                 }
-                if(wheelDistance > 110 && taskIndex == 1){
+                if(wheelDistance > 120 && taskIndex == 1){
                     ev3_motor_set_power(a_motor,-80);
                     taskIndex = 2;
                 }
