@@ -1634,16 +1634,16 @@ static void button_clicked_handler(intptr_t button) {
         }
         break;
     case LEFT_BUTTON:
-        ev3_motor_stop(left_motor, false);
-        ev3_motor_stop(right_motor, false);
-        ev3_motor_stop(a_motor, false);
-        ev3_motor_stop(d_motor, false);
         int ms = 0;
         char lcdstr[100];
         ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
         while(true) {
+            ev3_motor_stop(left_motor, false);
+            ev3_motor_stop(right_motor, false);
+            ev3_motor_stop(a_motor, false);
+            ev3_motor_stop(d_motor, false);
             tslp_tsk(1);
-            if(click) {
+            if(click == 1) {
                 ms += 1;
             }
             sprintf(lcdstr, "Pause Screen");
