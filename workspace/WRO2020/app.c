@@ -798,11 +798,11 @@ void doCarRedStreet(){
             ev3_motor_steer(left_motor,right_motor,0,0);
             ev3_motor_reset_counts(left_motor);
             ev3_motor_reset_counts(right_motor);
-            ev3_motor_steer(left_motor,right_motor,20,45);
-            tslp_tsk(1000);
-            ev3_motor_steer(left_motor,right_motor,0,0);
             ev3_motor_steer(left_motor,right_motor,20,-45);
-            tslp_tsk(1000);
+            tslp_tsk(800);
+            ev3_motor_steer(left_motor,right_motor,0,0);
+            ev3_motor_steer(left_motor,right_motor,20,45);
+            tslp_tsk(800);
             ev3_motor_steer(left_motor,right_motor,0,0);
             tslp_tsk(1000000000);
             /*wheelDistance = 0;
