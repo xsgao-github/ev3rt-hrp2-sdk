@@ -1598,7 +1598,7 @@ static void button_clicked_handler(intptr_t button) {
         ev3_lcd_draw_string("Program  Stopped", 10, 60);
         exit(0);
         break;
-    case BACK_BUTTON:
+    case DOWN_BUTTON:
         ev3_motor_stop(left_motor, false);
         ev3_motor_stop(right_motor, false);
         ev3_motor_stop(a_motor, false);
