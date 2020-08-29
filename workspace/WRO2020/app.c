@@ -92,23 +92,23 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                17,23,350
+                17,23,300
             },
             //index 1
             {
-                23,30,0
+                52,59,400
             },
             //index 2
             {
-                52,59,190
+                1,7,0
             },
             //index 3
             {
-                1,7,0
+                15,17,0
             },
             //index 4
             {
-                15,17,0
+                1000,0,0
             },
             //index 5
             {
@@ -123,15 +123,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,0,-600
+                1000,0,-600 // 30
             },
             //index 1
             {
-                80,0,-900
+                1000,0,-900 // 80
             },
             //index 2
             {
-                30,0,-1200
+                1000,0,-1200 // 30
             },
             //index 3
             {
@@ -484,20 +484,21 @@ void main_task(intptr_t unused) {
     pos.street = RED_STREET;
     doCarRedStreet();
     */
-    /*
+    ///*
     readCode();
     tasks[BLUE_STREET][0] = COLLECTSNOW;
     runBlueStreet();
-    */
-    ///*
-    readCode();
+    //*/
+    /*
     pos.street = BLUE_STREET;
+    tasks[BLUE_STREET][0] = COLLECTSNOW;
+    ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
     float distance;
     while (true) {
         distance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360));
         execute_tasks(distance, false);
     }
-    //*/
+    */
 }
 
 void run2020(){
@@ -1285,13 +1286,14 @@ void execute_tasks(float distance, int doCar) {
     ev3_lcd_draw_string(lcdstr, 0, 35);
     sprintf(lcdstr, "d_task: %d", d_task_running);
     ev3_lcd_draw_string(lcdstr, 0, 50);
-    sprintf(lcdstr, "Distance: %d", distance);
+    sprintf(lcdstr, "Distance: %f4", distance);
     ev3_lcd_draw_string(lcdstr, 0, 70);
 
 
     //check for a_motor task, execute task if task is to collect snow and it is time
     //execute part 1 of task
     if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && a_task_running == 0 && tasks[pos.street][0] == COLLECTSNOW) {
+        ev3_motor_stop(a_motor, false);
         ev3_motor_rotate(a_motor, allTasks[pos.street][A_MOTOR][a_motor_index][2], 80, false);
         a_task_running = 1;
         ev3_speaker_play_tone(NOTE_C4, 50);
@@ -1301,13 +1303,14 @@ void execute_tasks(float distance, int doCar) {
         ev3_motor_stop(a_motor, false);
         ev3_motor_rotate(a_motor, -1*allTasks[pos.street][A_MOTOR][a_motor_index][2], 80, false);
         a_task_running = 0;
-        a_motor_index += 1;
+        a_motor_index++;
         ev3_speaker_play_tone(NOTE_C5, 50);
     }
 
     //check for d_motor task, execute task if task is to dispense material and back is loaded and it is time and it is the correct material
     //execute part 1 of task
     if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_task_running == 0 && tasks[pos.street][0] == back_loaded) {
+        ev3_motor_stop(d_motor, false);
         ev3_motor_rotate(d_motor, allTasks[pos.street][D_MOTOR][d_motor_index][1], 100, false);
         d_task_running = 1;
         ev3_speaker_play_tone(NOTE_G4, 50);
@@ -1444,6 +1447,8 @@ static void button_clicked_handler(intptr_t button) {
         ev3_motor_stop(a_motor, false);
         ev3_motor_stop(d_motor, false);
         ev3_led_set_color(LED_RED);
+        ev3_speaker_set_volume(100);
+        ev3_speaker_play_tone(250, 1000);
         ev3_lcd_draw_string("Program  Stopped", 10, 60);
         exit(0);
         break;
@@ -1453,7 +1458,7 @@ static void button_clicked_handler(intptr_t button) {
         ev3_motor_stop(a_motor, false);
         ev3_motor_stop(d_motor, false);
         ev3_led_set_color(LED_ORANGE);
-        exit(2);
+        exit(0);
         break;
     }
 }
