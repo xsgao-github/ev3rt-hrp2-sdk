@@ -101,7 +101,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 2
             {
-                15,17,400
+                12,24,400
             },
             //index 3
             {
@@ -599,7 +599,7 @@ void runBlueStreet(){
         ev3_motor_reset_counts(left_motor);
         ev3_motor_reset_counts(right_motor);
         ev3_motor_steer(left_motor, right_motor, 20, 0);
-        while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 320) {
+        while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 340) {
             execute_tasks((((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360)), false);
         }
         ev3_motor_steer(left_motor, right_motor, 0, 0);
@@ -1405,10 +1405,10 @@ void init() {
 
     // reset snow/car collector and abrasive material spreader
     ev3_motor_set_power(a_motor, -100);
-    //ev3_motor_set_power(d_motor, 100);
+    ev3_motor_set_power(d_motor, -100);
     tslp_tsk(1500);
     ev3_motor_stop(a_motor, false);
-    //ev3_motor_stop(d_motor, false);
+    ev3_motor_stop(d_motor, false);
 
     // wait for button press
     ev3_lcd_draw_string("Press OK to run", 14, 45);
