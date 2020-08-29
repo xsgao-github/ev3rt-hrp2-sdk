@@ -496,8 +496,6 @@ void main_task(intptr_t unused) {
 
 void run2020(){
     int road = 0;
-    int i = 0;
-    int j = 0;
     //road1
     while(road < 2){
         if (pos.street == RED_STREET){
@@ -1598,6 +1596,8 @@ void displayValues(char line1[100],char line2[100],char line3[100],char line4[10
 
 static void button_clicked_handler(intptr_t button) {
     int click = 0;
+    int ms = 0;
+    char lcdstr[100];
     switch(button) {
     case BACK_BUTTON:
         ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
@@ -1631,8 +1631,6 @@ static void button_clicked_handler(intptr_t button) {
         }
         break;
     case LEFT_BUTTON:
-        int ms = 0;
-        char lcdstr[100];
         ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
         while(true) {
             ev3_motor_stop(left_motor, false);
