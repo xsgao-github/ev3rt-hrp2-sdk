@@ -472,7 +472,7 @@ void main_task(intptr_t unused) {
     init();
     ///*
     readColorCode();
-    carDetected[2] = 0;
+    carDetected[2] = 1;
     pos.street = YELLOW_STREET;
     doCarYellowStreet();
     //*/
@@ -894,8 +894,8 @@ void doCarYellowStreet(){
         case 1:
             ev3_motor_set_power(a_motor,80);
             ev3_motor_steer(left_motor,right_motor,25,3);
-            while(wheelDistance < 152){
-                if(wheelDistance > 20 && taskIndex == 0){
+            while(wheelDistance < 132){
+                if(wheelDistance > 40 && taskIndex == 0){
                     ev3_motor_set_power(a_motor,-80);
                     taskIndex = 1;
                 }
