@@ -484,12 +484,12 @@ void main_task(intptr_t unused) {
     pos.street = RED_STREET;
     doCarRedStreet();
     */
-    ///*
+    /*
     readCode();
     tasks[BLUE_STREET][0] = COLLECTSNOW;
     runBlueStreet();
-    //*/
-    /*
+    */
+    ///*
     readCode();
     pos.street = BLUE_STREET;
     float distance;
@@ -497,7 +497,7 @@ void main_task(intptr_t unused) {
         distance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360));
         execute_tasks(distance, false);
     }
-    */
+    //*/
 }
 
 void run2020(){
