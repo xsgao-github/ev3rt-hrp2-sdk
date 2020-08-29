@@ -486,6 +486,7 @@ void main_task(intptr_t unused) {
     */
     ///*
     readCode();
+    tasks[BLUE_STREET][0] = COLLECTSNOW;
     runBlueStreet();
     //*/
     /*
@@ -1277,21 +1278,31 @@ void execute_tasks(float distance, int doCar) {
     tslp_tsk(5);
     char lcdstr[100];
     sprintf(lcdstr, "a_index: %d", a_motor_index);
-    ev3_lcd_draw_string(lcdstr, 0, 45);
+    ev3_lcd_draw_string(lcdstr, 0, 0);
+    sprintf(lcdstr, "a_task: %d", a_task_running);
+    ev3_lcd_draw_string(lcdstr, 0, 15);
     sprintf(lcdstr, "d_index: %d", d_motor_index);
-    ev3_lcd_draw_string(lcdstr, 0, 60);
+    ev3_lcd_draw_string(lcdstr, 0, 35);
+    sprintf(lcdstr, "d_task: %d", d_task_running);
+    ev3_lcd_draw_string(lcdstr, 0, 50);
+    sprintf(lcdstr, "Distance: %d", distance);
+    ev3_lcd_draw_string(lcdstr, 0, 70);
+
 
     //check for a_motor task, execute task if task is to collect snow and it is time
     //execute part 1 of task
     if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && a_task_running == 0 && tasks[pos.street][0] == COLLECTSNOW) {
         ev3_motor_rotate(a_motor, allTasks[pos.street][A_MOTOR][a_motor_index][2], 80, false);
         a_task_running = 1;
+        ev3_speaker_play_tone(NOTE_C4, 50);
     }
     //execute part 2 of task
     if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][1] && a_task_running == 1 && tasks[pos.street][0] == COLLECTSNOW) {
+        ev3_motor_stop(a_motor, false);
         ev3_motor_rotate(a_motor, -1*allTasks[pos.street][A_MOTOR][a_motor_index][2], 80, false);
         a_task_running = 0;
         a_motor_index += 1;
+        ev3_speaker_play_tone(NOTE_C5, 50);
     }
 
     //check for d_motor task, execute task if task is to dispense material and back is loaded and it is time and it is the correct material
@@ -1299,17 +1310,24 @@ void execute_tasks(float distance, int doCar) {
     if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_task_running == 0 && tasks[pos.street][0] == back_loaded) {
         ev3_motor_rotate(d_motor, allTasks[pos.street][D_MOTOR][d_motor_index][1], 100, false);
         d_task_running = 1;
+        ev3_speaker_play_tone(NOTE_G4, 50);
+
     }
     //execute part 2 of task
     if ((abs(ev3_motor_get_power(d_motor))) == 0 && d_task_running == 1) {
+        ev3_motor_stop(d_motor, false);
         ev3_motor_rotate(d_motor, -1*allTasks[pos.street][D_MOTOR][d_motor_index][1], 100, false);
         d_task_running = 0;
         d_motor_index += 1;
+        ev3_speaker_play_tone(NOTE_G5, 50);
     }
 
     //check for color_4 task, execute if it is time
     if (distance > allTasks[pos.street][COLOR_4][color_4_index][0]) {
         // TODO: check for cars
+        ev3_speaker_set_volume(100);
+        ev3_speaker_play_tone(10000, -1);
+        tslp_tsk(1000000000);
     }
 
 }
