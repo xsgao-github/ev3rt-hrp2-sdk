@@ -96,15 +96,15 @@ int allTasks[4][3][7][3] = {
             },
             //index 1
             {
-                52,59,400
+                52,59,20
             },
             //index 2
             {
-                1,7,0
+                15,17,400
             },
             //index 3
             {
-                15,17,0
+                1000,0,0
             },
             //index 4
             {
@@ -441,12 +441,6 @@ int allTasks[4][3][7][3] = {
     },
 };
 /*
-* Tasks for current randomization.
-* Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
-* Index 2 - data:
-* ---------------[distance at execute (cm), distance at return (cm), degrees to rotate]
-*/
-/*
  * Position at where the car was detected
  * Index 1 - Car detected [0,1,2]
 */
@@ -558,7 +552,7 @@ void runBlueStreet(){
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 40, 1);
     wall_follow_with_tasks(77, 1, 1, 2, 0, false, 30);
-    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    ev3_motor_set_power(a_motor, -50);
     tslp_tsk(100);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
@@ -577,6 +571,7 @@ void runBlueStreet(){
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
+    ev3_motor_stop(a_motor, false);
     a_motor_index = 0;
     d_motor_index = 0;
     pos.street = BLUE_STREET;
@@ -861,7 +856,7 @@ void readCode() {
     ev3_motor_reset_counts(EV3_PORT_B);
     ev3_motor_reset_counts(EV3_PORT_C);
     ev3_motor_steer(left_motor, right_motor, 30, 2);
-    while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < 250) {
+    while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < 280) {
         display_sensors();
     }
 
@@ -871,6 +866,11 @@ void readCode() {
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
+
+    // stop d_motor
+    ev3_motor_stop(d_motor, false);
+
+    // write down road
     if (rgb4.g < 20) {
         pos.street = RED_STREET;
         ev3_speaker_play_tone(NOTE_G4, 40);
@@ -977,6 +977,11 @@ void readColorCode(){
         tslp_tsk(10);
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
+
+    //Maitian add some documentation in comments anywas // stop d_motor
+    ev3_motor_stop(d_motor, false);
+    //continue readColorCode
+
     int x = 0;
     while(x < 50){
         color3color = ev3_color_sensor_get_color(color_3);
@@ -1365,10 +1370,10 @@ void init() {
 
     // reset snow/car collector and abrasive material spreader
     ev3_motor_set_power(a_motor, -100);
-    ev3_motor_set_power(d_motor, 100);
+    //ev3_motor_set_power(d_motor, 100);
     tslp_tsk(1500);
     ev3_motor_stop(a_motor, false);
-    ev3_motor_stop(d_motor, false);
+    //ev3_motor_stop(d_motor, false);
 
     // wait for button press
     ev3_lcd_draw_string("Press OK to run", 14, 45);
@@ -1382,6 +1387,7 @@ void init() {
         }
     }
     ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
+    ev3_motor_set_power(d_motor, 100);
 }
 
 void display_sensors() {
