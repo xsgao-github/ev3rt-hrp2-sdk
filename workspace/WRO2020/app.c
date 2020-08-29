@@ -473,7 +473,10 @@ void main_task(intptr_t unused) {
     ///*
     readColorCode();
     carDetected[2] = 1;
+    carDetected[3] = 1;
     pos.street = YELLOW_STREET;
+    doCarYellowStreet();
+    doCarRedStreet();
     doCarYellowStreet();
     //*/
     /*
@@ -1460,6 +1463,7 @@ void init() {
     ev3_button_set_on_clicked(BACK_BUTTON, button_clicked_handler, BACK_BUTTON);
     ev3_button_set_on_clicked(DOWN_BUTTON, button_clicked_handler, -1);
     ev3_button_set_on_clicked(LEFT_BUTTON, button_clicked_handler, 1);
+    ev3_button_set_on_clicked(RIGHT_BUTTON, button_clicked_handler, -2);
     
     // Configure motors
     ev3_motor_config(left_motor, LARGE_MOTOR);
@@ -1582,6 +1586,7 @@ void displayValues(char line1[100],char line2[100],char line3[100],char line4[10
 }
 
 static void button_clicked_handler(intptr_t button) {
+    int click = 0;
     switch(button) {
     case BACK_BUTTON:
         ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
@@ -1604,22 +1609,33 @@ static void button_clicked_handler(intptr_t button) {
         ev3_led_set_color(LED_ORANGE);
         exit(0);
         break;
+    case -2:
+        ev3_led_set_color(LED_ORANGE);
+        if(click == 0) {
+            click = 1;
+        }
+        if(click == 1) {
+            click = 0;
+        }
+        break;
     case 1:
         ev3_motor_stop(left_motor, false);
         ev3_motor_stop(right_motor, false);
         ev3_motor_stop(a_motor, false);
         ev3_motor_stop(d_motor, false);
-        while(true){
-            ev3_speaker_set_volume(100);
-            ev3_speaker_play_tone(250, 50);
-            ev3_led_set_color(LED_ORANGE);
-            tslp_tsk(500);
-            ev3_speaker_set_volume(100);
-            ev3_speaker_play_tone(300, 50);
-            ev3_led_set_color(LED_RED);
-            tslp_tsk(500);
+        int ms = 0;
+        char lcdstr[100];
+        while(true) {
+            tslp_tsk(1);
+            if(click) {
+                ms += 1;
+            }
+            ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
+            sprintf(lcdstr, "Pause Screen");
+            ev3_lcd_draw_string(lcdstr, 45, 30);
+            sprintf(lcdstr, "ms: %d", ms);
+            ev3_lcd_draw_string(lcdstr, 45, 45);
         }
-        exit(0);
         break;
     }
 }
