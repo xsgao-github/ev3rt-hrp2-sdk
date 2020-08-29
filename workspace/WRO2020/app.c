@@ -476,13 +476,8 @@ int round_index = 0;
 void main_task(intptr_t unused) {
     init();
     ///*
-    char lcdstr[100];
-    int i = 0;
-    int j = 0;
     readColorCode();
-    carDetected[3] = 0;
-    pos.street = RED_STREET;
-    doCarRedStreet();
+    run2020();
     //*/
     /*
     readCode();
@@ -536,6 +531,7 @@ void run2020(){
     }
     round_index += 1;
     if (pos.street = RED_STREET){
+        doCarRedStreet());
         pos.street = YELLOW_STREET;
     }
     else if (pos.street = YELLOW_STREET){
