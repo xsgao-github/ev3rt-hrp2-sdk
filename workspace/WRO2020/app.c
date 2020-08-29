@@ -529,7 +529,7 @@ void run2020(){
 
         }
     }
-    round_index += 1;
+    //round_index += 1;
     if (pos.street = RED_STREET){
         runRedStreet();
         pos.street = YELLOW_STREET;
@@ -538,7 +538,7 @@ void run2020(){
         
     }
     doCarRedStreet();
-    round_index += 1;
+    //round_index += 1;
 
 }
 void runBlueStreet(int state){
