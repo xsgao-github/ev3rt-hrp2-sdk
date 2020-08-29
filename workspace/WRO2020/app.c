@@ -1458,7 +1458,7 @@ void execute_tasks(float distance, int doCar) {
 void init() {
     // Register button handlers
     ev3_button_set_on_clicked(BACK_BUTTON, button_clicked_handler, BACK_BUTTON);
-    ev3_button_set_on_clicked(DOWN_BUTTON, button_clicked_handler, -1);
+    ev3_button_set_on_clicked(DOWN_BUTTON, button_clicked_handler, DOWN_BUTTON);
     ev3_button_set_on_clicked(LEFT_BUTTON, button_clicked_handler, RIGHT_BUTTON);
     ev3_button_set_on_clicked(RIGHT_BUTTON, button_clicked_handler, LEFT_BUTTON);
     
@@ -1598,7 +1598,7 @@ static void button_clicked_handler(intptr_t button) {
         ev3_lcd_draw_string("Program  Stopped", 10, 60);
         exit(0);
         break;
-    case -1:
+    case BACK_BUTTON:
         ev3_motor_stop(left_motor, false);
         ev3_motor_stop(right_motor, false);
         ev3_motor_stop(a_motor, false);
