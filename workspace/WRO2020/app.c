@@ -1437,7 +1437,6 @@ void init() {
     // Register button handlers
     ev3_button_set_on_clicked(BACK_BUTTON, button_clicked_handler, BACK_BUTTON);
     ev3_button_set_on_clicked(DOWN_BUTTON, button_clicked_handler, -1);
-    ev3_button_set_on_clicked(LEFT_BUTTON, button_clicked_handler, 1);
     
     // Configure motors
     ev3_motor_config(left_motor, LARGE_MOTOR);
