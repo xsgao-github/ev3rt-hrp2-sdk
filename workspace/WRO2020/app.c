@@ -93,19 +93,19 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                15,23,300
+                10,21,280
             },
             //index 1
             {
-                52,59,20
+                48,55,20
             },
             //index 2
             {
-                12,24,400
+                1000,0,0 // spacer
             },
             //index 3
             {
-                1000,0,0
+                0,0,400
             },
             //index 4
             {
@@ -569,7 +569,7 @@ void runBlueStreet(){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 20, 0);
-    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 80) {
+    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 40) {
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
