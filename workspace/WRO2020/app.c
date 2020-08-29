@@ -587,6 +587,7 @@ void runBlueStreet(int state){
     pos.street = BLUE_STREET;
     tslp_tsk(100);
     switch (state) {
+        case NOTHING:
         case REMOVESNOW:
             linePID_with_tasks(60, 25, false);
             tslp_tsk(100);
@@ -650,7 +651,7 @@ void runBlueStreet(int state){
             ev3_motor_rotate(right_motor, 190, 20, true);
             tslp_tsk(100);
             linePID_with_tasks(32, 25, true);
-        case DISPENSEMATERIAL:
+        case SPREADABRASIVE:
             // TODO: stuff
             //so for now, here's a beep
             ev3_speaker_play_tone(10000, 1000000000);
