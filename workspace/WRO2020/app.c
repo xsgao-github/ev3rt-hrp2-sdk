@@ -482,19 +482,6 @@ void main_task(intptr_t unused) {
     tasks[BLUE_STREET][0] = COLLECTSNOW;
     runBlueStreet();
     //*/
-<<<<<<< Updated upstream
-    /*
-    pos.street = BLUE_STREET;
-    tasks[BLUE_STREET][0] = COLLECTSNOW;
-    ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
-    float distance;
-    while (true) {
-        distance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360));
-        execute_tasks(distance, false);
-    }
-    */
-=======
->>>>>>> Stashed changes
 }
 
 void run2020(){
@@ -666,7 +653,7 @@ void runBlueStreet(){
     }
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    if(carDetected[pos.street] == -1){
+    if(carDetected[pos.street] == -1){ //wot is dis
         carDetected[pos.street] = 3;
     }
     pos.street = YELLOW_STREET;
