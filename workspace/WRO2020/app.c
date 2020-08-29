@@ -470,21 +470,8 @@ int car_motor_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    ///*
     readColorCode();
-    carDetected[2] = 2;
-    carDetected[3] = 3;
-    pos.street = RED_STREET;
-    doCarRedStreet();
-    doCarYellowStreet();
-    doCarRedStreet();
-    doCarYellowStreet();
-    //*/
-    /*
-    readCode();
-    tasks[BLUE_STREET][0] = COLLECTSNOW;
-    runBlueStreet();
-    //*/
+    runRedStreet();
 }
 
 void run2020(){
@@ -529,17 +516,15 @@ void run2020(){
 
         }
     }
-    if (pos.street = RED_STREET){
-        runRedStreet();
-        pos.street = YELLOW_STREET;
-    }
-    else if (pos.street = YELLOW_STREET){
-        
-    }
-    doCarRedStreet();
 
 }
-
+/**
+ * \brief Parameters
+ * \param doSnow - [0,1]
+ * \param doCar - [0,1]
+ * \param detectCar - [0,1]
+ * \param spreadAbrasive - [0,1]
+**/
 void runBlueStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
     color_4_index = 0;
     a_motor_index = 0;
@@ -665,6 +650,13 @@ void runBlueStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
     }
     pos.street = YELLOW_STREET;
 }
+/**
+ * \brief Parameters
+ * \param doSnow - [0,1]
+ * \param doCar - [0,1]
+ * \param detectCar - [0,1]
+ * \param spreadAbrasive - [0,1]
+**/
 void runGreenStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
     color_4_index = 0;
     a_motor_index = 0;
@@ -733,6 +725,13 @@ void runGreenStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
     }
     pos.street = RED_STREET;
 }
+/**
+ * \brief Parameters
+ * \param doSnow - [0,1]
+ * \param doCar - [0,1]
+ * \param detectCar - [0,1]
+ * \param spreadAbrasive - [0,1]
+**/
 void runYellowStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
     if(doCar == 0){
         color_4_index = 0;
@@ -897,8 +896,16 @@ void runYellowStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
     }
     pos.street = RED_STREET;
 }
-//snowDepot : 0 no depot : 1 put in depot
-//collectAbrasive : 0 no abrasive : 1 blue : 2 black
+/**
+ * \brief Parameters
+ * \param doSnow - [0,1]
+ * \param doCar - [0,1]
+ * \param detectCar - [0,1]
+ * \param spreadAbrasive - [0,1]
+ * \param snowDepot - [0,1]
+ * \param collectAbrasive - [0,BLUEMATERIAL,BLACKMATERIAL]
+ * \param turnAround - [0,1]
+**/
 void runRedStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive,int snowDepot,int collectAbrasive,int turnAround){
     if(doCar == 0){
         color_4_index = 0;
