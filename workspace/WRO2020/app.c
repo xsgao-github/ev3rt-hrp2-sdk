@@ -1469,6 +1469,17 @@ void execute_tasks(float distance, int doCar) {
 
 }
 
+void waitforButton() {
+    ev3_led_set_color(LED_OFF);
+    while (1) {
+        if (ev3_button_is_pressed(ENTER_BUTTON)) {
+            while (ev3_button_is_pressed(ENTER_BUTTON));
+            break;
+        }
+    }
+    ev3_led_set_color(LED_GREEN);
+}
+
 void init() {
     // Register button handlers
     ev3_button_set_on_clicked(BACK_BUTTON, button_clicked_handler, BACK_BUTTON);
