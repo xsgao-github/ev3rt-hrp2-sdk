@@ -881,7 +881,6 @@ void doCarRedStreet(){
     ev3_motor_steer(left_motor,right_motor,0,0);
     pos.street = YELLOW_STREET;
 }
-
 void doCarYellowStreet(){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
@@ -891,14 +890,19 @@ void doCarYellowStreet(){
     int taskIndex = 0;
     switch(carDetected[pos.street]){
         case 0:
+            break;
+        case 1:
+            ev3_motor_set_power(a_motor,80);
             ev3_motor_steer(left_motor,right_motor,25,3);
             while(wheelDistance < 152){
+                if(wheelDistance > 20 && taskIndex == 0){
+                    ev3_motor_set_power(a_motor,-80);
+                    taskIndex = 1;
+                }
                 wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
                 tslp_tsk(1);
             }
             ev3_motor_steer(left_motor,right_motor,0,0);
-            break;
-        case 1:
             break;
         case 2:
             break;
@@ -1531,6 +1535,28 @@ void display_sensors() {
     value = ev3_color_sensor_get_reflect(color_3);
     sprintf(msg, "L: %d  ", value);
     ev3_lcd_draw_string(msg, 10*7, 15*7.5);
+}
+
+void displayValues(char line1[100],char line2[100],char line3[100],char line4[100],char line5[100],char line6[100],char line7[100],char line8[100]) {
+    char lcdstr[100];
+    
+    ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
+    sprintf(lcdstr, "%s", line1);
+    ev3_lcd_draw_string(lcdstr, 0, 0);
+    sprintf(lcdstr, "%s", line2);
+    ev3_lcd_draw_string(lcdstr, 0, 15);
+    sprintf(lcdstr, "%s", line3);
+    ev3_lcd_draw_string(lcdstr, 0, 30);
+    sprintf(lcdstr, "%s", line4);
+    ev3_lcd_draw_string(lcdstr, 0, 45);
+    sprintf(lcdstr, "%s", line5);
+    ev3_lcd_draw_string(lcdstr, 0, 60);
+    sprintf(lcdstr, "%s", line6);
+    ev3_lcd_draw_string(lcdstr, 0, 75);
+    sprintf(lcdstr, "%s", line7);
+    ev3_lcd_draw_string(lcdstr, 0, 90);
+    sprintf(lcdstr, "%s", line8);
+    ev3_lcd_draw_string(lcdstr, 0, 105);
 }
 
 static void button_clicked_handler(intptr_t button) {
