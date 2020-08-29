@@ -555,7 +555,7 @@ void run2020(){
 //11: collect snow and turn around and put in snow depot and collect abrasive debris black
 //12: collect snow and put in snow depot and collect abrasive debris blue
 //13: collect snow and put in snow depot and collect abrasive debris black
-void runBlueStreet(int state){
+void runBlueStreet(int doSnow,int doCar,int detectCar,int abrasiveDebris){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -680,7 +680,7 @@ void runBlueStreet(int state){
     }
     pos.street = YELLOW_STREET;
 }
-void runGreenStreet(int state){
+void runGreenStreet(int doSnow,int doCar,int detectCar,int abrasiveDebris){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -748,7 +748,7 @@ void runGreenStreet(int state){
     }
     pos.street = RED_STREET;
 }
-void runYellowStreet(int state){
+void runYellowStreet(int doSnow,int doCar,int detectCar,int abrasiveDebris){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -789,7 +789,7 @@ void runYellowStreet(int state){
     }
     pos.street = RED_STREET;
 }
-void runRedStreet(int state){
+void runRedStreet(int doSnow,int doCar,int detectCar,int abrasiveDebris,int snowDepot){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
