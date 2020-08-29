@@ -614,6 +614,7 @@ void runBlueStreet(){
         tslp_tsk(250);
         ev3_motor_rotate(right_motor, 190, 20, true);
         tslp_tsk(100);
+        a_motor_index++;
         linePID_with_tasks(32, 25, false);
     }
     //ev3_motor_steer(left_motor, right_motor, 10, 0);
