@@ -11,7 +11,6 @@
 #define COLLECTSNOW 0
 #define BLUEMATERIAL 1
 #define BLACKMATERIAL 2
-#define ROADDONE -1
 
 #define COLOR_4 0
 #define A_MOTOR 1
