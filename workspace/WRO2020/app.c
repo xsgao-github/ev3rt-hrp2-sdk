@@ -470,18 +470,18 @@ int round_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    /*
+    ///*
     readColorCode();
     carDetected[2] = 1;
     carDetected[3] = 1;
     pos.street = YELLOW_STREET;
     doCarYellowStreet();
-    */
-    ///*
+    //*/
+    /*
     readCode();
     tasks[BLUE_STREET][0] = COLLECTSNOW;
     runBlueStreet();
-    //*/
+    */
     /*
     pos.street = BLUE_STREET;
     tasks[BLUE_STREET][0] = COLLECTSNOW;
