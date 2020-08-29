@@ -16,6 +16,10 @@
 #define A_MOTOR 1
 #define D_MOTOR 2
 
+#define REMOVESNOW 0
+#define REMOVECAR 1
+#define DISPENSEMATERIAL 2
+
 typedef struct {
 int street;
 int dash;
