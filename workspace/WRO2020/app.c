@@ -470,7 +470,7 @@ int car_motor_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    ///*
+    /*
     readColorCode();
     carDetected[2] = 2;
     carDetected[3] = 3;
@@ -479,11 +479,11 @@ void main_task(intptr_t unused) {
     doCarYellowStreet();
     doCarRedStreet();
     doCarYellowStreet();
-    //*/
-    /*
+    */
+    ///*
     readCode();
     tasks[BLUE_STREET][0] = COLLECTSNOW;
-    runBlueStreet();
+    runBlueStreet(REMOVESNOW);
     //*/
 }
 
