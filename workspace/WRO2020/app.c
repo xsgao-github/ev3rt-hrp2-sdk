@@ -541,17 +541,6 @@ void run2020(){
     round_index += 1;
 
 }
-//0: do nothing
-//1: collect snow
-//2: collect car
-//3: spread abrasive debris
-//4: collect snow and put in snow depot
-//5: collect car and put in car depot
-//6: collect snow and turn around and put in snow depot
-//7: collect abrasive debris
-//8: collect snow and put in snow depot
-//9: collect car and put in car depot
-//10: collect snow and turn around and put in snow depot
 void runBlueStreet(int state){
     color_4_index = 0;
     a_motor_index = 0;
@@ -588,6 +577,18 @@ void runBlueStreet(int state){
     tslp_tsk(100);
     switch (state) {
         case NOTHING:
+            linePID_with_tasks(86, 30, false);
+            tslp_tsk(100);
+            ev3_motor_steer(left_motor, right_motor, 10, -1);
+            while (ev3_color_sensor_get_reflect(color_2) > 20) {
+                display_sensors();
+            }
+            tslp_tsk(250);
+            ev3_motor_steer(left_motor, right_motor, -10, 0);
+            tslp_tsk(250);
+            ev3_motor_rotate(right_motor, 180, 20, true);
+            tslp_tsk(100);
+            linePID_with_tasks(40, 25, false);
         case REMOVESNOW:
             linePID_with_tasks(60, 25, false);
             tslp_tsk(100);
@@ -653,7 +654,10 @@ void runBlueStreet(int state){
             linePID_with_tasks(32, 25, true);
         case SPREADABRASIVE:
             // TODO: stuff
-            //so for now, here's a beep
+            //so for now, here's a beep(s)
+            while (true) {
+                ev3_speaker_play_tone(1000)
+            }
             ev3_speaker_play_tone(10000, 1000000000);
     }
     //ev3_motor_steer(left_motor, right_motor, 10, 0);
