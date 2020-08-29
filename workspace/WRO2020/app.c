@@ -550,13 +550,11 @@ void run2020(){
 //6: collect snow and turn around and put in snow depot
 //7: collect abrasive debris blue
 //8: collect abrasive debris black
-//9: collect snow and put in snow depot
-//10: collect car and put in car depot
-//11: collect snow and turn around and put in snow depot
-//12: collect snow and turn around and put in snow depot and collect abrasive debris blue
-//13: collect snow and turn around and put in snow depot and collect abrasive debris black
-//14: collect snow and put in snow depot and collect abrasive debris blue
-//15: collect snow and put in snow depot and collect abrasive debris black
+//9: collect snow and turn around and put in snow depot
+//10: collect snow and turn around and put in snow depot and collect abrasive debris blue
+//11: collect snow and turn around and put in snow depot and collect abrasive debris black
+//12: collect snow and put in snow depot and collect abrasive debris blue
+//13: collect snow and put in snow depot and collect abrasive debris black
 void runBlueStreet(int state){
     color_4_index = 0;
     a_motor_index = 0;
