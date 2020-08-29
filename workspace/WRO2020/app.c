@@ -499,38 +499,45 @@ void main_task(intptr_t unused) {
 }
 
 void run2020(){
-    int road = 0;
     //road1
-    while(road < 2){
-        if (pos.street == RED_STREET){
-            if (tasks[GREEN_STREET][0] == COLLECTSNOW){
-                road += 1;
-                runGreenStreet();
-                tasks[GREEN_STREET][1] = 1;
-            }
-            else if (tasks[RED_STREET][0] == COLLECTSNOW){
-                road += 1;
-                runRedStreet();
-                tasks[RED_STREET][1] = 1;
-            }
-            else{
-                runRedStreet();
-            }
+    if (pos.street == RED_STREET){
+        if(tasks[RED_STREET][0] == 0 && tasks[YELLOW_STREET][0] == 0){
+            runRedStreet();
         }
-        else if (pos.street == YELLOW_STREET){
-            if (tasks[BLUE_STREET][0] == COLLECTSNOW){
-                road += 1;
-                runBlueStreet();
-                tasks[BLUE_STREET][1] = 1;
-            }
-            else if (tasks[YELLOW_STREET][0] == COLLECTSNOW){
-                road += 1;
-                runYellowStreet();
-                tasks[YELLOW_STREET][1] = 1;
-            }
-            else{
-                runYellowStreet();
-            }
+        if(tasks[RED_STREET][0] == 0 && tasks[GREEN_STREET][0] == 0){
+
+        }
+        if(tasks[RED_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
+
+        }
+        if(tasks[YELLOW_STREET][0] == 0 && tasks[GREEN_STREET][0] == 0){
+
+        }
+        if(tasks[YELLOW_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
+
+        }
+        if(tasks[GREEN_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
+
+        }
+    }
+    else if (pos.street == YELLOW_STREET){
+        if(tasks[RED_STREET][0] == 0 && tasks[YELLOW_STREET][0] == 0){
+
+        }
+        if(tasks[RED_STREET][0] == 0 && tasks[GREEN_STREET][0] == 0){
+
+        }
+        if(tasks[RED_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
+
+        }
+        if(tasks[YELLOW_STREET][0] == 0 && tasks[GREEN_STREET][0] == 0){
+
+        }
+        if(tasks[YELLOW_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
+
+        }
+        if(tasks[GREEN_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
+
         }
     }
     round_index += 1;
@@ -545,7 +552,7 @@ void run2020(){
     round_index += 1;
 
 }
-void runBlueStreet(){
+void runBlueStreet(int state){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -665,7 +672,7 @@ void runBlueStreet(){
     }
     pos.street = YELLOW_STREET;
 }
-void runGreenStreet(){
+void runGreenStreet(int state){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -733,7 +740,7 @@ void runGreenStreet(){
     }
     pos.street = RED_STREET;
 }
-void runYellowStreet(){
+void runYellowStreet(int state){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -774,7 +781,7 @@ void runYellowStreet(){
     }
     pos.street = RED_STREET;
 }
-void runRedStreet(){
+void runRedStreet(int state){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
