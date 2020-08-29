@@ -1634,7 +1634,7 @@ static void button_clicked_handler(intptr_t button) {
             sprintf(lcdstr, "Pause Screen");
             ev3_lcd_draw_string(lcdstr, 45, 30);
             sprintf(lcdstr, "ms: %d", ms);
-            ev3_lcd_draw_string(lcdstr, 45, 45);
+        ev3_lcd_draw_string(lcdstr, 45, 45);
         }
         break;
     }
