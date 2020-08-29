@@ -24,6 +24,7 @@ void runBlueStreet();
 void runGreenStreet();
 void runYellowStreet();
 void runRedStreet();
+void doCarRedStreet();
 void readCode();
 void readColorCode();
 void linePID_with_tasks(int distance, int speed, int doCar);
@@ -534,7 +535,7 @@ void run2020(){
     }
     round_index += 1;
     if (pos.street = RED_STREET){
-        doCarRedStreet());
+        doCarRedStreet();
         pos.street = YELLOW_STREET;
     }
     else if (pos.street = YELLOW_STREET){
