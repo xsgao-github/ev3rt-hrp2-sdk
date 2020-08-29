@@ -642,8 +642,8 @@ void runBlueStreet(){
     //}
     //ev3_motor_steer(left_motor, right_motor, 0, 0);
     ev3_motor_rotate(left_motor, 50, 10, true);
-    ev3_motor_rotate(left_motor, 170, 20, false);
-    ev3_motor_rotate(right_motor, 170, 20, true);
+    ev3_motor_rotate(left_motor, 180, 20, false);
+    ev3_motor_rotate(right_motor, 180, 20, true);
     tslp_tsk(100);
     ev3_motor_rotate(right_motor, 250, 20, true);
     tslp_tsk(100);
