@@ -552,6 +552,17 @@ void run2020(){
     round_index += 1;
 
 }
+//0: do nothing
+//1: collect snow
+//2: collect car
+//3: spread abrasive debris
+//4: collect snow and put in snow depot
+//5: collect car and put in car depot
+//6: collect snow and turn around and put in snow depot
+//7: collect abrasive debris
+//8: collect snow and put in snow depot
+//9: collect car and put in car depot
+//10: collect snow and turn around and put in snow depot
 void runBlueStreet(int state){
     color_4_index = 0;
     a_motor_index = 0;
