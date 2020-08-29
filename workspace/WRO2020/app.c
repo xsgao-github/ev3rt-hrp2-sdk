@@ -1587,16 +1587,7 @@ static void button_clicked_handler(intptr_t button) {
         ev3_motor_stop(right_motor, false);
         ev3_motor_stop(a_motor, false);
         ev3_motor_stop(d_motor, false);
-        while(true){
-            ev3_speaker_set_volume(100);
-            ev3_speaker_play_tone(250, 50);
-            ev3_led_set_color(LED_ORANGE);
-            tslp_tsk(500);
-            ev3_speaker_set_volume(100);
-            ev3_speaker_play_tone(300, 50);
-            ev3_led_set_color(LED_RED);
-            tslp_tsk(500);
-        }
+
         exit(0);
         break;
     }
