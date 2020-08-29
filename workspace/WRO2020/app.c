@@ -470,14 +470,17 @@ int car_motor_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    /*
-    readColorCode();
-    carDetected[2] = 1;
-    carDetected[3] = 1;
-    pos.street = YELLOW_STREET;
-    doCarYellowStreet();
-    */
     ///*
+    readColorCode();
+    carDetected[2] = 2;
+    carDetected[3] = 3;
+    pos.street = RED_STREET;
+    doCarRedStreet();
+    doCarYellowStreet();
+    doCarRedStreet();
+    doCarYellowStreet();
+    //*/
+    /*
     readCode();
     tasks[BLUE_STREET][0] = COLLECTSNOW;
     runBlueStreet();
@@ -485,40 +488,45 @@ void main_task(intptr_t unused) {
 }
 
 void run2020(){
-    int road = 0;
-    int i = 0;
-    int j = 0;
     //road1
-    while(road < 2){
-        if (pos.street == RED_STREET){
-            if (tasks[GREEN_STREET][0] == COLLECTSNOW){
-                road += 1;
-                runGreenStreet();
-                tasks[GREEN_STREET][1] = 1;
-            }
-            else if (tasks[RED_STREET][0] == COLLECTSNOW){
-                road += 1;
-                runRedStreet();
-                tasks[RED_STREET][1] = 1;
-            }
-            else{
-                runRedStreet();
-            }
+    if (pos.street == RED_STREET){
+        if(tasks[RED_STREET][0] == 0 && tasks[YELLOW_STREET][0] == 0){
+            runRedStreet();
         }
-        else if (pos.street == YELLOW_STREET){
-            if (tasks[BLUE_STREET][0] == COLLECTSNOW){
-                road += 1;
-                runBlueStreet();
-                tasks[BLUE_STREET][1] = 1;
-            }
-            else if (tasks[YELLOW_STREET][0] == COLLECTSNOW){
-                road += 1;
-                runYellowStreet();
-                tasks[YELLOW_STREET][1] = 1;
-            }
-            else{
-                runYellowStreet();
-            }
+        if(tasks[RED_STREET][0] == 0 && tasks[GREEN_STREET][0] == 0){
+
+        }
+        if(tasks[RED_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
+
+        }
+        if(tasks[YELLOW_STREET][0] == 0 && tasks[GREEN_STREET][0] == 0){
+
+        }
+        if(tasks[YELLOW_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
+
+        }
+        if(tasks[GREEN_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
+
+        }
+    }
+    else if (pos.street == YELLOW_STREET){
+        if(tasks[RED_STREET][0] == 0 && tasks[YELLOW_STREET][0] == 0){
+
+        }
+        if(tasks[RED_STREET][0] == 0 && tasks[GREEN_STREET][0] == 0){
+
+        }
+        if(tasks[RED_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
+
+        }
+        if(tasks[YELLOW_STREET][0] == 0 && tasks[GREEN_STREET][0] == 0){
+
+        }
+        if(tasks[YELLOW_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
+
+        }
+        if(tasks[GREEN_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
+
         }
     }
     round_index += 1;
@@ -533,7 +541,18 @@ void run2020(){
     round_index += 1;
 
 }
-void runBlueStreet(){
+//0: do nothing
+//1: collect snow
+//2: collect car
+//3: spread abrasive debris
+//4: collect snow and put in snow depot
+//5: collect car and put in car depot
+//6: collect snow and turn around and put in snow depot
+//7: collect abrasive debris
+//8: collect snow and put in snow depot
+//9: collect car and put in car depot
+//10: collect snow and turn around and put in snow depot
+void runBlueStreet(int state){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -658,7 +677,7 @@ void runBlueStreet(){
     }
     pos.street = YELLOW_STREET;
 }
-void runGreenStreet(){
+void runGreenStreet(int state){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -726,7 +745,7 @@ void runGreenStreet(){
     }
     pos.street = RED_STREET;
 }
-void runYellowStreet(){
+void runYellowStreet(int state){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -767,7 +786,7 @@ void runYellowStreet(){
     }
     pos.street = RED_STREET;
 }
-void runRedStreet(){
+void runRedStreet(int state){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -821,6 +840,7 @@ void doCarRedStreet(){
     ev3_motor_reset_counts(d_motor);
     float wheelDistance = -100;
     int taskIndex = 0;
+    //switch
     switch(carDetected[pos.street]){
         case 0:
             ev3_motor_steer(left_motor,right_motor,35,3);
@@ -892,34 +912,43 @@ void doCarRedStreet(){
             ev3_motor_steer(left_motor,right_motor,0,0);
             break;
     }
-    ev3_motor_steer(left_motor,right_motor,-30,90);
-    tslp_tsk(200);
+    //turn
+    ev3_motor_steer(left_motor,right_motor,-20,90);
+    tslp_tsk(250);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    //move and back
     ev3_motor_steer(left_motor,right_motor,30,0);
-    tslp_tsk(1000);
+    tslp_tsk(1100);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,-30,0);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    //turn again
     ev3_motor_steer(left_motor,right_motor,-30,90);
-    tslp_tsk(300);
+    tslp_tsk(350);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    //back up
     ev3_motor_steer(left_motor,right_motor,-10,0);
-    tslp_tsk(750);
+    tslp_tsk(2000);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    //move forward
     ev3_motor_steer(left_motor,right_motor,30,0);
     tslp_tsk(2500);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    //detect line
     ev3_motor_steer(left_motor, right_motor, 15, 3);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
     ev3_motor_steer(left_motor,right_motor,0,0);
+    //move forward
     ev3_motor_steer(left_motor,right_motor,30,0);
     tslp_tsk(450);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    //turn
     ev3_motor_steer(left_motor,right_motor,30,-45);
     tslp_tsk(800);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    //detect line
     ev3_motor_steer(left_motor, right_motor, 15, 3);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
@@ -933,6 +962,7 @@ void doCarYellowStreet(){
     ev3_motor_reset_counts(d_motor);
     float wheelDistance = -100;
     int taskIndex = 0;
+    //switch
     switch(carDetected[pos.street]){
         case 0:
             ev3_motor_steer(left_motor,right_motor,35,3);
@@ -957,39 +987,91 @@ void doCarYellowStreet(){
             carDetected[pos.street] = 0;
             break;
         case 2:
+            ev3_motor_set_power(a_motor,80);
+            ev3_motor_steer(left_motor,right_motor,25,3);
+            while(wheelDistance < 132){
+                if(wheelDistance > 105 && taskIndex == 0){
+                    ev3_motor_set_power(a_motor,-80);
+                    taskIndex = 1;
+                }
+                if(wheelDistance > 120 && taskIndex == 1){
+                    ev3_motor_set_power(a_motor,-80);
+                    taskIndex = 2;
+                }
+                wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
+                tslp_tsk(1);
+            }
             carDetected[pos.street] = 0;
+            ev3_motor_steer(left_motor,right_motor,0,0);
             break;
         case 3:
+            ev3_motor_steer(left_motor,right_motor,25,3);
+            while(wheelDistance < 92){
+                wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
+                tslp_tsk(1);
+            }
+            ev3_motor_steer(left_motor,right_motor,0,0);
+            ev3_motor_reset_counts(left_motor);
+            ev3_motor_reset_counts(right_motor);
+            ev3_motor_steer(left_motor,right_motor,20,-45);
+            tslp_tsk(500);
+            ev3_motor_steer(left_motor,right_motor,0,0);
+            ev3_motor_steer(left_motor,right_motor,20,45);
+            tslp_tsk(300);
+            ev3_motor_steer(left_motor,right_motor,0,0);
+            ev3_motor_reset_counts(left_motor);
+            ev3_motor_reset_counts(right_motor);
+            wheelDistance = 0;
+            ev3_motor_steer(left_motor,right_motor,25,5);
+            while(wheelDistance < 56){
+                if(wheelDistance > 20){
+                    ev3_motor_set_power(a_motor,-80);
+                }
+                wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
+                tslp_tsk(1);
+            }
             carDetected[pos.street] = 0;
+            ev3_motor_steer(left_motor,right_motor,0,0);
             break;
     }
+    //turn
     ev3_motor_steer(left_motor,right_motor,30,-45);
     tslp_tsk(600);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    //move forward
     ev3_motor_steer(left_motor,right_motor,30,0);
     tslp_tsk(800);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    //complete turn
     ev3_motor_steer(left_motor,right_motor,30,-45);
     tslp_tsk(200);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    //move forward
     wall_follow_with_tasks(35,3,0,0,0,0,35);
+    //detect line
     ev3_motor_steer(left_motor,right_motor,15,0);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
     ev3_motor_steer(left_motor,right_motor,0,0);
+    //move forward to turn
     ev3_motor_steer(left_motor,right_motor,30,0);
     tslp_tsk(300);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    //turn
     ev3_motor_steer(left_motor,right_motor,30,-45);
     tslp_tsk(750);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    //move 42 cm
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     wheelDistance = 0;
-    ev3_motor_steer(left_motor,right_motor,15,3);
-    while(wheelDistance < 44){
+    ev3_motor_steer(left_motor,right_motor,40,3);
+    while(wheelDistance < 42){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
     }
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    //detect line
+    ev3_motor_steer(left_motor,right_motor,15,3);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
     ev3_motor_steer(left_motor,right_motor,0,0);
@@ -1112,17 +1194,14 @@ void readColorCode(){
     float values[8] = {0,0,0,0,0,0,0,0};
     int isReading = 0;
     int i = 0;
-    char lcdstr[100];
     while(wheelDistance < 21){
-        ev3_motor_steer(left_motor,right_motor,25,5);
+        ev3_motor_steer(left_motor,right_motor,30,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
     }
     ev3_motor_steer(left_motor, right_motor, 7, 5);
     colorid_t color3color = 6;
     while(color3color == 6){
         color3color = ev3_color_sensor_get_color(color_3);
-        sprintf(lcdstr, "Color: %d", color3color);
-	    ev3_lcd_draw_string(lcdstr, 0, 45);
         tslp_tsk(10);
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
@@ -1134,8 +1213,6 @@ void readColorCode(){
     int x = 0;
     while(x < 50){
         color3color = ev3_color_sensor_get_color(color_3);
-        sprintf(lcdstr, "Color: %d", color3color);
-        ev3_lcd_draw_string(lcdstr, 0, 45);
         x += 1;
         tslp_tsk(10);
     }
@@ -1145,9 +1222,7 @@ void readColorCode(){
     if(color3color == 4){
         pos.street = YELLOW_STREET;
     }
-    sprintf(lcdstr, "%f3", wheelDistance);
-    ev3_lcd_draw_string(lcdstr, 0, 105);
-    ev3_motor_steer(left_motor, right_motor, 10, 5);
+    ev3_motor_steer(left_motor, right_motor, 15, 5);
     while(wheelDistance < 58){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
@@ -1196,14 +1271,6 @@ void readColorCode(){
     ev3_motor_steer(left_motor, right_motor, 10, 5);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
-    sprintf(lcdstr, "         %d", tasks[0][0]);
-    ev3_lcd_draw_string(lcdstr, 0, 15);
-    sprintf(lcdstr, "         %d", tasks[1][0]);
-    ev3_lcd_draw_string(lcdstr, 0, 15 * 2);
-    sprintf(lcdstr, "         %d", tasks[2][0]);
-    ev3_lcd_draw_string(lcdstr, 0, 15 * 3);
-    sprintf(lcdstr, "         %d", tasks[3][0]);
-    ev3_lcd_draw_string(lcdstr, 0, 15 * 4);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
 }
 
@@ -1258,7 +1325,6 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
     ev3_motor_reset_counts(d_motor);
     int isTurningA = 0;
     int isTurningD = 0;
-    char lcdstr[100];
     float wheelDistance = 0;
     int tasksLeftA = tasksNumA;
     int tasksLeftD = tasksNumD;
@@ -1332,13 +1398,11 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     int a_motorStopped = 0;
     int isTurningD = 0;
     int d_motorStopped = 0;
-    char lcdstr[100];
     float wheelDistance = -100;
     int tasksLeft4 = tasksNum4;
     int tasksLeftA = tasksNumA;
     int tasksLeftD = tasksNumD;
     int i = 0;
-    int carDone = 0;
     for(i = 0;i < 3;i++){
         next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
     }
@@ -1369,8 +1433,6 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
                 ev3_speaker_play_tone(NOTE_C5,60);
                 carDetected[pos.street] = color_4_index + 1;
             }
-            sprintf(lcdstr, "%d,  %d,  %d,  ", rgb4.r, rgb4.g, rgb4.b);
-            ev3_lcd_draw_string(lcdstr, 0, 45);
             color_4_index += 1;
             for(int i = 0;i < 3;i++){
                 next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
@@ -1416,8 +1478,6 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
         }
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
         tslp_tsk(1);
-        //sprintf(lcdstr, "%d,   %d", carDetected[3],ev3_motor_get_counts(a_motor));
-        //ev3_lcd_draw_string(lcdstr, 0, 45);
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     return;
@@ -1504,8 +1564,6 @@ void init() {
     // Register button handlers
     ev3_button_set_on_clicked(BACK_BUTTON, button_clicked_handler, BACK_BUTTON);
     ev3_button_set_on_clicked(DOWN_BUTTON, button_clicked_handler, DOWN_BUTTON);
-    ev3_button_set_on_clicked(LEFT_BUTTON, button_clicked_handler, LEFT_BUTTON);
-    ev3_button_set_on_clicked(RIGHT_BUTTON, button_clicked_handler, RIGHT_BUTTON);
     
     // Configure motors
     ev3_motor_config(left_motor, LARGE_MOTOR);
@@ -1628,7 +1686,6 @@ void displayValues(char line1[100],char line2[100],char line3[100],char line4[10
 }
 
 static void button_clicked_handler(intptr_t button) {
-    int click = 0;
     switch(button) {
     case BACK_BUTTON:
         ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
@@ -1650,35 +1707,6 @@ static void button_clicked_handler(intptr_t button) {
         ev3_motor_stop(d_motor, false);
         ev3_led_set_color(LED_ORANGE);
         exit(0);
-        break;
-    case RIGHT_BUTTON:
-        if(click == 0) {
-            click = 1;
-            ev3_led_set_color(LED_GREEN);
-        }
-        if(click == 1) {
-            click = 0;
-            ev3_led_set_color(LED_ORANGE);
-        }
-        break;
-    case LEFT_BUTTON:
-        ev3_motor_stop(left_motor, false);
-        ev3_motor_stop(right_motor, false);
-        ev3_motor_stop(a_motor, false);
-        ev3_motor_stop(d_motor, false);
-        int ms = 0;
-        char lcdstr[100];
-        while(true) {
-            tslp_tsk(1);
-            if(click) {
-                ms += 1;
-            }
-            ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
-            sprintf(lcdstr, "Pause Screen");
-            ev3_lcd_draw_string(lcdstr, 45, 30);
-            sprintf(lcdstr, "ms: %d", ms);
-            ev3_lcd_draw_string(lcdstr, 45, 45);
-        }
         break;
     }
 }
