@@ -808,7 +808,7 @@ void doCarRedStreet(){
             ev3_motor_reset_counts(right_motor);
             wheelDistance = 0;
             ev3_motor_steer(left_motor,right_motor,25,5);
-            while(wheelDistance < 50){
+            while(wheelDistance < 53){
                 if(wheelDistance > 20){
                     ev3_motor_set_power(a_motor,-80);
                 }
@@ -846,13 +846,6 @@ void doCarRedStreet(){
             }
             break;
     }
-    ev3_motor_steer(left_motor, right_motor, 15, 3);
-    while (ev3_color_sensor_get_reflect(color_3) > 20) {
-    }
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,-30,0);
-    tslp_tsk(500);
-    ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,-30,90);
     tslp_tsk(200);
     ev3_motor_steer(left_motor,right_motor,0,0);
@@ -879,7 +872,7 @@ void doCarRedStreet(){
     tslp_tsk(450);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,30,-45);
-    tslp_tsk(700);
+    tslp_tsk(800);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor, right_motor, 15, 3);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
