@@ -541,7 +541,7 @@ void run2020(){
     //round_index += 1;
 
 }
-void runBlueStreet(int state){
+void runBlueStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -575,7 +575,6 @@ void runBlueStreet(int state){
     d_motor_index = 0;
     pos.street = BLUE_STREET;
     tslp_tsk(100);
-    switch (state) {
         case NOTHING:
             linePID_with_tasks(86, 30, false);
             tslp_tsk(100);
@@ -696,7 +695,7 @@ void runBlueStreet(int state){
     }
     pos.street = YELLOW_STREET;
 }
-void runGreenStreet(int state){
+void runGreenStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -764,7 +763,7 @@ void runGreenStreet(int state){
     }
     pos.street = RED_STREET;
 }
-void runYellowStreet(int state){
+void runYellowStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -805,7 +804,7 @@ void runYellowStreet(int state){
     }
     pos.street = RED_STREET;
 }
-void runRedStreet(int state){
+void runRedStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
