@@ -16,6 +16,17 @@
 #define A_MOTOR 1
 #define D_MOTOR 2
 
+/**
+ * \brief Struct for runStreets
+ * Index 1: doSnow
+ * Index 2: doCar
+ * Index 3: doAbrasive
+ * Index 4: detectCar
+ * Index 5: snowDepot (Only for red street)
+ * Index 6: carDepot (Only for red street)
+ * Index 7: collectAbrasive (Only for red street)
+ * Index 8: uTurn (Only for red street)
+**/
 typedef struct {
     int doSnow;
     int doCar;
