@@ -20,10 +20,10 @@ const int color_1 = EV3_PORT_2, color_2 = EV3_PORT_2, color_3 = EV3_PORT_3, colo
 
 // declare methods
 void run2020();
-void runBlueStreet(directions instructions);
-void runGreenStreet(directions instructions);
-void runYellowStreet(directions instructions);
-void runRedStreet(directions instructions);
+void runBlueStreet();
+void runGreenStreet();
+void runYellowStreet();
+void runRedStreet();
 void readCode();
 void readColorCode();
 void linePID_with_tasks(int distance, int speed, int doCar);
@@ -39,6 +39,7 @@ static void button_clicked_handler(intptr_t button);
 rgb_raw_t rgb1;
 rgb_raw_t rgb4;
 position pos = {-1, -1};
+directions instructions = {0, 0, 0, 0, 0, 0, 0, 0};
 /*
  * instructions for robot
  * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
@@ -471,10 +472,10 @@ void main_task(intptr_t unused) {
     init();
     ///*
     readColorCode();
-    directions instructions = {0,0,0,0,0,0,0,0};
-    if(1){
-        directions instructions = {1,0,0,1,1,0,0,0};
-    }
+    
+    
+    instructions = {1,0,0,1,1,0,0,0};
+    
     runRedStreet(instructions);
     //*/
     /*
@@ -594,7 +595,7 @@ void run2020(){
  * \param doAbrasive dispense abrasive material on run-through of road (cannot be true while doSnow or doCar are true)
  * \param detectCar detect car on run-through of road
 */
-void runBlueStreet(directions instructions){
+void runBlueStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -747,7 +748,7 @@ void runBlueStreet(directions instructions){
  * \param doAbrasive dispense abrasive material on run-through of road (cannot be true while doSnow or doCar are true)
  * \param detectCar detect car on run-through of road
 */
-void runGreenStreet(directions instructions){
+void runGreenStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -822,7 +823,7 @@ void runGreenStreet(directions instructions){
  * \param doAbrasive dispense abrasive material on run-through of road (cannot be true while doSnow or doCar are true)
  * \param detectCar detect car on run-through of road
 */
-void runYellowStreet(directions instructions){
+void runYellowStreet(){
     //doCar
     if(instructions.doCar == 0){
         color_4_index = 0;
@@ -1019,7 +1020,7 @@ void runYellowStreet(directions instructions){
  * \param collectAbrasive TODO: Maitian
  * \param uTurn TODO: Maitian
 */
-void runRedStreet(directions instructions){
+void runRedStreet(){
     //doCar
     if(instructions.doCar == 0){
         color_4_index = 0;
