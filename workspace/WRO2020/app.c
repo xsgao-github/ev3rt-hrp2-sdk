@@ -474,15 +474,15 @@ void main_task(intptr_t unused) {
     ///*
     readColorCode();
 
-    writeInstructions(0,1,0,0,0,0,0,0);
+    writeInstructions(1,0,0,0,0,0,0,0);
 
     char lcdstr[100];
     
     sprintf(lcdstr, "%p", instructions.doCar);
     ev3_lcd_draw_string(lcdstr, 0, 0);
-    pos.street = YELLOW_STREET;
-    carDetected[2] = 2;
-    runYellowStreet(instructions);
+    pos.street = RED_STREET;
+    carDetected[2] = 3;
+    runRedStreet(instructions);
     //*/
     /*
     readCode();
@@ -959,7 +959,7 @@ void runYellowStreet(directions instructions){
                 ev3_motor_reset_counts(right_motor);
                 wheelDistance = 0;
                 ev3_motor_steer(left_motor,right_motor,25,5);
-                while(wheelDistance < 56){
+                while(wheelDistance < 35){
                     if(wheelDistance > 20){
                         ev3_motor_set_power(a_motor,-80);
                     }
@@ -1038,28 +1038,35 @@ void runRedStreet(directions instructions){
         else{
             wall_follow_with_tasks(128,3,instructions.detectCar,3,0,25);
         }
-        //move amotor
-        ev3_motor_set_power(a_motor,50);
-        tslp_tsk(800);
-        ev3_motor_set_power(a_motor,0);
-        //detect line
-        ev3_motor_steer(left_motor, right_motor, 10, 5);
-        while (ev3_color_sensor_get_reflect(color_3) > 20) {
+        if(instructions.snowDepot){
+            //move amotor
+            ev3_motor_set_power(a_motor,50);
+            tslp_tsk(800);
+            ev3_motor_set_power(a_motor,0);
+            //detect line
+            ev3_motor_steer(left_motor, right_motor, 10, 5);
+            while (ev3_color_sensor_get_reflect(color_3) > 20) {
+            }
+            //move backwards
+            ev3_motor_steer(left_motor,right_motor,-30,0);
+            tslp_tsk(300);
+            ev3_motor_steer(left_motor,right_motor,0,0);
+            //turn amotor back and turn
+            ev3_motor_rotate(a_motor,200,-50,true);
+            ev3_motor_steer(left_motor,right_motor,-15,70);
+            ev3_motor_rotate(a_motor,100,-50,false);
+            tslp_tsk(1075);
+            ev3_motor_steer(left_motor,right_motor,0,0);
+            //turn amotor back completely
+            ev3_motor_set_power(a_motor,-50);
+            tslp_tsk(700);
+            ev3_motor_set_power(a_motor,0);
         }
-        //move backwards
-        ev3_motor_steer(left_motor,right_motor,-30,0);
-        tslp_tsk(300);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        //turn amotor back and turn
-        ev3_motor_rotate(a_motor,200,-50,true);
-        ev3_motor_steer(left_motor,right_motor,-15,70);
-        ev3_motor_rotate(a_motor,100,-50,false);
-        tslp_tsk(1075);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        //turn amotor back completely
-        ev3_motor_set_power(a_motor,-50);
-        tslp_tsk(700);
-        ev3_motor_set_power(a_motor,0);
+        else{
+            ev3_motor_steer(left_motor,right_motor,-15,90);
+            tslp_tsk(1000);
+            ev3_motor_steer(left_motor,right_motor,0,0);
+        }
         //back up
         ev3_motor_steer(left_motor,right_motor,-10,0);
         tslp_tsk(1000);
