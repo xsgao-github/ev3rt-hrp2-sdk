@@ -40,7 +40,6 @@ static void button_clicked_handler(intptr_t button);
 rgb_raw_t rgb1;
 rgb_raw_t rgb4;
 position pos = {-1, -1};
-directions instructions;
 /*
  * instructions for robot
  * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
@@ -519,7 +518,7 @@ void run2020(){
     }
 
 }
-void runBlueStreet(directions direction){
+void runBlueStreet(directions instructions){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -672,7 +671,7 @@ void runBlueStreet(directions direction){
     }
     pos.street = YELLOW_STREET;
 }
-void runGreenStreet(directions direction){
+void runGreenStreet(directions instructions){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -740,7 +739,8 @@ void runGreenStreet(directions direction){
     }
     pos.street = RED_STREET;
 }
-void runYellowStreet(directions direction){
+void runYellowStreet(directions instructions){
+    int doCar = 1;
     if(doCar == 0){
         color_4_index = 0;
         a_motor_index = 0;
@@ -904,7 +904,8 @@ void runYellowStreet(directions direction){
     }
     pos.street = RED_STREET;
 }
-void runRedStreet(directions direction){
+void runRedStreet(directions instructions){
+    int doCar = 1;
     if(doCar == 0){
         color_4_index = 0;
         a_motor_index = 0;
