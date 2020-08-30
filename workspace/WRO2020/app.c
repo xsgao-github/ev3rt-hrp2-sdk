@@ -40,6 +40,7 @@ static void button_clicked_handler(intptr_t button);
 rgb_raw_t rgb1;
 rgb_raw_t rgb4;
 position pos = {-1, -1};
+directions instructions;
 /*
  * instructions for robot
  * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
