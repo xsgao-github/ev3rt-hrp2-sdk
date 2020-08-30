@@ -33,6 +33,7 @@ void execute_tasks(float distance, int doCar);
 void waitforButton();
 void init();
 void display_sensors();
+void displayValues(char text[100],int row,int collumn);
 void writeInstructions(int doSnow,int doCar,int doAbrasive,int detectCar,int snowDepot,int carDepot,int collectAbrasive,int uTurn);
 static void button_clicked_handler(intptr_t button);
 
@@ -473,16 +474,12 @@ void main_task(intptr_t unused) {
     init();
     ///*
     readColorCode();
-
+    displayValues("a",0,1);
+    displayValues("a",10,2);
     writeInstructions(1,0,0,0,0,0,0,0);
-
-    char lcdstr[100];
-    
-    sprintf(lcdstr, "%p", instructions.doCar);
-    ev3_lcd_draw_string(lcdstr, 0, 0);
-    pos.street = RED_STREET;
-    carDetected[2] = 3;
-    runRedStreet(instructions);
+    //pos.street = RED_STREET;
+    //carDetected[2] = 3;
+    //runRedStreet(instructions);
     //*/
     /*
     readCode();
@@ -1499,12 +1496,10 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
     while (wheelDistance < distance) {
         if(ev3_motor_get_power(a_motor) == 0 && ev3_motor_get_counts(a_motor) < 10 && a_motorStopped == 0){
             ev3_motor_stop(a_motor,false);
-            ev3_speaker_play_tone(NOTE_A5,60);
             a_motorStopped = 1;
         }
         if(ev3_motor_get_power(d_motor) == 0 && ev3_motor_get_counts(d_motor) < 10 && d_motorStopped == 0){
             ev3_motor_stop(d_motor,false);
-            ev3_speaker_play_tone(NOTE_A5,60);
             d_motorStopped = 1;
         }
         if(wheelDistance > next_color_4_task[0] && detectCar == 1){
@@ -1522,7 +1517,6 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
         }
         if(wheelDistance > next_a_motor_task[0] && tasksLeftA > 0 && isTurningA == 0){
             ev3_motor_reset_counts(a_motor);
-            ev3_speaker_play_tone(NOTE_A4,60);
             ev3_motor_rotate(a_motor,next_a_motor_task[2],80,false);
             isTurningA = 1;
         }
@@ -1745,26 +1739,12 @@ void display_sensors() {
     ev3_lcd_draw_string(msg, 10*7, 15*7.5);
 }
 
-void displayValues(char line1[100],char line2[100],char line3[100],char line4[100],char line5[100],char line6[100],char line7[100],char line8[100]) {
+void displayValues(char text[100],int row,int collumn) {
     char lcdstr[100];
     
     ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
-    sprintf(lcdstr, "%s", line1);
-    ev3_lcd_draw_string(lcdstr, 0, 0);
-    sprintf(lcdstr, "%s", line2);
-    ev3_lcd_draw_string(lcdstr, 0, 15);
-    sprintf(lcdstr, "%s", line3);
-    ev3_lcd_draw_string(lcdstr, 0, 30);
-    sprintf(lcdstr, "%s", line4);
-    ev3_lcd_draw_string(lcdstr, 0, 45);
-    sprintf(lcdstr, "%s", line5);
-    ev3_lcd_draw_string(lcdstr, 0, 60);
-    sprintf(lcdstr, "%s", line6);
-    ev3_lcd_draw_string(lcdstr, 0, 75);
-    sprintf(lcdstr, "%s", line7);
-    ev3_lcd_draw_string(lcdstr, 0, 90);
-    sprintf(lcdstr, "%s", line8);
-    ev3_lcd_draw_string(lcdstr, 0, 105);
+    sprintf(lcdstr, "%s", text);
+    ev3_lcd_draw_string(lcdstr, row, collumn * 15);
 }
 
 void writeInstructions(int doSnow,int doCar,int doAbrasive,int detectCar,int snowDepot,int carDepot,int collectAbrasive,int uTurn){
