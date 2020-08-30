@@ -17,8 +17,20 @@
 #define D_MOTOR 2
 
 typedef struct {
-int street;
-int dash;
+    int doSnow;
+    int doCar;
+    int doAbrasive;
+    int detectCar;
+    int snowDepot;
+    int carDepot;
+    int collectAbrasive;
+    int uTurn;
+} directions;
+
+
+typedef struct {
+    int street;
+    int dash;
 } position;
 
 extern void	main_task(intptr_t exinf);

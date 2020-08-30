@@ -637,7 +637,7 @@ void runBlueStreet(){
         ev3_motor_rotate(right_motor, 180, 20, true);
         tslp_tsk(100);
         linePID_with_tasks(32, 25, false);
-    //collect car
+    // collect car
         linePID_with_tasks(86, 25, false);
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 10, 20, true);
@@ -651,7 +651,7 @@ void runBlueStreet(){
         ev3_motor_rotate(right_motor, 190, 20, true);
         tslp_tsk(100);
         linePID_with_tasks(32, 25, true);
-    //spread abrasive
+    // spread abrasive
         // TODO: stuff
         //so for now, here's a beep(s)
         ev3_speaker_set_volume(100);
