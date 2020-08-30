@@ -477,6 +477,8 @@ void main_task(intptr_t unused) {
     writeInstructions(1,0,0,1,0,0,0,0);
     pos.street = YELLOW_STREET;
     runYellowStreet(instructions);
+    writeInstructions(0,0,0,0,1,0,0,0);
+    runRedStreet(instructions);
     //*/
     /*
     readCode();
