@@ -33,12 +33,14 @@ void execute_tasks(float distance, int doCar);
 void waitforButton();
 void init();
 void display_sensors();
+void writeInstructions(int doSnow,int doCar,int doAbrasive,int detectCar,int snowDepot,int carDepot,int collectAbrasive,int uTurn);
 static void button_clicked_handler(intptr_t button);
 
 //declare global variables
 rgb_raw_t rgb1;
 rgb_raw_t rgb4;
 position pos = {-1, -1};
+directions instructions = {0,0,0,0,0,0,0,0};
 /*
  * instructions for robot
  * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
@@ -471,12 +473,8 @@ void main_task(intptr_t unused) {
     init();
     ///*
     readColorCode();
-    directions instructions = {0,0,0,0,0,0,0,0};
 
-    instructions.doSnow = 0;
-    instructions.doCar = 1;
-    instructions.doAbrasive = 0;
-    instructions.detectCar = 0;
+    writeInstructions(0,1,0,0,0,0,0,0);
 
     char lcdstr[100];
     
@@ -1817,6 +1815,17 @@ void displayValues(char line1[100],char line2[100],char line3[100],char line4[10
     ev3_lcd_draw_string(lcdstr, 0, 90);
     sprintf(lcdstr, "%s", line8);
     ev3_lcd_draw_string(lcdstr, 0, 105);
+}
+
+void writeInstructions(int doSnow,int doCar,int doAbrasive,int detectCar,int snowDepot,int carDepot,int collectAbrasive,int uTurn){
+    instructions.doSnow = doSnow;
+    instructions.doCar = doCar;
+    instructions.doAbrasive = doAbrasive;
+    instructions.detectCar = detectCar;
+    instructions.snowDepot = snowDepot;
+    instructions.carDepot = carDepot;
+    instructions.collectAbrasive = collectAbrasive;
+    instructions.uTurn = uTurn;
 }
 
 static void button_clicked_handler(intptr_t button) {
