@@ -472,9 +472,17 @@ void main_task(intptr_t unused) {
     ///*
     readColorCode();
     directions instructions = {0,0,0,0,0,0,0,0};
-    if(1){
-        directions instructions = {0,1,0,0,0,0,0,0};
-    }
+
+    instructions.doSnow = 0;
+    instructions.doCar = 1;
+    instructions.doAbrasive = 0;
+    instructions.detectCar = 0;
+
+    char lcdstr[100];
+    
+    sprintf(lcdstr, "%p", instructions.doCar);
+    ev3_lcd_draw_string(lcdstr, 0, 0);
+    pos.street = YELLOW_STREET;
     carDetected[2] = 2;
     runYellowStreet(instructions);
     //*/
