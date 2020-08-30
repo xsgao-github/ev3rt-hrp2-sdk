@@ -257,11 +257,11 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                1000,0,0
+                44,0,0
             },
             //index 1
             {
-                1000,0,0
+                17,0,0
             },
             //index 2
             {
@@ -474,12 +474,9 @@ void main_task(intptr_t unused) {
     init();
     ///*
     readColorCode();
-    displayValues("a",0,1);
-    displayValues("a",10,2);
-    writeInstructions(1,0,0,0,0,0,0,0);
-    //pos.street = RED_STREET;
-    //carDetected[2] = 3;
-    //runRedStreet(instructions);
+    writeInstructions(1,0,0,1,0,0,0,0);
+    pos.street = YELLOW_STREET;
+    runYellowStreet(instructions);
     //*/
     /*
     readCode();
@@ -958,7 +955,7 @@ void runYellowStreet(directions instructions){
     ev3_motor_reset_counts(right_motor);
     float wheelDistance = 0;
     ev3_motor_steer(left_motor,right_motor,40,3);
-    while(wheelDistance < 42){
+    while(wheelDistance < 38){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
     }
     //detect line
@@ -1746,7 +1743,7 @@ void displayValues(char text[100],int row,int collumn,int clearScreen) {
         ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
     }
     sprintf(lcdstr, "%s", text);
-    ev3_lcd_draw_string(lcdstr, row, collumn * 15);
+    ev3_lcd_draw_string(lcdstr, row * 10, collumn * 15);
 }
 
 void writeInstructions(int doSnow,int doCar,int doAbrasive,int detectCar,int snowDepot,int carDepot,int collectAbrasive,int uTurn){
