@@ -525,7 +525,7 @@ void run2020(){
  * \param detectCar - [0,1]
  * \param spreadAbrasive - [0,1]
 **/
-void runBlueStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
+void runBlueStreet(directions direction){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -657,7 +657,7 @@ void runBlueStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
  * \param detectCar - [0,1]
  * \param spreadAbrasive - [0,1]
 **/
-void runGreenStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
+void runGreenStreet(directions direction){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -732,7 +732,7 @@ void runGreenStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
  * \param detectCar - [0,1]
  * \param spreadAbrasive - [0,1]
 **/
-void runYellowStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
+void runYellowStreet(directions direction){
     if(doCar == 0){
         color_4_index = 0;
         a_motor_index = 0;
@@ -906,7 +906,7 @@ void runYellowStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
  * \param collectAbrasive - [0,BLUEMATERIAL,BLACKMATERIAL]
  * \param turnAround - [0,1]
 **/
-void runRedStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive,int snowDepot,int collectAbrasive,int turnAround){
+void runRedStreet(directions direction){
     if(doCar == 0){
         color_4_index = 0;
         a_motor_index = 0;
