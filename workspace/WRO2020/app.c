@@ -20,11 +20,10 @@ const int color_1 = EV3_PORT_2, color_2 = EV3_PORT_2, color_3 = EV3_PORT_3, colo
 
 // declare methods
 void run2020();
-void runBlueStreet();
-void runGreenStreet();
-void runYellowStreet();
-void runRedStreet();
-void doCarRedStreet();
+void runBlueStreet(directions instructions);
+void runGreenStreet(directions instructions);
+void runYellowStreet(directions instructions);
+void runRedStreet(directions instructions);
 void readCode();
 void readColorCode();
 void linePID_with_tasks(int distance, int speed, int doCar);
@@ -470,8 +469,8 @@ int car_motor_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    readColorCode();
-    runRedStreet();
+    readCode();
+    runBlueStreet(true, false, false, true);
 }
 
 void run2020(){
@@ -518,12 +517,22 @@ void run2020(){
     }
 
 }
+/**
+ * \brief Runs robot through Blue Street | WARNING: Only one of doSnow, doCar, and doAbrasive can be true at a time | WARNING: runBlueStreet does not support the following: snowDepot, carDepot, uTurn, collectAbrasive
+ * \param doSnow collect snow on run-through of road (cannot be true while doCar or doAbrasive are true)
+ * \param doCar collect cars on run-through of road (cannot be true while doSnow or doAbrasive are true)
+ * \param doAbrasive dispense abrasive material on run-through of road (cannot be true while doSnow or doCar are true)
+ * \param detectCar detect car on run-through of road
+*/
 void runBlueStreet(directions instructions){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
     pos.street = YELLOW_STREET;
 
+    if ((instructions.doCar&&instructions.doSnow)||(instructions.doCar&&instructions.doAbrasive)||(instructions.doSnow&&instructions.doAbrasive)||(instructions.doCar&&instructions.doSnow&&instructions.doAbrasive)) {
+        ev3_motor_steer(a_motor, a_motor, 100, 0);
+    }
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 40, 1);
@@ -552,20 +561,7 @@ void runBlueStreet(directions instructions){
     d_motor_index = 0;
     pos.street = BLUE_STREET;
     tslp_tsk(100);
-    // do nithing
-        linePID_with_tasks(86, 30, false);
-        tslp_tsk(100);
-        ev3_motor_steer(left_motor, right_motor, 10, -1);
-        while (ev3_color_sensor_get_reflect(color_2) > 20) {
-            display_sensors();
-        }
-        tslp_tsk(250);
-        ev3_motor_steer(left_motor, right_motor, -10, 0);
-        tslp_tsk(250);
-        ev3_motor_rotate(right_motor, 180, 20, true);
-        tslp_tsk(100);
-        linePID_with_tasks(40, 25, false);
-    // collect snow
+    if (instructions.doSnow == 1) {
         linePID_with_tasks(60, 25, false);
         tslp_tsk(100);
         /* old code
@@ -614,21 +610,7 @@ void runBlueStreet(directions instructions){
         ev3_motor_rotate(right_motor, 180, 20, true);
         tslp_tsk(100);
         linePID_with_tasks(32, 25, false);
-    // collect car
-        linePID_with_tasks(86, 25, false);
-        tslp_tsk(100);
-        ev3_motor_rotate(right_motor, 10, 20, true);
-        ev3_motor_steer(left_motor, right_motor, 10, -1);
-        while (ev3_color_sensor_get_reflect(color_2) > 20) {
-            display_sensors();
-        }
-        tslp_tsk(250);
-        ev3_motor_steer(left_motor, right_motor, -10, 0);
-        tslp_tsk(250);
-        ev3_motor_rotate(right_motor, 190, 20, true);
-        tslp_tsk(100);
-        linePID_with_tasks(32, 25, true);
-    // spread abrasive
+    } else if (instructions.doCar == 1) {
         // TODO: stuff
         //so for now, here's a beep(s)
         ev3_speaker_set_volume(100);
@@ -648,7 +630,27 @@ void runBlueStreet(directions instructions){
             }
             ev3_speaker_play_tone(haha, 10);
         }
-        ev3_speaker_play_tone(10000, 1000000000);
+    } else if (instructions.doAbrasive == 1) {
+        // TODO: stuff
+        //so for now, here's a beep(s)
+        ev3_speaker_set_volume(100);
+        int haha = 250;
+        int ha = 0;
+        while (true) {
+            if (ha) {
+                haha++;
+                if (haha == 10000) {
+                    ha = 1;
+                }
+            } else {
+                haha--;
+                if (haha == 250) {
+                    ha = 0;
+                }
+            }
+            ev3_speaker_play_tone(haha, 10);
+        }
+    }
     //ev3_motor_steer(left_motor, right_motor, 10, 0);
     //while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 30) {
     //    display_sensors();
@@ -671,6 +673,13 @@ void runBlueStreet(directions instructions){
     }
     pos.street = YELLOW_STREET;
 }
+/**
+ * \brief Runs robot through Green Street | WARNING: Only one of doSnow, doCar, and doAbrasive can be true at a time | WARNING: runGreenStreet does not support the following: snowDepot, carDepot, uTurn, collectAbrasive
+ * \param doSnow collect snow on run-through of road (cannot be true while doCar or doAbrasive are true)
+ * \param doCar collect cars on run-through of road (cannot be true while doSnow or doAbrasive are true)
+ * \param doAbrasive dispense abrasive material on run-through of road (cannot be true while doSnow or doCar are true)
+ * \param detectCar detect car on run-through of road
+*/
 void runGreenStreet(directions instructions){
     color_4_index = 0;
     a_motor_index = 0;
@@ -739,6 +748,13 @@ void runGreenStreet(directions instructions){
     }
     pos.street = RED_STREET;
 }
+/**
+ * \brief Runs robot through Yellow Street | WARNING: Only one of doSnow, doCar, and doAbrasive can be true at a time | WARNING: runYellowStreet does not support the following: snowDepot, carDepot, uTurn, collectAbrasive
+ * \param doSnow collect snow on run-through of road (cannot be true while doCar or doAbrasive are true)
+ * \param doCar collect cars on run-through of road (cannot be true while doSnow or doAbrasive are true)
+ * \param doAbrasive dispense abrasive material on run-through of road (cannot be true while doSnow or doCar are true)
+ * \param detectCar detect car on run-through of road
+*/
 void runYellowStreet(directions instructions){
     int doCar = 1;
     if(doCar == 0){
@@ -904,6 +920,17 @@ void runYellowStreet(directions instructions){
     }
     pos.street = RED_STREET;
 }
+/**
+ * \brief Runs robot through Red Street | WARNING: Only one of doSnow, doCar, and doAbrasive can be true at a time
+ * \param doSnow collect snow on run-through of road (cannot be true while doCar or doAbrasive are true)
+ * \param doCar collect cars on run-through of road (cannot be true while doSnow or doAbrasive are true)
+ * \param doAbrasive dispense abrasive material on run-through of road (cannot be true while doSnow or doCar are true)
+ * \param detectCar detect car on run-through of road
+ * \param snowDepot TODO: Maitian
+ * \param carDepot TODO: Maitian
+ * \param collectAbrasive TODO: Maitian
+ * \param uTurn TODO: Maitian
+*/
 void runRedStreet(directions instructions){
     int doCar = 1;
     if(doCar == 0){
