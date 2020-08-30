@@ -1161,9 +1161,11 @@ void runRedStreet(directions instructions){
         ev3_motor_steer(left_motor,right_motor,0,0);
     }
     if(!instructions.snowDepot && !instructions.carDepot){
+        ev3_motor_set_power(a_motor,80);
         ev3_motor_steer(left_motor,right_motor,-15,90);
         tslp_tsk(800);
         ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_set_power(a_motor,-80);
     }
     //back up
     ev3_motor_steer(left_motor,right_motor,-10,0);
