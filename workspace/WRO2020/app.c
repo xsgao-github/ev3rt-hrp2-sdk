@@ -880,8 +880,8 @@ void runYellowStreet(directions instructions){
         ev3_motor_reset_counts(left_motor);
         ev3_motor_reset_counts(right_motor);
         float wheelDistance = 0;
-        ev3_motor_steer(left_motor,right_motor,15,3);
-        while(wheelDistance < 44){
+        ev3_motor_steer(left_motor,right_motor,40,3);
+        while(wheelDistance < 42){
             wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
         }
         //detect line
@@ -924,14 +924,13 @@ void runYellowStreet(directions instructions){
                 carDetected[pos.street] = 0;
                 break;
             case 2:
-                ev3_motor_set_power(a_motor,80);
                 ev3_motor_steer(left_motor,right_motor,25,3);
                 while(wheelDistance < 132){
-                    if(wheelDistance > 105 && taskIndex == 0){
-                        ev3_motor_set_power(a_motor,-80);
+                    if(wheelDistance > 85 && taskIndex == 0){
+                        ev3_motor_set_power(a_motor,80);
                         taskIndex = 1;
                     }
-                    if(wheelDistance > 120 && taskIndex == 1){
+                    if(wheelDistance > 125 && taskIndex == 1){
                         ev3_motor_set_power(a_motor,-80);
                         taskIndex = 2;
                     }
