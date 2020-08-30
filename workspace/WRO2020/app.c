@@ -1451,11 +1451,11 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
             isTurningA = 0;
             tasksLeftA -= 1;
         }
-        if(wheelDistance > next_d_motor_task[0] && tasksLeft4 > 0 && isTurningD == 0 && back_loaded){
+        if(wheelDistance > next_d_motor_task[0] && tasksLeftD > 0 && isTurningD == 0 && back_loaded){
             ev3_motor_rotate(d_motor,next_d_motor_task[2],80,false);
             isTurningD = 1;
         }
-        if(wheelDistance > next_d_motor_task[1] && tasksLeft4 > 0 && isTurningD == 1 && back_loaded){
+        if(wheelDistance > next_d_motor_task[1] && tasksLeftD > 0 && isTurningD == 1 && back_loaded){
             ev3_motor_set_power(d_motor,-100);
             d_motor_index += 1;
             for(int i = 0;i < 3;i++){
