@@ -473,9 +473,10 @@ void main_task(intptr_t unused) {
     readColorCode();
     directions instructions = {0,0,0,0,0,0,0,0};
     if(1){
-        directions instructions = {1,0,0,1,1,0,0,0};
+        directions instructions = {0,1,0,0,0,0,0,0};
     }
-    runRedStreet(instructions);
+    carDetected[2] = 2;
+    runYellowStreet(instructions);
     //*/
     /*
     readCode();
