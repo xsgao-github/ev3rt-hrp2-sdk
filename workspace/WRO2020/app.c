@@ -844,53 +844,6 @@ void runYellowStreet(directions instructions){
             wall_follow_with_tasks(90,3,instructions.detectCar,1,0,25);
             wall_follow_with_tasks(42,3,instructions.detectCar,2,0,10);
         }
-        //turn 1
-        ev3_motor_steer(left_motor,right_motor,30,-45);
-        tslp_tsk(600);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        //move forward
-        ev3_motor_steer(left_motor,right_motor,30,0);
-        tslp_tsk(800);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        //turn 2
-        ev3_motor_steer(left_motor,right_motor,30,-45);
-        tslp_tsk(200);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        //Side Length
-        if(instructions.doAbrasive){
-            wall_follow_with_tasks(35,3,0,0,1,35);
-        }
-        else{
-            wall_follow_with_tasks(35,3,0,0,0,35);
-        }
-        //detect line
-        ev3_motor_steer(left_motor,right_motor,15,0);
-        while (ev3_color_sensor_get_reflect(color_3) > 20) {
-        }
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        //move forward
-        ev3_motor_steer(left_motor,right_motor,30,0);
-        tslp_tsk(350);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        //turn
-        ev3_motor_steer(left_motor,right_motor,30,-45);
-        tslp_tsk(750);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        //move forward
-        ev3_motor_reset_counts(left_motor);
-        ev3_motor_reset_counts(right_motor);
-        float wheelDistance = 0;
-        ev3_motor_steer(left_motor,right_motor,40,3);
-        while(wheelDistance < 42){
-            wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
-        }
-        //detect line
-        while (ev3_color_sensor_get_reflect(color_3) > 20) {
-        }
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        if(carDetected[pos.street] == -1){
-            carDetected[pos.street] = 3;
-        }
     }
     else if(instructions.doCar == 1){
         ev3_motor_reset_counts(left_motor);
@@ -970,47 +923,53 @@ void runYellowStreet(directions instructions){
                 ev3_motor_steer(left_motor,right_motor,0,0);
                 break;
         }
-        //turn
-        ev3_motor_steer(left_motor,right_motor,30,-45);
-        tslp_tsk(600);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        //move forward
-        ev3_motor_steer(left_motor,right_motor,30,0);
-        tslp_tsk(800);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        //complete turn
-        ev3_motor_steer(left_motor,right_motor,30,-45);
-        tslp_tsk(200);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        //move forward
+    }
+    //turn 1
+    ev3_motor_steer(left_motor,right_motor,30,-45);
+    tslp_tsk(600);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    //move forward
+    ev3_motor_steer(left_motor,right_motor,30,0);
+    tslp_tsk(800);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    //turn 2
+    ev3_motor_steer(left_motor,right_motor,30,-45);
+    tslp_tsk(200);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    //Side Length
+    if(instructions.doAbrasive){
+        wall_follow_with_tasks(35,3,0,0,1,35);
+    }
+    else{
         wall_follow_with_tasks(35,3,0,0,0,35);
-        //detect line
-        ev3_motor_steer(left_motor,right_motor,15,0);
-        while (ev3_color_sensor_get_reflect(color_3) > 20) {
-        }
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        //move forward to turn
-        ev3_motor_steer(left_motor,right_motor,30,0);
-        tslp_tsk(300);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        //turn
-        ev3_motor_steer(left_motor,right_motor,30,-45);
-        tslp_tsk(750);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        //move 42 cm
-        ev3_motor_reset_counts(left_motor);
-        ev3_motor_reset_counts(right_motor);
-        wheelDistance = 0;
-        ev3_motor_steer(left_motor,right_motor,40,3);
-        while(wheelDistance < 42){
-            wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
-        }
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        //detect line
-        ev3_motor_steer(left_motor,right_motor,15,3);
-        while (ev3_color_sensor_get_reflect(color_3) > 20) {
-        }
-        ev3_motor_steer(left_motor,right_motor,0,0);
+    }
+    //detect line
+    ev3_motor_steer(left_motor,right_motor,15,0);
+    while (ev3_color_sensor_get_reflect(color_3) > 20) {
+    }
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    //move forward
+    ev3_motor_steer(left_motor,right_motor,30,0);
+    tslp_tsk(350);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    //turn
+    ev3_motor_steer(left_motor,right_motor,30,-45);
+    tslp_tsk(750);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    //move forward
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
+    float wheelDistance = 0;
+    ev3_motor_steer(left_motor,right_motor,40,3);
+    while(wheelDistance < 42){
+        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
+    }
+    //detect line
+    while (ev3_color_sensor_get_reflect(color_3) > 20) {
+    }
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    if(carDetected[pos.street] == -1 && instructions.detectCar){
+        carDetected[pos.street] = 3;
     }
     pos.street = RED_STREET;
 }
