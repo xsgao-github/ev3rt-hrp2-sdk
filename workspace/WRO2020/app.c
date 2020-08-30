@@ -29,7 +29,7 @@ void readCode();
 void readColorCode();
 void linePID_with_tasks(int distance, int speed, int doCar);
 void color4PID(int distance,int tasksNumA,int tasksNumD);
-void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,int tasksNumD,int doCar,int speed);
+void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,int tasksNumD,int speed);
 void execute_tasks(float distance, int doCar);
 void waitforButton();
 void init();
@@ -534,7 +534,7 @@ void runBlueStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 40, 1);
-    wall_follow_with_tasks(77, 1, 1, 2, 0, false, 30);
+    wall_follow_with_tasks(77, 1, 1, 2, 0, 30);
     ev3_motor_set_power(a_motor, -50);
     tslp_tsk(100);
     ev3_motor_reset_counts(left_motor);
@@ -670,7 +670,7 @@ void runGreenStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
     //    display_sensors();
     //}
     //ev3_motor_steer(left_motor, right_motor, 0, 0);
-    wall_follow_with_tasks(45, 1, 1, 2, 0, false, 30);
+    wall_follow_with_tasks(45, 1, 1, 2, 0, 30);
     tslp_tsk(100);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
@@ -737,8 +737,8 @@ void runYellowStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
         color_4_index = 0;
         a_motor_index = 0;
         d_motor_index = 0;
-        wall_follow_with_tasks(90,3,0,1,0,0,25);
-        wall_follow_with_tasks(42,3,0,2,0,0,10);
+        wall_follow_with_tasks(90,3,0,1,0,25);
+        wall_follow_with_tasks(42,3,0,2,0,10);
         ev3_motor_steer(left_motor,right_motor,30,-45);
         tslp_tsk(600);
         ev3_motor_steer(left_motor,right_motor,0,0);
@@ -748,7 +748,7 @@ void runYellowStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
         ev3_motor_steer(left_motor,right_motor,30,-45);
         tslp_tsk(200);
         ev3_motor_steer(left_motor,right_motor,0,0);
-        wall_follow_with_tasks(35,3,0,0,0,0,35);
+        wall_follow_with_tasks(35,3,0,0,0,35);
         ev3_motor_steer(left_motor,right_motor,15,0);
         while (ev3_color_sensor_get_reflect(color_3) > 20) {
         }
@@ -865,7 +865,7 @@ void runYellowStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive){
         tslp_tsk(200);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //move forward
-        wall_follow_with_tasks(35,3,0,0,0,0,35);
+        wall_follow_with_tasks(35,3,0,0,0,35);
         //detect line
         ev3_motor_steer(left_motor,right_motor,15,0);
         while (ev3_color_sensor_get_reflect(color_3) > 20) {
@@ -911,7 +911,7 @@ void runRedStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive,int snow
         color_4_index = 0;
         a_motor_index = 0;
         d_motor_index = 0;
-        wall_follow_with_tasks(128,3,2,3,0,0,25);
+        wall_follow_with_tasks(128,3,2,3,0,25);
         ev3_motor_reset_counts(left_motor);
         ev3_motor_reset_counts(right_motor);
         float wheelDistance = 0;
@@ -935,7 +935,7 @@ void runRedStreet(int doSnow,int doCar,int detectCar,int spreadAbrasive,int snow
         ev3_motor_steer(left_motor,right_motor,-30,0);
         tslp_tsk(402);
         ev3_motor_steer(left_motor,right_motor,0,0);
-        wall_follow_with_tasks(60,0,0,1,0,0,25);
+        wall_follow_with_tasks(60,0,0,1,0,25);
         ev3_motor_steer(left_motor, right_motor, 15, 3);
         while (ev3_color_sensor_get_reflect(color_3) > 20) {
         }
@@ -1381,13 +1381,13 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
  * \brief follows a wall with a wall follower and does tasks
  * \param distance Distance in cm
  * \param steer Steer amount, ranging from 0 to 100
- * \param tasksNum4 amount of tasks for Color_4
+ * \param detectCar do you detect car
  * \param tasksNumA amount of tasks for A_Motor
  * \param tasksNumD amount of tasks for D_Motor
  * \param doCar is it a car-collecting road?
  * \param speed speed abs (recommended 25 with tasks, 30 without, sometimes 15)
 */
-void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,int tasksNumD, int doCar, int speed){
+void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,int tasksNumD, int speed){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_reset_counts(a_motor);
@@ -1398,7 +1398,6 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
     int isTurningD = 0;
     int d_motorStopped = 0;
     float wheelDistance = -100;
-    int tasksLeft4 = tasksNum4;
     int tasksLeftA = tasksNumA;
     int tasksLeftD = tasksNumD;
     int i = 0;
@@ -1423,9 +1422,8 @@ void wall_follow_with_tasks(int distance,int steer,int tasksNum4,int tasksNumA,i
             ev3_speaker_play_tone(NOTE_A5,60);
             d_motorStopped = 1;
         }
-        if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
+        if(wheelDistance > next_color_4_task[0] && detectCar == 1){
             ev3_speaker_play_tone(NOTE_C4,60);
-            tasksNum4 -= 1;
             bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
             assert(val);
             if(rgb4.g < 40 && rgb4.r < 40 && rgb4.b < 40){
