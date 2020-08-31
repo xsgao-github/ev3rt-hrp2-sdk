@@ -472,7 +472,7 @@ int car_motor_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    ///*
+    /*
     readColorCode();
 
     writeInstructions(1,0,0,0,0,0,0,0);
@@ -484,11 +484,6 @@ void main_task(intptr_t unused) {
     pos.street = RED_STREET;
     carDetected[2] = 3;
     runRedStreet(instructions);
-    //*/
-    /*
-    readColorCode();
-    writeInstrucitons(sdkfjl; adsf;jk;adfjk; adsfjkdasjfjk; adsfjkl; adsjfkjadsf;jladsf);
-    runRedStreet();
     */
     ///*
     readCode();
