@@ -20,10 +20,10 @@ const int color_1 = EV3_PORT_2, color_2 = EV3_PORT_2, color_3 = EV3_PORT_3, colo
 
 // declare methods
 void run2020();
-void runBlueStreet(directions instructions);
-void runGreenStreet(directions instructions);
-void runYellowStreet(directions instructions);
-void runRedStreet(directions instructions);
+void runBlueStreet();
+void runGreenStreet();
+void runYellowStreet();
+void runRedStreet();
 void readCode();
 void readColorCode();
 void linePID_with_tasks(int distance, int speed, int doCar);
@@ -31,6 +31,7 @@ void color4PID(int distance,int tasksNumA,int tasksNumD);
 void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,int tasksNumD,int speed);
 void execute_tasks(float distance, int doCar);
 void waitforButton();
+void writeInstructions(int doSnow, int doCar, int doAbrasive, int detectCar, int snowDepot, int carDepot, int collectAbrasive, int uTurn);
 void init();
 void display_sensors();
 void displayValues(char text[100],int row,int collumn,int clearScreen);
@@ -42,13 +43,13 @@ rgb_raw_t rgb1;
 rgb_raw_t rgb4;
 position pos = {-1, -1};
 directions instructions = {0,0,0,0,0,0,0,0};
-/*
+/**
  * instructions for robot
  * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
  * Index 2 - Task or Taskdone
-*/
+**/
 int tasks[4][2] = {{-1, 0}, {-1, 0}, {-1, 0}, {-1, 0}};
-/*
+/**
  * All task directions written to here
  * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
  * Index 2 - Sensor/Motor [COLOR_4, A_MOTOR, D_MOTOR]
@@ -57,7 +58,7 @@ int tasks[4][2] = {{-1, 0}, {-1, 0}, {-1, 0}, {-1, 0}};
  * ---------------COLOR_4-[distance at read (cm), null, null]
  * ---------------A_MOTOR-[distance at execute (cm), distance at return (cm), degrees to rotate]
  * ---------------D_MOTOR-[distance at execute (cm), degrees to rotate, abrasive type]
-*/
+**/
 int allTasks[4][3][7][3] = {
     //blue
     {
@@ -108,11 +109,11 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                6,8,300
+                5,8,300
             },
             //index 4
             {
-                9,25,400
+                8,20,400
             },
             //index 5
             {
@@ -444,10 +445,10 @@ int allTasks[4][3][7][3] = {
         },
     },
 };
-/*
+/**
  * Position at where the car was detected
  * Index 1 - Car detected [0,1,2]
-*/
+**/
 int carDetected[4] = {
     //blue
     -1,
@@ -481,9 +482,15 @@ void main_task(intptr_t unused) {
     runRedStreet(instructions);
     //*/
     /*
-    readCode();
-    runBlueStreet(true, false, false, true);
+    readColorCode();
+    writeInstrucitons(sdkfjl; adsf;jk;adfjk; adsfjkdasjfjk; adsfjkl; adsjfkjadsf;jladsf);
+    runRedStreet();
     */
+    ///*
+    readCode();
+    writeInstructions(true, false, false, false, false, false, false, false);
+    runBlueStreet();
+    //*/
 }
 
 void run2020(){
@@ -590,14 +597,7 @@ void run2020(){
     }
 
 }
-/**
- * \brief Runs robot through Blue Street | WARNING: Only one of doSnow, doCar, and doAbrasive can be true at a time | WARNING: runBlueStreet does not support the following: snowDepot, carDepot, uTurn, collectAbrasive
- * \param doSnow collect snow on run-through of road (cannot be true while doCar or doAbrasive are true)
- * \param doCar collect cars on run-through of road (cannot be true while doSnow or doAbrasive are true)
- * \param doAbrasive dispense abrasive material on run-through of road (cannot be true while doSnow or doCar are true)
- * \param detectCar detect car on run-through of road
-*/
-void runBlueStreet(directions instructions){
+void runBlueStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -665,10 +665,10 @@ void runBlueStreet(directions instructions){
         ev3_motor_rotate(right_motor, -50, 20, true);
         ev3_motor_rotate(left_motor, 30, 10, false);
         ev3_motor_rotate(right_motor, 30, 10, true);
-        ev3_motor_rotate(left_motor, -40, 10, true);
+        ev3_motor_rotate(right_motor, 40, 10, true);
         a_motor_index++;
         linePID_with_tasks(4, 20, false);
-        linePID_with_tasks(7, 20, false);
+        linePID_with_tasks(6, 20, false);
         tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
         while (ev3_color_sensor_get_reflect(color_2) > 20) {
@@ -680,6 +680,7 @@ void runBlueStreet(directions instructions){
         ev3_motor_rotate(right_motor, 180, 20, true);
         tslp_tsk(100);
         linePID_with_tasks(32, 25, false);
+        ev3_motor_set_power(a_motor, -50);
     } else if (instructions.doCar == 1) {
         // TODO: stuff
         //so for now, here's a beep(s)
@@ -721,18 +722,23 @@ void runBlueStreet(directions instructions){
             ev3_speaker_play_tone(haha, 10);
         }
     }
-    //ev3_motor_steer(left_motor, right_motor, 10, 0);
-    //while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 30) {
-    //    display_sensors();
-    //}
-    //ev3_motor_steer(left_motor, right_motor, 0, 0);
-    ev3_motor_rotate(left_motor, 50, 10, true);
-    ev3_motor_rotate(left_motor, 180, 20, false);
-    ev3_motor_rotate(right_motor, 180, 20, true);
+    ev3_motor_steer(left_motor, right_motor, 10, 0);
+    while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 30) {
+        display_sensors();
+    }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    //ev3_motor_rotate(left_motor, 50, 10, true);
+    ev3_motor_rotate(left_motor, 160, 20, false);
+    ev3_motor_rotate(right_motor, 160, 20, true);
+    ev3_motor_stop(a_motor, false);
     tslp_tsk(100);
     ev3_motor_rotate(right_motor, 250, 20, true);
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 10, 5);
+    tslp_tsk(1000);
+    ev3_motor_steer(left_motor, right_motor, -20, 3);
+    tslp_tsk(1000);
+    ev3_motor_steer(left_motor, right_motor, 10, 1);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
         display_sensors();
     }
@@ -743,14 +749,7 @@ void runBlueStreet(directions instructions){
     }
     pos.street = YELLOW_STREET;
 }
-/**
- * \brief Runs robot through Green Street | WARNING: Only one of doSnow, doCar, and doAbrasive can be true at a time | WARNING: runGreenStreet does not support the following: snowDepot, carDepot, uTurn, collectAbrasive
- * \param doSnow collect snow on run-through of road (cannot be true while doCar or doAbrasive are true)
- * \param doCar collect cars on run-through of road (cannot be true while doSnow or doAbrasive are true)
- * \param doAbrasive dispense abrasive material on run-through of road (cannot be true while doSnow or doCar are true)
- * \param detectCar detect car on run-through of road
-*/
-void runGreenStreet(directions instructions){
+void runGreenStreet(){
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -818,14 +817,7 @@ void runGreenStreet(directions instructions){
     }
     pos.street = RED_STREET;
 }
-/**
- * \brief Runs robot through Yellow Street | WARNING: Only one of doSnow, doCar, and doAbrasive can be true at a time | WARNING: runYellowStreet does not support the following: snowDepot, carDepot, uTurn, collectAbrasive
- * \param doSnow collect snow on run-through of road (cannot be true while doCar or doAbrasive are true)
- * \param doCar collect cars on run-through of road (cannot be true while doSnow or doAbrasive are true)
- * \param doAbrasive dispense abrasive material on run-through of road (cannot be true while doSnow or doCar are true)
- * \param detectCar detect car on run-through of road
-*/
-void runYellowStreet(directions instructions){
+void runYellowStreet(){
     //doCar
     if(instructions.doCar == 0){
         color_4_index = 0;
@@ -971,18 +963,7 @@ void runYellowStreet(directions instructions){
     }
     pos.street = RED_STREET;
 }
-/**
- * \brief Runs robot through Red Street | WARNING: Only one of doSnow, doCar, and doAbrasive can be true at a time
- * \param doSnow collect snow on run-through of road (cannot be true while doCar or doAbrasive are true)
- * \param doCar collect cars on run-through of road (cannot be true while doSnow or doAbrasive are true)
- * \param doAbrasive dispense abrasive material on run-through of road (cannot be true while doSnow or doCar are true)
- * \param detectCar detect car on run-through of road
- * \param snowDepot TODO: Maitian
- * \param carDepot TODO: Maitian
- * \param collectAbrasive TODO: Maitian
- * \param uTurn TODO: Maitian
-*/
-void runRedStreet(directions instructions){
+void runRedStreet(){
     //doCar
     if(instructions.doCar == 0){
         color_4_index = 0;
@@ -1165,9 +1146,8 @@ void runRedStreet(directions instructions){
 }
 
 void readCode() {
-    // define variables
-    int bit1 = -1;
-    int bit2 = -1;
+    // define array
+    int values[8] = {-1, -1, -1, -1, -1, -1, -1, -1};
 
     // leave start
     ev3_motor_reset_counts(EV3_PORT_B);
@@ -1210,43 +1190,41 @@ void readCode() {
     ev3_motor_reset_counts(EV3_PORT_C);
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     int i;
-    for (i = 0; i < 4; i++) {
+    for (i = 1; i < 5; i++) {
         // read instructions
-        bit1 = 0;
-        bit2 = 0;
+        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((i) * 60)) {
+            display_sensors();
+        }
+        if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
+            values[i - 1] = 1;
+            ev3_speaker_play_tone(NOTE_C5, 50);
+        } else {
+            values[i - 1] = 0;
+            ev3_speaker_play_tone(NOTE_C4, 50);
+        }
         while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((i + 1) * 60)) {
             display_sensors();
         }
         if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
-            bit1 = 1;
+            values[i] = 1;
             ev3_speaker_play_tone(NOTE_C5, 50);
         } else {
-            bit1 = 0;
-            ev3_speaker_play_tone(NOTE_C4, 50);
-        }
-        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((i + 2) * 60)) {
-            display_sensors();
-        }
-        if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
-            bit2 = 1;
-            ev3_speaker_play_tone(NOTE_C5, 50);
-        } else {
-            bit2 = 0;
+            values[i] = 0;
             ev3_speaker_play_tone(NOTE_C4, 50);
         }
 
         // decode instructions
-        if (bit1 == 1) {
-            if (bit2 == 1) {
+        if (values[i] == 1) {
+            if (values[i + 1] == 1) {
                 ev3_speaker_play_tone(NOTE_G6, -1);
             } else {
-                tasks[i][0] = BLACKMATERIAL;
+                tasks[i - 1][0] = BLACKMATERIAL;
             }
         } else {
-            if (bit2 == 1) {
-                tasks[i][0] = BLUEMATERIAL;
+            if (values[i + 1] == 1) {
+                tasks[i - 1][0] = BLUEMATERIAL;
             } else {
-                tasks[i][0] = COLLECTSNOW;
+                tasks[i - 1][0] = COLLECTSNOW;
             }
         }
     }
@@ -1365,7 +1343,7 @@ void readColorCode(){
  * \param distance Distance in cm
  * \param speed speed abs (recommended 25 with tasks, 30 without)
  * \param doCar is it a car-collecting road?
-*/
+**/
 void linePID_with_tasks(int distance, int speed, int doCar){
     ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
 
@@ -1403,7 +1381,7 @@ void linePID_with_tasks(int distance, int speed, int doCar){
  * \param distance Distance in cm
  * \param tasksNumA amount of tasks for A_Motor
  * \param tasksNumD amount of tasks for D_Motor
-*/
+**/
 void color4PID(int distance,int tasksNumA,int tasksNumD){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
@@ -1472,7 +1450,7 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
  * \param tasksNumA amount of tasks for A_Motor
  * \param tasksNumD amount of tasks for D_Motor
  * \param speed speed abs (recommended 25 with tasks, 30 without, sometimes 15)
-*/
+**/
 void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,int tasksNumD, int speed){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
@@ -1573,7 +1551,7 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
  * \brief executes tasks
  * \param distance Distance of robot travelled (cm)
  * \param doCar Do we do car collection or not?
-*/
+**/
 void execute_tasks(float distance, int doCar) {
     //display_sensors();
     tslp_tsk(5);
@@ -1644,6 +1622,28 @@ void waitforButton() {
         }
     }
     ev3_led_set_color(LED_GREEN);
+}
+
+/**
+ * \brief literally writes parameters... Why don't we just use normal parameters instead of a struct? There are a few...
+ * \param doSnow robot collects snow on street if true
+ * \param doCar robot collects cars on street if true
+ * \param doAbrasive robot dispensive abrasive material on street if true
+ * \param detectCar robot detects cars on street if true
+ * \param snowDepot robot goes to snowDepot after running street | WARNING: only supported by runRedStreet
+ * \param carDepot robot goes to carDepot (parking lot) after running street | WARNING: only supported by runRedStreet
+ * \param collectAbrasive collects abrasive material after running street  | WARNING: only supported by runRedStreet
+ * \param uTurn u-turns robot after street to go backwards  | WARNING: not supported at all by any street DO NOT USE
+**/
+void writeInstructions(int doSnow, int doCar, int doAbrasive, int detectCar, int snowDepot, int carDepot, int collectAbrasive, int uTurn) {
+    instructions.doSnow = doSnow;
+    instructions.doCar = doCar;
+    instructions.doAbrasive = doAbrasive;
+    instructions.detectCar = detectCar;
+    instructions.snowDepot = snowDepot;
+    instructions.carDepot = carDepot;
+    instructions.collectAbrasive = collectAbrasive;
+    instructions.uTurn = uTurn;
 }
 
 void init() {
@@ -1757,17 +1757,6 @@ void displayValues(char text[100],int row,int collumn,int clearScreen) {
     }
     sprintf(lcdstr, "%s", text);
     ev3_lcd_draw_string(lcdstr, collumn * 10, row * 15);
-}
-
-void writeInstructions(int doSnow,int doCar,int doAbrasive,int detectCar,int snowDepot,int carDepot,int collectAbrasive,int uTurn){
-    instructions.doSnow = doSnow;
-    instructions.doCar = doCar;
-    instructions.doAbrasive = doAbrasive;
-    instructions.detectCar = detectCar;
-    instructions.snowDepot = snowDepot;
-    instructions.carDepot = carDepot;
-    instructions.collectAbrasive = collectAbrasive;
-    instructions.uTurn = uTurn;
 }
 
 static void button_clicked_handler(intptr_t button) {

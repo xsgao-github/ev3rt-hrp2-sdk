@@ -38,7 +38,9 @@ typedef struct {
     int uTurn;
 } directions;
 
-
+/**
+ * 
+**/
 typedef struct {
     int street;
     int dash;
