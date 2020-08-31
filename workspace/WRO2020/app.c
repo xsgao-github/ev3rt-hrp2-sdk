@@ -1808,17 +1808,6 @@ void displayValues(char line1[100],char line2[100],char line3[100],char line4[10
     ev3_lcd_draw_string(lcdstr, 0, 105);
 }
 
-void writeInstructions(int doSnow,int doCar,int doAbrasive,int detectCar,int snowDepot,int carDepot,int collectAbrasive,int uTurn){
-    instructions.doSnow = doSnow;
-    instructions.doCar = doCar;
-    instructions.doAbrasive = doAbrasive;
-    instructions.detectCar = detectCar;
-    instructions.snowDepot = snowDepot;
-    instructions.carDepot = carDepot;
-    instructions.collectAbrasive = collectAbrasive;
-    instructions.uTurn = uTurn;
-}
-
 static void button_clicked_handler(intptr_t button) {
     switch(button) {
     case BACK_BUTTON:
