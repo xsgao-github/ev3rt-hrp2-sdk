@@ -100,7 +100,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 1
             {
-                50, 55, 50
+                48, 55, 100
             },
             //index 2
             {
@@ -108,11 +108,11 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                15, 1000, 150 // sort of spacer
+                15, 1000, 200 // sort of spacer
             },
             //index 4
             {
-                2,22,400
+                0,22,400
             },
             //index 5
             {
@@ -1202,18 +1202,8 @@ void readCode() {
     ev3_motor_reset_counts(EV3_PORT_C);
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     int i;
-    for (i = 1; i < 5; i++) {
+    for (i = 0; i < 8; i++) {
         // read instructions
-        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((i) * 60)) {
-            display_sensors();
-        }
-        if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
-            values[i - 1] = 1;
-            ev3_speaker_play_tone(NOTE_C5, 50);
-        } else {
-            values[i - 1] = 0;
-            ev3_speaker_play_tone(NOTE_C4, 50);
-        }
         while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((i + 1) * 60)) {
             display_sensors();
         }
@@ -1224,19 +1214,20 @@ void readCode() {
             values[i] = 0;
             ev3_speaker_play_tone(NOTE_C4, 50);
         }
-
-        // decode instructions
+    }
+    for (i = 0, i < 8, i += 2) {
+    // decode instructions
         if (values[i] == 1) {
             if (values[i + 1] == 1) {
                 ev3_speaker_play_tone(NOTE_G6, -1);
             } else {
-                tasks[i - 1][0] = BLACKMATERIAL;
+                tasks[i / 2][0] = BLACKMATERIAL;
             }
         } else {
             if (values[i + 1] == 1) {
-                tasks[i - 1][0] = BLUEMATERIAL;
+                tasks[i / 2][0] = BLUEMATERIAL;
             } else {
-                tasks[i - 1][0] = COLLECTSNOW;
+                tasks[i / 2][0] = COLLECTSNOW;
             }
         }
     }
