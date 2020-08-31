@@ -712,11 +712,11 @@ void runBlueStreet(){
             ev3_speaker_play_tone(haha, 10);
         }
     }
-    //ev3_motor_steer(left_motor, right_motor, 10, 0);
-    //while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 30) {
-    //    display_sensors();
-    //}
-    //ev3_motor_steer(left_motor, right_motor, 0, 0);
+    ev3_motor_steer(left_motor, right_motor, 10, 0);
+    while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 30) {
+        display_sensors();
+    }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
     //ev3_motor_rotate(left_motor, 50, 10, true);
     ev3_motor_rotate(left_motor, 160, 20, false);
     ev3_motor_rotate(right_motor, 160, 20, true);
@@ -1231,20 +1231,20 @@ void readCode() {
             display_sensors();
         }
         if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
-            values[i] = 1;
+            values[i - 1] = 1;
             ev3_speaker_play_tone(NOTE_C5, 50);
         } else {
-            values[i] = 0;
+            values[i - 1] = 0;
             ev3_speaker_play_tone(NOTE_C4, 50);
         }
         while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((i + 1) * 60)) {
             display_sensors();
         }
         if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
-            values[i + 1] = 1;
+            values[i] = 1;
             ev3_speaker_play_tone(NOTE_C5, 50);
         } else {
-            values[i + 1] = 0;
+            values[i] = 0;
             ev3_speaker_play_tone(NOTE_C4, 50);
         }
 
