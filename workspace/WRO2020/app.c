@@ -476,11 +476,17 @@ void main_task(intptr_t unused) {
     init();
     ///*
     readColorCode();
-    writeInstructions(0,0,0,0,0,1,0,0);
     pos.street = RED_STREET;
+    writeInstructions(1,0,0,1,1,0,0,0);
     runRedStreet(instructions);
-    writeInstructions(0,0,0,0,0,0,0,0);
+    writeInstructions(1,0,0,1,0,0,0,0);
     runYellowStreet(instructions);
+    writeInstructions(0,0,0,0,1,0,0,0);
+    runRedStreet(instructions);
+    writeInstructions(0,1,0,0,0,0,0,0);
+    runYellowStreet(instructions);
+    writeInstructions(0,1,0,0,0,1,0,0);
+    runRedStreet(instructions);
     //*/
     /*
     readColorCode();
@@ -1002,7 +1008,7 @@ void runRedStreet(){
                 ev3_motor_set_power(a_motor,80);
                 ev3_motor_steer(left_motor,right_motor,25,3);
                 while(wheelDistance < 130){
-                    if(wheelDistance > 20 && taskIndex == 0){
+                    if(wheelDistance > 80 && taskIndex == 0){
                         ev3_motor_set_power(a_motor,-80);
                         taskIndex = 1;
                     }
@@ -1068,10 +1074,27 @@ void runRedStreet(){
         ev3_motor_set_power(a_motor,0);
         //detect line
         ev3_motor_steer(left_motor, right_motor, 10, 5);
-        while (ev3_color_sensor_get_reflect(color_3) > 20) {
+        //int backMotor = ev3_motor_get_counts(left_motor);
+        //int lastMotor = ev3_motor_get_counts(left_motor);
+        //int counts = 0;
+        /*while (ev3_color_sensor_get_reflect(color_3) > 20 || counts == 25) {
+            if(ev3_motor_get_counts(left_motor) == lastMotor){
+                counts += 1;
+            }
+            else{
+                counts = 0;
+            }
+            lastMotor = ev3_motor_get_counts(left_motor);
+            tslp_tsk(10);
+        }*/
+        while(ev3_color_sensor_get_reflect(color_3) > 40){
+            
         }
         //move backwards
         ev3_motor_steer(left_motor,right_motor,-30,0);
+        //while(ev3_motor_get_counts(left_motor) - backMotor > 0){
+//
+        //}
         tslp_tsk(300);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back and turn
@@ -1097,10 +1120,16 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,-30,0);
         tslp_tsk(1000);
         ev3_motor_steer(left_motor,right_motor,0,0);
+        //turn amotor
+        ev3_motor_set_power(a_motor,80);
+        tslp_tsk(500);
         //turn again
         ev3_motor_steer(left_motor,right_motor,-30,90);
-        tslp_tsk(350);
+        tslp_tsk(275);
         ev3_motor_steer(left_motor,right_motor,0,0);
+        //turn amotor
+        ev3_motor_set_power(a_motor,-80);
+        tslp_tsk(500);
     }
     if(!instructions.snowDepot && !instructions.carDepot){
         ev3_motor_set_power(a_motor,80);
