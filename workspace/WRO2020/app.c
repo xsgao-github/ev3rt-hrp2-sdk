@@ -1493,10 +1493,9 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
                 ev3_speaker_play_tone(NOTE_C5,60);
                 carDetected[pos.street] = color_4_index + 1;
             }
-            displayValues("r:" + sprintf(rgb4.r),1,1,1);
-            displayValues("g:" + sprintf(rgb4.g),2,1,0);
-            displayValues("b:" + sprintf(rgb4.b),3,1,0);
-            displayValues("4: NaN",4,1,0);
+            displayValues(rgb4.r,1,1,1);
+            displayValues(rgb4.g,2,1,0);
+            displayValues(rgb4.b,3,1,0);
             tasksLeft4 -= 1;
             color_4_index += 1;
             for(int i = 0;i < 3;i++){
