@@ -492,6 +492,7 @@ void main_task(intptr_t unused) {
     readCode();
     writeInstructions(true, false, false, false, false, false, false, false);
     runBlueStreet();
+    runYellowStreet();
     //*/
 }
 
