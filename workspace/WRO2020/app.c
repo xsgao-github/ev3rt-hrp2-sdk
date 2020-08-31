@@ -34,7 +34,7 @@ void waitforButton();
 void writeInstructions(int doSnow, int doCar, int doAbrasive, int detectCar, int snowDepot, int carDepot, int collectAbrasive, int uTurn);
 void init();
 void display_sensors();
-void displayValues(char text[100],int row,int collumn,int clearScreen);
+void displayValues(float text,int row,int collumn,int clearScreen);
 void displayText(char text[100],int row,int collumn,int clearScreen);
 void writeInstructions(int doSnow,int doCar,int doAbrasive,int detectCar,int snowDepot,int carDepot,int collectAbrasive,int uTurn);
 static void button_clicked_handler(intptr_t button);
@@ -476,22 +476,22 @@ void main_task(intptr_t unused) {
     init();
     ///*
     readColorCode();
-    writeInstructions(1,0,0,1,0,0,0,0);
-    pos.street = YELLOW_STREET;
-    runYellowStreet(instructions);
-    writeInstructions(0,0,0,0,1,0,0,0);
+    writeInstructions(0,0,0,0,0,1,0,0);
+    pos.street = RED_STREET;
     runRedStreet(instructions);
+    writeInstructions(0,0,0,0,0,0,0,0);
+    runYellowStreet(instructions);
     //*/
     /*
     readColorCode();
     writeInstrucitons(sdkfjl; adsf;jk;adfjk; adsfjkdasjfjk; adsfjkl; adsjfkjadsf;jladsf);
     runRedStreet();
     */
-    ///*
+    /*
     readCode();
     writeInstructions(true, false, false, false, false, false, false, false);
     runBlueStreet();
-    //*/
+    */
 }
 
 void run2020(){
