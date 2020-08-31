@@ -35,6 +35,7 @@ void writeInstructions(int doSnow, int doCar, int doAbrasive, int detectCar, int
 void init();
 void display_sensors();
 void displayValues(char text[100],int row,int collumn,int clearScreen);
+void displayText(char text[100],int row,int collumn,int clearScreen);
 void writeInstructions(int doSnow,int doCar,int doAbrasive,int detectCar,int snowDepot,int carDepot,int collectAbrasive,int uTurn);
 static void button_clicked_handler(intptr_t button);
 
@@ -1748,7 +1749,16 @@ void display_sensors() {
     ev3_lcd_draw_string(msg, 10*7, 15*7.5);
 }
 
-void displayValues(char text[100],int row,int collumn,int clearScreen) {
+void displayValues(float text,int row,int collumn,int clearScreen) {
+    char lcdstr[100];
+    
+    if(clearScreen){
+        ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
+    }
+    sprintf(lcdstr, "%f3", text);
+    ev3_lcd_draw_string(lcdstr, collumn * 10, row * 15);
+}
+void displayText(char text[100],int row,int collumn,int clearScreen) {
     char lcdstr[100];
     
     if(clearScreen){
