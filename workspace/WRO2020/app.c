@@ -107,11 +107,11 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                6,8,300
+                5,8,300
             },
             //index 4
             {
-                9,20,400
+                8,20,400
             },
             //index 5
             {
@@ -655,10 +655,10 @@ void runBlueStreet(){
         ev3_motor_rotate(right_motor, -50, 20, true);
         ev3_motor_rotate(left_motor, 30, 10, false);
         ev3_motor_rotate(right_motor, 30, 10, true);
-        ev3_motor_rotate(left_motor, -40, 10, true);
+        ev3_motor_rotate(right_motor, 40, 10, true);
         a_motor_index++;
         linePID_with_tasks(4, 20, false);
-        linePID_with_tasks(7, 20, false);
+        linePID_with_tasks(6, 20, false);
         tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
         while (ev3_color_sensor_get_reflect(color_2) > 20) {
@@ -670,6 +670,7 @@ void runBlueStreet(){
         ev3_motor_rotate(right_motor, 180, 20, true);
         tslp_tsk(100);
         linePID_with_tasks(32, 25, false);
+        ev3_motor_set_power(a_motor, -50);
     } else if (instructions.doCar == 1) {
         // TODO: stuff
         //so for now, here's a beep(s)
@@ -716,13 +717,18 @@ void runBlueStreet(){
     //    display_sensors();
     //}
     //ev3_motor_steer(left_motor, right_motor, 0, 0);
-    ev3_motor_rotate(left_motor, 50, 10, true);
-    ev3_motor_rotate(left_motor, 180, 20, false);
-    ev3_motor_rotate(right_motor, 180, 20, true);
+    //ev3_motor_rotate(left_motor, 50, 10, true);
+    ev3_motor_rotate(left_motor, 160, 20, false);
+    ev3_motor_rotate(right_motor, 160, 20, true);
+    ev3_motor_stop(a_motor, false);
     tslp_tsk(100);
     ev3_motor_rotate(right_motor, 250, 20, true);
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 10, 5);
+    tslp_tsk(1000);
+    ev3_motor_steer(left_motor, right_motor, -20, 3);
+    tslp_tsk(1000);
+    ev3_motor_steer(left_motor, right_motor, 10, 1);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
         display_sensors();
     }
@@ -1175,9 +1181,8 @@ void runRedStreet(){
 }
 
 void readCode() {
-    // define variables
-    int bit1 = -1;
-    int bit2 = -1;
+    // define array
+    int values[8] = {-1, -1, -1, -1, -1, -1, -1, -1};
 
     // leave start
     ev3_motor_reset_counts(EV3_PORT_B);
@@ -1220,43 +1225,41 @@ void readCode() {
     ev3_motor_reset_counts(EV3_PORT_C);
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     int i;
-    for (i = 0; i < 4; i++) {
+    for (i = 1; i < 5; i++) {
         // read instructions
-        bit1 = 0;
-        bit2 = 0;
+        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((i) * 60)) {
+            display_sensors();
+        }
+        if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
+            values[i] = 1;
+            ev3_speaker_play_tone(NOTE_C5, 50);
+        } else {
+            values[i] = 0;
+            ev3_speaker_play_tone(NOTE_C4, 50);
+        }
         while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((i + 1) * 60)) {
             display_sensors();
         }
         if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
-            bit1 = 1;
+            values[i + 1] = 1;
             ev3_speaker_play_tone(NOTE_C5, 50);
         } else {
-            bit1 = 0;
-            ev3_speaker_play_tone(NOTE_C4, 50);
-        }
-        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < ((i + 2) * 60)) {
-            display_sensors();
-        }
-        if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
-            bit2 = 1;
-            ev3_speaker_play_tone(NOTE_C5, 50);
-        } else {
-            bit2 = 0;
+            values[i + 1] = 0;
             ev3_speaker_play_tone(NOTE_C4, 50);
         }
 
         // decode instructions
-        if (bit1 == 1) {
-            if (bit2 == 1) {
+        if (values[i] == 1) {
+            if (values[i + 1] == 1) {
                 ev3_speaker_play_tone(NOTE_G6, -1);
             } else {
-                tasks[i][0] = BLACKMATERIAL;
+                tasks[i - 1][0] = BLACKMATERIAL;
             }
         } else {
-            if (bit2 == 1) {
-                tasks[i][0] = BLUEMATERIAL;
+            if (values[i + 1] == 1) {
+                tasks[i - 1][0] = BLUEMATERIAL;
             } else {
-                tasks[i][0] = COLLECTSNOW;
+                tasks[i - 1][0] = COLLECTSNOW;
             }
         }
     }
