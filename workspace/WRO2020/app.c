@@ -321,7 +321,7 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                1000,0,0
+                30,40,-600
             },
             //index 1
             {
@@ -479,9 +479,10 @@ void main_task(intptr_t unused) {
     pos.street = RED_STREET;
     writeInstructions(1,0,0,0,0,0,1,0);
     runRedStreet(instructions);
-    /*writeInstructions(1,0,0,1,0,0,0,0);
+    back_loaded = 1;
+    writeInstructions(0,0,1,0,0,0,0,0);
     runYellowStreet(instructions);
-    writeInstructions(0,0,0,0,1,0,0,0);
+    /*writeInstructions(0,0,0,0,1,0,0,0);
     runRedStreet(instructions);
     writeInstructions(0,1,0,0,0,0,0,0);
     runYellowStreet(instructions);
@@ -1161,7 +1162,7 @@ void runRedStreet(){
         tslp_tsk(2000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(850);
+        tslp_tsk(800);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor,right_motor,15,0);
