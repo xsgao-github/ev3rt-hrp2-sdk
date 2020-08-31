@@ -294,7 +294,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 1
             {
-                8,18,250
+                8,18,200
             },
             //index 2
             {
@@ -390,7 +390,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 1
             {
-                71,89,250
+                71,89,200
             },
             //index 2
             {
@@ -1139,25 +1139,26 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,80);
         ev3_motor_steer(left_motor,right_motor,-15,90);
-        tslp_tsk(850);
+        tslp_tsk(800);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
-        tslp_tsk(2200);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        ev3_motor_steer(left_motor,right_motor,-10,0);
-        tslp_tsk(100);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        ev3_motor_steer(left_motor,right_motor,5,0);
-        tslp_tsk(200);
+        tslp_tsk(2000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-5,0);
-        tslp_tsk(200);
+        tslp_tsk(400);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,5,0);
-        tslp_tsk(200);
+        tslp_tsk(400);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        tslp_tsk(1000);
+        ev3_motor_steer(left_motor,right_motor,-5,0);
+        tslp_tsk(400);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_steer(left_motor,right_motor,5,0);
+        tslp_tsk(400);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,10,0);
-        tslp_tsk(2200);
+        tslp_tsk(2000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
         tslp_tsk(850);
@@ -1177,7 +1178,7 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,80);
         ev3_motor_steer(left_motor,right_motor,-15,90);
-        tslp_tsk(850);
+        tslp_tsk(800);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
         tslp_tsk(2200);
