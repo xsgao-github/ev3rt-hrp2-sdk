@@ -290,7 +290,7 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                43,60,400
+                44,60,400
             },
             //index 1
             {
@@ -394,7 +394,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 2
             {
-                100,112,350
+                97,112,350
             },
             //index 3
             {
@@ -476,16 +476,14 @@ void main_task(intptr_t unused) {
     init();
     
     readColorCode();
-    pos.street = YELLOW_STREET;
-    writeInstructions(0,0,0,1,0,0,0,0);
-    runYellowStreet(instructions);
-    writeInstructions(0,0,0,1,0,0,0,0);
+    pos.street = RED_STREET;
+    writeInstructions(1,0,0,1,1,0,0,0);
     runRedStreet(instructions);
-    writeInstructions(0,0,0,1,0,0,0,0);
+    writeInstructions(1,0,0,1,0,0,0,0);
     runYellowStreet(instructions);
-    writeInstructions(1,0,0,0,1,1,0,0);
+    writeInstructions(0,0,0,0,1,0,0,0);
     runRedStreet(instructions);
-    writeInstructions(1,1,0,0,1,1,1,0);
+    writeInstructions(0,1,0,0,0,0,0,0);
     runYellowStreet(instructions);
     writeInstructions(0,1,0,0,0,1,0,0);
     runRedStreet(instructions);
@@ -837,7 +835,7 @@ void runYellowStreet(){
                 ev3_motor_set_power(a_motor,80);
                 ev3_motor_steer(left_motor,right_motor,25,3);
                 while(wheelDistance < 132){
-                    if(wheelDistance > 50 && taskIndex == 0){
+                    if(wheelDistance > 100 && taskIndex == 0){
                         ev3_motor_set_power(a_motor,-80);
                         taskIndex = 1;
                     }
@@ -969,6 +967,7 @@ void runRedStreet(){
         float wheelDistance = -100;
         int taskIndex = 0;
         //switch
+        displayValues(carDetected[pos.street],1,1,1);
         switch(carDetected[pos.street]){
             case 0:
                 ev3_motor_steer(left_motor,right_motor,35,3);
@@ -996,13 +995,9 @@ void runRedStreet(){
                 ev3_motor_set_power(a_motor,80);
                 ev3_motor_steer(left_motor,right_motor,25,3);
                 while(wheelDistance < 130){
-                    if(wheelDistance > 65 && taskIndex == 0){
+                    if(wheelDistance > 80 && taskIndex == 0){
                         ev3_motor_set_power(a_motor,-80);
                         taskIndex = 1;
-                    }
-                    if(wheelDistance > 100 && taskIndex == 1){
-                        ev3_motor_set_power(a_motor,-80);
-                        taskIndex = 2;
                     }
                     wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
                     tslp_tsk(1);
@@ -1094,16 +1089,20 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,-30,0);
         tslp_tsk(1000);
         ev3_motor_steer(left_motor,right_motor,0,0);
-        //turn amotor
-        ev3_motor_set_power(a_motor,80);
-        tslp_tsk(500);
+        if(instructions.doSnow){
+            //turn amotor
+            ev3_motor_set_power(a_motor,80);
+            tslp_tsk(500);
+        }
         //turn again
         ev3_motor_steer(left_motor,right_motor,-30,90);
-        tslp_tsk(275);
+        tslp_tsk(325);
         ev3_motor_steer(left_motor,right_motor,0,0);
-        //turn amotor
-        ev3_motor_set_power(a_motor,-80);
-        tslp_tsk(500);
+        if(instructions.doSnow){
+            //turn amotor
+            ev3_motor_set_power(a_motor,-80);
+            tslp_tsk(500);
+        }
     }
     if(!instructions.snowDepot && !instructions.carDepot){
         ev3_motor_set_power(a_motor,80);
