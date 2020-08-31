@@ -355,11 +355,11 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                20,0,0
+                13,25,0
             },
             //index 1
             {
-                85,0,0
+                77,89,0
             },
             //index 2
             {
@@ -477,13 +477,13 @@ void main_task(intptr_t unused) {
     ///*
     readColorCode();
     pos.street = RED_STREET;
-    writeInstructions(1,0,0,1,1,0,0,0);
+    writeInstructions(0,0,0,1,0,0,0,0);
     runRedStreet(instructions);
-    writeInstructions(1,0,0,1,0,0,0,0);
+    writeInstructions(0,0,0,1,0,0,0,0);
     runYellowStreet(instructions);
-    writeInstructions(0,0,0,0,1,0,0,0);
+    writeInstructions(1,0,0,0,1,1,0,0);
     runRedStreet(instructions);
-    writeInstructions(0,1,0,0,0,0,0,0);
+    writeInstructions(1,1,0,0,1,1,1,0);
     runYellowStreet(instructions);
     writeInstructions(0,1,0,0,0,1,0,0);
     runRedStreet(instructions);
@@ -1008,7 +1008,7 @@ void runRedStreet(){
                 ev3_motor_set_power(a_motor,80);
                 ev3_motor_steer(left_motor,right_motor,25,3);
                 while(wheelDistance < 130){
-                    if(wheelDistance > 80 && taskIndex == 0){
+                    if(wheelDistance > 20 && taskIndex == 0){
                         ev3_motor_set_power(a_motor,-80);
                         taskIndex = 1;
                     }
@@ -1026,7 +1026,7 @@ void runRedStreet(){
                         ev3_motor_set_power(a_motor,-80);
                         taskIndex = 1;
                     }
-                    if(wheelDistance > 80 && taskIndex == 1){
+                    if(wheelDistance > 100 && taskIndex == 1){
                         ev3_motor_set_power(a_motor,-80);
                         taskIndex = 2;
                     }
@@ -1516,16 +1516,17 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
             d_motorStopped = 1;
         }
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
-            ev3_speaker_play_tone(NOTE_C4,60);
             bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
             assert(val);
-            if(rgb4.g < 40 && rgb4.r < 40 && rgb4.b < 40){
+            if(rgb4.b > 60){
                 ev3_speaker_play_tone(NOTE_C5,60);
                 carDetected[pos.street] = color_4_index + 1;
             }
             displayValues(rgb4.r,1,1,1);
             displayValues(rgb4.g,2,1,0);
             displayValues(rgb4.b,3,1,0);
+        }
+        if(wheelDistance > next_color_4_task[1] && tasksLeft4 > 0){
             tasksLeft4 -= 1;
             color_4_index += 1;
             for(int i = 0;i < 3;i++){
