@@ -488,11 +488,11 @@ void main_task(intptr_t unused) {
     writeInstructions(0,1,0,0,0,1,0,0);
     runRedStreet(instructions);
     */
-    /*
+    ///*
     readCode();
     writeInstructions(true, false, false, false, false, false, false, false);
     runBlueStreet();
-    */
+    //*/
 }
 
 void run2020(){
