@@ -832,14 +832,16 @@ void runYellowStreet(directions instructions){
         a_motor_index = 0;
         d_motor_index = 0;
         //Main length
+        int abrasive = 0;
+        int car = 0;
         if(instructions.doAbrasive){
-            wall_follow_with_tasks(90,3,instructions.detectCar,1,1,25);
-            wall_follow_with_tasks(42,3,instructions.detectCar,2,1,10);
+            abrasive = 1;
         }
-        else{
-            wall_follow_with_tasks(90,3,instructions.detectCar,1,0,25);
-            wall_follow_with_tasks(42,3,instructions.detectCar,2,0,10);
+        if(instructions.detectCar){
+            car = 1;
         }
+        wall_follow_with_tasks(90,3,car,1,abrasive,25);
+        wall_follow_with_tasks(42,3,car,2,abrasive,10);
     }
     else if(instructions.doCar == 1){
         ev3_motor_reset_counts(left_motor);
@@ -950,7 +952,7 @@ void runYellowStreet(directions instructions){
     ev3_motor_steer(left_motor,right_motor,0,0);
     //turn
     ev3_motor_steer(left_motor,right_motor,30,-45);
-    tslp_tsk(750);
+    tslp_tsk(800);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //move forward
     ev3_motor_reset_counts(left_motor);
@@ -987,12 +989,15 @@ void runRedStreet(directions instructions){
         a_motor_index = 0;
         d_motor_index = 0;
         //Main Length
+        int abrasive = 0;
+        int car = 0;
         if(instructions.doAbrasive){
-            wall_follow_with_tasks(130,3,instructions.detectCar,3,2,25);
+            abrasive = 2;
         }
-        else{
-            wall_follow_with_tasks(130,3,instructions.detectCar,3,0,25);
+        if(instructions.detectCar){
+            car = 2;
         }
+        wall_follow_with_tasks(130,3,car,3,abrasive,25);
     }
     else if(instructions.doCar == 1){
         ev3_motor_reset_counts(left_motor);
@@ -1479,6 +1484,7 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
     int isTurningD = 0;
     int d_motorStopped = 0;
     float wheelDistance = -100;
+    int tasksLeft4 = detectCar;
     int tasksLeftA = tasksNumA;
     int tasksLeftD = tasksNumD;
     int i = 0;
@@ -1501,7 +1507,7 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
             ev3_motor_stop(d_motor,false);
             d_motorStopped = 1;
         }
-        if(wheelDistance > next_color_4_task[0] && detectCar == 1){
+        if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
             ev3_speaker_play_tone(NOTE_C4,60);
             bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
             assert(val);
@@ -1509,6 +1515,11 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
                 ev3_speaker_play_tone(NOTE_C5,60);
                 carDetected[pos.street] = color_4_index + 1;
             }
+            displayValues("r:" + sprintf(rgb4.r),1,1,1);
+            displayValues("g:" + sprintf(rgb4.g),2,1,0);
+            displayValues("b:" + sprintf(rgb4.b),3,1,0);
+            displayValues("4: NaN",4,1,0);
+            tasksLeft4 -= 1;
             color_4_index += 1;
             for(int i = 0;i < 3;i++){
                 next_color_4_task[i] = allTasks[pos.street][0][color_4_index][i];
@@ -1745,7 +1756,7 @@ void displayValues(char text[100],int row,int collumn,int clearScreen) {
         ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
     }
     sprintf(lcdstr, "%s", text);
-    ev3_lcd_draw_string(lcdstr, row * 10, collumn * 15);
+    ev3_lcd_draw_string(lcdstr, collumn * 10, row * 15);
 }
 
 void writeInstructions(int doSnow,int doCar,int doAbrasive,int detectCar,int snowDepot,int carDepot,int collectAbrasive,int uTurn){
