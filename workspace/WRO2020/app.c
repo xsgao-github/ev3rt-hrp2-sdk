@@ -477,16 +477,16 @@ void main_task(intptr_t unused) {
     
     readColorCode();
     pos.street = RED_STREET;
-    writeInstructions(1,0,0,1,1,0,0,0);
+    writeInstructions(1,0,0,0,0,0,1,0);
     runRedStreet(instructions);
-    writeInstructions(1,0,0,1,0,0,0,0);
+    /*writeInstructions(1,0,0,1,0,0,0,0);
     runYellowStreet(instructions);
     writeInstructions(0,0,0,0,1,0,0,0);
     runRedStreet(instructions);
     writeInstructions(0,1,0,0,0,0,0,0);
     runYellowStreet(instructions);
     writeInstructions(0,1,0,0,0,1,0,0);
-    runRedStreet(instructions);
+    runRedStreet(instructions);*
     
     /*
     readCode();
@@ -1078,7 +1078,7 @@ void runRedStreet(){
         tslp_tsk(700);
         ev3_motor_set_power(a_motor,0);
     }
-    if(instructions.carDepot){
+    else if(instructions.carDepot){
         //turn
         ev3_motor_steer(left_motor,right_motor,-20,90);
         tslp_tsk(250);
@@ -1105,7 +1105,7 @@ void runRedStreet(){
             tslp_tsk(500);
         }
     }
-    if(!instructions.snowDepot && !instructions.carDepot){
+    else if(!instructions.snowDepot && !instructions.carDepot){
         ev3_motor_set_power(a_motor,80);
         ev3_motor_steer(left_motor,right_motor,-15,90);
         tslp_tsk(800);
@@ -1130,6 +1130,27 @@ void runRedStreet(){
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
     ev3_motor_steer(left_motor,right_motor,0,0);
+    if(instructions.uTurn){
+        //TODO: uTurn code
+    }
+    if(instructions.collectAbrasive == 1){
+        ev3_motor_steer(left_motor,right_motor,-15,0);
+        tslp_tsk(1900);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_set_power(a_motor,80);
+        ev3_motor_steer(left_motor,right_motor,-15,90);
+        tslp_tsk(850);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_steer(left_motor,right_motor,-10,0);
+        tslp_tsk(2200);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        tslp_tsk(1000000);
+    }
+    else if(instructions.collectAbrasive == 2){
+        ev3_motor_steer(left_motor,right_motor,-15,0);
+        tslp_tsk(1000);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+    }
     //move forward
     ev3_motor_steer(left_motor,right_motor,30,0);
     tslp_tsk(450);
