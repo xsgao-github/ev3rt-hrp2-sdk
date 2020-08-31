@@ -932,9 +932,10 @@ void runYellowStreet(){
     ev3_motor_reset_counts(right_motor);
     float wheelDistance = 0;
     ev3_motor_steer(left_motor,right_motor,40,3);
-    while(wheelDistance < 38){
+    while(wheelDistance < 42){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
     }
+    ev3_motor_steer(left_motor,right_motor,15,3);
     //detect line
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
