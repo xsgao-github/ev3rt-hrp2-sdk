@@ -461,6 +461,7 @@ int carDetected[4] = {
     -1,
 };
 
+int mute_task_running = false;
 int color_4_index = 0;
 int next_color_4_task[3] = {0,0,0};
 int a_motor_index = 0;
@@ -2015,6 +2016,13 @@ static void button_clicked_handler(intptr_t button) {
         exit(0);
         break;
     case UP_BUTTON:
-        ev3_speaker_set_volume(0);
+        if (mute_task_running) {
+            ev3_speaker_set_volume(10);
+            mute_task_running = 1;
+        } else {
+            ev3_speaker_set_volume(0);
+            mute_task_running = 0;
+        }
+        ev3_button_set_on_clicked(UP_BUTTON, button_clicked_handler, UP_BUTTON);
     }
 }
