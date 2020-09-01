@@ -1524,10 +1524,11 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
             ev3_motor_stop(a_motor,false);
             a_motorStopped = 1;
         }
-        if(ev3_motor_get_power(d_motor) == 0 && ev3_motor_get_counts(d_motor) > -100 && d_motorStopped == 0){
+        if(eev3_motor_get_counts(d_motor) > -10 && d_motorStopped == 0){
             ev3_motor_stop(d_motor,false);
             d_motorStopped = 1;
         }
+        displayValues(ev3_motor_get_counts(d_motor),1,1,0);
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
             bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
             assert(val);
