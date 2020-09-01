@@ -194,19 +194,19 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                1000,0,0
+                0,13,400
             },
             //index 1
             {
-                1000,0,0
+                1000,0,0 // spacer
             },
             //index 2
             {
-                1000,0,0
+                8,15,400
             },
             //index 3
             {
-                1000,0,0
+                1000,10,300 // arbitrary bad idea
             },
             //index 4
             {
@@ -474,7 +474,7 @@ int car_motor_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    
+    /*
     readColorCode();
     pos.street = RED_STREET;
     writeInstructions(1,0,0,0,0,0,1,0);
@@ -488,13 +488,21 @@ void main_task(intptr_t unused) {
     runYellowStreet(instructions);
     writeInstructions(0,1,0,0,0,1,0,0);
     runRedStreet(instructions);*
-    
-    /*
-    readCode();
-    writeInstructions(true, false, false, false, false, false, false, false);
-    runBlueStreet();
-    runYellowStreet();
     */
+    ///*
+    //readCode();
+    ev3_motor_steer(left_motor, right_motor, 30, 1);
+    tslp_tsk(2000);
+    ev3_motor_steer(left_motor, right_motor, 10, 1);
+    while (ev3_color_sensor_get_reflect(color_3) > 20) {
+        display_sensors();
+    }
+    tslp_tsk(100);
+    tasks[GREEN_STREET][0] = COLLECTSNOW;
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    writeInstructions(true, false, false, false, false, false, false, false);
+    runGreenStreet();
+    //*/
 }
 
 void run2020(){
@@ -737,7 +745,8 @@ void runBlueStreet(){
         tslp_tsk(150);
         ev3_motor_rotate(right_motor, 200, 20, true);
         ev3_motor_rotate(a_motor, 500, 80, true);
-        linePID_with_tasks(34, 25, false);
+        tslp_tsk(100);
+        linePID_with_tasks(40, 25, false);
         ev3_motor_set_power(a_motor, -50);
     } else if (instructions.doCar == 1) {
         // TODO: stuff
@@ -779,6 +788,9 @@ void runBlueStreet(){
             }
             ev3_speaker_play_tone(haha, 10);
         }
+    } else {
+        ev3_speaker_play_tone(NOTE_G6, -1);
+        while (true);
     }
     //ev3_motor_steer(left_motor, right_motor, 10, 0);
     //while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 30) {
@@ -786,8 +798,8 @@ void runBlueStreet(){
     //}
     //ev3_motor_steer(left_motor, right_motor, 0, 0);
     //ev3_motor_rotate(left_motor, 50, 10, true);
-    ev3_motor_rotate(left_motor, 130, 20, false);
-    ev3_motor_rotate(right_motor, 130, 20, true);
+    ev3_motor_rotate(left_motor, 100, 20, false);
+    ev3_motor_rotate(right_motor, 100, 20, true);
     ev3_motor_stop(a_motor, false);
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 30, -40);
@@ -822,12 +834,12 @@ void runGreenStreet(){
     //    display_sensors();
     //}
     //ev3_motor_steer(left_motor, right_motor, 0, 0);
-    wall_follow_with_tasks(45, 1, 1, 2, 0, 30);
+    wall_follow_with_tasks(54, 1, 1, 2, 0, 30);
     tslp_tsk(100);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, -20, 0);
-    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) > -15) {
+    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) > -150) {
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
@@ -837,34 +849,96 @@ void runGreenStreet(){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 20, 0);
-    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 80) {
+    while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 40) {
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
+    a_motor_index = 0;
+    d_motor_index = 0;
     pos.street = GREEN_STREET;
-    //linePID_with_tasks(86, 25, (round_index != 0 && tasks[BLUE_STREET][0] == 0));
-    ev3_motor_rotate(right_motor, 10, 20, true);
-    ev3_motor_steer(left_motor, right_motor, 10, -1);
-    while (ev3_color_sensor_get_reflect(color_2) > 20) {
-        display_sensors();
-    }
-    tslp_tsk(250);
-    ev3_motor_steer(left_motor, right_motor, -10, 0);
-    tslp_tsk(250);
-    ev3_motor_rotate(right_motor, 210, 20, true);
     tslp_tsk(100);
-    //linePID_with_tasks(38, 25, (round_index != 0 && tasks[BLUE_STREET][0] == 0));
+    if (instructions.doSnow == 1) {
+        linePID_with_tasks(23, 25, false);
+        tslp_tsk(100);
+        ev3_motor_rotate(right_motor, 80, 20, true);
+        ev3_motor_rotate(left_motor, 160, 20, true);
+        ev3_motor_rotate(right_motor, 80, 20, true);
+        tslp_tsk(100);
+        a_motor_index++;
+        linePID_with_tasks(23, 25, false);
+        tslp_tsk(100);
+        ev3_motor_rotate(right_motor, 70, 10, true);
+        ev3_motor_rotate(left_motor, 100, 20, false);
+        ev3_motor_rotate(right_motor, 100, 20, true);
+        tslp_tsk(100);
+        linePID_with_tasks(20, 25, false);
+        ev3_motor_rotate(a_motor, 300, 80, false);
+        ev3_motor_steer(left_motor, right_motor, 10, -1);
+        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+            display_sensors();
+        }
+        tslp_tsk(150);
+        ev3_motor_steer(left_motor, right_motor, -10, 0);
+        tslp_tsk(150);
+        ev3_motor_rotate(right_motor, 210, 20, true);
+        tslp_tsk(100);
+        a_task_running = 1;
+        linePID_with_tasks(39, 25, false);
+    } else if (instructions.doCar == 1) {
+        // TODO: stuff
+        //so for now, here's a beep(s)
+        ev3_speaker_set_volume(100);
+        int haha = 250;
+        int ha = 0;
+        while (true) {
+            if (ha) {
+                haha++;
+                if (haha == 10000) {
+                    ha = 1;
+                }
+            } else {
+                haha--;
+                if (haha == 250) {
+                    ha = 0;
+                }
+            }
+            ev3_speaker_play_tone(haha, 10);
+        }
+    } else if (instructions.doAbrasive == 1) {
+        // TODO: stuff
+        //so for now, here's a beep(s)
+        ev3_speaker_set_volume(100);
+        int haha = 250;
+        int ha = 0;
+        while (true) {
+            if (ha) {
+                haha++;
+                if (haha == 10000) {
+                    ha = 1;
+                }
+            } else {
+                haha--;
+                if (haha == 250) {
+                    ha = 0;
+                }
+            }
+            ev3_speaker_play_tone(haha, 10);
+        }
+    } else {
+        ev3_speaker_play_tone(NOTE_G6, -1);
+        while (true);
+    }
     //ev3_motor_steer(left_motor, right_motor, 10, 0);
     //while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 30) {
     //    display_sensors();
     //}
-    //ev3_motor_steer(left_motor, right_motor, 0, 0);
-    ev3_motor_rotate(left_motor, 150, 20, false);
-    ev3_motor_rotate(right_motor, 150, 20, true);
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    ev3_motor_rotate(left_motor, 100, 20, false);
+    ev3_motor_rotate(right_motor, 100, 20, true);
     tslp_tsk(250);
-    ev3_motor_rotate(right_motor, 220, 20, true);
+    ev3_motor_rotate(right_motor, 230, 20, true);
     tslp_tsk(250);
-    ev3_motor_steer(left_motor, right_motor, 20, 5);
+    ev3_motor_steer(left_motor, right_motor, 20, 3);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
@@ -1768,6 +1842,7 @@ void init() {
     // Register button handlers
     ev3_button_set_on_clicked(BACK_BUTTON, button_clicked_handler, BACK_BUTTON);
     ev3_button_set_on_clicked(DOWN_BUTTON, button_clicked_handler, DOWN_BUTTON);
+    ev3_button_set_on_clicked(UP_BUTTON, button_clicked_handler, UP_BUTTON);
     
     // Configure motors
     ev3_motor_config(left_motor, LARGE_MOTOR);
@@ -1909,5 +1984,7 @@ static void button_clicked_handler(intptr_t button) {
         ev3_led_set_color(LED_ORANGE);
         exit(0);
         break;
+    case UP_BUTTON:
+        ev3_speaker_set_volume(0);
     }
 }
