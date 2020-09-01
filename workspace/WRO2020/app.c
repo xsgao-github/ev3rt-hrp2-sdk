@@ -321,15 +321,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,40,-600
+                30,40,-1000
             },
             //index 1
             {
-                60,40,-600
+                60,80,-1000
             },
             //index 2
             {
-                15,40,-600
+                15,40,-1000
             },
             //index 3
             {
@@ -1524,7 +1524,7 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
             ev3_motor_stop(a_motor,false);
             a_motorStopped = 1;
         }
-        if(ev3_motor_get_power(d_motor) == 0 && ev3_motor_get_counts(d_motor) < 10 && d_motorStopped == 0){
+        if(ev3_motor_get_power(d_motor) == 0 && ev3_motor_get_counts(d_motor) > -100 && d_motorStopped == 0){
             ev3_motor_stop(d_motor,false);
             d_motorStopped = 1;
         }
@@ -1570,12 +1570,12 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
             ev3_speaker_play_tone(NOTE_A4,60);
             ev3_motor_set_power(d_motor,100);
             d_motor_index += 1;
+            d_motorStopped = 0;
             for(int i = 0;i < 3;i++){
                 next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
             }
             isTurningD = 0;
             tasksLeftD -= 1;
-            d_motorStopped = 0;
         }
         if(ev3_color_sensor_get_reflect(color_2) > 75 && pos.dash % 2 == 0 && wheelDistance > lastDash + 3){
             pos.dash += 1;
