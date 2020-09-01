@@ -499,26 +499,86 @@ void main_task(intptr_t unused) {
 
 void run2020(){
     //road1
+    readColorCode();
     if (pos.street == RED_STREET){
         if(tasks[RED_STREET][0] == 0 && tasks[YELLOW_STREET][0] == 0){
             if(tasks[GREEN_STREET][0] == 1){
-
+                writeInstructions(1,0,0,1,1,0,2,0);
+                runRedStreet();
+                writeInstructions(0,0,1,0,0,0,0,0);
+                runBlueStreet();
+                writeInstructions(1,0,0,1,0,0,0,0);
+                runYellowStreet();
+                writeInstructions(0,0,0,0,1,0,1,0);
+                runRedStreet();
+                writeInstructions(0,1,0,0,0,0,0,0);
+                runYellowStreet();
+                writeInstructions(0,0,1,0,0,0,0,0);
+                runGreenStreet();
+                writeInstructions(0,1,0,0,0,1,0,0);
+                runRedStreet();
             }
             else if(tasks[BLUE_STREET][0] == 1){
-
+                writeInstructions(1,0,0,1,1,0,1,0);
+                runRedStreet();
+                writeInstructions(0,0,1,0,0,0,0,0);
+                runBlueStreet();
+                writeInstructions(1,0,0,1,0,0,0,0);
+                runYellowStreet();
+                writeInstructions(0,0,0,0,1,0,2,0);
+                runRedStreet();
+                writeInstructions(0,1,0,0,0,0,0,0);
+                runYellowStreet();
+                writeInstructions(0,0,1,0,0,0,0,0);
+                runGreenStreet();
+                writeInstructions(0,1,0,0,0,1,0,0);
+                runRedStreet();
             }
         }
         else if(tasks[RED_STREET][0] == 0 && tasks[GREEN_STREET][0] == 0){
             if(tasks[YELLOW_STREET][0] == 1){
-
+                writeInstructions(1,0,0,1,1,0,1,0);
+                runRedStreet();
+                writeInstructions(0,0,1,0,0,0,0,0);
+                runYellowStreet();
+                writeInstructions(1,0,0,1,0,0,0,0);
+                runGreenStreet();
+                writeInstructions(0,0,0,0,0,1,2,0);
+                runRedStreet();
+                writeInstructions(0,0,1,0,0,0,0,0);
+                runBlueStreet();
+                writeInstructions(0,0,0,0,0,0,0,0);
+                runYellowStreet();
+                writeInstructions(0,1,0,0,0,0,0,0);
+                runGreenStreet();
+                writeInstructions(0,1,0,0,1,0,0,0);
+                runRedStreet();
             }
             else if(tasks[BLUE_STREET][0] == 1){
-
+                writeInstructions(1,0,0,1,1,0,2,0);
+                runRedStreet();
+                writeInstructions(0,0,1,0,0,0,0,0);
+                runYellowStreet();
+                writeInstructions(1,0,0,1,0,0,0,0);
+                runGreenStreet();
+                writeInstructions(0,0,0,0,0,1,1,0);
+                runRedStreet();
+                writeInstructions(0,0,1,0,0,0,0,0);
+                runBlueStreet();
+                writeInstructions(0,0,0,0,0,0,0,0);
+                runYellowStreet();
+                writeInstructions(0,1,0,0,0,0,0,0);
+                runGreenStreet();
+                writeInstructions(0,1,0,0,1,0,0,0);
+                runRedStreet();
             }
         }
         else if(tasks[RED_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
             if(tasks[YELLOW_STREET][0] == 1){
-
+                writeInstructions(1,0,0,1,1,0,1,0);
+                runRedStreet();
+                writeInstructions(1,0,0,1,0,0,0x,0);
+                runBlueStreet();
             }
             else if(tasks[GREEN_STREET][0] == 1){
 
