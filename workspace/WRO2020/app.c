@@ -325,11 +325,11 @@ int allTasks[4][3][7][3] = {
             },
             //index 1
             {
-                1000,0,0
+                60,40,-600
             },
             //index 2
             {
-                1000,0,0
+                15,40,-600
             },
             //index 3
             {
@@ -1566,7 +1566,8 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
             isTurningD = 1;
         }
         if(wheelDistance > next_d_motor_task[1] && tasksLeftD > 0 && isTurningD == 1 && back_loaded){
-            ev3_motor_set_power(d_motor,-100);
+            ev3_speaker_play_tone(NOTE_A4);
+            ev3_motor_set_power(d_motor,100);
             d_motor_index += 1;
             for(int i = 0;i < 3;i++){
                 next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
