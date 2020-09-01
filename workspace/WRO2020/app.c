@@ -1767,6 +1767,7 @@ void init() {
     // Register button handlers
     ev3_button_set_on_clicked(BACK_BUTTON, button_clicked_handler, BACK_BUTTON);
     ev3_button_set_on_clicked(DOWN_BUTTON, button_clicked_handler, DOWN_BUTTON);
+    ev3_button_set_on_clicked(UP_BUTTON, button_clicked_handler, UP_BUTTON);
     
     // Configure motors
     ev3_motor_config(left_motor, LARGE_MOTOR);
@@ -1908,5 +1909,7 @@ static void button_clicked_handler(intptr_t button) {
         ev3_led_set_color(LED_ORANGE);
         exit(0);
         break;
+    case UP_BUTTON:
+        ev3_speaker_set_volume(0);
     }
 }
