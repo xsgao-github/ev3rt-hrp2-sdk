@@ -194,15 +194,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                3,13,200
+                1,13,400
             },
             //index 1
             {
-                1000,0,0
+                1000,0,0 // spacer
             },
             //index 2
             {
-                1000,0,0
+                8,15,400
             },
             //index 3
             {
@@ -490,7 +490,16 @@ void main_task(intptr_t unused) {
     runRedStreet(instructions);*
     */
     ///*
-    readCode();
+    //readCode();
+    ev3_motor_steer(left_motor, right_motor, 30, 1);
+    tslp_tsk(2000);
+    ev3_motor_steer(left_motor, right_motor, 10, 1);
+    while (ev3_color_sensor_get_reflect(color_3) > 20) {
+        display_sensors();
+    }
+    tslp_tsk(100);
+    tasks[GREEN_STREET][0] = COLLECTSNOW;
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
     writeInstructions(true, false, false, false, false, false, false, false);
     runGreenStreet();
     //*/
@@ -770,12 +779,16 @@ void runGreenStreet(){
     pos.street = GREEN_STREET;
     tslp_tsk(100);
     if (instructions.doSnow == 1) {
-        linePID_with_tasks(24, 25, false);
+        linePID_with_tasks(22, 25, false);
         ev3_motor_rotate(right_motor, 80, 20, true);
         ev3_motor_rotate(left_motor, 80, 20, true);
+        ev3_motor_steer(left_motor, right_motor, 20, -5);
         ev3_motor_rotate(left_motor, 80, 20, true);
         ev3_motor_rotate(right_motor, 80, 20, true);
-        linePID_with_tasks(55, 25, false);
+        a_motor_index++;
+        linePID_with_tasks(20, 25, false);
+        ev3_motor_rotate(right_motor, 50, 10, true);
+        linePID_with_tasks(34, 25, false);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
         while (ev3_color_sensor_get_reflect(color_2) > 20) {
             display_sensors();
@@ -785,7 +798,8 @@ void runGreenStreet(){
         tslp_tsk(150);
         ev3_motor_rotate(right_motor, 210, 20, true);
         tslp_tsk(100);
-        linePID_with_tasks(40, 25, false);
+        a_motor_index++;
+        linePID_with_tasks(38, 25, false);
     } else if (instructions.doCar == 1) {
         // TODO: stuff
         //so for now, here's a beep(s)
