@@ -577,7 +577,7 @@ void run2020(){
             if(tasks[YELLOW_STREET][0] == 1){
                 writeInstructions(1,0,0,1,1,0,1,0);
                 runRedStreet();
-                writeInstructions(1,0,0,1,0,0,0x,0);
+                writeInstructions(1,0,0,1,0,0,0,0);
                 runBlueStreet();
             }
             else if(tasks[GREEN_STREET][0] == 1){
