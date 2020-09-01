@@ -1566,7 +1566,7 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
             isTurningD = 1;
         }
         if(wheelDistance > next_d_motor_task[1] && tasksLeftD > 0 && isTurningD == 1 && back_loaded){
-            ev3_speaker_play_tone(NOTE_A4);
+            ev3_speaker_play_tone(NOTE_A4,60);
             ev3_motor_set_power(d_motor,100);
             d_motor_index += 1;
             for(int i = 0;i < 3;i++){
