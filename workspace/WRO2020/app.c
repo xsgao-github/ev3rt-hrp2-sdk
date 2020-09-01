@@ -1524,7 +1524,7 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
             ev3_motor_stop(a_motor,false);
             a_motorStopped = 1;
         }
-        if(eev3_motor_get_counts(d_motor) > -10 && d_motorStopped == 0){
+        if(ev3_motor_get_counts(d_motor) > -10 && d_motorStopped == 0){
             ev3_motor_stop(d_motor,false);
             d_motorStopped = 1;
         }
