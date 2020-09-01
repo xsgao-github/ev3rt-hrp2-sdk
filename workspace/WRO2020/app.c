@@ -321,15 +321,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,40,-1000
+                30,40,-600
             },
             //index 1
             {
-                15,25,-1000
+                15,25,-900
             },
             //index 2
             {
-                15,25,-1000
+                15,25,-1200
             },
             //index 3
             {
@@ -1503,7 +1503,6 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
     int isTurningA = 0;
     int a_motorStopped = 0;
     int isTurningD = 0;
-    int d_motorStopped = 0;
     float wheelDistance = -100;
     int tasksLeft4 = detectCar;
     int tasksLeftA = tasksNumA;
@@ -1523,10 +1522,6 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
         if(ev3_motor_get_power(a_motor) == 0 && ev3_motor_get_counts(a_motor) < 10 && a_motorStopped == 0){
             ev3_motor_stop(a_motor,false);
             a_motorStopped = 1;
-        }
-        if(ev3_motor_get_counts(d_motor) > -10 && d_motorStopped == 0){
-            ev3_motor_stop(d_motor,false);
-            d_motorStopped = 1;
         }
         displayValues(ev3_motor_get_counts(d_motor),1,1,0);
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
@@ -1563,15 +1558,13 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
             tasksLeftA -= 1;
         }
         if(wheelDistance > next_d_motor_task[0] && tasksLeftD > 0 && isTurningD == 0 && back_loaded){
-            ev3_motor_reset_counts(d_motor);
             ev3_motor_rotate(d_motor,next_d_motor_task[2],80,false);
             isTurningD = 1;
         }
         if(wheelDistance > next_d_motor_task[1] && tasksLeftD > 0 && isTurningD == 1 && back_loaded){
             ev3_speaker_play_tone(NOTE_A4,60);
-            ev3_motor_set_power(d_motor,100);
+            ev3_motor_rotate(d_motor,next_d_motor_task[2] * -1,80,false);
             d_motor_index += 1;
-            d_motorStopped = 0;
             for(int i = 0;i < 3;i++){
                 next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
             }
