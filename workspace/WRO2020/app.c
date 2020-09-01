@@ -1562,6 +1562,7 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
             tasksLeftA -= 1;
         }
         if(wheelDistance > next_d_motor_task[0] && tasksLeftD > 0 && isTurningD == 0 && back_loaded){
+            ev3_motor_reset_counts(d_motor);
             ev3_motor_rotate(d_motor,next_d_motor_task[2],80,false);
             isTurningD = 1;
         }
