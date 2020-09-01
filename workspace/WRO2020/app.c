@@ -780,11 +780,15 @@ void runGreenStreet(){
     tslp_tsk(100);
     if (instructions.doSnow == 1) {
         linePID_with_tasks(22, 25, false);
+                                                                        waitforButton();
         ev3_motor_rotate(right_motor, 80, 20, true);
         ev3_motor_rotate(left_motor, 80, 20, true);
+                                                                        waitforButton();
         ev3_motor_steer(left_motor, right_motor, 20, -5);
+                                                                        waitforButton();
         ev3_motor_rotate(left_motor, 80, 20, true);
         ev3_motor_rotate(right_motor, 80, 20, true);
+                                                                        waitforButton();
         a_motor_index++;
         linePID_with_tasks(20, 25, false);
         ev3_motor_rotate(right_motor, 50, 10, true);
