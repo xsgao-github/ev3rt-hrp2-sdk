@@ -1598,6 +1598,10 @@ void readColorCode(){
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
+    displayValues(tasks[RED_STREET][0],1,1,1);
+    displayValues(tasks[YELLOW_STREET][0],2,1,0);
+    displayValues(tasks[GREEN_STREET][0],3,1,0);
+    displayValues(tasks[BLUE_STREET][0],4,1,0);
 }
 
 /**
