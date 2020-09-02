@@ -2141,6 +2141,7 @@ static void button_clicked_handler(intptr_t button) {
                 ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
                 ev3_led_set_color(LED_OFF);
                 ev3_lcd_draw_string("Program Exited", 14, 60);
+                ev3_speaker_set_volume(0);
                 exit(0);
                 break;
             }
@@ -2149,6 +2150,7 @@ static void button_clicked_handler(intptr_t button) {
                 ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
                 ev3_led_set_color(LED_OFF);
                 ev3_lcd_draw_string("Program Exited", 14, 60);
+                ev3_speaker_set_volume(0);
                 exit(0);
                 break;
             }
@@ -2157,6 +2159,7 @@ static void button_clicked_handler(intptr_t button) {
                 ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
                 ev3_led_set_color(LED_OFF);
                 ev3_lcd_draw_string("Program Exited", 14, 60);
+                ev3_speaker_set_volume(0);
                 exit(0);
                 break;
             }
@@ -2165,6 +2168,7 @@ static void button_clicked_handler(intptr_t button) {
                 ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
                 ev3_led_set_color(LED_OFF);
                 ev3_lcd_draw_string("Program Exited", 14, 60);
+                ev3_speaker_set_volume(0);
                 exit(0);
                 break;
             }
