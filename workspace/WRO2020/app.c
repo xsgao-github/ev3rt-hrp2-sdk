@@ -2067,6 +2067,10 @@ static void button_clicked_handler(intptr_t button) {
         ev3_lcd_draw_string("Press LEFT", 29, 60);
         ev3_lcd_draw_string("to exit.", 34, 75);
         while (1) {
+            ev3_motor_stop(left_motor, false);
+            ev3_motor_stop(right_motor, false);
+            ev3_motor_stop(a_motor, false);
+            ev3_motor_stop(d_motor, false);
             if (ev3_button_is_pressed(ENTER_BUTTON)) {
                 while (ev3_button_is_pressed(ENTER_BUTTON));
                 ev3_motor_steer(a_motor,a_motor,100,0);
