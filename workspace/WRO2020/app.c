@@ -476,14 +476,10 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readColorCode();
-    writeInstructions(1,0,0,1,0,0,0,0);
-    runBlueStreet();
-    //run2020();
+    run2020();
 }
 
 void run2020(){
-    //road1
-    readColorCode();
     if (pos.street == RED_STREET){
         if(tasks[RED_STREET][0] == 0 && tasks[YELLOW_STREET][0] == 0){
             if(tasks[GREEN_STREET][0] == 1){
