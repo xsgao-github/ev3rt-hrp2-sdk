@@ -806,7 +806,7 @@ void runBlueStreet(){
     pos.street = BLUE_STREET;
     tslp_tsk(100);
     if (instructions.doSnow == 1) {
-        linePID_with_tasks(60, 25);
+        linePID_with_tasks(58, 25);
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 70, 20, true);
         a_motor_index++;
@@ -833,50 +833,8 @@ void runBlueStreet(){
         ev3_motor_set_power(a_motor, -50);
     } else if (instructions.doCar == 1) {
         // TODO: stuff
-        //so for now, here's a beep(s)
-        ev3_speaker_set_volume(100);
-        int haha = 250;
-        int ha = 0;
-        int hahaha = 0;
-        while (true) {
-            if (ha) {
-                haha--;
-                if (haha == 250) {
-                    ha = 0;
-                }
-            } else {
-                haha++;
-                if (haha == 10000) {
-                    ha = 1;
-                }
-            }
-            sprintf(hahaha, "%i", haha);
-            ev3_lcd_draw_string(hahaha, 0, 0);
-            ev3_speaker_play_tone(haha, 100);
-        }
     } else if (instructions.doAbrasive == 1) {
         // TODO: stuff
-        //so for now, here's a beep(s)
-        ev3_speaker_set_volume(100);
-        int haha = 250;
-        int ha = 0;
-        int hahaha = 0;
-        while (true) {
-            if (ha) {
-                haha--;
-                if (haha == 250) {
-                    ha = 0;
-                }
-            } else {
-                haha++;
-                if (haha == 10000) {
-                    ha = 1;
-                }
-            }
-            sprintf(hahaha, "%i", haha);
-            ev3_lcd_draw_string(hahaha, 0, 0);
-            ev3_speaker_play_tone(haha, 100);
-        }
     } else {
         ev3_speaker_play_tone(NOTE_G6, -1);
         while (true);
@@ -974,7 +932,8 @@ void runGreenStreet(){
         tslp_tsk(100);
         a_task_running = 1;
         linePID_with_tasks(39, 25);
-    } else if (instructions.doCar == 1) {
+    }
+    else if (instructions.doCar == 1) {
         ev3_motor_set_power(a_motor, 50);
         linePID_with_tasks(88, 25);
         ev3_motor_set_power(a_motor, -50);
@@ -992,30 +951,11 @@ void runGreenStreet(){
         waitforButton();
         linePID_with_tasks(5, 20);
         waitforButton();
-    } else if (instructions.doAbrasive == 1) {
+    }
+    else if (instructions.doAbrasive == 1) {
         // TODO: stuff
-        //so for now, here's a beep(s)
-        ev3_speaker_set_volume(100);
-        int haha = 250;
-        int ha = 0;
-        char hahaha[10];
-        while (true) {
-            if (ha) {
-                haha--;
-                if (haha == 250) {
-                    ha = 0;
-                }
-            } else {
-                haha++;
-                if (haha == 10000) {
-                    ha = 1;
-                }
-            }
-            sprintf(hahaha, "%i", haha);
-            ev3_lcd_draw_string(hahaha, 0, 0);
-            ev3_speaker_play_tone(haha, 100);
-        }
-    } else {
+    }
+    else {
         ev3_speaker_play_tone(NOTE_G6, -1);
         while (true);
     }
@@ -2120,6 +2060,59 @@ static void button_clicked_handler(intptr_t button) {
         ev3_speaker_set_volume(100);
         ev3_speaker_play_tone(250, 1000);
         ev3_lcd_draw_string("Program  Stopped", 10, 60);
+        tslp_tsk(1000);
+        ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
+        ev3_lcd_draw_string("Press CENTER", 29, 30);
+        ev3_lcd_draw_string("to shut down", 29, 45);
+        ev3_lcd_draw_string("Press LEFT", 29, 60);
+        ev3_lcd_draw_string("to exit.", 34, 75);
+        while (1) {
+            ev3_motor_stop(left_motor, false);
+            ev3_motor_stop(right_motor, false);
+            ev3_motor_stop(a_motor, false);
+            ev3_motor_stop(d_motor, false);
+            if (ev3_button_is_pressed(ENTER_BUTTON)) {
+                while (ev3_button_is_pressed(ENTER_BUTTON));
+                ev3_motor_steer(a_motor,a_motor,100,0);
+                break;
+            }
+            if (ev3_button_is_pressed(LEFT_BUTTON)) {
+                while (ev3_button_is_pressed(LEFT_BUTTON));
+                ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
+                ev3_led_set_color(LED_OFF);
+                ev3_lcd_draw_string("Program Exited", 14, 60);
+                ev3_speaker_set_volume(0);
+                exit(0);
+                break;
+            }
+            if (ev3_button_is_pressed(RIGHT_BUTTON)) {
+                while (ev3_button_is_pressed(LEFT_BUTTON));
+                ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
+                ev3_led_set_color(LED_OFF);
+                ev3_lcd_draw_string("Program Exited", 14, 60);
+                ev3_speaker_set_volume(0);
+                exit(0);
+                break;
+            }
+            if (ev3_button_is_pressed(UP_BUTTON)) {
+                while (ev3_button_is_pressed(LEFT_BUTTON));
+                ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
+                ev3_led_set_color(LED_OFF);
+                ev3_lcd_draw_string("Program Exited", 14, 60);
+                ev3_speaker_set_volume(0);
+                exit(0);
+                break;
+            }
+            if (ev3_button_is_pressed(DOWN_BUTTON)) {
+                while (ev3_button_is_pressed(LEFT_BUTTON));
+                ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
+                ev3_led_set_color(LED_OFF);
+                ev3_lcd_draw_string("Program Exited", 14, 60);
+                ev3_speaker_set_volume(0);
+                exit(0);
+                break;
+            }
+        }
         exit(0);
         break;
     case DOWN_BUTTON:
