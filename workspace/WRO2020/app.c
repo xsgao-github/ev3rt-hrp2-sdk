@@ -501,7 +501,7 @@ void main_task(intptr_t unused) {
     tslp_tsk(100);
     tasks[GREEN_STREET][0] = COLLECTSNOW;
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    writeInstructions(true, false, false, false, false, false, false, false);
+    writeInstructions(false, true, false, false, false, false, false, false);
     runGreenStreet();
     //*/
 }
@@ -785,19 +785,22 @@ void runBlueStreet(){
         ev3_speaker_set_volume(100);
         int haha = 250;
         int ha = 0;
+        int hahaha = 0;
         while (true) {
             if (ha) {
-                haha++;
-                if (haha == 10000) {
-                    ha = 1;
-                }
-            } else {
                 haha--;
                 if (haha == 250) {
                     ha = 0;
                 }
+            } else {
+                haha++;
+                if (haha == 10000) {
+                    ha = 1;
+                }
             }
-            ev3_speaker_play_tone(haha, 10);
+            sprintf(hahaha, "%i", haha);
+            ev3_lcd_draw_string(hahaha, 0, 0);
+            ev3_speaker_play_tone(haha, 100);
         }
     } else if (instructions.doAbrasive == 1) {
         // TODO: stuff
@@ -805,19 +808,22 @@ void runBlueStreet(){
         ev3_speaker_set_volume(100);
         int haha = 250;
         int ha = 0;
+        int hahaha = 0;
         while (true) {
             if (ha) {
-                haha++;
-                if (haha == 10000) {
-                    ha = 1;
-                }
-            } else {
                 haha--;
                 if (haha == 250) {
                     ha = 0;
                 }
+            } else {
+                haha++;
+                if (haha == 10000) {
+                    ha = 1;
+                }
             }
-            ev3_speaker_play_tone(haha, 10);
+            sprintf(hahaha, "%i", haha);
+            ev3_lcd_draw_string(hahaha, 0, 0);
+            ev3_speaker_play_tone(haha, 100);
         }
     } else {
         ev3_speaker_play_tone(NOTE_G6, -1);
@@ -903,6 +909,7 @@ void runGreenStreet(){
         ev3_motor_rotate(right_motor, 100, 20, true);
         tslp_tsk(100);
         linePID_with_tasks(20, 25, false);
+        tslp_tsk(100);
         ev3_motor_rotate(a_motor, 300, 80, false);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
         while (ev3_color_sensor_get_reflect(color_2) > 20) {
@@ -916,44 +923,40 @@ void runGreenStreet(){
         a_task_running = 1;
         linePID_with_tasks(39, 25, false);
     } else if (instructions.doCar == 1) {
-        // TODO: stuff
-        //so for now, here's a beep(s)
-        ev3_speaker_set_volume(100);
-        int haha = 250;
-        int ha = 0;
-        while (true) {
-            if (ha) {
-                haha++;
-                if (haha == 10000) {
-                    ha = 1;
-                }
-            } else {
-                haha--;
-                if (haha == 250) {
-                    ha = 0;
-                }
-            }
-            ev3_speaker_play_tone(haha, 10);
+        ev3_motor_set_power(a_motor, 50);
+        linePID_with_tasks(88, 25, true);
+        tslp_tsk(100);
+        ev3_motor_steer(left_motor, right_motor, 10, -1);
+        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+            display_sensors();
         }
+        tslp_tsk(150);
+        ev3_motor_steer(left_motor, right_motor, -10, 0);
+        tslp_tsk(150);
+        ev3_motor_rotate(right_motor, 210, 20, true);
+        tslp_tsk(100);
     } else if (instructions.doAbrasive == 1) {
         // TODO: stuff
         //so for now, here's a beep(s)
         ev3_speaker_set_volume(100);
         int haha = 250;
         int ha = 0;
+        char hahaha[10];
         while (true) {
             if (ha) {
-                haha++;
-                if (haha == 10000) {
-                    ha = 1;
-                }
-            } else {
                 haha--;
                 if (haha == 250) {
                     ha = 0;
                 }
+            } else {
+                haha++;
+                if (haha == 10000) {
+                    ha = 1;
+                }
             }
-            ev3_speaker_play_tone(haha, 10);
+            sprintf(hahaha, "%i", haha);
+            ev3_lcd_draw_string(hahaha, 0, 0);
+            ev3_speaker_play_tone(haha, 100);
         }
     } else {
         ev3_speaker_play_tone(NOTE_G6, -1);
@@ -1833,7 +1836,6 @@ void execute_tasks(float distance, int doCar) {
         ev3_speaker_play_tone(10000, -1);
         tslp_tsk(1000000000);
     }
-
 }
 
 void waitforButton() {
