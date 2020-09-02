@@ -30,7 +30,7 @@ void linePID_with_tasks(int distance, int speed);
 void color4PID(int distance,int tasksNumA,int tasksNumD);
 void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,int tasksNumD,int speed);
 void execute_tasks(float distance);
-void waitforButton();
+void waitforButton(int time);
 void writeInstructions(int doSnow, int doCar, int doAbrasive, int detectCar, int snowDepot, int carDepot, int collectAbrasive, int uTurn);
 void init();
 void display_sensors();
@@ -1686,7 +1686,7 @@ void readColorCode(){
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
 
-    //Maitian add some documentation in comments anywas // stop d_motor
+    // stop d_motor
     ev3_motor_stop(d_motor, false);
     //continue readColorCode
 
@@ -2028,8 +2028,9 @@ void execute_tasks(float distance) {
     }
 }
 
-void waitforButton() {
+void waitforButton(int time) {
     ev3_led_set_color(LED_OFF);
+    tslp_tsk(time);
     while (1) {
         if (ev3_button_is_pressed(ENTER_BUTTON)) {
             while (ev3_button_is_pressed(ENTER_BUTTON));
