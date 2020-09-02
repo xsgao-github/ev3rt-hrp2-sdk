@@ -1095,9 +1095,9 @@ void runGreenStreet(){
         ev3_motor_rotate(right_motor, 210, 20, true);
         ev3_motor_stop(a_motor, false);
         tslp_tsk(100);
-        waitforButton();
+        waitforButton(0);
         linePID_with_tasks(5, 20);
-        waitforButton();
+        waitforButton(0);
     }
     else if (instructions.doAbrasive == 1) {
         // TODO: stuff
