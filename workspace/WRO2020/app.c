@@ -502,7 +502,7 @@ void main_task(intptr_t unused) {
     tasks[GREEN_STREET][0] = COLLECTSNOW;
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     writeInstructions(false, true, false, false, false, false, false, false);
-    runBlueStreet();
+    runGreenStreet();
     //*/
 }
 
@@ -937,6 +937,9 @@ void runGreenStreet(){
         ev3_motor_rotate(right_motor, 210, 20, true);
         ev3_motor_stop(a_motor, false);
         tslp_tsk(100);
+        waitforButton();
+        linePID_with_tasks(5, 20);
+        waitforButton();
     } else if (instructions.doAbrasive == 1) {
         // TODO: stuff
         //so for now, here's a beep(s)
