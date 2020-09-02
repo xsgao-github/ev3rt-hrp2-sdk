@@ -2064,21 +2064,25 @@ static void button_clicked_handler(intptr_t button) {
             }
             if (ev3_button_is_pressed(LEFT_BUTTON)) {
                 while (ev3_button_is_pressed(LEFT_BUTTON));
+                ev3_led_set_color(LED_OFF);
                 exit(0);
                 break;
             }
             if (ev3_button_is_pressed(RIGHT_BUTTON)) {
                 while (ev3_button_is_pressed(LEFT_BUTTON));
+                ev3_led_set_color(LED_OFF);
                 exit(0);
                 break;
             }
             if (ev3_button_is_pressed(UP_BUTTON)) {
                 while (ev3_button_is_pressed(LEFT_BUTTON));
+                ev3_led_set_color(LED_OFF);
                 exit(0);
                 break;
             }
             if (ev3_button_is_pressed(DOWN_BUTTON)) {
                 while (ev3_button_is_pressed(LEFT_BUTTON));
+                ev3_led_set_color(LED_OFF);
                 exit(0);
                 break;
             }
