@@ -1118,8 +1118,8 @@ void runGreenStreet(){
         ev3_motor_rotate(left_motor, 50, 20, false);
         ev3_motor_rotate(right_motor, 50, 20, true);
         ev3_motor_rotate(right_motor, 100, 20, true);
-        waitforButton(0);
-        linePID_with_tasks(10, 20);
+        tslp_tsk(100);
+        linePID_with_tasks(12, 20);
         waitforButton(0);
     }
     else if (instructions.doAbrasive == 1) {
@@ -1911,19 +1911,6 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
 **/
 void execute_tasks(float distance) {
     display_sensors();
-    //tslp_tsk(5);
-    //char lcdstr[100];
-    //sprintf(lcdstr, "a_index: %d", a_motor_index);
-    //ev3_lcd_draw_string(lcdstr, 0, 0);
-    //sprintf(lcdstr, "a_task: %d", a_task_running);
-    //ev3_lcd_draw_string(lcdstr, 0, 15);
-    //sprintf(lcdstr, "d_index: %d", d_motor_index);
-    //ev3_lcd_draw_string(lcdstr, 0, 35);
-    //sprintf(lcdstr, "d_task: %d", d_task_running);
-    //ev3_lcd_draw_string(lcdstr, 0, 50);
-    //sprintf(lcdstr, "Distance: %f4", distance);
-    //ev3_lcd_draw_string(lcdstr, 0, 70);
-
 
     //check for a_motor task, execute task if task is to collect snow and it is time and collect cars is false
     //execute part 1 of task
@@ -1952,7 +1939,7 @@ void execute_tasks(float distance) {
 
     }
     //execute part 2 of task
-    if ((abs(ev3_motor_get_power(d_motor))) == 0 && d_task_running == 1) {
+    if ((abs(ev3_motor_get_power(d_motor))) == 0 && d_task_running == 1 && tasks[pos.street][0] == back_loaded) {
         ev3_motor_stop(d_motor, false);
         ev3_motor_rotate(d_motor, -1*allTasks[pos.street][D_MOTOR][d_motor_index][1], 100, false);
         d_task_running = 0;
