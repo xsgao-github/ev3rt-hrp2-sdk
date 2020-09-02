@@ -871,7 +871,7 @@ void runBlueStreet(){
     pos.street = BLUE_STREET;
     tslp_tsk(100);
     if (instructions.doSnow == 1) {
-        linePID_with_tasks(58, 25);
+        linePID_with_tasks(54, 25);
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 70, 20, true);
         a_motor_index++;
@@ -890,8 +890,8 @@ void runBlueStreet(){
         tslp_tsk(150);
         ev3_motor_steer(left_motor, right_motor, -10, 0);
         ev3_motor_set_power(a_motor, -80);
-        tslp_tsk(150);
-        ev3_motor_rotate(right_motor, 200, 20, true);
+        tslp_tsk(200);
+        ev3_motor_rotate(right_motor, 250, 20, true);
         ev3_motor_rotate(a_motor, 500, 80, true);
         tslp_tsk(100);
         linePID_with_tasks(38, 25);
