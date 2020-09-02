@@ -2060,59 +2060,6 @@ static void button_clicked_handler(intptr_t button) {
         ev3_speaker_set_volume(100);
         ev3_speaker_play_tone(250, 1000);
         ev3_lcd_draw_string("Program  Stopped", 10, 60);
-        tslp_tsk(1000);
-        ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
-        ev3_lcd_draw_string("Press CENTER", 29, 30);
-        ev3_lcd_draw_string("to shut down", 29, 45);
-        ev3_lcd_draw_string("Press LEFT", 29, 60);
-        ev3_lcd_draw_string("to exit.", 34, 75);
-        while (1) {
-            ev3_motor_stop(left_motor, false);
-            ev3_motor_stop(right_motor, false);
-            ev3_motor_stop(a_motor, false);
-            ev3_motor_stop(d_motor, false);
-            if (ev3_button_is_pressed(ENTER_BUTTON)) {
-                while (ev3_button_is_pressed(ENTER_BUTTON));
-                ev3_motor_steer(a_motor,a_motor,100,0);
-                break;
-            }
-            if (ev3_button_is_pressed(LEFT_BUTTON)) {
-                while (ev3_button_is_pressed(LEFT_BUTTON));
-                ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
-                ev3_led_set_color(LED_OFF);
-                ev3_lcd_draw_string("Program Exited", 14, 60);
-                ev3_speaker_set_volume(0);
-                exit(0);
-                break;
-            }
-            if (ev3_button_is_pressed(RIGHT_BUTTON)) {
-                while (ev3_button_is_pressed(LEFT_BUTTON));
-                ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
-                ev3_led_set_color(LED_OFF);
-                ev3_lcd_draw_string("Program Exited", 14, 60);
-                ev3_speaker_set_volume(0);
-                exit(0);
-                break;
-            }
-            if (ev3_button_is_pressed(UP_BUTTON)) {
-                while (ev3_button_is_pressed(LEFT_BUTTON));
-                ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
-                ev3_led_set_color(LED_OFF);
-                ev3_lcd_draw_string("Program Exited", 14, 60);
-                ev3_speaker_set_volume(0);
-                exit(0);
-                break;
-            }
-            if (ev3_button_is_pressed(DOWN_BUTTON)) {
-                while (ev3_button_is_pressed(LEFT_BUTTON));
-                ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
-                ev3_led_set_color(LED_OFF);
-                ev3_lcd_draw_string("Program Exited", 14, 60);
-                ev3_speaker_set_volume(0);
-                exit(0);
-                break;
-            }
-        }
         exit(0);
         break;
     case DOWN_BUTTON:
