@@ -474,35 +474,7 @@ int car_motor_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    /*
-    readColorCode();
-    pos.street = RED_STREET;
-    writeInstructions(1,0,0,0,0,0,1,0);
-    runRedStreet(instructions);
-    back_loaded = 1;
-    writeInstructions(0,0,1,0,0,0,0,0);
-    runYellowStreet(instructions);
-    /*writeInstructions(0,0,0,0,1,0,0,0);
-    runRedStreet(instructions);
-    writeInstructions(0,1,0,0,0,0,0,0);
-    runYellowStreet(instructions);
-    writeInstructions(0,1,0,0,0,1,0,0);
-    runRedStreet(instructions);*
-    */
-    ///*
-    //readCode();
-    ev3_motor_steer(left_motor, right_motor, 30, 1);
-    tslp_tsk(2000);
-    ev3_motor_steer(left_motor, right_motor, 10, 1);
-    while (ev3_color_sensor_get_reflect(color_3) > 20) {
-        display_sensors();
-    }
-    tslp_tsk(100);
-    tasks[GREEN_STREET][0] = COLLECTSNOW;
-    ev3_motor_steer(left_motor, right_motor, 0, 0);
-    writeInstructions(true, false, false, false, false, false, false, false);
-    runGreenStreet();
-    //*/
+    run2020();
 }
 
 void run2020(){
