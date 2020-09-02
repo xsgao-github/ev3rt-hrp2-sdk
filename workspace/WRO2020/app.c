@@ -1561,19 +1561,19 @@ void readColorCode(){
         assert(val);
         if(rgb4.r > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance - 26) / 4);
+            i = round((wheelDistance - 28) / 4);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.g > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance - 26) / 4);
+            i = round((wheelDistance - 28) / 4);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.b > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance - 26) / 4);
+            i = round((wheelDistance - 28) / 4);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
