@@ -474,13 +474,11 @@ int car_motor_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    /*
     readColorCode();
     writeInstructions(1,0,0,1,1,0,1,0);
     runRedStreet();
     //run2020();
-    */
-    ///*
+    /*
     ev3_motor_steer(left_motor, right_motor, 30, 1);
     tslp_tsk(2500);
     ev3_motor_stop(d_motor, false);
@@ -493,7 +491,7 @@ void main_task(intptr_t unused) {
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     writeInstructions(false, true, false, false, false, false, false, false);
     runGreenStreet();
-    //*/
+    */
 }
 
 void run2020(){
@@ -1402,32 +1400,16 @@ void runRedStreet(){
         ev3_motor_set_power(a_motor,0);
         //detect line
         ev3_motor_steer(left_motor, right_motor, 10, 5);
-        //int backMotor = ev3_motor_get_counts(left_motor);
-        //int lastMotor = ev3_motor_get_counts(left_motor);
-        //int counts = 0;
-        /*while (ev3_color_sensor_get_reflect(color_3) > 20 || counts == 25) {
-            if(ev3_motor_get_counts(left_motor) == lastMotor){
-                counts += 1;
-            }
-            else{
-                counts = 0;
-            }
-            lastMotor = ev3_motor_get_counts(left_motor);
-            tslp_tsk(10);
-        }*/
         while(ev3_color_sensor_get_reflect(color_3) > 40){
             
         }
         //move backwards
         ev3_motor_steer(left_motor,right_motor,-30,0);
-        //while(ev3_motor_get_counts(left_motor) - backMotor > 0){
-//
-        //}
         tslp_tsk(300);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back and turn
         ev3_motor_rotate(a_motor,200,-50,true);
-        ev3_motor_steer(left_motor,right_motor,-15,70);
+        ev3_motor_steer(left_motor,right_motor,-15,60);
         ev3_motor_rotate(a_motor,100,-50,false);
         tslp_tsk(1075);
         ev3_motor_steer(left_motor,right_motor,0,0);
