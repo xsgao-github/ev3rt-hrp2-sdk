@@ -27,7 +27,6 @@ void runRedStreet();
 void readCode();
 void readColorCode();
 void linePID_with_tasks(int distance, int speed);
-void color4PID(int distance,int tasksNumA,int tasksNumD);
 void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,int tasksNumD,int speed);
 void execute_tasks(float distance);
 void waitforButton(int time);
@@ -1795,72 +1794,6 @@ void linePID_with_tasks(int distance, int speed){
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     tslp_tsk(5);
-    return;
-}
-
-/**
- * \brief follows a line using Color_4 and does tasks
- * \param distance Distance in cm
- * \param tasksNumA amount of tasks for A_Motor
- * \param tasksNumD amount of tasks for D_Motor
-**/
-void color4PID(int distance,int tasksNumA,int tasksNumD){
-    ev3_motor_reset_counts(left_motor);
-    ev3_motor_reset_counts(right_motor);
-    ev3_motor_reset_counts(a_motor);
-    ev3_motor_reset_counts(d_motor);
-    int isTurningA = 0;
-    int isTurningD = 0;
-    float wheelDistance = 0;
-    int tasksLeftA = tasksNumA;
-    int tasksLeftD = tasksNumD;
-    for(int i = 0;i < 3;i++){
-        next_a_motor_task[i] = allTasks[pos.street][1][a_motor_index][i];
-    }
-    for(int i = 0;i < 3;i++){
-        next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
-    }
-    float lasterror = 0, integral = 0;
-    while (wheelDistance < distance) {
-        if(wheelDistance > next_a_motor_task[0] && tasksLeftA > 0 && isTurningA == 0){
-            ev3_motor_rotate(a_motor,next_a_motor_task[2],0,false);
-            isTurningA = 1;
-        }
-        if(wheelDistance > next_a_motor_task[1] && tasksLeftA > 0 && isTurningA == 1){
-            ev3_motor_set_power(a_motor,-80);
-            a_motor_index += 1;
-            for(int i = 0;i < 3;i++){
-                next_a_motor_task[i] = allTasks[pos.street][1][a_motor_index][i];
-            }
-            isTurningA = 0;
-            tasksLeftA -= 1;
-        }
-        if(wheelDistance > next_d_motor_task[0] && tasksLeftD > 0 && isTurningD == 0){
-            ev3_motor_rotate(d_motor,next_d_motor_task[2],80,false);
-            isTurningD = 1;
-        }
-        if(wheelDistance > next_d_motor_task[1] && tasksLeftD > 0 && isTurningD == 1){
-            ev3_motor_set_power(d_motor,-80);
-            d_motor_index += 1;
-            for(int i = 0;i < 3;i++){
-                next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
-            }
-            isTurningD = 0;
-            tasksLeftD -= 1;
-        }
-        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
-        bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
-        assert(val);
-        float error = (rgb4.r + rgb4.g + rgb4.b) / 3 - 30;
-        integral = error + integral * 0.5;
-        float steer = 0.7 * error + 0 * integral + 0 * (error - lasterror);
-        if(steer > 30){
-            steer = 30;
-        }
-        ev3_motor_steer(left_motor, right_motor, 20, steer);
-        lasterror = error;
-    }
-    ev3_motor_steer(left_motor, right_motor, 0, 0);
     return;
 }
 
