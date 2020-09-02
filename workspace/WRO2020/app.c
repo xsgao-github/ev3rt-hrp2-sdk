@@ -485,6 +485,7 @@ void main_task(intptr_t unused) {
     ///*
     ev3_motor_steer(left_motor, right_motor, 30, 1);
     tslp_tsk(2500);
+    ev3_motor_stop(d_motor, false);
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
         display_sensors();
@@ -1100,7 +1101,7 @@ void runGreenStreet(){
     }
     else if (instructions.doCar == 1) {
         ev3_motor_set_power(a_motor, 50);
-        linePID_with_tasks(86, 25);
+        linePID_with_tasks(82, 25);
         ev3_motor_set_power(a_motor, -50);
         tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
@@ -1110,7 +1111,7 @@ void runGreenStreet(){
         tslp_tsk(150);
         ev3_motor_steer(left_motor, right_motor, -10, 0);
         tslp_tsk(150);
-        ev3_motor_rotate(right_motor, 210, 20, true);
+        ev3_motor_rotate(right_motor, 230, 20, true);
         ev3_motor_stop(a_motor, false);
         tslp_tsk(100);
         waitforButton(0);
