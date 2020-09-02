@@ -476,7 +476,9 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readColorCode();
-    run2020();
+    //run2020();
+    writeInstructions(1,0,0,1,1,0,1,0);
+    runRedStreet();
 }
 
 void run2020(){
