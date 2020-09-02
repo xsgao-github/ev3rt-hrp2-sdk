@@ -1100,7 +1100,6 @@ void runGreenStreet(){
     else if (instructions.doCar == 1) {
         ev3_motor_set_power(a_motor, 50);
         linePID_with_tasks(82, 25);
-        linePID_with_tasks(88, 25);
         ev3_motor_set_power(a_motor, -50);
         tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
