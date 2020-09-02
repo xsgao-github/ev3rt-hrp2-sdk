@@ -813,7 +813,7 @@ void runBlueStreet(){
         ev3_motor_reset_counts(left_motor);
         ev3_motor_reset_counts(right_motor);
         ev3_motor_steer(left_motor, right_motor, 25, 0);
-        while ((((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360)) < 21) {
+        while ((((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360)) < 20) {
             execute_tasks((((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360)));
         }
         ev3_motor_steer(left_motor, right_motor, 0, 0);
