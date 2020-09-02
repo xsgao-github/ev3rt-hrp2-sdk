@@ -890,11 +890,11 @@ void runBlueStreet(){
         tslp_tsk(150);
         ev3_motor_steer(left_motor, right_motor, -10, 0);
         ev3_motor_set_power(a_motor, -80);
-        tslp_tsk(200);
+        tslp_tsk(250);
         ev3_motor_rotate(right_motor, 250, 20, true);
         ev3_motor_rotate(a_motor, 500, 80, true);
         tslp_tsk(100);
-        linePID_with_tasks(38, 25);
+        linePID_with_tasks(35, 25);
         ev3_motor_set_power(a_motor, -50);
     } else if (instructions.doCar == 1) {
         // TODO: stuff
