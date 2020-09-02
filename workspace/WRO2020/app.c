@@ -1362,6 +1362,9 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,-10,0);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,-5,0);
+    tslp_tsk(1000);
+    ev3_motor_steer(left_motor,right_motor,0,0);
     //Side Length
     if(instructions.doSnow){
         wall_follow_with_tasks(60,0,0,1,0,25);
@@ -1414,11 +1417,50 @@ void runRedStreet(){
         tslp_tsk(1500);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor, right_motor, 15, 0);
+        back_loaded = 1;
         while (ev3_color_sensor_get_reflect(color_3) > 20) {
         }
         ev3_motor_steer(left_motor,right_motor,0,0);
     }
     else if(instructions.collectAbrasive == 2){
+        ev3_motor_steer(left_motor,right_motor,-15,0);
+        tslp_tsk(800);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_set_power(a_motor,80);
+        ev3_motor_steer(left_motor,right_motor,-15,90);
+        tslp_tsk(800);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_steer(left_motor,right_motor,-10,0);
+        tslp_tsk(2000);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_steer(left_motor,right_motor,-5,0);
+        tslp_tsk(400);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_steer(left_motor,right_motor,5,0);
+        tslp_tsk(400);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        tslp_tsk(1000);
+        ev3_motor_steer(left_motor,right_motor,-5,0);
+        tslp_tsk(400);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_steer(left_motor,right_motor,5,0);
+        tslp_tsk(400);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_steer(left_motor,right_motor,10,0);
+        tslp_tsk(2000);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_steer(left_motor,right_motor,15,90);
+        tslp_tsk(800);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_set_power(a_motor,-80);
+        ev3_motor_steer(left_motor,right_motor,15,0);
+        tslp_tsk(600);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_steer(left_motor, right_motor, 15, 0);
+        back_loaded = 2;
+        while (ev3_color_sensor_get_reflect(color_3) > 20) {
+        }
+        ev3_motor_steer(left_motor,right_motor,0,0);
     }
     //move forward
     ev3_motor_steer(left_motor,right_motor,30,0);
@@ -1580,19 +1622,19 @@ void readColorCode(){
         assert(val);
         if(rgb4.r > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance - 26) / 4);
+            i = round((wheelDistance - 28) / 4);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.g > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance - 26) / 4);
+            i = round((wheelDistance - 28) / 4);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
         else if(rgb4.b > 55 && isReading < 2){
             isReading = 50;
-            i = round((wheelDistance - 26) / 4);
+            i = round((wheelDistance - 28) / 4);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
@@ -1623,6 +1665,10 @@ void readColorCode(){
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
+    displayValues(tasks[RED_STREET][0],1,1,1);
+    displayValues(tasks[YELLOW_STREET][0],2,1,0);
+    displayValues(tasks[GREEN_STREET][0],3,1,0);
+    displayValues(tasks[BLUE_STREET][0],4,1,0);
 }
 
 /**
@@ -2081,6 +2127,10 @@ static void button_clicked_handler(intptr_t button) {
         ev3_lcd_draw_string("Press LEFT", 29, 60);
         ev3_lcd_draw_string("to exit.", 34, 75);
         while (1) {
+            ev3_motor_stop(left_motor, false);
+            ev3_motor_stop(right_motor, false);
+            ev3_motor_stop(a_motor, false);
+            ev3_motor_stop(d_motor, false);
             if (ev3_button_is_pressed(ENTER_BUTTON)) {
                 while (ev3_button_is_pressed(ENTER_BUTTON));
                 ev3_motor_steer(a_motor,a_motor,100,0);
@@ -2088,25 +2138,33 @@ static void button_clicked_handler(intptr_t button) {
             }
             if (ev3_button_is_pressed(LEFT_BUTTON)) {
                 while (ev3_button_is_pressed(LEFT_BUTTON));
+                ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
                 ev3_led_set_color(LED_OFF);
+                ev3_lcd_draw_string("Program Exited", 14, 60);
                 exit(0);
                 break;
             }
             if (ev3_button_is_pressed(RIGHT_BUTTON)) {
                 while (ev3_button_is_pressed(LEFT_BUTTON));
+                ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
                 ev3_led_set_color(LED_OFF);
+                ev3_lcd_draw_string("Program Exited", 14, 60);
                 exit(0);
                 break;
             }
             if (ev3_button_is_pressed(UP_BUTTON)) {
                 while (ev3_button_is_pressed(LEFT_BUTTON));
+                ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
                 ev3_led_set_color(LED_OFF);
+                ev3_lcd_draw_string("Program Exited", 14, 60);
                 exit(0);
                 break;
             }
             if (ev3_button_is_pressed(DOWN_BUTTON)) {
                 while (ev3_button_is_pressed(LEFT_BUTTON));
+                ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
                 ev3_led_set_color(LED_OFF);
+                ev3_lcd_draw_string("Program Exited", 14, 60);
                 exit(0);
                 break;
             }
