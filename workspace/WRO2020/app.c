@@ -26,10 +26,10 @@ void runYellowStreet();
 void runRedStreet();
 void readCode();
 void readColorCode();
-void linePID_with_tasks(int distance, int speed, int doCar);
+void linePID_with_tasks(int distance, int speed);
 void color4PID(int distance,int tasksNumA,int tasksNumD);
 void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,int tasksNumD,int speed);
-void execute_tasks(float distance, int doCar);
+void execute_tasks(float distance);
 void waitforButton();
 void writeInstructions(int doSnow, int doCar, int doAbrasive, int detectCar, int snowDepot, int carDepot, int collectAbrasive, int uTurn);
 void init();
@@ -502,7 +502,7 @@ void main_task(intptr_t unused) {
     tasks[GREEN_STREET][0] = COLLECTSNOW;
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     writeInstructions(false, true, false, false, false, false, false, false);
-    runGreenStreet();
+    runBlueStreet();
     //*/
 }
 
@@ -754,7 +754,7 @@ void runBlueStreet(){
     pos.street = BLUE_STREET;
     tslp_tsk(100);
     if (instructions.doSnow == 1) {
-        linePID_with_tasks(60, 25, false);
+        linePID_with_tasks(60, 25);
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 70, 20, true);
         a_motor_index++;
@@ -762,7 +762,7 @@ void runBlueStreet(){
         ev3_motor_reset_counts(right_motor);
         ev3_motor_steer(left_motor, right_motor, 25, 0);
         while ((((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360)) < 21) {
-            execute_tasks((((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360)), false);
+            execute_tasks((((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360)));
         }
         ev3_motor_steer(left_motor, right_motor, 0, 0);
         tslp_tsk(250);
@@ -777,7 +777,7 @@ void runBlueStreet(){
         ev3_motor_rotate(right_motor, 200, 20, true);
         ev3_motor_rotate(a_motor, 500, 80, true);
         tslp_tsk(100);
-        linePID_with_tasks(40, 25, false);
+        linePID_with_tasks(38, 25);
         ev3_motor_set_power(a_motor, -50);
     } else if (instructions.doCar == 1) {
         // TODO: stuff
@@ -895,20 +895,20 @@ void runGreenStreet(){
     pos.street = GREEN_STREET;
     tslp_tsk(100);
     if (instructions.doSnow == 1) {
-        linePID_with_tasks(23, 25, false);
+        linePID_with_tasks(23, 25);
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 80, 20, true);
         ev3_motor_rotate(left_motor, 160, 20, true);
         ev3_motor_rotate(right_motor, 80, 20, true);
         tslp_tsk(100);
         a_motor_index++;
-        linePID_with_tasks(23, 25, false);
+        linePID_with_tasks(23, 25);
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 70, 10, true);
         ev3_motor_rotate(left_motor, 100, 20, false);
         ev3_motor_rotate(right_motor, 100, 20, true);
         tslp_tsk(100);
-        linePID_with_tasks(20, 25, false);
+        linePID_with_tasks(20, 25);
         tslp_tsk(100);
         ev3_motor_rotate(a_motor, 300, 80, false);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
@@ -921,10 +921,11 @@ void runGreenStreet(){
         ev3_motor_rotate(right_motor, 210, 20, true);
         tslp_tsk(100);
         a_task_running = 1;
-        linePID_with_tasks(39, 25, false);
+        linePID_with_tasks(39, 25);
     } else if (instructions.doCar == 1) {
         ev3_motor_set_power(a_motor, 50);
-        linePID_with_tasks(88, 25, true);
+        linePID_with_tasks(88, 25);
+        ev3_motor_set_power(a_motor, -50);
         tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
         while (ev3_color_sensor_get_reflect(color_2) > 20) {
@@ -934,6 +935,7 @@ void runGreenStreet(){
         ev3_motor_steer(left_motor, right_motor, -10, 0);
         tslp_tsk(150);
         ev3_motor_rotate(right_motor, 210, 20, true);
+        ev3_motor_stop(a_motor, false);
         tslp_tsk(100);
     } else if (instructions.doAbrasive == 1) {
         // TODO: stuff
@@ -1574,7 +1576,7 @@ void readColorCode(){
  * \param speed speed abs (recommended 25 with tasks, 30 without)
  * \param doCar is it a car-collecting road?
 **/
-void linePID_with_tasks(int distance, int speed, int doCar){
+void linePID_with_tasks(int distance, int speed){
     ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
 
     ev3_motor_reset_counts(left_motor);
@@ -1584,7 +1586,7 @@ void linePID_with_tasks(int distance, int speed, int doCar){
     float wheelDistance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360));
     float lasterror = 0, integral = 0;
     while (wheelDistance < distance) {
-        execute_tasks(wheelDistance, doCar);
+        execute_tasks(wheelDistance);
         //if(ev3_motor_get_counts(a_motor) > 490){
         //    ev3_motor_reset_counts(a_motor);
         //    ev3_motor_rotate(a_motor,-500,13,false);
@@ -1778,7 +1780,7 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
  * \param distance Distance of robot travelled (cm)
  * \param doCar Do we do car collection or not?
 **/
-void execute_tasks(float distance, int doCar) {
+void execute_tasks(float distance) {
     display_sensors();
     //tslp_tsk(5);
     //char lcdstr[100];
@@ -1794,16 +1796,16 @@ void execute_tasks(float distance, int doCar) {
     //ev3_lcd_draw_string(lcdstr, 0, 70);
 
 
-    //check for a_motor task, execute task if task is to collect snow and it is time
+    //check for a_motor task, execute task if task is to collect snow and it is time and collect cars is false
     //execute part 1 of task
-    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && a_task_running == 0 && tasks[pos.street][0] == COLLECTSNOW) {
+    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && a_task_running == 0 && tasks[pos.street][0] == COLLECTSNOW && instructions.doCar == 0) {
         ev3_motor_stop(a_motor, false);
         ev3_motor_rotate(a_motor, allTasks[pos.street][A_MOTOR][a_motor_index][2], 80, false);
         a_task_running = 1;
         ev3_speaker_play_tone(NOTE_C4, 50);
     }
     //execute part 2 of task
-    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][1] && a_task_running == 1 && tasks[pos.street][0] == COLLECTSNOW) {
+    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][1] && a_task_running == 1 && tasks[pos.street][0] == COLLECTSNOW && instructions.doCar == 0) {
         ev3_motor_stop(a_motor, false);
         ev3_motor_rotate(a_motor, -1*allTasks[pos.street][A_MOTOR][a_motor_index][2], 80, false);
         a_task_running = 0;
