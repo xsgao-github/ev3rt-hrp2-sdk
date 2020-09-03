@@ -476,10 +476,12 @@ int car_motor_index = 0;
 
 void main_task(intptr_t unused) {
     init();
+    /*
     readColorCode();
     writeInstructions(1,0,0,1,1,0,1,0);
     runRedStreet();
     resetAbrasive();
+    */
     //run2020();
     ///*
     ev3_motor_steer(left_motor, right_motor, 30, 1);
@@ -1015,45 +1017,39 @@ void runBlueStreet(){
         ev3_motor_rotate(right_motor, 240, 20, true);
         ev3_motor_stop(a_motor, false);
         tslp_tsk(100);
-        waitforButton(0);
         ev3_motor_rotate(right_motor, 80, 20, true);
         ev3_motor_rotate(left_motor, 75, 20, true);
-        waitforButton(0);
         ev3_motor_reset_counts(left_motor);
         ev3_motor_reset_counts(right_motor);
         ev3_motor_steer(left_motor, right_motor, 20, 5);
-        while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 100) {
+        while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 50) {
             display_sensors();
         }
         ev3_motor_steer(left_motor, right_motor, 0, 0);
-        waitforButton(0);
         ev3_motor_rotate(left_motor, 80, 20, true);
         ev3_motor_rotate(right_motor, 75, 20, true);
-        waitforButton(0);
         tslp_tsk(100);
-        linePID_with_tasks(14, 20);
-        waitforButton(0);
+        linePID_with_tasks(18, 20);
         tslp_tsk(100);
     } else if (instructions.doAbrasive == 1) {
-        // TODO: 
-        while (true);
+        
     } else {
         ev3_speaker_play_tone(NOTE_G6, -1);
         while (true);
     }
-    ev3_motor_rotate(left_motor, 130, 20, false);
-    ev3_motor_rotate(right_motor, 130, 20, true);
+    ev3_motor_rotate(left_motor, 140, 20, false);
+    ev3_motor_rotate(right_motor, 140, 20, true);
     ev3_motor_stop(a_motor, false);
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 30, -40);
-    tslp_tsk(850);
+    tslp_tsk(800);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     tslp_tsk(100);
-    ev3_motor_steer(left_motor, right_motor, 20, 5);
+    ev3_motor_steer(left_motor, right_motor, 20, 10);
     tslp_tsk(1200);
-    ev3_motor_steer(left_motor, right_motor, -20, 3);
+    ev3_motor_steer(left_motor, right_motor, -20, 10);
     tslp_tsk(1500);
-    ev3_motor_steer(left_motor, right_motor, 10, 1);
+    ev3_motor_steer(left_motor, right_motor, 10, 10);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
         display_sensors();
     }
@@ -2092,6 +2088,7 @@ void resetAbrasive(){
     tslp_tsk(1500);
     ev3_motor_stop(d_motor, false);
 }
+
 /**
  * \brief literally writes parameters... Why don't we just use normal parameters instead of a struct? There are a few...
  * \param doSnow robot collects snow on street if true
