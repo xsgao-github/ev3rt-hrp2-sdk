@@ -476,11 +476,10 @@ int car_motor_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    color4PID(1000000,0,0);
-    //readColorCode();
-    //writeInstructions(1,0,0,1,1,0,1,0);
-    //runRedStreet();
-    //resetAbrasive();
+    readColorCode();
+    writeInstructions(1,0,0,1,1,0,1,0);
+    runRedStreet();
+    resetAbrasive();
     //run2020();
     /*
     ev3_motor_steer(left_motor, right_motor, 30, 1);
