@@ -27,9 +27,11 @@ void runRedStreet();
 void readCode();
 void readColorCode();
 void linePID_with_tasks(int distance, int speed);
+void color4PID(int distance,int tasksNumA,int tasksNumD);
 void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,int tasksNumD,int speed);
 void execute_tasks(float distance);
 void waitforButton(int time);
+void resetAbrasive();
 void writeInstructions(int doSnow, int doCar, int doAbrasive, int detectCar, int snowDepot, int carDepot, int collectAbrasive, int uTurn);
 void init();
 void display_sensors();
@@ -474,12 +476,11 @@ int car_motor_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    /*
     readColorCode();
     writeInstructions(1,0,0,1,1,0,1,0);
     runRedStreet();
+    resetAbrasive();
     //run2020();
-    */
     ///*
     ev3_motor_steer(left_motor, right_motor, 30, 1);
     tslp_tsk(2500);
@@ -1443,34 +1444,18 @@ void runRedStreet(){
         ev3_motor_set_power(a_motor,0);
         //detect line
         ev3_motor_steer(left_motor, right_motor, 10, 5);
-        //int backMotor = ev3_motor_get_counts(left_motor);
-        //int lastMotor = ev3_motor_get_counts(left_motor);
-        //int counts = 0;
-        /*while (ev3_color_sensor_get_reflect(color_3) > 20 || counts == 25) {
-            if(ev3_motor_get_counts(left_motor) == lastMotor){
-                counts += 1;
-            }
-            else{
-                counts = 0;
-            }
-            lastMotor = ev3_motor_get_counts(left_motor);
-            tslp_tsk(10);
-        }*/
         while(ev3_color_sensor_get_reflect(color_3) > 40){
             
         }
         //move backwards
         ev3_motor_steer(left_motor,right_motor,-30,0);
-        //while(ev3_motor_get_counts(left_motor) - backMotor > 0){
-//
-        //}
         tslp_tsk(300);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back and turn
         ev3_motor_rotate(a_motor,200,-50,true);
-        ev3_motor_steer(left_motor,right_motor,-15,70);
+        ev3_motor_steer(left_motor,right_motor,-15,75);
         ev3_motor_rotate(a_motor,100,-50,false);
-        tslp_tsk(1075);
+        tslp_tsk(1100);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back completely
         ev3_motor_set_power(a_motor,-50);
@@ -1515,18 +1500,17 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,-10,0);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,-5,0);
+    ev3_motor_steer(left_motor,right_motor,10,0);
+    tslp_tsk(1500);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,10,45);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,10,-45);
+    tslp_tsk(1200);
+    ev3_motor_steer(left_motor,right_motor,0,0);
     //Side Length
-    if(instructions.doSnow){
-        wall_follow_with_tasks(60,0,0,1,0,25);
-    }
-    else{
-        ev3_motor_steer(left_motor,right_motor,40,0);
-        tslp_tsk(1700);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-    }
+    color4PID(42,1,0);
     //detect line
     ev3_motor_steer(left_motor, right_motor, 15, 0);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
@@ -1541,7 +1525,7 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,80);
         ev3_motor_steer(left_motor,right_motor,-15,90);
-        tslp_tsk(800);
+        tslp_tsk(850);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
         tslp_tsk(2000);
@@ -1563,7 +1547,7 @@ void runRedStreet(){
         tslp_tsk(2000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(800);
+        tslp_tsk(830);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor,right_motor,15,0);
@@ -1581,7 +1565,7 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,80);
         ev3_motor_steer(left_motor,right_motor,-15,90);
-        tslp_tsk(800);
+        tslp_tsk(850);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
         tslp_tsk(2000);
@@ -1603,7 +1587,7 @@ void runRedStreet(){
         tslp_tsk(2000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(800);
+        tslp_tsk(830);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor,right_motor,15,0);
@@ -1863,6 +1847,78 @@ void linePID_with_tasks(int distance, int speed){
 }
 
 /**
+ * \brief follows a line using Color_4 and does tasks
+ * \param distance Distance in cm
+ * \param tasksNumA amount of tasks for A_Motor
+ * \param tasksNumD amount of tasks for D_Motor
+**/
+void color4PID(int distance,int tasksNumA,int tasksNumD){
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
+    ev3_motor_reset_counts(a_motor);
+    ev3_motor_reset_counts(d_motor);
+    int isTurningA = 0;
+    int isTurningD = 0;
+    int a_motorStopped = 0;
+    float wheelDistance = 0;
+    int tasksLeftA = tasksNumA;
+    int tasksLeftD = tasksNumD;
+    for(int i = 0;i < 3;i++){
+        next_a_motor_task[i] = allTasks[pos.street][1][a_motor_index][i];
+    }
+    for(int i = 0;i < 3;i++){
+        next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
+    }
+    float lasterror = 0, integral = 0;
+    while (wheelDistance < distance) {
+        if(ev3_motor_get_power(a_motor) == 0 && ev3_motor_get_counts(a_motor) < 10 && a_motorStopped == 0){
+            ev3_motor_stop(a_motor,false);
+            a_motorStopped = 1;
+        }
+        if(wheelDistance > next_a_motor_task[0] && tasksLeftA > 0 && isTurningA == 0){
+            ev3_motor_reset_counts(a_motor);
+            ev3_motor_rotate(a_motor,next_a_motor_task[2],80,false);
+            isTurningA = 1;
+        }
+        if(wheelDistance > next_a_motor_task[1] && tasksLeftA > 0 && isTurningA == 1){
+            ev3_motor_set_power(a_motor,-50);
+            a_motor_index += 1;
+            a_motorStopped = 0;
+            for(int i = 0;i < 3;i++){
+                next_a_motor_task[i] = allTasks[pos.street][1][a_motor_index][i];
+            }
+            isTurningA = 0;
+            tasksLeftA -= 1;
+        }
+        if(wheelDistance > next_d_motor_task[0] && tasksLeftD > 0 && isTurningD == 0 && back_loaded){
+            ev3_motor_rotate(d_motor,next_d_motor_task[2],80,false);
+            isTurningD = 1;
+        }
+        if(wheelDistance > next_d_motor_task[1] && tasksLeftD > 0 && isTurningD == 1 && back_loaded){
+            ev3_speaker_play_tone(NOTE_A4,60);
+            ev3_motor_rotate(d_motor,next_d_motor_task[2] * -1,80,false);
+            d_motor_index += 1;
+            for(int i = 0;i < 3;i++){
+                next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
+            }
+            isTurningD = 0;
+            tasksLeftD -= 1;
+        }
+        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
+        bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
+        assert(val);
+        float error = (rgb4.r + rgb4.g + rgb4.b) / 3 - 40;
+        displayValues(error,1,1,1);
+        integral = error + integral * 0.5;
+        float steer = 0.3 * error + 0 * integral + 0.1 * (error - lasterror);
+        ev3_motor_steer(left_motor, right_motor, 15, steer);
+        lasterror = error;
+    }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    return;
+}
+
+/**
  * \brief follows a wall with a wall follower and does tasks
  * \param distance Distance in cm
  * \param steer Steer amount, ranging from 0 to 100
@@ -2031,6 +2087,11 @@ void waitforButton(int time) {
     ev3_led_set_color(LED_GREEN);
 }
 
+void resetAbrasive(){
+    ev3_motor_set_power(d_motor, -100);
+    tslp_tsk(1500);
+    ev3_motor_stop(d_motor, false);
+}
 /**
  * \brief literally writes parameters... Why don't we just use normal parameters instead of a struct? There are a few...
  * \param doSnow robot collects snow on street if true
