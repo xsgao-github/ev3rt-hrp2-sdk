@@ -477,10 +477,7 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readColorCode();
-    writeInstructions(1,0,0,1,0,0,1,0);
-    runRedStreet();
-    resetAbrasive();
-    //run2020();
+    run2020();
     /*
     ev3_motor_steer(left_motor, right_motor, 30, 1);
     tslp_tsk(2500);
@@ -1531,7 +1528,7 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,80);
         ev3_motor_steer(left_motor,right_motor,-15,90);
-        tslp_tsk(850);
+        tslp_tsk(900);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
         tslp_tsk(2000);
