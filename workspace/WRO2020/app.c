@@ -1112,17 +1112,20 @@ void runGreenStreet(){
         ev3_motor_rotate(right_motor, 240, 20, true);
         ev3_motor_stop(a_motor, false);
         tslp_tsk(100);
-        ev3_motor_rotate(right_motor, 100, 20, true);
-        ev3_motor_rotate(left_motor, 50, 20, false);
-        ev3_motor_rotate(right_motor, 50, 20, true);
-        ev3_motor_rotate(left_motor, 100, 20, true);
-        ev3_motor_rotate(left_motor, 100, 20, true);
-        ev3_motor_rotate(left_motor, 50, 20, false);
-        ev3_motor_rotate(right_motor, 50, 20, true);
-        ev3_motor_rotate(right_motor, 100, 20, true);
+        ev3_motor_rotate(right_motor, 80, 20, true);
+        ev3_motor_rotate(left_motor, 75, 20, true);
+        ev3_motor_reset_counts(left_motor);
+        ev3_motor_reset_counts(right_motor);
+        ev3_motor_steer(left_motor, right_motor, 20, 5);
+        while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 150) {
+            display_sensors();
+        }
+        ev3_motor_steer(left_motor, right_motor, 0, 0);
+        ev3_motor_rotate(left_motor, 80, 20, true);
+        ev3_motor_rotate(right_motor, 75, 20, true);
         tslp_tsk(100);
-        linePID_with_tasks(12, 20);
-        waitforButton(0);
+        linePID_with_tasks(10, 20);
+        tslp_tsk(100);
     }
     else if (instructions.doAbrasive == 1) {
         // TODO: stuff
@@ -1131,15 +1134,11 @@ void runGreenStreet(){
         ev3_speaker_play_tone(NOTE_G6, -1);
         while (true);
     }
-    //ev3_motor_steer(left_motor, right_motor, 10, 0);
-    //while (((ev3_color_sensor_get_reflect(color_2) + ev3_color_sensor_get_reflect(color_3)) / 2) > 30) {
-    //    display_sensors();
-    //}
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    ev3_motor_rotate(left_motor, 130, 20, false);
-    ev3_motor_rotate(right_motor, 130, 20, true);
+    ev3_motor_rotate(left_motor, 180, 20, false);
+    ev3_motor_rotate(right_motor, 180, 20, true);
     tslp_tsk(250);
-    ev3_motor_rotate(right_motor, 230, 20, true);
+    ev3_motor_rotate(right_motor, 210, 20, true);
     tslp_tsk(250);
     ev3_motor_steer(left_motor, right_motor, 20, 3);
     tslp_tsk(1000);
