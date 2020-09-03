@@ -476,7 +476,7 @@ int car_motor_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    readColorCode();
+    readCode();
     run2020();
     /*
     ev3_motor_steer(left_motor, right_motor, 30, 1);
@@ -1720,19 +1720,22 @@ void readColorCode(){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
         assert(val);
-        if(rgb4.r > 55 && isReading < 2){
+        displayValues(rgb4.r,1,1,1);
+        displayValues(rgb4.g,2,1,0);
+        displayValues(rgb4.b,3,1,0);
+        if(rgb4.r > 60 && isReading < 2){
             isReading = 50;
             i = round((wheelDistance - 28) / 4);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
-        else if(rgb4.g > 55 && isReading < 2){
+        else if(rgb4.g > 60 && isReading < 2){
             isReading = 50;
             i = round((wheelDistance - 28) / 4);
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C4,50);
         }
-        else if(rgb4.b > 55 && isReading < 2){
+        else if(rgb4.b > 60 && isReading < 2){
             isReading = 50;
             i = round((wheelDistance - 28) / 4);
             values[i] = 1;
