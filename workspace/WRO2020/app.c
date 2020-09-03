@@ -489,10 +489,10 @@ void main_task(intptr_t unused) {
         display_sensors();
     }
     tslp_tsk(100);
-    tasks[GREEN_STREET][0] = COLLECTSNOW;
+    tasks[BLUE_STREET][0] = COLLECTSNOW;
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     writeInstructions(false, true, false, false, false, false, false, false);
-    runGreenStreet();
+    runBlueStreet();
     //*/
 }
 
@@ -997,7 +997,7 @@ void runBlueStreet(){
         ev3_motor_rotate(right_motor, 250, 20, true);
         ev3_motor_rotate(a_motor, 500, 80, true);
         tslp_tsk(100);
-        linePID_with_tasks(35, 25);
+        linePID_with_tasks(38, 25);
         ev3_motor_set_power(a_motor, -50);
     } else if (instructions.doCar == 1) {
         ev3_motor_set_power(a_motor, 50);
@@ -1014,19 +1014,24 @@ void runBlueStreet(){
         ev3_motor_rotate(right_motor, 240, 20, true);
         ev3_motor_stop(a_motor, false);
         tslp_tsk(100);
+        waitforButton(0);
         ev3_motor_rotate(right_motor, 80, 20, true);
         ev3_motor_rotate(left_motor, 75, 20, true);
+        waitforButton(0);
         ev3_motor_reset_counts(left_motor);
         ev3_motor_reset_counts(right_motor);
         ev3_motor_steer(left_motor, right_motor, 20, 5);
-        while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 150) {
+        while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 100) {
             display_sensors();
         }
         ev3_motor_steer(left_motor, right_motor, 0, 0);
+        waitforButton(0);
         ev3_motor_rotate(left_motor, 80, 20, true);
         ev3_motor_rotate(right_motor, 75, 20, true);
+        waitforButton(0);
         tslp_tsk(100);
-        linePID_with_tasks(10, 20);
+        linePID_with_tasks(14, 20);
+        waitforButton(0);
         tslp_tsk(100);
     } else if (instructions.doAbrasive == 1) {
         // TODO: 
@@ -1035,8 +1040,8 @@ void runBlueStreet(){
         ev3_speaker_play_tone(NOTE_G6, -1);
         while (true);
     }
-    ev3_motor_rotate(left_motor, 30, 20, false);
-    ev3_motor_rotate(right_motor, 30, 20, true);
+    ev3_motor_rotate(left_motor, 100, 20, false);
+    ev3_motor_rotate(right_motor, 100, 20, true);
     ev3_motor_stop(a_motor, false);
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 30, -40);
@@ -2010,6 +2015,10 @@ void execute_tasks(float distance) {
     }
 }
 
+/**
+ * \brief waits for center button press
+ * \param time amount of time for button to be activated (ms)
+**/
 void waitforButton(int time) {
     ev3_led_set_color(LED_OFF);
     tslp_tsk(time);
