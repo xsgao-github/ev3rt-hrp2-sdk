@@ -1128,7 +1128,18 @@ void runGreenStreet(){
         tslp_tsk(100);
     }
     else if (instructions.doAbrasive == 1) {
-        // TODO: stuff
+        linePID_with_tasks(84, 30);
+        tslp_tsk(100);
+        ev3_motor_steer(left_motor, right_motor, 10, -1);
+        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+            display_sensors();
+        }
+        tslp_tsk(150);
+        ev3_motor_steer(left_motor, right_motor, -10, 0);
+        tslp_tsk(150);
+        ev3_motor_rotate(right_motor, 240, 20, true);
+        tslp_tsk(100);
+        linePID_with_tasks(38, 30);
     }
     else {
         ev3_speaker_play_tone(NOTE_G6, -1);
