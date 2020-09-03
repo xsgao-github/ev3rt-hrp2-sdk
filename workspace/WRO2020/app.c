@@ -30,6 +30,7 @@ void linePID_with_tasks(int distance, int speed);
 void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,int tasksNumD,int speed);
 void execute_tasks(float distance);
 void waitforButton(int time);
+void resetAbrasive();
 void writeInstructions(int doSnow, int doCar, int doAbrasive, int detectCar, int snowDepot, int carDepot, int collectAbrasive, int uTurn);
 void init();
 void display_sensors();
@@ -477,6 +478,7 @@ void main_task(intptr_t unused) {
     readColorCode();
     writeInstructions(1,0,0,1,1,0,1,0);
     runRedStreet();
+    resetAbrasive();
     //run2020();
     /*
     ev3_motor_steer(left_motor, right_motor, 30, 1);
@@ -1409,9 +1411,9 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back and turn
         ev3_motor_rotate(a_motor,200,-50,true);
-        ev3_motor_steer(left_motor,right_motor,-15,60);
+        ev3_motor_steer(left_motor,right_motor,-15,75);
         ev3_motor_rotate(a_motor,100,-50,false);
-        tslp_tsk(1075);
+        tslp_tsk(1100);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back completely
         ev3_motor_set_power(a_motor,-50);
@@ -1461,10 +1463,10 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,0,0);
     //Side Length
     if(instructions.doSnow){
-        wall_follow_with_tasks(60,0,0,1,0,25);
+        wall_follow_with_tasks(60,-1,0,1,0,25);
     }
     else{
-        ev3_motor_steer(left_motor,right_motor,40,0);
+        ev3_motor_steer(left_motor,right_motor,40,-1);
         tslp_tsk(1700);
         ev3_motor_steer(left_motor,right_motor,0,0);
     }
@@ -1504,7 +1506,7 @@ void runRedStreet(){
         tslp_tsk(2000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(800);
+        tslp_tsk(750);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor,right_motor,15,0);
@@ -1544,7 +1546,7 @@ void runRedStreet(){
         tslp_tsk(2000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(800);
+        tslp_tsk(750);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor,right_motor,15,0);
@@ -1968,6 +1970,11 @@ void waitforButton(int time) {
     ev3_led_set_color(LED_GREEN);
 }
 
+void resetAbrasive(){
+    ev3_motor_set_power(d_motor, -100);
+    tslp_tsk(1500);
+    ev3_motor_stop(d_motor, false);
+}
 /**
  * \brief literally writes parameters... Why don't we just use normal parameters instead of a struct? There are a few...
  * \param doSnow robot collects snow on street if true
