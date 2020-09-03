@@ -1000,8 +1000,34 @@ void runBlueStreet(){
         linePID_with_tasks(35, 25);
         ev3_motor_set_power(a_motor, -50);
     } else if (instructions.doCar == 1) {
-        // TODO: stuff
-        while (true);
+        ev3_motor_set_power(a_motor, 50);
+        linePID_with_tasks(84, 25);
+        ev3_motor_set_power(a_motor, -50);
+        tslp_tsk(100);
+        ev3_motor_steer(left_motor, right_motor, 10, -1);
+        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+            display_sensors();
+        }
+        tslp_tsk(150);
+        ev3_motor_steer(left_motor, right_motor, -10, 0);
+        tslp_tsk(200);
+        ev3_motor_rotate(right_motor, 240, 20, true);
+        ev3_motor_stop(a_motor, false);
+        tslp_tsk(100);
+        ev3_motor_rotate(right_motor, 80, 20, true);
+        ev3_motor_rotate(left_motor, 75, 20, true);
+        ev3_motor_reset_counts(left_motor);
+        ev3_motor_reset_counts(right_motor);
+        ev3_motor_steer(left_motor, right_motor, 20, 5);
+        while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 150) {
+            display_sensors();
+        }
+        ev3_motor_steer(left_motor, right_motor, 0, 0);
+        ev3_motor_rotate(left_motor, 80, 20, true);
+        ev3_motor_rotate(right_motor, 75, 20, true);
+        tslp_tsk(100);
+        linePID_with_tasks(10, 20);
+        tslp_tsk(100);
     } else if (instructions.doAbrasive == 1) {
         // TODO: 
         while (true);
