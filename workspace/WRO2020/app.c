@@ -1864,11 +1864,11 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
         assert(val);
-        float error = (rgb4.r + rgb4.g + rgb4.b) / 3 - 35;
+        float error = (rgb4.r + rgb4.g + rgb4.b) / 3 - 40;
         displayValues(error,1,1,1);
         integral = error + integral * 0.5;
-        float steer = 0.3 * error + 0 * integral + 0 * (error - lasterror);
-        ev3_motor_steer(left_motor, right_motor, 10, steer);
+        float steer = 0.4 * error + 0 * integral + 0 * (error - lasterror);
+        ev3_motor_steer(left_motor, right_motor, 15, steer);
         lasterror = error;
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
