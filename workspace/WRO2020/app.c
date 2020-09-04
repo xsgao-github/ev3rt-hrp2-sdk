@@ -477,10 +477,14 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    //writeInstructions(1,0,0,1,1,0,0,1);
-    //runRedStreet();
-    run2020();
-    goBackToBase();
+    tasks[GREEN_STREET][0] = COLLECTSNOW;
+    writeInstructions(true, false, false, false, false, false, false, false);
+    runGreenStreet();
+    waitforButton(0);
+    writeInstructions(false, true, false, false, false, false, false, false);
+    runGreenStreet();
+    //run2020();
+    //goBackToBase();
 }
 
 void run2020(){
@@ -988,7 +992,7 @@ void runBlueStreet(){
         ev3_motor_set_power(a_motor, -50);
     } else if (instructions.doCar == 1) {
         ev3_motor_set_power(a_motor, 50);
-        linePID_with_tasks(84, 25);
+        linePID_with_tasks(84, 30);
         ev3_motor_set_power(a_motor, -50);
         tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
@@ -1026,7 +1030,7 @@ void runBlueStreet(){
         tslp_tsk(200);
         ev3_motor_rotate(right_motor, 230, 20, true);
         tslp_tsk(100);
-        linePID_with_tasks(38, 30);
+        linePID_with_tasks(35, 30);
     } else {
         ev3_speaker_play_tone(NOTE_G6, -1);
         while (true);
@@ -1095,7 +1099,7 @@ void runGreenStreet(){
     pos.street = GREEN_STREET;
     tslp_tsk(100);
     if (instructions.doSnow == 1) {
-        linePID_with_tasks(24, 25);
+        linePID_with_tasks(25, 25);
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 80, 20, true);
         ev3_motor_rotate(left_motor, 160, 20, true);
@@ -1106,9 +1110,12 @@ void runGreenStreet(){
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 70, 10, true);
         ev3_motor_rotate(left_motor, 100, 20, false);
-        ev3_motor_rotate(right_motor, 100, 20, true);
+        ev3_motor_rotate(right_motor, 100, 35, true);
+        ev3_motor_rotate(right_motor, 20, 10, true);
+        ev3_motor_rotate(left_motor, 175, 20, false);
+        ev3_motor_rotate(right_motor, 175, 20, true);
         tslp_tsk(100);
-        linePID_with_tasks(20, 25);
+        //linePID_with_tasks(20, 25);
         tslp_tsk(100);
         ev3_motor_rotate(a_motor, 300, 80, false);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
@@ -1121,11 +1128,11 @@ void runGreenStreet(){
         ev3_motor_rotate(right_motor, 230, 20, true);
         tslp_tsk(100);
         a_task_running = 1;
-        linePID_with_tasks(32, 25);
+        linePID_with_tasks(25, 25);
     }
     else if (instructions.doCar == 1) {
         ev3_motor_set_power(a_motor, 50);
-        linePID_with_tasks(84, 25);
+        linePID_with_tasks(84, 30);
         ev3_motor_set_power(a_motor, -50);
         tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
@@ -1138,19 +1145,21 @@ void runGreenStreet(){
         ev3_motor_rotate(right_motor, 230, 20, true);
         ev3_motor_stop(a_motor, false);
         tslp_tsk(100);
-        ev3_motor_rotate(right_motor, 80, 20, true);
-        ev3_motor_rotate(left_motor, 75, 20, true);
+        ev3_motor_rotate(left_motor, 80, 10, false);
+        ev3_motor_rotate(right_motor, 80, 10, true);
+        ev3_motor_rotate(right_motor, 90, 20, true);
+        ev3_motor_rotate(left_motor, 85, 20, true);
         ev3_motor_reset_counts(left_motor);
         ev3_motor_reset_counts(right_motor);
         ev3_motor_steer(left_motor, right_motor, 20, 5);
-        while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 150) {
+        while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 10) {
             display_sensors();
         }
         ev3_motor_steer(left_motor, right_motor, 0, 0);
-        ev3_motor_rotate(left_motor, 80, 20, true);
-        ev3_motor_rotate(right_motor, 75, 20, true);
+        ev3_motor_rotate(left_motor, 90, 20, true);
+        ev3_motor_rotate(right_motor, 85, 20, true);
         tslp_tsk(100);
-        linePID_with_tasks(10, 20);
+        linePID_with_tasks(5, 20);
         tslp_tsk(100);
     }
     else if (instructions.doAbrasive == 1) {
@@ -1997,14 +2006,14 @@ void execute_tasks(float distance) {
 
     //check for a_motor task, execute task if task is to collect snow and it is time and collect cars is false
     //execute part 1 of task
-    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && a_task_running == 0 && tasks[pos.street][0] == COLLECTSNOW && instructions.doCar == 0) {
+    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && a_task_running == 0 && tasks[pos.street][0] == COLLECTSNOW && instructions.doSnow == 1) {
         ev3_motor_stop(a_motor, false);
         ev3_motor_rotate(a_motor, allTasks[pos.street][A_MOTOR][a_motor_index][2], 80, false);
         a_task_running = 1;
         ev3_speaker_play_tone(NOTE_C4, 50);
     }
     //execute part 2 of task
-    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][1] && a_task_running == 1 && tasks[pos.street][0] == COLLECTSNOW && instructions.doCar == 0) {
+    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][1] && a_task_running == 1 && tasks[pos.street][0] == COLLECTSNOW && instructions.doSnow == 1) {
         ev3_motor_stop(a_motor, false);
         ev3_motor_rotate(a_motor, -1*allTasks[pos.street][A_MOTOR][a_motor_index][2], 80, false);
         a_task_running = 0;
@@ -2022,7 +2031,7 @@ void execute_tasks(float distance) {
 
     }
     //execute part 2 of task
-    if ((abs(ev3_motor_get_power(d_motor))) == 0 && d_task_running == 1 && tasks[pos.street][0] == back_loaded) {
+    if (abs((ev3_motor_get_counts(d_motor))) <= 5 && d_task_running == 1 && tasks[pos.street][0] == back_loaded) {
         ev3_motor_stop(d_motor, false);
         ev3_motor_rotate(d_motor, -1*allTasks[pos.street][D_MOTOR][d_motor_index][1], 100, false);
         d_task_running = 0;
@@ -2032,10 +2041,11 @@ void execute_tasks(float distance) {
 
     //check for color_4 task, execute if it is time
     if (distance > allTasks[pos.street][COLOR_4][color_4_index][0]) {
-        // TODO: check for cars
-        ev3_speaker_set_volume(100);
-        ev3_speaker_play_tone(10000, -1);
-        tslp_tsk(1000000000);
+        if(rgb4.b > 70){
+            ev3_speaker_play_tone(NOTE_E4, 50);
+            carDetected[pos.street] = (color_4_index + 1);
+            color_4_index++;
+        }
     }
 }
 
