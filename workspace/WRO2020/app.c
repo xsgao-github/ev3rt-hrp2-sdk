@@ -391,7 +391,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 1
             {
-                71,89,200
+                65,89,200
             },
             //index 2
             {
@@ -1451,7 +1451,7 @@ void runRedStreet(){
         tslp_tsk(300);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back and turn
-        ev3_motor_rotate(a_motor,200,-50,true);
+        ev3_motor_rotate(a_motor,250,-50,true);
         ev3_motor_steer(left_motor,right_motor,-15,75);
         ev3_motor_rotate(a_motor,100,-50,false);
         tslp_tsk(1100);
@@ -1516,7 +1516,7 @@ void runRedStreet(){
         color4PID(8,0,0);
     }
     //Side Length
-    color4PID(42,1,0);
+    color4PID(37,1,0);
     //detect line
     ev3_motor_steer(left_motor, right_motor, 15, 0);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
