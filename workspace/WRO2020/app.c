@@ -478,6 +478,7 @@ void main_task(intptr_t unused) {
     init();
     readCode();
     run2020();
+    goBackToBase();
 }
 
 void run2020(){
@@ -562,7 +563,7 @@ void run2020(){
                 runBlueStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
-                writeInstructions(0,0,0,0,1,0,1,0);
+                writeInstructions(0,0,0,0,0,1,0,0);
                 runRedStreet();
             }
             else if(tasks[GREEN_STREET][0] == 1){
@@ -580,7 +581,7 @@ void run2020(){
                 runBlueStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
-                writeInstructions(0,0,0,0,1,0,1,0);
+                writeInstructions(0,0,0,0,0,1,0,0);
                 runRedStreet();
             }
         }
@@ -1808,7 +1809,7 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
         next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
     }
     float lasterror = 0, integral = 0;
-    while (wheelDistance < distance && ev3_color_sensor_get_reflect(color_3) > 20) {
+    while (wheelDistance < distance) {
         if(ev3_motor_get_power(a_motor) == 0 && ev3_motor_get_counts(a_motor) < 10 && a_motorStopped == 0){
             ev3_motor_stop(a_motor,false);
             a_motorStopped = 1;
@@ -1842,6 +1843,17 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
             isTurningD = 0;
             tasksLeftD -= 1;
         }
+        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
+        bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
+        assert(val);
+        float error = (rgb4.r + rgb4.g + rgb4.b) / 3 - 40;
+        displayValues(error,1,1,1);
+        integral = error + integral * 0.5;
+        float steer = 0.3 * error + 0 * integral + 0.1 * (error - lasterror);
+        ev3_motor_steer(left_motor, right_motor, 15, steer);
+        lasterror = error;
+    }
+    while (ev3_color_sensor_get_reflect(color_3) > 20) {
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
         assert(val);
