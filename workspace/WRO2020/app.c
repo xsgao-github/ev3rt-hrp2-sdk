@@ -1656,7 +1656,12 @@ void readCode() {
         pos.street = YELLOW_STREET;
         ev3_speaker_play_tone(NOTE_G5, 40);
     }
-    tslp_tsk(100);
+    tslp_tsk(50);
+
+    ev3_motor_rotate(left_motor, 10, 10, false);
+    ev3_motor_rotate(right_motor, 10, 10, true);
+
+    tslp_tsk(50);
 
     // record instructions
     ev3_motor_reset_counts(EV3_PORT_B);
@@ -1668,7 +1673,7 @@ void readCode() {
         while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < (i * 58)) {
             display_sensors();
         }
-        ht_nxt_color_sensor_measure_rgb(color_4, &rgb4);
+        display_sensors();
         if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
             values[i] = 1;
             ev3_speaker_play_tone(NOTE_C5, 50);
