@@ -1042,9 +1042,9 @@ void runBlueStreet(){
     ev3_motor_steer(left_motor, right_motor, 20, 10);
     tslp_tsk(1500);
     ev3_motor_steer(left_motor, right_motor, -20, 15);
-    tslp_tsk(1200);
+    tslp_tsk(1000);
     ev3_motor_steer(left_motor, right_motor, -20, -10);
-    tslp_tsk(500);
+    tslp_tsk(700);
     ev3_motor_steer(left_motor, right_motor, -20, 0);
     tslp_tsk(400);
     ev3_motor_steer(left_motor, right_motor, 10, 10);
@@ -1095,14 +1095,14 @@ void runGreenStreet(){
     pos.street = GREEN_STREET;
     tslp_tsk(100);
     if (instructions.doSnow == 1) {
-        linePID_with_tasks(23, 25);
+        linePID_with_tasks(24, 25);
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 80, 20, true);
         ev3_motor_rotate(left_motor, 160, 20, true);
         ev3_motor_rotate(right_motor, 80, 20, true);
         tslp_tsk(100);
         a_motor_index++;
-        linePID_with_tasks(23, 25);
+        linePID_with_tasks(22, 25);
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 70, 10, true);
         ev3_motor_rotate(left_motor, 100, 20, false);
@@ -1121,7 +1121,7 @@ void runGreenStreet(){
         ev3_motor_rotate(right_motor, 230, 20, true);
         tslp_tsk(100);
         a_task_running = 1;
-        linePID_with_tasks(35, 25);
+        linePID_with_tasks(32, 25);
     }
     else if (instructions.doCar == 1) {
         ev3_motor_set_power(a_motor, 50);
@@ -1165,7 +1165,7 @@ void runGreenStreet(){
         tslp_tsk(150);
         ev3_motor_rotate(right_motor, 230, 20, true);
         tslp_tsk(100);
-        linePID_with_tasks(38, 30);
+        linePID_with_tasks(30, 30);
     }
     else {
         ev3_speaker_play_tone(NOTE_G6, -1);
@@ -1695,10 +1695,10 @@ void goBackToBase(){
 void readCode() {
     // define array & variable
     int values[8] = {-1, -1, -1, -1, -1, -1, -1, -1};
-    rgb_raw_t rgb3;
+    colorid_t color3;
 
     // leave start
-    ///* old leavestart
+    ///* old leavestart but its the new one
     ev3_motor_reset_counts(EV3_PORT_B);
     ev3_motor_reset_counts(EV3_PORT_C);
     ev3_motor_steer(left_motor, right_motor, 30, 2);
@@ -1706,29 +1706,30 @@ void readCode() {
         display_sensors();
     }
 
-    // detect line
-    ev3_color_sensor_get_rgb_raw(color_3, &rgb3);
-    ev3_motor_steer(left_motor, right_motor, 10, 1);
-    while (rgb3.b > 100) {
-        tslp_tsk(3);
-        ev3_color_sensor_get_rgb_raw(color_3, &rgb3);
-    }
-    ev3_motor_steer(left_motor, right_motor, 0, 0);
-
     // stop d_motor
     ev3_motor_stop(d_motor, false);
 
+    // detect line
+    ev3_motor_steer(left_motor, right_motor, 10, 1);
+    while (ev3_color_sensor_get_color(color_3) == COLOR_WHITE) {
+        tslp_tsk(3);
+    }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+
     // write down road
-    if (rgb3.g < 100) {
+    if (ev3_color_sensor_get_color(color_3) == COLOR_RED) {
         pos.street = RED_STREET;
         ev3_speaker_play_tone(NOTE_G4, 40);
-    } else {
+    } else if (ev3_color_sensor_get_color(color_3) == COLOR_YELLOW) {
         pos.street = YELLOW_STREET;
         ev3_speaker_play_tone(NOTE_G5, 40);
+    } else {
+        pos.street = -1;
+        ev3_speaker_play_tone(NOTE_G6, -1);
     }
     tslp_tsk(100);
     //*/
-    /* new leavestart
+    /* new leavestartf but its now the old one
     float wheelDistance = 0;
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
