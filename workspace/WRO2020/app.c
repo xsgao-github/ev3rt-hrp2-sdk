@@ -484,7 +484,7 @@ void main_task(intptr_t unused) {
     */
     //run2020();
     ///*
-    /*
+    ///*
     ev3_motor_steer(left_motor, right_motor, 30, 1);
     tslp_tsk(2500);
     ev3_motor_stop(d_motor, false);
@@ -495,9 +495,6 @@ void main_task(intptr_t unused) {
     tslp_tsk(100);
     tasks[BLUE_STREET][0] = COLLECTSNOW;
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    */
-    ///*
-    readCode();
     //*/
     writeInstructions(false, true, false, false, false, false, false, false);
     runBlueStreet();
