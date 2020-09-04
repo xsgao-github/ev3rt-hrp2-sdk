@@ -399,7 +399,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                7,12,500
+                0,7,500
             },
             //index 4
             {
@@ -1630,7 +1630,7 @@ void readCode() {
     rgb_raw_t rgb3;
 
     // leave start
-    ev3_motor_reset_counts(EV3_PORT_B);
+    /*ev3_motor_reset_counts(EV3_PORT_B);
     ev3_motor_reset_counts(EV3_PORT_C);
     ev3_motor_steer(left_motor, right_motor, 30, 2);
     while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < 280) {
@@ -1649,6 +1649,8 @@ void readCode() {
     // stop d_motor
     ev3_motor_stop(d_motor, false);
 
+    
+
     // write down road
     if (rgb3.g < 100) {
         pos.street = RED_STREET;
@@ -1657,12 +1659,42 @@ void readCode() {
         pos.street = YELLOW_STREET;
         ev3_speaker_play_tone(NOTE_G5, 40);
     }
-    tslp_tsk(100);
+    tslp_tsk(100);*/
+    float wheelDistance = 0;
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
+    while(wheelDistance < 21){
+        ev3_motor_steer(left_motor,right_motor,30,5);
+        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
+    }
+    ev3_motor_steer(left_motor, right_motor, 7, 5);
+    colorid_t color3color = 6;
+    while(color3color == 6){
+        color3color = ev3_color_sensor_get_color(color_3);
+        tslp_tsk(10);
+    }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    int x = 0;
+    while(x < 50){
+        color3color = ev3_color_sensor_get_color(color_3);
+        x += 1;
+        tslp_tsk(10);
+    }
+    if(color3color == 5){
+        pos.street = RED_STREET;
+    }
+    if(color3color == 4){
+        pos.street = YELLOW_STREET;
+    }
+    // stop d_motor
+    ev3_motor_stop(d_motor, false);
 
     // record instructions
     ev3_motor_reset_counts(EV3_PORT_B);
     ev3_motor_reset_counts(EV3_PORT_C);
-    ev3_motor_steer(left_motor, right_motor, 10, 1);
+    ev3_motor_steer(left_motor, right_motor, 10, 3);
+    ht_nxt_color_sensor_measure_rgb(color_4, &rgb4);
+    tslp_tsk(100);
     int i;
     for (i = 0; i < 8; i++) {
         // read instructions
