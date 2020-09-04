@@ -1204,7 +1204,12 @@ void runYellowStreet(){
         if(instructions.detectCar){
             car = 1;
         }
-        wall_follow_with_tasks(90,3,car,1,abrasive,25);
+        if(instructions.doSnow){
+            wall_follow_with_tasks(90,3,car,1,abrasive,25);
+        }
+        else{
+            wall_follow_with_tasks(90,3,car,1,abrasive,40);
+        }
         wall_follow_with_tasks(42,3,car,2,abrasive,10);
     }
     else if(instructions.doCar == 1){
@@ -1351,7 +1356,12 @@ void runRedStreet(){
         if(instructions.detectCar){
             car = 2;
         }
-        wall_follow_with_tasks(130,3,car,3,abrasive,25);
+        if(instructions.doSnow){
+            wall_follow_with_tasks(130,3,car,3,abrasive,25);
+        }
+        else{
+            wall_follow_with_tasks(130,3,car,3,abrasive,40);
+        }
     }
     else if(instructions.doCar == 1){
         ev3_motor_reset_counts(left_motor);
