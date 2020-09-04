@@ -1639,7 +1639,8 @@ void readCode() {
     rgb_raw_t rgb3;
 
     // leave start
-    /*ev3_motor_reset_counts(EV3_PORT_B);
+    /* old leavestart
+    ev3_motor_reset_counts(EV3_PORT_B);
     ev3_motor_reset_counts(EV3_PORT_C);
     ev3_motor_steer(left_motor, right_motor, 30, 2);
     while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < 280) {
@@ -1658,8 +1659,6 @@ void readCode() {
     // stop d_motor
     ev3_motor_stop(d_motor, false);
 
-    
-
     // write down road
     if (rgb3.g < 100) {
         pos.street = RED_STREET;
@@ -1668,7 +1667,8 @@ void readCode() {
         pos.street = YELLOW_STREET;
         ev3_speaker_play_tone(NOTE_G5, 40);
     }
-    tslp_tsk(100);*/
+    tslp_tsk(100);
+    */
     float wheelDistance = 0;
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
@@ -1695,6 +1695,7 @@ void readCode() {
     if(color3color == 4){
         pos.street = YELLOW_STREET;
     }
+    
     // stop d_motor
     ev3_motor_stop(d_motor, false);
 
