@@ -477,7 +477,7 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    run2020();
+    //run2020();
     /*
     ev3_motor_steer(left_motor, right_motor, 30, 1);
     tslp_tsk(2500);
@@ -490,10 +490,7 @@ void main_task(intptr_t unused) {
     tasks[BLUE_STREET][0] = COLLECTSNOW;
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     */
-    ///*
-    readCode();
-    //*/
-    writeInstructions(false, true, false, false, false, false, false, false);
+    writeInstructions(true, false, false, false, false, false, false, false);
     runBlueStreet();
 }
 
@@ -1695,7 +1692,7 @@ void readCode() {
     if(color3color == 4){
         pos.street = YELLOW_STREET;
     }
-    
+
     // stop d_motor
     ev3_motor_stop(d_motor, false);
 
