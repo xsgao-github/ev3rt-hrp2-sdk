@@ -999,7 +999,7 @@ void runBlueStreet(){
         ev3_motor_steer(left_motor, right_motor, -10, 0);
         ev3_motor_set_power(a_motor, -80);
         tslp_tsk(250);
-        ev3_motor_rotate(right_motor, 250, 20, true);
+        ev3_motor_rotate(right_motor, 240, 20, true);
         ev3_motor_rotate(a_motor, 500, 80, true);
         tslp_tsk(100);
         linePID_with_tasks(38, 25);
@@ -1034,7 +1034,17 @@ void runBlueStreet(){
         linePID_with_tasks(18, 20);
         tslp_tsk(100);
     } else if (instructions.doAbrasive == 1) {
-        
+        linePID_with_tasks(84, 30);
+        ev3_motor_steer(left_motor, right_motor, 10, -1);
+        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+            display_sensors();
+        }
+        tslp_tsk(150);
+        ev3_motor_steer(left_motor, right_motor, -10, 0);
+        tslp_tsk(200);
+        ev3_motor_rotate(right_motor, 240, 20, true);
+        tslp_tsk(100);
+        linePID_with_tasks(38, 30);
     } else {
         ev3_speaker_play_tone(NOTE_G6, -1);
         while (true);
