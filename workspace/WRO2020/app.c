@@ -486,7 +486,7 @@ void main_task(intptr_t unused) {
     tslp_tsk(100);
     tasks[BLUE_STREET][0] = COLLECTSNOW;
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    writeInstructions(false, true, false, false, false, false, false, false);
+    writeInstructions(true, false, false, false, false, false, false, false);
     runBlueStreet();
 }
 
@@ -1023,7 +1023,7 @@ void runBlueStreet(){
         linePID_with_tasks(18, 20);
         tslp_tsk(100);
     } else if (instructions.doAbrasive == 1) {
-        linePID_with_tasks(84, 30);
+        linePID_with_tasks(80, 30);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
         while (ev3_color_sensor_get_reflect(color_2) > 20) {
             display_sensors();
