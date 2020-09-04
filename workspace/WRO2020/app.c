@@ -477,8 +477,10 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    run2020();
-    goBackToBase();
+    writeInstructions(1,0,0,1,1,0,0,1);
+    runRedStreet();
+    //run2020();
+    //goBackToBase();
 }
 
 void run2020(){
@@ -844,15 +846,15 @@ void run2020(){
         else if(tasks[YELLOW_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
             if(tasks[RED_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runYellowStreet();
-                writeInstructions(1,0,0,1,0,0,0,0);
                 runBlueStreet();
+                writeInstructions(1,0,0,1,0,0,0,0);
+                runYellowStreet();
                 writeInstructions(0,0,0,0,1,0,1,0);
                 runRedStreet();
                 writeInstructions(0,1,0,0,0,0,0,0);
-                runYellowStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
                 runBlueStreet();
+                writeInstructions(0,1,0,0,0,0,0,0);
+                runYellowStreet();
                 writeInstructions(0,0,1,0,0,1,2,0);
                 runRedStreet();
                 writeInstructions(0,0,0,0,0,0,0,0);
@@ -862,15 +864,15 @@ void run2020(){
             }
             else if(tasks[GREEN_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runYellowStreet();
-                writeInstructions(1,0,0,1,0,0,0,0);
                 runBlueStreet();
+                writeInstructions(1,0,0,1,0,0,0,0);
+                runYellowStreet();
                 writeInstructions(0,0,0,0,1,0,2,0);
                 runRedStreet();
                 writeInstructions(0,1,0,0,0,0,0,0);
-                runYellowStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
                 runBlueStreet();
+                writeInstructions(0,1,0,0,0,0,0,0);
+                runYellowStreet();
                 writeInstructions(0,0,1,0,0,1,1,0);
                 runRedStreet();
                 writeInstructions(0,0,0,0,0,0,0,0);
@@ -1522,7 +1524,21 @@ void runRedStreet(){
     //Side Length
     color4PID(25,1,0);
     ev3_speaker_play_tone(NOTE_A4,60);
+    //detect line
+    ev3_motor_steer(left_motor, right_motor, 15, 0);
+    while (ev3_color_sensor_get_reflect(color_3) > 20) {
+    }
+    ev3_motor_steer(left_motor,right_motor,0,0);
     if(instructions.uTurn){
+        waitforButton(0);
+        ev3_motor_steer(left_motor,right_motor,15,90);
+        tslp_tsk(1650);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        waitforButton(0);
+        ev3_motor_steer(left_motor,right_motor,30,0);
+        tslp_tsk(10000);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        waitforButton(0);
         //TODO: uTurn code
     }
     if(instructions.collectAbrasive == 1){
@@ -1853,17 +1869,6 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
             isTurningD = 0;
             tasksLeftD -= 1;
         }
-        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
-        bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
-        assert(val);
-        float error = (rgb4.r + rgb4.g + rgb4.b) / 3 - 40;
-        displayValues(error,1,1,1);
-        integral = error + integral * 0.5;
-        float steer = 0.3 * error + 0 * integral + 0.1 * (error - lasterror);
-        ev3_motor_steer(left_motor, right_motor, 15, steer);
-        lasterror = error;
-    }
-    while (ev3_color_sensor_get_reflect(color_3) > 20) {
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
         bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
         assert(val);
