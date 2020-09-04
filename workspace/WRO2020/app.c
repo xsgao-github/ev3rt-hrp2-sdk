@@ -477,14 +477,8 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    tasks[GREEN_STREET][0] = COLLECTSNOW;
-    writeInstructions(true, false, false, false, false, false, false, false);
-    runGreenStreet();
-    waitforButton(0);
-    writeInstructions(false, true, false, false, false, false, false, false);
-    runGreenStreet();
-    //run2020();
-    //goBackToBase();
+    run2020();
+    goBackToBase();
 }
 
 void run2020(){
@@ -1704,7 +1698,6 @@ void goBackToBase(){
 void readCode() {
     // define array & variable
     int values[8] = {-1, -1, -1, -1, -1, -1, -1, -1};
-    colorid_t color3;
 
     // leave start
     ///* old leavestart but its the new one
@@ -1724,6 +1717,8 @@ void readCode() {
         tslp_tsk(3);
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
+
+    tslp_tsk(50);
 
     // write down road
     if (ev3_color_sensor_get_color(color_3) == COLOR_RED) {
