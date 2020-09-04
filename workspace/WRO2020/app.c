@@ -1110,8 +1110,8 @@ void runGreenStreet(){
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 70, 10, true);
         ev3_motor_rotate(left_motor, 100, 20, false);
-        ev3_motor_rotate(right_motor, 100, 35, true);
-        ev3_motor_rotate(right_motor, 20, 10, true);
+        ev3_motor_rotate(right_motor, 100, 20, true);
+        ev3_motor_rotate(right_motor, 35, 10, true);
         ev3_motor_rotate(left_motor, 175, 20, false);
         ev3_motor_rotate(right_motor, 175, 20, true);
         tslp_tsk(100);
