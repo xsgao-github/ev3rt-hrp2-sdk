@@ -972,7 +972,7 @@ void runBlueStreet(){
     pos.street = BLUE_STREET;
     tslp_tsk(100);
     if (instructions.doSnow == 1) {
-        linePID_with_tasks(54, 25);
+        linePID_with_tasks(56, 25);
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 70, 20, true);
         a_motor_index++;
