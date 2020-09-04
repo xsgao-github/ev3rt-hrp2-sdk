@@ -1042,9 +1042,9 @@ void runBlueStreet(){
     ev3_motor_steer(left_motor, right_motor, 20, 10);
     tslp_tsk(1500);
     ev3_motor_steer(left_motor, right_motor, -20, 15);
-    tslp_tsk(1200);
+    tslp_tsk(1000);
     ev3_motor_steer(left_motor, right_motor, -20, -10);
-    tslp_tsk(500);
+    tslp_tsk(700);
     ev3_motor_steer(left_motor, right_motor, -20, 0);
     tslp_tsk(400);
     ev3_motor_steer(left_motor, right_motor, 10, 10);
@@ -1095,14 +1095,14 @@ void runGreenStreet(){
     pos.street = GREEN_STREET;
     tslp_tsk(100);
     if (instructions.doSnow == 1) {
-        linePID_with_tasks(23, 25);
+        linePID_with_tasks(24, 25);
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 80, 20, true);
         ev3_motor_rotate(left_motor, 160, 20, true);
         ev3_motor_rotate(right_motor, 80, 20, true);
         tslp_tsk(100);
         a_motor_index++;
-        linePID_with_tasks(23, 25);
+        linePID_with_tasks(22, 25);
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 70, 10, true);
         ev3_motor_rotate(left_motor, 100, 20, false);
@@ -1121,7 +1121,7 @@ void runGreenStreet(){
         ev3_motor_rotate(right_motor, 230, 20, true);
         tslp_tsk(100);
         a_task_running = 1;
-        linePID_with_tasks(35, 25);
+        linePID_with_tasks(32, 25);
     }
     else if (instructions.doCar == 1) {
         ev3_motor_set_power(a_motor, 50);
