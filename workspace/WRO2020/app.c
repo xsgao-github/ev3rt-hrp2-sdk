@@ -1632,6 +1632,9 @@ void runRedStreet(){
     }
     pos.street = YELLOW_STREET;
 }
+void goBackToBase(){
+    ev3_motor_steer(left_motor,right_motor,-30,0);
+}
 
 void readCode() {
     // define array & variable
@@ -2006,7 +2009,7 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
             bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
             assert(val);
-            if(rgb4.b > 60){
+            if(rgb4.b > 70){
                 ev3_speaker_play_tone(NOTE_C5,60);
                 carDetected[pos.street] = color_4_index + 1;
             }
