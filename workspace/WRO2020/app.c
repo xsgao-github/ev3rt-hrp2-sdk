@@ -1165,7 +1165,7 @@ void runGreenStreet(){
         tslp_tsk(150);
         ev3_motor_rotate(right_motor, 230, 20, true);
         tslp_tsk(100);
-        linePID_with_tasks(38, 30);
+        linePID_with_tasks(30, 30);
     }
     else {
         ev3_speaker_play_tone(NOTE_G6, -1);
