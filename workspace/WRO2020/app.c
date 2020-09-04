@@ -1267,7 +1267,7 @@ void runYellowStreet(){
                 tslp_tsk(500);
                 ev3_motor_steer(left_motor,right_motor,0,0);
                 ev3_motor_steer(left_motor,right_motor,20,45);
-                tslp_tsk(300);
+                tslp_tsk(350);
                 ev3_motor_steer(left_motor,right_motor,0,0);
                 ev3_motor_reset_counts(left_motor);
                 ev3_motor_reset_counts(right_motor);
@@ -1443,16 +1443,14 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,-30,0);
         tslp_tsk(300);
         ev3_motor_steer(left_motor,right_motor,0,0);
-        //turn amotor back and turn
-        ev3_motor_rotate(a_motor,250,-50,true);
-        ev3_motor_steer(left_motor,right_motor,-15,75);
-        ev3_motor_rotate(a_motor,100,-50,false);
-        tslp_tsk(1100);
-        ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back completely
         ev3_motor_set_power(a_motor,-50);
         tslp_tsk(700);
         ev3_motor_set_power(a_motor,0);
+        //turn
+        ev3_motor_steer(left_motor,right_motor,-15,75);
+        tslp_tsk(1100);
+        ev3_motor_steer(left_motor,right_motor,0,0);
         //back up
         ev3_motor_steer(left_motor,right_motor,-10,0);
         tslp_tsk(1000);
@@ -1509,7 +1507,8 @@ void runRedStreet(){
         color4PID(8,0,0);
     }
     //Side Length
-    color4PID(37,1,0);
+    color4PID(35,1,0);
+    ev3_speaker_play_tone(NOTE_A4,60);
     //detect line
     ev3_motor_steer(left_motor, right_motor, 15, 0);
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
