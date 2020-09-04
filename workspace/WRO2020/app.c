@@ -1039,11 +1039,11 @@ void runBlueStreet(){
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 20, 10);
-    tslp_tsk(1500);
+    tslp_tsk(1200);
     ev3_motor_steer(left_motor, right_motor, -20, 15);
-    tslp_tsk(1100);
+    tslp_tsk(1000);
     ev3_motor_steer(left_motor, right_motor, -20, -10);
-    tslp_tsk(500);
+    tslp_tsk(300);
     ev3_motor_steer(left_motor, right_motor, -20, 0);
     tslp_tsk(400);
     ev3_motor_steer(left_motor, right_motor, 10, 10);
@@ -1120,7 +1120,7 @@ void runGreenStreet(){
         ev3_motor_rotate(right_motor, 230, 20, true);
         tslp_tsk(100);
         a_task_running = 1;
-        linePID_with_tasks(39, 25);
+        linePID_with_tasks(35, 25);
     }
     else if (instructions.doCar == 1) {
         ev3_motor_set_power(a_motor, 50);
