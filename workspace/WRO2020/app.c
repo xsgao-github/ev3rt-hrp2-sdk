@@ -1645,10 +1645,10 @@ void goBackToBase(){
 void readCode() {
     // define array & variable
     int values[8] = {-1, -1, -1, -1, -1, -1, -1, -1};
-    rgb_raw_t rgb3;
+    colorid_t color3;
 
     // leave start
-    ///* old leavestart
+    ///* old leavestart but its the new one
     ev3_motor_reset_counts(EV3_PORT_B);
     ev3_motor_reset_counts(EV3_PORT_C);
     ev3_motor_steer(left_motor, right_motor, 30, 2);
@@ -1656,29 +1656,30 @@ void readCode() {
         display_sensors();
     }
 
-    // detect line
-    ev3_color_sensor_get_rgb_raw(color_3, &rgb3);
-    ev3_motor_steer(left_motor, right_motor, 10, 1);
-    while (rgb3.b > 100) {
-        tslp_tsk(3);
-        ev3_color_sensor_get_rgb_raw(color_3, &rgb3);
-    }
-    ev3_motor_steer(left_motor, right_motor, 0, 0);
-
     // stop d_motor
     ev3_motor_stop(d_motor, false);
 
+    // detect line
+    ev3_motor_steer(left_motor, right_motor, 10, 1);
+    while (ev3_color_sensor_get_color(color_3) == COLOR_WHITE) {
+        tslp_tsk(3);
+    }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+
     // write down road
-    if (rgb3.g < 100) {
+    if (ev3_color_sensor_get_color(color_3) == COLOR_RED) {
         pos.street = RED_STREET;
         ev3_speaker_play_tone(NOTE_G4, 40);
-    } else {
+    } else if (ev3_color_sensor_get_color(color_3) == COLOR_YELLOW) {
         pos.street = YELLOW_STREET;
         ev3_speaker_play_tone(NOTE_G5, 40);
+    } else {
+        pos.street = -1;
+        ev3_speaker_play_tone(NOTE_G6, -1);
     }
     tslp_tsk(100);
     //*/
-    /* new leavestart
+    /* new leavestartf but its now the old one
     float wheelDistance = 0;
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
