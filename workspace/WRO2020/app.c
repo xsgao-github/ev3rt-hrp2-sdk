@@ -1626,6 +1626,106 @@ void runRedStreet(){
     pos.street = YELLOW_STREET;
 }
 
+void readCode() {
+    // define array & variable
+    int values[8] = {-1, -1, -1, -1, -1, -1, -1, -1};
+    rgb_raw_t rgb3;
+
+    // leave start
+    ev3_motor_reset_counts(EV3_PORT_B);
+    ev3_motor_reset_counts(EV3_PORT_C);
+    ev3_motor_steer(left_motor, right_motor, 30, 2);
+    while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < 280) {
+        display_sensors();
+    }
+
+    // detect line
+    ev3_color_sensor_get_rgb_raw(color_3, &rgb3);
+    ev3_motor_steer(left_motor, right_motor, 10, 1);
+    while (rgb3.b > 100) {
+        tslp_tsk(3);
+        ev3_color_sensor_get_rgb_raw(color_3, &rgb3);
+    }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+
+    // stop d_motor
+    ev3_motor_stop(d_motor, false);
+
+    // write down road
+    if (rgb3.g < 100) {
+        pos.street = RED_STREET;
+        ev3_speaker_play_tone(NOTE_G4, 40);
+    } else {
+        pos.street = YELLOW_STREET;
+        ev3_speaker_play_tone(NOTE_G5, 40);
+    }
+    tslp_tsk(50);
+
+    ev3_motor_rotate(left_motor, 10, 10, false);
+    ev3_motor_rotate(right_motor, 10, 10, true);
+
+    tslp_tsk(50);
+
+    // record instructions
+    ev3_motor_reset_counts(EV3_PORT_B);
+    ev3_motor_reset_counts(EV3_PORT_C);
+    ev3_motor_steer(left_motor, right_motor, 10, 1);
+    int i;
+    for (i = 0; i < 8; i++) {
+        // read instructions
+        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < (i * 58)) {
+            display_sensors();
+        }
+        display_sensors();
+        if (((rgb4.r + rgb4.g + rgb4.b) / 3) > 40) {
+            values[i] = 1;
+            ev3_speaker_play_tone(NOTE_C5, 50);
+        } else {
+            values[i] = 0;
+            ev3_speaker_play_tone(NOTE_C4, 50);
+        }
+    }
+    i = 0;
+    while (i < 8) {
+    // decode instructions
+        if (values[i] == 1) {
+            if (values[i + 1] == 1) {
+                ev3_speaker_play_tone(NOTE_G6, -1);
+            } else {
+                tasks[i / 2][0] = BLACKMATERIAL;
+            }
+        } else {
+            if (values[i + 1] == 1) {
+                tasks[i / 2][0] = BLUEMATERIAL;
+            } else {
+                tasks[i / 2][0] = COLLECTSNOW;
+            }
+        }
+        i += 2;
+    }
+
+    // detect line
+    ev3_motor_steer(left_motor, right_motor, 10, 1);
+    while (ev3_color_sensor_get_reflect(color_3) > 20) {
+        display_sensors();
+    }
+    tslp_tsk(100);
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+    tslp_tsk(5);
+
+    // display things in a very medium font
+    char lcdstr[100];
+    sprintf(lcdstr, "%d, %d", tasks[BLUE_STREET][0], tasks[GREEN_STREET][0]);
+    ev3_lcd_draw_string(lcdstr, 0, 15);
+    sprintf(lcdstr, "%d, %d", tasks[YELLOW_STREET][0], tasks[RED_STREET][0]);
+    ev3_lcd_draw_string(lcdstr, 0, 30);
+    if (pos.street == RED_STREET) {
+        ev3_lcd_draw_string("RED_STREET", 0, 45);
+    } else if (pos.street == YELLOW_STREET) {
+        ev3_lcd_draw_string("YELLOW_STREET", 0, 45);
+    }
+}
+
 void readColorCode(){
     float wheelDistance = 0;
     ev3_motor_reset_counts(left_motor);
