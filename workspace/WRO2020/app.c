@@ -26,7 +26,6 @@ void runYellowStreet();
 void runRedStreet();
 void goBackToBase();
 void readCode();
-void readColorCode();
 void linePID_with_tasks(int distance, int speed);
 void color4PID(int distance,int tasksNumA,int tasksNumD);
 void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,int tasksNumD,int speed);
@@ -131,7 +130,7 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,40,-600
+                20,30,-600
             },
             //index 1
             {
@@ -227,7 +226,7 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,40,-600
+                20,30,-600
             },
             //index 1
             {
@@ -239,7 +238,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                20,30,-1200
+                10,20,-1200
             },
             //index 4
             {
