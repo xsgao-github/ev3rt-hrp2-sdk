@@ -476,11 +476,7 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    writeInstructions(0,0,0,0,0,0,0,0);
-    runYellowStreet();
-    writeInstructions(0,0,0,0,0,0,0,0);
-    runRedStreet();
-    //run2020();
+    run2020();
     goBackToBase();
 }
 
@@ -1217,7 +1213,7 @@ void runYellowStreet(){
             wall_follow_with_tasks(90,3,car,1,abrasive,25);
         }
         else{
-            wall_follow_with_tasks(85,3,car,1,abrasive,80);
+            wall_follow_with_tasks(85,3,car,1,abrasive,50);
         }
         if(instructions.doSnow){
             wall_follow_with_tasks(42,3,car,2,abrasive,10);
@@ -1377,7 +1373,7 @@ void runRedStreet(){
             wall_follow_with_tasks(130,3,car,3,abrasive,25);
         }
         else{
-            wall_follow_with_tasks(130,3,car,3,abrasive,80);
+            wall_follow_with_tasks(130,3,car,3,abrasive,50);
         }
     }
     else if(instructions.doCar == 1){
