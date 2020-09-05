@@ -1262,7 +1262,7 @@ void runYellowStreet(){
                 break;
             case 3:
                 ev3_motor_steer(left_motor,right_motor,25,3);
-                while(wheelDistance < 95){
+                while(wheelDistance < 94){
                     wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
                     tslp_tsk(1);
                 }
