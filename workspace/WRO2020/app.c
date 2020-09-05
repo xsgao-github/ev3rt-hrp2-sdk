@@ -1563,19 +1563,15 @@ void runRedStreet(){
     }
     ev3_motor_steer(left_motor,right_motor,0,0);
     if(instructions.uTurn){
-        waitforButton();
         ev3_motor_steer(left_motor,right_motor,15,90);
         tslp_tsk(1630);
         ev3_motor_steer(left_motor,right_motor,0,0);
-        waitforButton();
         ev3_motor_steer(left_motor,right_motor,30,0);
         tslp_tsk(2800);
         ev3_motor_steer(left_motor,right_motor,0,0);
-        waitforButton();
         ev3_motor_steer(left_motor,right_motor,-15,90);
         tslp_tsk(850);
         ev3_motor_steer(left_motor,right_motor,0,0);
-        waitforButton();
         //move amotor
         ev3_motor_set_power(a_motor,50);
         tslp_tsk(800);
