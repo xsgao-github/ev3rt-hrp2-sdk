@@ -476,11 +476,7 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    writeInstructions(0,0,0,0,0,0,0,0);
-    runYellowStreet();
-    writeInstructions(0,0,0,0,0,0,0,0);
-    runRedStreet();
-    //run2020();
+    run2020();
     goBackToBase();
 }
 
@@ -1725,7 +1721,16 @@ void goBackToBase(){
     ev3_speaker_set_volume(100);
     ev3_speaker_play_tone(NOTE_C5, 500);
     ev3_lcd_draw_string("Program Finished", 10, 60);
-    exit(0);
+    while (true) {
+        ev3_led_set_color(LED_GREEN);
+        tslp_tsk(250);
+        ev3_led_set_color(LED_ORANGE);
+        tslp_tsk(250);
+        ev3_led_set_color(LED_RED);
+        tslp_tsk(250);
+        ev3_led_set_color(LED_ORANGE);
+        tslp_tsk(250);
+    }
 }
 
 void readCode() {
