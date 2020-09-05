@@ -476,11 +476,7 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    writeInstructions(0,0,0,0,0,0,0,0);
-    runYellowStreet();
-    writeInstructions(0,0,0,0,0,0,0,0);
-    runRedStreet();
-    //run2020();
+    run2020();
     goBackToBase();
 }
 
