@@ -476,7 +476,11 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    run2020();
+    writeInstructions(0,0,0,0,0,0,0,0);
+    runYellowStreet();
+    writeInstructions(0,0,0,0,0,0,0,0);
+    runRedStreet();
+    //run2020();
     goBackToBase();
 }
 
@@ -1525,13 +1529,13 @@ void runRedStreet(){
     tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,30,-1);
-    tslp_tsk(750);
+    tslp_tsk(1500);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,30,45);
-    tslp_tsk(500);
+    tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,30,-45);
-    tslp_tsk(600);
+    tslp_tsk(1200);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //Side Length
     color4PID(35,1,0);
@@ -1682,7 +1686,7 @@ void runRedStreet(){
     }
     //move forward
     ev3_motor_steer(left_motor,right_motor,30,0);
-    tslp_tsk(225);
+    tslp_tsk(450);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //turn
     ev3_motor_steer(left_motor,right_motor,30,-45);
@@ -1721,16 +1725,7 @@ void goBackToBase(){
     ev3_speaker_set_volume(100);
     ev3_speaker_play_tone(NOTE_C5, 500);
     ev3_lcd_draw_string("Program Finished", 10, 60);
-    while (true) {
-        ev3_led_set_color(LED_GREEN);
-        tslp_tsk(250);
-        ev3_led_set_color(LED_ORANGE);
-        tslp_tsk(250);
-        ev3_led_set_color(LED_RED);
-        tslp_tsk(250);
-        ev3_led_set_color(LED_ORANGE);
-        tslp_tsk(250);
-    }
+    exit(0);
 }
 
 void readCode() {
