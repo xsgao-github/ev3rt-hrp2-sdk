@@ -1720,7 +1720,6 @@ void goBackToBase(){
     ev3_speaker_play_tone(NOTE_C5, 500);
     ev3_lcd_draw_string("Program  Stopped", 10, 60);
     exit(0);
-    break;
 }
 
 void readCode() {
