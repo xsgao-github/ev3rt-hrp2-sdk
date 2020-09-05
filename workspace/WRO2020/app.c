@@ -321,11 +321,11 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,40,-900
+                30,40,-1000
             },
             //index 1
             {
-                20,35,-900
+                20,35,-1000
             },
             //index 2
             {
@@ -1320,7 +1320,7 @@ void runYellowStreet(){
     ev3_motor_steer(left_motor,right_motor,0,0);
     //turn 2
     ev3_motor_steer(left_motor,right_motor,30,-45);
-    tslp_tsk(300);
+    tslp_tsk(200);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //Side Length
     if(instructions.doAbrasive){
@@ -1483,7 +1483,19 @@ void runRedStreet(){
         ev3_motor_set_power(a_motor,-50);
         tslp_tsk(700);
         ev3_motor_set_power(a_motor,0);
-        
+        //back up
+        ev3_motor_steer(left_motor,right_motor,-10,0);
+        tslp_tsk(1000);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_steer(left_motor,right_motor,10,-1);
+        tslp_tsk(1500);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_steer(left_motor,right_motor,10,45);
+        tslp_tsk(1000);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_steer(left_motor,right_motor,10,-45);
+        tslp_tsk(1200);
+        ev3_motor_steer(left_motor,right_motor,0,0);
     }
     else if(instructions.carDepot){
         //turn
@@ -1511,6 +1523,11 @@ void runRedStreet(){
             ev3_motor_set_power(a_motor,-80);
             tslp_tsk(500);
         }
+        //back up
+        ev3_motor_steer(left_motor,right_motor,-10,0);
+        tslp_tsk(2000);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        color4PID(15,0,0);
     }
     else if(!instructions.snowDepot && !instructions.carDepot){
         
@@ -1524,21 +1541,13 @@ void runRedStreet(){
         ev3_motor_set_power(a_motor,-80);
         tslp_tsk(700);
         ev3_motor_set_power(a_motor,0);
-        color4PID(8,0,0);
+        //back up
+        ev3_motor_steer(left_motor,right_motor,-10,0);
+        tslp_tsk(2000);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        color4PID(15,0,0);
     }
-    //back up
-    ev3_motor_steer(left_motor,right_motor,-10,0);
-    tslp_tsk(1000);
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,10,-1);
-    tslp_tsk(1500);
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,10,45);
-    tslp_tsk(1000);
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,10,-45);
-    tslp_tsk(1200);
-    ev3_motor_steer(left_motor,right_motor,0,0);
+    
     //Side Length
     color4PID(35,1,0);
     ev3_speaker_play_tone(NOTE_A4,60);
