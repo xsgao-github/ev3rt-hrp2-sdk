@@ -476,6 +476,8 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
+    writeInstructions(1,0,0,0,1,0,0,1);
+    runRedStreet();
     //run2020();
     goBackToBase();
 }
@@ -1563,7 +1565,7 @@ void runRedStreet(){
     if(instructions.uTurn){
         waitforButton();
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(1600);
+        tslp_tsk(1630);
         ev3_motor_steer(left_motor,right_motor,0,0);
         waitforButton();
         ev3_motor_steer(left_motor,right_motor,30,0);
