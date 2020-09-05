@@ -812,7 +812,7 @@ void run2020(){
                 runYellowStreet();
                 writeInstructions(1,0,0,1,0,0,0,0);
                 runGreenStreet();
-                writeInstructions(0,0,0,0,1,0,1,1);
+                writeInstructions(0,0,0,0,1,0,1,0);
                 runRedStreet();
                 writeInstructions(0,1,0,0,0,0,0,0);
                 runYellowStreet();
@@ -828,7 +828,7 @@ void run2020(){
                 runYellowStreet();
                 writeInstructions(1,0,0,1,0,0,0,0);
                 runGreenStreet();
-                writeInstructions(0,0,0,0,1,0,2,1);
+                writeInstructions(0,0,0,0,1,0,2,0);
                 runRedStreet();
                 writeInstructions(0,1,0,0,0,0,0,0);
                 runYellowStreet();
@@ -1303,6 +1303,10 @@ void runYellowStreet(){
                 ev3_motor_steer(left_motor,right_motor,0,0);
                 break;
         }
+        //move forward
+        ev3_motor_steer(left_motor,right_motor,30,5);
+        tslp_tsk(400);
+        ev3_motor_steer(left_motor,right_motor,0,0);
     }
     //move forward
     ev3_motor_steer(left_motor,right_motor,30,0);
@@ -1565,7 +1569,7 @@ void runRedStreet(){
         tslp_tsk(1630);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,30,0);
-        tslp_tsk(2800);
+        tslp_tsk(2500);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-15,90);
         tslp_tsk(850);
@@ -1607,7 +1611,7 @@ void runRedStreet(){
         tslp_tsk(1200);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //Side Length
-        color4PID(25,1,0);
+        color4PID(37,1,0);
         ev3_speaker_play_tone(NOTE_A4,60);
         //detect line
         ev3_motor_steer(left_motor, right_motor, 15, 0);
@@ -1965,7 +1969,7 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
         float error = (rgb4.r + rgb4.g + rgb4.b) / 3 - 40;
         displayValues(error,1,1,1);
         integral = error + integral * 0.5;
-        float steer = 0.5 * error + 0 * integral + 0.1 * (error - lasterror);
+        float steer = 0.5 * error + 0 * integral + 0.2 * (error - lasterror);
         ev3_motor_steer(left_motor, right_motor, 15, steer);
         lasterror = error;
     }
