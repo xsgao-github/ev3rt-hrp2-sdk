@@ -1693,9 +1693,29 @@ void runRedStreet(){
     }
     pos.street = YELLOW_STREET;
 }
+
 void goBackToBase(){
-    ev3_motor_steer(left_motor,right_motor,-30,0);
-    resetAbrasive();
+    ev3_motor_steer(left_motor,right_motor,-30,10);
+    ev3_motor_set_power(d_motor, -100);
+    tslp_tsk(500);
+    ev3_motor_steer(left_motor, right_motor, -30, -10);
+    tslp_tsk(500);
+    ev3_motor_steer(left_motor, right_motor, 10, 10);
+    tslp_tsk(500);
+    ev3_motor_steer(left_motor, right_motor, -30, 0);
+    tslp_tsk(1000);
+    ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
+    ev3_lcd_draw_string("Stopping Program", 10, 60);
+    ev3_motor_stop(left_motor, false);
+    ev3_motor_stop(right_motor, false);
+    ev3_motor_stop(a_motor, false);
+    ev3_motor_stop(d_motor, false);
+    ev3_led_set_color(LED_GREEN);
+    ev3_speaker_set_volume(100);
+    ev3_speaker_play_tone(NOTE_C5, 500);
+    ev3_lcd_draw_string("Program  Stopped", 10, 60);
+    exit(0);
+    break;
 }
 
 void readCode() {
@@ -2100,12 +2120,6 @@ void waitforButton(int time) {
         }
     }
     ev3_led_set_color(LED_GREEN);
-}
-
-void resetAbrasive(){
-    ev3_motor_set_power(d_motor, -100);
-    tslp_tsk(1500);
-    ev3_motor_stop(d_motor, false);
 }
 
 /**
