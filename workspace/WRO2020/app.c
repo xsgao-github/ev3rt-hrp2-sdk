@@ -31,7 +31,6 @@ void color4PID(int distance,int tasksNumA,int tasksNumD);
 void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,int tasksNumD,int speed);
 void execute_tasks(float distance);
 void waitforButton(int time);
-void resetAbrasive();
 void writeInstructions(int doSnow, int doCar, int doAbrasive, int detectCar, int snowDepot, int carDepot, int collectAbrasive, int uTurn);
 void init();
 void display_sensors();
