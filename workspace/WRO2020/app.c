@@ -476,14 +476,6 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    writeInstructions(1,0,0,1,1,0,0,0);
-    runRedStreet();
-    writeInstructions(1,0,0,1,0,0,0,0);
-    runYellowStreet();
-    writeInstructions(0,1,0,0,1,0,0,0);
-    runRedStreet();
-    writeInstructions(0,1,0,0,0,1,0,0);
-    runYellowStreet();
     //run2020();
     goBackToBase();
 }
@@ -1314,7 +1306,7 @@ void runYellowStreet(){
     }
     //move forward
     ev3_motor_steer(left_motor,right_motor,30,0);
-    tslp_tsk(400);
+    tslp_tsk(200);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //turn 1
     ev3_motor_steer(left_motor,right_motor,30,-45);
@@ -1737,7 +1729,7 @@ void runRedStreet(){
 void goBackToBase(){
     ev3_motor_steer(left_motor,right_motor,-30, 5);
     ev3_motor_set_power(d_motor, -100);
-    ev3_motor_set_power(a_motor, 100);
+    ev3_motor_set_power(a_motor, -100);
     tslp_tsk(1200);
     ev3_motor_stop(d_motor, false);
     ev3_motor_stop(a_motor, false);
@@ -1745,6 +1737,7 @@ void goBackToBase(){
     tslp_tsk(1200);
     ev3_motor_steer(left_motor, right_motor, 20, 5);
     tslp_tsk(1000);
+    ev3_motor_set_power(a_motor, 100);
     ev3_motor_steer(left_motor, right_motor, -30, 1);
     tslp_tsk(2000);
     ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
