@@ -476,19 +476,7 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    waitforButton();
-    back_loaded = 1;
-    writeInstructions(0,0,1,0,0,0,1,0);
-    runRedStreet();
-    writeInstructions(0,0,1,0,0,0,0,0);
-    runYellowStreet();
-    waitforButton();
-    writeInstructions(false, false, true, false, false, false, false, false);
-    runBlueStreet();
-    waitforButton();
-    readCode();
-    runGreenStreet();
-    //run2020();
+    run2020();
     goBackToBase();
 }
 
@@ -1752,49 +1740,24 @@ void goBackToBase(){
 void readCode() {
     // define array & variable
     int values[8] = {-1, -1, -1, -1, -1, -1, -1, -1};
-    colorid_t color3 = 6;
     int i;
 
-    // leave start
+    float wheelDistance = 0;
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
-    ev3_motor_steer(left_motor, right_motor, 30, 2);
-    while (abs(((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2)) < 280) {
-        display_sensors();
+    while(wheelDistance < 21){
+        ev3_motor_steer(left_motor,right_motor,30,5);
+        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
     }
-
-    // stop d_motor
-    ev3_motor_stop(d_motor, false);
-
-    // detect line
-    ev3_motor_steer(left_motor, right_motor, 10, 1);
-    while (color3 == COLOR_WHITE) {
-        color3 = ev3_color_sensor_get_color(color_3);
-        tslp_tsk(5);
-    }
-    ev3_motor_steer(left_motor, right_motor, 0, 0);
-
-    ///* old stuff
-    for (i = 0; i < 10; i++) {
-        color3 = ev3_color_sensor_get_color(color_3);
+    ev3_motor_steer(left_motor, right_motor, 7, 5);
+    colorid_t color3color = 6;
+    while(color3color == 6){
+        color3color = ev3_color_sensor_get_color(color_3);
         tslp_tsk(10);
     }
-
-    // write down road
-    if (color3 == COLOR_RED) {
-        pos.street = RED_STREET;
-        ev3_speaker_play_tone(NOTE_G4, 40);
-    } else if (color3 == COLOR_YELLOW) {
-        pos.street = YELLOW_STREET;
-        ev3_speaker_play_tone(NOTE_G5, 40);
-    } else {
-        pos.street = -1;
-        ev3_speaker_play_tone(NOTE_G6, -1);
-    }
-    //*/
-
-    /*
-    colorid_t color3color;
+    // stop d_motor
+    ev3_motor_stop(d_motor, false);
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
     int x = 0;
     while(x < 50){
         color3color = ev3_color_sensor_get_color(color_3);
@@ -1809,7 +1772,6 @@ void readCode() {
         pos.street = YELLOW_STREET;
         ev3_speaker_play_tone(NOTE_G5, 40);
     }
-    */
 
     tslp_tsk(100);
     // record instructions
