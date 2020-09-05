@@ -476,6 +476,12 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
+    writeInstructions(1,0,0,1,0,0,1,0);
+    runRedStreet();
+    writeInstructions(0,0,1,0,0,0,0,0);
+    runYellowStreet();
+    writeInstructions(0,1,0,0,0,0,0,0);
+    runRedStreet();
     waitforButton();
     writeInstructions(false, false, true, false, false, false, false, false);
     runBlueStreet();
@@ -1966,7 +1972,7 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
         displayValues(error,1,1,1);
         integral = error + integral * 0.5;
         float steer = 0.5 * error + 0 * integral + 0.1 * (error - lasterror);
-        ev3_motor_steer(left_motor, right_motor, 30, steer);
+        ev3_motor_steer(left_motor, right_motor, 15, steer);
         lasterror = error;
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
