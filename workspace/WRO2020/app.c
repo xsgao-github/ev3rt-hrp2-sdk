@@ -390,7 +390,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 1
             {
-                65,89,200
+                60,89,200
             },
             //index 2
             {
@@ -1385,7 +1385,8 @@ void runRedStreet(){
             wall_follow_with_tasks(130,3,car,3,abrasive,25);
         }
         else{
-            wall_follow_with_tasks(130,3,car,3,abrasive,50);
+            a_motor_index = 1;
+            wall_follow_with_tasks(130,3,car,1,abrasive,50);
         }
     }
     else if(instructions.doCar == 1){
@@ -1558,6 +1559,7 @@ void runRedStreet(){
     if(instructions.doAbrasive){
         abrasive = 1;
     }
+    a_motor_index = 3;
     //Side Length
     color4PID(37,1,abrasive);
     ev3_speaker_play_tone(NOTE_A4,60);
