@@ -1770,6 +1770,9 @@ void readCode() {
     int values[8] = {-1, -1, -1, -1, -1, -1, -1, -1};
     int i;
 
+    //leave start
+
+    //readColorCode start
     float wheelDistance = 0;
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
@@ -1781,7 +1784,7 @@ void readCode() {
     colorid_t color3color = 6;
     while(color3color == 6){
         color3color = ev3_color_sensor_get_color(color_3);
-        tslp_tsk(1);
+        tslp_tsk(10);
     }
     // stop d_motor
     ev3_motor_stop(d_motor, false);
@@ -1790,7 +1793,7 @@ void readCode() {
     while(x < 50){
         color3color = ev3_color_sensor_get_color(color_3);
         x += 1;
-        tslp_tsk(1);
+        tslp_tsk(10);
     }
     if(color3color == 5){
         pos.street = RED_STREET;
@@ -1800,6 +1803,10 @@ void readCode() {
         pos.street = YELLOW_STREET;
         ev3_speaker_play_tone(NOTE_G5, 40);
     }
+
+    //ok back to readCode
+    ev3_motor_rotate(left_motor, 15, 10, false);
+    ev3_motor_rotate(right_motor, 15, 10, true);
 
     tslp_tsk(100);
     // record instructions
