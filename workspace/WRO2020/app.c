@@ -1428,7 +1428,7 @@ void runRedStreet(){
                 ev3_motor_set_power(a_motor,80);
                 ev3_motor_steer(left_motor,right_motor,25,3);
                 while(wheelDistance < 130){
-                    if(wheelDistance > 80 && taskIndex == 0){
+                    if(wheelDistance > 100 && taskIndex == 0){
                         ev3_motor_set_power(a_motor,-80);
                         taskIndex = 1;
                     }
