@@ -1529,13 +1529,13 @@ void runRedStreet(){
     tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,30,-1);
-    tslp_tsk(1500);
+    tslp_tsk(750);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,30,45);
-    tslp_tsk(1000);
+    tslp_tsk(500);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,30,-45);
-    tslp_tsk(1200);
+    tslp_tsk(600);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //Side Length
     color4PID(35,1,0);
@@ -1686,7 +1686,7 @@ void runRedStreet(){
     }
     //move forward
     ev3_motor_steer(left_motor,right_motor,30,0);
-    tslp_tsk(450);
+    tslp_tsk(225);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //turn
     ev3_motor_steer(left_motor,right_motor,30,-45);
