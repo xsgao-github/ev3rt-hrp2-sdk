@@ -131,19 +131,19 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                1000,0,-600 // 30
+                30,40,-600
             },
             //index 1
             {
-                1000,0,-900 // 80
+                70,80,-900
             },
             //index 2
             {
-                1000,0,-1200 // 30
+                1000,0,0 // spacer
             },
             //index 3
             {
-                1000,0,0
+                20,30,-1200
             },
             //index 4
             {
@@ -227,19 +227,19 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,0,-600
+                30,40,-600
             },
             //index 1
             {
-                80,0,-900
+                70,80,-900
             },
             //index 2
             {
-                30,0,-1200
+                1000,0,0 // spacer
             },
             //index 3
             {
-                1000,0,0
+                20,30,-1200
             },
             //index 4
             {
@@ -1025,6 +1025,7 @@ void runBlueStreet(){
         tslp_tsk(200);
         ev3_motor_rotate(right_motor, 230, 20, true);
         tslp_tsk(100);
+        d_motor_index++;
         linePID_with_tasks(35, 30);
     } else {
         ev3_speaker_play_tone(NOTE_G6, -1);
@@ -1169,6 +1170,7 @@ void runGreenStreet(){
         tslp_tsk(150);
         ev3_motor_rotate(right_motor, 230, 20, true);
         tslp_tsk(100);
+        d_motor_index++;
         linePID_with_tasks(30, 30);
     }
     else {
