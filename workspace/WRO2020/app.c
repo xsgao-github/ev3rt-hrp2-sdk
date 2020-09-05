@@ -398,7 +398,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                0,7,500
+                0,7,400
             },
             //index 4
             {
@@ -1220,10 +1220,10 @@ void runYellowStreet(){
             wall_follow_with_tasks(85,3,car,1,abrasive,80);
         }
         if(instructions.doSnow){
-            wall_follow_with_tasks(42,3,car,2,abrasive,30);
+            wall_follow_with_tasks(42,3,car,2,abrasive,10);
         }
         else{
-            wall_follow_with_tasks(42,3,car,2,abrasive,10);
+            wall_follow_with_tasks(42,3,car,2,abrasive,30);
         }
     }
     else if(instructions.doCar == 1){
