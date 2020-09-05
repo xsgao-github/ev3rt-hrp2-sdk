@@ -934,7 +934,6 @@ void runBlueStreet(){
     ev3_motor_steer(left_motor, right_motor, 40, 1);
     wall_follow_with_tasks(77, 1, 1, 2, 0, 30);
     ev3_motor_set_power(a_motor, -50);
-    tslp_tsk(100);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, -20, 0);
@@ -942,9 +941,7 @@ void runBlueStreet(){
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    tslp_tsk(100);
     ev3_motor_rotate(right_motor, 340, 30, true);
-    tslp_tsk(100);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 20, 0);
@@ -959,7 +956,6 @@ void runBlueStreet(){
     tslp_tsk(100);
     if (instructions.doSnow == 1) {
         linePID_with_tasks(60, 25);
-        tslp_tsk(100);
         ev3_motor_rotate(right_motor, 70, 20, true);
         a_motor_index++;
         ev3_motor_reset_counts(left_motor);
@@ -969,7 +965,6 @@ void runBlueStreet(){
             execute_tasks((((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360)));
         }
         ev3_motor_steer(left_motor, right_motor, 0, 0);
-        tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
         while (ev3_color_sensor_get_reflect(color_2) > 20) {
             display_sensors();
@@ -980,14 +975,12 @@ void runBlueStreet(){
         tslp_tsk(250);
         ev3_motor_rotate(right_motor, 240, 20, true);
         ev3_motor_rotate(a_motor, 500, 80, true);
-        tslp_tsk(100);
         linePID_with_tasks(32, 25);
         ev3_motor_set_power(a_motor, -50);
     } else if (instructions.doCar == 1) {
         ev3_motor_set_power(a_motor, 50);
         linePID_with_tasks(84, 30);
         ev3_motor_set_power(a_motor, -50);
-        tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
         while (ev3_color_sensor_get_reflect(color_2) > 20) {
             display_sensors();
@@ -997,7 +990,6 @@ void runBlueStreet(){
         tslp_tsk(200);
         ev3_motor_rotate(right_motor, 230, 20, true);
         ev3_motor_stop(a_motor, false);
-        tslp_tsk(100);
         ev3_motor_rotate(right_motor, 80, 20, true);
         ev3_motor_rotate(left_motor, 75, 20, true);
         ev3_motor_reset_counts(left_motor);
@@ -1009,9 +1001,7 @@ void runBlueStreet(){
         ev3_motor_steer(left_motor, right_motor, 0, 0);
         ev3_motor_rotate(left_motor, 80, 20, true);
         ev3_motor_rotate(right_motor, 75, 20, true);
-        tslp_tsk(100);
         linePID_with_tasks(18, 20);
-        tslp_tsk(100);
     } else if (instructions.doAbrasive == 1) {
         linePID_with_tasks(80, 30);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
@@ -1022,7 +1012,6 @@ void runBlueStreet(){
         ev3_motor_steer(left_motor, right_motor, -10, 0);
         tslp_tsk(200);
         ev3_motor_rotate(right_motor, 230, 20, true);
-        tslp_tsk(100);
         d_motor_index++;
         linePID_with_tasks(35, 30);
     } else {
@@ -1032,11 +1021,9 @@ void runBlueStreet(){
     ev3_motor_rotate(left_motor, 140, 20, false);
     ev3_motor_rotate(right_motor, 140, 20, true);
     ev3_motor_stop(a_motor, false);
-    tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 30, -40);
     tslp_tsk(800);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 20, 10);
     tslp_tsk(1500);
     ev3_motor_steer(left_motor, right_motor, -20, 15);
@@ -1070,7 +1057,6 @@ void runGreenStreet(){
     //}
     //ev3_motor_steer(left_motor, right_motor, 0, 0);
     wall_follow_with_tasks(54, 1, 1, 2, 0, 30);
-    tslp_tsk(100);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, -20, 0);
@@ -1078,9 +1064,7 @@ void runGreenStreet(){
         display_sensors();
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
-    tslp_tsk(100);
     ev3_motor_rotate(right_motor, 340, 30, true);
-    tslp_tsk(100);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 20, 0);
@@ -1091,26 +1075,19 @@ void runGreenStreet(){
     a_motor_index = 0;
     d_motor_index = 0;
     pos.street = GREEN_STREET;
-    tslp_tsk(100);
     if (instructions.doSnow == 1) {
         linePID_with_tasks(25, 25);
-        tslp_tsk(100);
         ev3_motor_rotate(right_motor, 80, 20, true);
         ev3_motor_rotate(left_motor, 160, 20, true);
         ev3_motor_rotate(right_motor, 80, 20, true);
-        tslp_tsk(100);
         a_motor_index++;
         linePID_with_tasks(22, 25);
-        tslp_tsk(100);
         ev3_motor_rotate(right_motor, 70, 10, true);
         ev3_motor_rotate(left_motor, 100, 20, false);
         ev3_motor_rotate(right_motor, 100, 20, true);
         ev3_motor_rotate(right_motor, 35, 10, true);
         ev3_motor_rotate(left_motor, 175, 20, false);
         ev3_motor_rotate(right_motor, 175, 20, true);
-        tslp_tsk(100);
-        //linePID_with_tasks(20, 25);
-        tslp_tsk(100);
         ev3_motor_rotate(a_motor, 300, 80, false);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
         while (ev3_color_sensor_get_reflect(color_2) > 20) {
@@ -1120,7 +1097,6 @@ void runGreenStreet(){
         ev3_motor_steer(left_motor, right_motor, -10, 0);
         tslp_tsk(150);
         ev3_motor_rotate(right_motor, 230, 20, true);
-        tslp_tsk(100);
         a_task_running = 1;
         linePID_with_tasks(25, 25);
     }
@@ -1128,7 +1104,6 @@ void runGreenStreet(){
         ev3_motor_set_power(a_motor, 50);
         linePID_with_tasks(84, 30);
         ev3_motor_set_power(a_motor, -50);
-        tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
         while (ev3_color_sensor_get_reflect(color_2) > 20) {
             display_sensors();
@@ -1138,7 +1113,6 @@ void runGreenStreet(){
         tslp_tsk(200);
         ev3_motor_rotate(right_motor, 230, 20, true);
         ev3_motor_stop(a_motor, false);
-        tslp_tsk(100);
         ev3_motor_rotate(left_motor, 80, 10, false);
         ev3_motor_rotate(right_motor, 80, 10, true);
         ev3_motor_rotate(right_motor, 90, 20, true);
@@ -1152,13 +1126,10 @@ void runGreenStreet(){
         ev3_motor_steer(left_motor, right_motor, 0, 0);
         ev3_motor_rotate(left_motor, 90, 20, true);
         ev3_motor_rotate(right_motor, 85, 20, true);
-        tslp_tsk(100);
         linePID_with_tasks(12, 20);
-        tslp_tsk(100);
     }
     else if (instructions.doAbrasive == 1) {
         linePID_with_tasks(84, 30);
-        tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
         while (ev3_color_sensor_get_reflect(color_2) > 20) {
             display_sensors();
@@ -1167,7 +1138,6 @@ void runGreenStreet(){
         ev3_motor_steer(left_motor, right_motor, -10, 0);
         tslp_tsk(150);
         ev3_motor_rotate(right_motor, 230, 20, true);
-        tslp_tsk(100);
         d_motor_index++;
         linePID_with_tasks(30, 30);
     }
@@ -1187,7 +1157,6 @@ void runGreenStreet(){
     while (ev3_color_sensor_get_reflect(color_3) > 20) {
         display_sensors();
     }
-    tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     if(carDetected[pos.street] == -1){
         carDetected[pos.street] = 3;
