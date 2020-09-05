@@ -321,15 +321,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,40,-1000
+                10,40,-900
             },
             //index 1
             {
-                20,35,-1000
+                20,45,-900
             },
             //index 2
             {
-                5,25,-1300
+                5,35,-1200
             },
             //index 3
             {
@@ -1316,6 +1316,10 @@ void runYellowStreet(){
                 break;
         }
     }
+    //move forward
+    ev3_motor_steer(left_motor,right_motor,30,0);
+    tslp_tsk(400);
+    ev3_motor_steer(left_motor,right_motor,0,0);
     //turn 1
     ev3_motor_steer(left_motor,right_motor,30,-45);
     tslp_tsk(600);
