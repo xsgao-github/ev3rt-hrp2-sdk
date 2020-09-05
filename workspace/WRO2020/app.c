@@ -1217,7 +1217,7 @@ void runYellowStreet(){
             wall_follow_with_tasks(90,3,car,1,abrasive,25);
         }
         else{
-            wall_follow_with_tasks(90,3,car,1,abrasive,80);
+            wall_follow_with_tasks(85,3,car,1,abrasive,80);
         }
         if(instructions.doSnow){
             wall_follow_with_tasks(42,3,car,2,abrasive,30);
@@ -1528,13 +1528,13 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,-10,0);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,10,-1);
+    ev3_motor_steer(left_motor,right_motor,30,-1);
     tslp_tsk(1500);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,10,45);
+    ev3_motor_steer(left_motor,right_motor,30,45);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,10,-45);
+    ev3_motor_steer(left_motor,right_motor,30,-45);
     tslp_tsk(1200);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //Side Length
@@ -1954,8 +1954,8 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
         float error = (rgb4.r + rgb4.g + rgb4.b) / 3 - 40;
         displayValues(error,1,1,1);
         integral = error + integral * 0.5;
-        float steer = 0.3 * error + 0 * integral + 0.1 * (error - lasterror);
-        ev3_motor_steer(left_motor, right_motor, 15, steer);
+        float steer = 0.5 * error + 0 * integral + 0.1 * (error - lasterror);
+        ev3_motor_steer(left_motor, right_motor, 30, steer);
         lasterror = error;
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
