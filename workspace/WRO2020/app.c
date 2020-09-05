@@ -1709,7 +1709,7 @@ void runRedStreet(){
 
 void goBackToBase(int fromBlueStreet){
     if (fromBlueStreet) {
-        ev3_motor_steer(left_motor,right_motor,-30, 10);
+        ev3_motor_steer(left_motor,right_motor,-30, 5);
         ev3_motor_set_power(d_motor, -100);
         ev3_motor_set_power(a_motor, -100);
         tslp_tsk(1200);
@@ -1729,7 +1729,7 @@ void goBackToBase(int fromBlueStreet){
         tslp_tsk(1200);
         ev3_motor_stop(d_motor, false);
         ev3_motor_stop(a_motor, false);
-        ev3_motor_steer(left_motor, right_motor, -30, 3);
+        ev3_motor_steer(left_motor, right_motor, -30, 5);
         tslp_tsk(1200);
         ev3_motor_steer(left_motor, right_motor, 20, -1);
         tslp_tsk(1000);
