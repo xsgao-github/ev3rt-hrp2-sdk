@@ -1314,7 +1314,7 @@ void runYellowStreet(){
     ev3_motor_steer(left_motor,right_motor,0,0);
     //move forward
     ev3_motor_steer(left_motor,right_motor,30,0);
-    tslp_tsk(1000);
+    tslp_tsk(800);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //turn 2
     ev3_motor_steer(left_motor,right_motor,30,-45);
