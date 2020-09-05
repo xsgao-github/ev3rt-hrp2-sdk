@@ -323,7 +323,7 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,40,-600
+                30,40,-900
             },
             //index 1
             {
@@ -564,7 +564,7 @@ void run2020(){
                 runBlueStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
-                writeInstructions(0,0,0,0,0,1,0,0);
+                writeInstructions(0,1,0,0,0,1,0,0);
                 runRedStreet();
             }
             else if(tasks[GREEN_STREET][0] == 1){
@@ -582,7 +582,7 @@ void run2020(){
                 runBlueStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
-                writeInstructions(0,0,0,0,0,1,0,0);
+                writeInstructions(0,1,0,0,0,1,0,0);
                 runRedStreet();
             }
         }
