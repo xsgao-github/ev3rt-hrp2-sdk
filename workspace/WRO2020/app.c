@@ -1696,6 +1696,7 @@ void runRedStreet(){
 }
 void goBackToBase(){
     ev3_motor_steer(left_motor,right_motor,-30,0);
+    resetAbrasive();
 }
 
 void readCode() {
