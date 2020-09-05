@@ -1178,9 +1178,9 @@ void runGreenStreet(){
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     ev3_motor_rotate(left_motor, 180, 20, false);
     ev3_motor_rotate(right_motor, 180, 20, true);
-    tslp_tsk(250);
+    tslp_tsk(100);
     ev3_motor_rotate(right_motor, 210, 20, true);
-    tslp_tsk(250);
+    tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 20, 3);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor, right_motor, 10, 1);
