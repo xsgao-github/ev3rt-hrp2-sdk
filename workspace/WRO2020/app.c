@@ -1318,7 +1318,7 @@ void runYellowStreet(){
     ev3_motor_steer(left_motor,right_motor,0,0);
     //turn 2
     ev3_motor_steer(left_motor,right_motor,30,-45);
-    tslp_tsk(400);
+    tslp_tsk(300);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //Side Length
     if(instructions.doAbrasive){
