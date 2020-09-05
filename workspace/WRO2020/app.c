@@ -1594,7 +1594,6 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,0,0);
         //Side Length
         color4PID(35,1,0);
-        ev3_speaker_play_tone(NOTE_A4,60);
         //detect line
         ev3_motor_steer(left_motor, right_motor, 15, 0);
         while (ev3_color_sensor_get_reflect(color_3) > 25) {
