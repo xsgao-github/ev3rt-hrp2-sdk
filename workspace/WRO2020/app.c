@@ -30,7 +30,7 @@ void linePID_with_tasks(int distance, int speed);
 void color4PID(int distance,int tasksNumA,int tasksNumD);
 void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,int tasksNumD,int speed);
 void execute_tasks(float distance);
-void waitforButton(int time);
+void waitforButton();
 void writeInstructions(int doSnow, int doCar, int doAbrasive, int detectCar, int snowDepot, int carDepot, int collectAbrasive, int uTurn);
 void init();
 void display_sensors();
@@ -476,7 +476,13 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    run2020();
+    waitforButton();
+    writeInstructions(false, false, true, false, false, false, false, false);
+    runBlueStreet();
+    waitforButton();
+    readCode();
+    runGreenStreet();
+    //run2020();
     goBackToBase();
 }
 
@@ -1542,19 +1548,19 @@ void runRedStreet(){
     }
     ev3_motor_steer(left_motor,right_motor,0,0);
     if(instructions.uTurn){
-        waitforButton(0);
+        waitforButton();
         ev3_motor_steer(left_motor,right_motor,15,90);
         tslp_tsk(1600);
         ev3_motor_steer(left_motor,right_motor,0,0);
-        waitforButton(0);
+        waitforButton();
         ev3_motor_steer(left_motor,right_motor,30,0);
         tslp_tsk(2800);
         ev3_motor_steer(left_motor,right_motor,0,0);
-        waitforButton(0);
+        waitforButton();
         ev3_motor_steer(left_motor,right_motor,-15,90);
         tslp_tsk(850);
         ev3_motor_steer(left_motor,right_motor,0,0);
-        waitforButton(0);
+        waitforButton();
         //move amotor
         ev3_motor_set_power(a_motor,50);
         tslp_tsk(800);
@@ -2112,13 +2118,8 @@ void execute_tasks(float distance) {
     }
 }
 
-/**
- * \brief waits for center button press
- * \param time amount of time for button to be activated (ms)
-**/
-void waitforButton(int time) {
+void waitforButton() {
     ev3_led_set_color(LED_OFF);
-    tslp_tsk(time);
     while (1) {
         if (ev3_button_is_pressed(ENTER_BUTTON)) {
             while (ev3_button_is_pressed(ENTER_BUTTON));
