@@ -321,7 +321,7 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                10,40,-900
+                10,40,-600
             },
             //index 1
             {
@@ -417,15 +417,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                1000,0,0
+                5,40,-600
             },
             //index 1
             {
-                1000,0,0
+                80,120,-900
             },
             //index 2
             {
-                1000,0,0
+                5,30,-1200
             },
             //index 3
             {
@@ -476,12 +476,12 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    writeInstructions(1,0,0,1,0,0,1,0);
+    waitforButton();
+    back_loaded = 1;
+    writeInstructions(0,0,1,0,0,0,1,0);
     runRedStreet();
     writeInstructions(0,0,1,0,0,0,0,0);
     runYellowStreet();
-    writeInstructions(0,1,0,0,0,0,0,0);
-    runRedStreet();
     waitforButton();
     writeInstructions(false, false, true, false, false, false, false, false);
     runBlueStreet();
