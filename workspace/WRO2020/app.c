@@ -1213,7 +1213,7 @@ void runYellowStreet(){
             wall_follow_with_tasks(90,3,car,1,abrasive,25);
         }
         else{
-            wall_follow_with_tasks(85,3,car,1,abrasive,80);
+            wall_follow_with_tasks(85,3,car,1,abrasive,50);
         }
         if(instructions.doSnow){
             wall_follow_with_tasks(42,3,car,2,abrasive,10);
@@ -1314,7 +1314,7 @@ void runYellowStreet(){
     ev3_motor_steer(left_motor,right_motor,0,0);
     //turn 2
     ev3_motor_steer(left_motor,right_motor,30,-45);
-    tslp_tsk(400);
+    tslp_tsk(300);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //Side Length
     if(instructions.doAbrasive){
@@ -1373,7 +1373,7 @@ void runRedStreet(){
             wall_follow_with_tasks(130,3,car,3,abrasive,25);
         }
         else{
-            wall_follow_with_tasks(130,3,car,3,abrasive,80);
+            wall_follow_with_tasks(130,3,car,3,abrasive,50);
         }
     }
     else if(instructions.doCar == 1){
