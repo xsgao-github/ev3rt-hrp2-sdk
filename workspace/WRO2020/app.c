@@ -1213,7 +1213,7 @@ void runYellowStreet(){
             wall_follow_with_tasks(90,3,car,1,abrasive,25);
         }
         else{
-            wall_follow_with_tasks(90,3,car,1,abrasive,40);
+            wall_follow_with_tasks(90,3,car,1,abrasive,80);
         }
         if(instructions.doSnow){
             wall_follow_with_tasks(42,3,car,2,abrasive,30);
@@ -1314,7 +1314,7 @@ void runYellowStreet(){
     ev3_motor_steer(left_motor,right_motor,0,0);
     //turn 2
     ev3_motor_steer(left_motor,right_motor,30,-45);
-    tslp_tsk(300);
+    tslp_tsk(400);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //Side Length
     if(instructions.doAbrasive){
@@ -1373,7 +1373,7 @@ void runRedStreet(){
             wall_follow_with_tasks(130,3,car,3,abrasive,25);
         }
         else{
-            wall_follow_with_tasks(130,3,car,3,abrasive,40);
+            wall_follow_with_tasks(130,3,car,3,abrasive,80);
         }
     }
     else if(instructions.doCar == 1){
@@ -1432,7 +1432,7 @@ void runRedStreet(){
                 ev3_motor_reset_counts(left_motor);
                 ev3_motor_reset_counts(right_motor);
                 ev3_motor_steer(left_motor,right_motor,20,-45);
-                tslp_tsk(500);
+                tslp_tsk(400);
                 ev3_motor_steer(left_motor,right_motor,0,0);
                 ev3_motor_steer(left_motor,right_motor,20,45);
                 tslp_tsk(300);
@@ -1477,19 +1477,7 @@ void runRedStreet(){
         ev3_motor_set_power(a_motor,-50);
         tslp_tsk(700);
         ev3_motor_set_power(a_motor,0);
-        //back up
-        ev3_motor_steer(left_motor,right_motor,-10,0);
-        tslp_tsk(1000);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        ev3_motor_steer(left_motor,right_motor,10,-1);
-        tslp_tsk(1500);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        ev3_motor_steer(left_motor,right_motor,10,45);
-        tslp_tsk(1000);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        ev3_motor_steer(left_motor,right_motor,10,-45);
-        tslp_tsk(1200);
-        ev3_motor_steer(left_motor,right_motor,0,0);
+        
     }
     else if(instructions.carDepot){
         //turn
@@ -1532,8 +1520,21 @@ void runRedStreet(){
         ev3_motor_set_power(a_motor,0);
         color4PID(8,0,0);
     }
+    //back up
+    ev3_motor_steer(left_motor,right_motor,-10,0);
+    tslp_tsk(1000);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,10,-1);
+    tslp_tsk(1500);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,10,45);
+    tslp_tsk(1000);
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor,right_motor,10,-45);
+    tslp_tsk(1200);
+    ev3_motor_steer(left_motor,right_motor,0,0);
     //Side Length
-    color4PID(25,1,0);
+    color4PID(35,1,0);
     ev3_speaker_play_tone(NOTE_A4,60);
     //detect line
     ev3_motor_steer(left_motor, right_motor, 15, 0);
@@ -1624,10 +1625,7 @@ void runRedStreet(){
         tslp_tsk(400);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,10,0);
-        tslp_tsk(500);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        ev3_motor_steer(left_motor,right_motor,20,0);
-        tslp_tsk(500);
+        tslp_tsk(1500);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
         tslp_tsk(830);
