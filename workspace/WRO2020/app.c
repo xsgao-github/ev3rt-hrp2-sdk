@@ -476,13 +476,13 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    writeInstructions(1,0,0,1,1,0,1,0);
+    writeInstructions(1,0,0,1,1,0,0,0);
     runRedStreet();
     writeInstructions(1,0,0,1,0,0,0,0);
     runYellowStreet();
-    writeInstructions(0,0,1,0,1,0,2,0);
+    writeInstructions(0,1,0,0,1,0,0,0);
     runRedStreet();
-    writeInstructions(0,0,1,0,0,0,0,0);
+    writeInstructions(0,1,0,0,0,1,0,0);
     runYellowStreet();
     //run2020();
     goBackToBase();
@@ -1636,7 +1636,7 @@ void runRedStreet(){
         tslp_tsk(850);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
-        tslp_tsk(1500);
+        tslp_tsk(1600);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-5,0);
         tslp_tsk(400);
@@ -1652,7 +1652,7 @@ void runRedStreet(){
         tslp_tsk(400);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,10,0);
-        tslp_tsk(1500);
+        tslp_tsk(1600);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
         tslp_tsk(830);
@@ -1676,7 +1676,7 @@ void runRedStreet(){
         tslp_tsk(850);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
-        tslp_tsk(1500);
+        tslp_tsk(1600);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-5,0);
         tslp_tsk(400);
@@ -1692,7 +1692,7 @@ void runRedStreet(){
         tslp_tsk(400);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,10,0);
-        tslp_tsk(1500);
+        tslp_tsk(1600);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
         tslp_tsk(830);
