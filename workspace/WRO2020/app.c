@@ -24,7 +24,7 @@ void runBlueStreet();
 void runGreenStreet();
 void runYellowStreet();
 void runRedStreet();
-void goBackToBase();
+void goBackToBase(int fromBlueStreet);
 void readCode();
 void linePID_with_tasks(int distance, int speed);
 void color4PID(int distance,int tasksNumA,int tasksNumD);
@@ -477,7 +477,7 @@ void main_task(intptr_t unused) {
     init();
     readCode();
     run2020();
-    goBackToBase();
+    goBackToBase(false);
 }
 
 void run2020(){
@@ -1153,7 +1153,7 @@ void runGreenStreet(){
         ev3_motor_rotate(left_motor, 90, 20, true);
         ev3_motor_rotate(right_motor, 85, 20, true);
         tslp_tsk(100);
-        linePID_with_tasks(10, 20);
+        linePID_with_tasks(12, 20);
         tslp_tsk(100);
     }
     else if (instructions.doAbrasive == 1) {
@@ -1781,11 +1781,11 @@ void readCode() {
         ev3_motor_steer(left_motor,right_motor,30,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
     }
-    ev3_motor_steer(left_motor, right_motor, 7, 5);
+    ev3_motor_steer(left_motor, right_motor, 5, 5);
     colorid_t color3color = 6;
     while(color3color == 6){
         color3color = ev3_color_sensor_get_color(color_3);
-        tslp_tsk(10);
+        tslp_tsk(1);
     }
     // stop d_motor
     ev3_motor_stop(d_motor, false);
@@ -1794,7 +1794,7 @@ void readCode() {
     while(x < 50){
         color3color = ev3_color_sensor_get_color(color_3);
         x += 1;
-        tslp_tsk(10);
+        tslp_tsk(1);
     }
     if(color3color == 5){
         pos.street = RED_STREET;
@@ -2143,7 +2143,7 @@ void waitforButton() {
 }
 
 /**
- * \brief literally writes parameters... Why don't we just use normal parameters instead of a struct? There are a few...
+ * \brief literally writes parameters
  * \param doSnow robot collects snow on street if true
  * \param doCar robot collects cars on street if true
  * \param doAbrasive robot dispensive abrasive material on street if true
