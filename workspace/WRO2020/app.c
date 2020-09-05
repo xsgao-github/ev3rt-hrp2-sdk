@@ -1709,12 +1709,12 @@ void goBackToBase(){
     ev3_motor_steer(left_motor,right_motor,-30, 5);
     ev3_motor_set_power(d_motor, -100);
     ev3_motor_set_power(a_motor, 100);
-    tslp_tsk(1500);
+    tslp_tsk(1200);
     ev3_motor_stop(d_motor, false);
     ev3_motor_stop(a_motor, false);
     ev3_motor_steer(left_motor, right_motor, -30, -5);
-    tslp_tsk(1000);
-    ev3_motor_steer(left_motor, right_motor, 10, 5);
+    tslp_tsk(1200);
+    ev3_motor_steer(left_motor, right_motor, 20, 5);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor, right_motor, -30, 1);
     tslp_tsk(2000);
