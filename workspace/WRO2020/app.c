@@ -327,11 +327,11 @@ int allTasks[4][3][7][3] = {
             },
             //index 1
             {
-                10,25,-900
+                20,35,-900
             },
             //index 2
             {
-                5,25,-1200
+                5,25,-1300
             },
             //index 3
             {
@@ -1217,7 +1217,12 @@ void runYellowStreet(){
         else{
             wall_follow_with_tasks(90,3,car,1,abrasive,40);
         }
-        wall_follow_with_tasks(42,3,car,2,abrasive,10);
+        if(instructions.doSnow){
+            wall_follow_with_tasks(42,3,car,2,abrasive,30);
+        }
+        else{
+            wall_follow_with_tasks(42,3,car,2,abrasive,10);
+        }
     }
     else if(instructions.doCar == 1){
         ev3_motor_reset_counts(left_motor);
@@ -1975,7 +1980,7 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
             bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
             assert(val);
-            if(rgb4.b > 70){
+            if(rgb4.b > 75){
                 ev3_speaker_play_tone(NOTE_C5,60);
                 carDetected[pos.street] = color_4_index + 1;
             }
