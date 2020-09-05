@@ -1715,7 +1715,7 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,0,0);
     //turn
     ev3_motor_steer(left_motor,right_motor,30,-45);
-    tslp_tsk(700);
+    tslp_tsk(650);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //turn amotor back completely
     ev3_motor_set_power(a_motor,-50);
