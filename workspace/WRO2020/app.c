@@ -1093,7 +1093,7 @@ void runGreenStreet(){
     pos.street = GREEN_STREET;
     tslp_tsk(100);
     if (instructions.doSnow == 1) {
-        linePID_with_tasks(26, 25);
+        linePID_with_tasks(25, 25);
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 80, 20, true);
         ev3_motor_rotate(left_motor, 160, 20, true);
