@@ -1524,13 +1524,13 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,-10,0);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,30,-1);
+    ev3_motor_steer(left_motor,right_motor,10,-1);
     tslp_tsk(1500);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,30,45);
+    ev3_motor_steer(left_motor,right_motor,10,45);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,30,-45);
+    ev3_motor_steer(left_motor,right_motor,10,-45);
     tslp_tsk(1200);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //Side Length
