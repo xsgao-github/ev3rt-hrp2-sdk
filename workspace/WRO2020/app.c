@@ -129,11 +129,11 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                20,30,-600
+                15,30,-600
             },
             //index 1
             {
-                70,80,-900
+                60,75,-900
             },
             //index 2
             {
@@ -141,7 +141,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                20,30,-1200
+                5,20,-1200
             },
             //index 4
             {
@@ -225,11 +225,11 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                20,30,-600
+                15,30,-600
             },
             //index 1
             {
-                70,80,-900
+                60,75,-900
             },
             //index 2
             {
@@ -237,7 +237,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                10,20,-1200
+                5,20,-1200
             },
             //index 4
             {
@@ -1883,7 +1883,7 @@ void linePID_with_tasks(int distance, int speed){
         wheelDistance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360));
         float error = ev3_color_sensor_get_reflect(color_2) - ev3_color_sensor_get_reflect(color_3);
         integral = error + integral * 0.6;
-        float steer = 0.035 * error + 0.25 * integral + 4 * (error - lasterror);
+        float steer = 0.0325 * error + 0.25 * integral + 3.9 * (error - lasterror);
         ev3_motor_steer(left_motor, right_motor, speed, steer);
         lasterror = error;
     }
