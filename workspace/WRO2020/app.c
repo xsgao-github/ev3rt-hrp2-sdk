@@ -1213,7 +1213,7 @@ void runYellowStreet(){
             wall_follow_with_tasks(90,3,car,1,abrasive,25);
         }
         else{
-            wall_follow_with_tasks(90,3,car,1,abrasive,40);
+            wall_follow_with_tasks(90,3,car,1,abrasive,80);
         }
         if(instructions.doSnow){
             wall_follow_with_tasks(42,3,car,2,abrasive,30);
@@ -1373,7 +1373,7 @@ void runRedStreet(){
             wall_follow_with_tasks(130,3,car,3,abrasive,25);
         }
         else{
-            wall_follow_with_tasks(130,3,car,3,abrasive,40);
+            wall_follow_with_tasks(130,3,car,3,abrasive,80);
         }
     }
     else if(instructions.doCar == 1){
