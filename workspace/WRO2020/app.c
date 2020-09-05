@@ -24,6 +24,7 @@ void runBlueStreet();
 void runGreenStreet();
 void runYellowStreet();
 void runRedStreet();
+void goBackToBase();
 void readCode();
 void readColorCode();
 void linePID_with_tasks(int distance, int speed);
@@ -59,7 +60,7 @@ int tasks[4][2] = {{-1, 0}, {-1, 0}, {-1, 0}, {-1, 0}};
  * Index 4 - data:
  * ---------------COLOR_4-[distance at read (cm), null, null]
  * ---------------A_MOTOR-[distance at execute (cm), distance at return (cm), degrees to rotate]
- * ---------------D_MOTOR-[distance at execute (cm), degrees to rotate, abrasive type]
+ * ---------------D_MOTOR-[distance at execute (cm), distance at return (cm), degrees to rotate]
 **/
 int allTasks[4][3][7][3] = {
     //blue
@@ -130,19 +131,19 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                1000,0,-600 // 30
+                30,40,-600
             },
             //index 1
             {
-                1000,0,-900 // 80
+                70,80,-900
             },
             //index 2
             {
-                1000,0,-1200 // 30
+                1000,0,0 // spacer
             },
             //index 3
             {
-                1000,0,0
+                20,30,-1200
             },
             //index 4
             {
@@ -226,19 +227,19 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,0,-600
+                30,40,-600
             },
             //index 1
             {
-                80,0,-900
+                70,80,-900
             },
             //index 2
             {
-                30,0,-1200
+                1000,0,0 // spacer
             },
             //index 3
             {
-                1000,0,0
+                20,30,-1200
             },
             //index 4
             {
@@ -1024,6 +1025,7 @@ void runBlueStreet(){
         tslp_tsk(200);
         ev3_motor_rotate(right_motor, 230, 20, true);
         tslp_tsk(100);
+        d_motor_index++;
         linePID_with_tasks(35, 30);
     } else {
         ev3_speaker_play_tone(NOTE_G6, -1);
@@ -1168,6 +1170,7 @@ void runGreenStreet(){
         tslp_tsk(150);
         ev3_motor_rotate(right_motor, 230, 20, true);
         tslp_tsk(100);
+        d_motor_index++;
         linePID_with_tasks(30, 30);
     }
     else {
@@ -1699,13 +1702,14 @@ void goBackToBase(){
 void readCode() {
     // define array & variable
     int values[8] = {-1, -1, -1, -1, -1, -1, -1, -1};
+    colorid_t color3 = 6;
+    int i;
 
     // leave start
-    ///* old leavestart but its the new one
-    ev3_motor_reset_counts(EV3_PORT_B);
-    ev3_motor_reset_counts(EV3_PORT_C);
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 30, 2);
-    while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < 280) {
+    while (abs(((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2)) < 280) {
         display_sensors();
     }
 
@@ -1714,41 +1718,33 @@ void readCode() {
 
     // detect line
     ev3_motor_steer(left_motor, right_motor, 10, 1);
-    while (ev3_color_sensor_get_color(color_3) == COLOR_WHITE) {
-        tslp_tsk(3);
+    while (color3 == COLOR_WHITE) {
+        color3 = ev3_color_sensor_get_color(color_3);
+        tslp_tsk(5);
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
 
-    tslp_tsk(50);
+    ///* old stuff
+    for (i = 0; i < 10; i++) {
+        color3 = ev3_color_sensor_get_color(color_3);
+        tslp_tsk(10);
+    }
 
     // write down road
-    if (ev3_color_sensor_get_color(color_3) == COLOR_RED) {
+    if (color3 == COLOR_RED) {
         pos.street = RED_STREET;
         ev3_speaker_play_tone(NOTE_G4, 40);
-    } else if (ev3_color_sensor_get_color(color_3) == COLOR_YELLOW) {
+    } else if (color3 == COLOR_YELLOW) {
         pos.street = YELLOW_STREET;
         ev3_speaker_play_tone(NOTE_G5, 40);
     } else {
         pos.street = -1;
         ev3_speaker_play_tone(NOTE_G6, -1);
     }
-    tslp_tsk(100);
     //*/
-    /* new leavestartf but its now the old one
-    float wheelDistance = 0;
-    ev3_motor_reset_counts(left_motor);
-    ev3_motor_reset_counts(right_motor);
-    while(wheelDistance < 21){
-        ev3_motor_steer(left_motor,right_motor,30,5);
-        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
-    }
-    ev3_motor_steer(left_motor, right_motor, 7, 5);
-    colorid_t color3color = 6;
-    while(color3color == 6){
-        color3color = ev3_color_sensor_get_color(color_3);
-        tslp_tsk(10);
-    }
-    ev3_motor_steer(left_motor, right_motor, 0, 0);
+
+    /*
+    colorid_t color3color;
     int x = 0;
     while(x < 50){
         color3color = ev3_color_sensor_get_color(color_3);
@@ -1757,25 +1753,24 @@ void readCode() {
     }
     if(color3color == 5){
         pos.street = RED_STREET;
+        ev3_speaker_play_tone(NOTE_G4, 40);
     }
     if(color3color == 4){
         pos.street = YELLOW_STREET;
+        ev3_speaker_play_tone(NOTE_G5, 40);
     }
     */
 
-    // stop d_motor
-    ev3_motor_stop(d_motor, false);
-
+    tslp_tsk(100);
     // record instructions
-    ev3_motor_reset_counts(EV3_PORT_B);
-    ev3_motor_reset_counts(EV3_PORT_C);
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 10, 3);
     ht_nxt_color_sensor_measure_rgb(color_4, &rgb4);
     tslp_tsk(100);
-    int i;
     for (i = 0; i < 8; i++) {
         // read instructions
-        while (abs(((ev3_motor_get_counts(EV3_PORT_B) + ev3_motor_get_counts(EV3_PORT_C)) / 2)) < (i * 58)) {
+        while (abs(((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2)) < (i * 58)) {
             display_sensors();
         }
         ht_nxt_color_sensor_measure_rgb(color_4, &rgb4);
@@ -2066,17 +2061,17 @@ void execute_tasks(float distance) {
 
     //check for d_motor task, execute task if task is to dispense material and back is loaded and it is time and it is the correct material
     //execute part 1 of task
-    if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_task_running == 0 && tasks[pos.street][0] == back_loaded) {
+    if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_task_running == 0 && instructions.doAbrasive == 1) {
         ev3_motor_stop(d_motor, false);
-        ev3_motor_rotate(d_motor, allTasks[pos.street][D_MOTOR][d_motor_index][1], 100, false);
+        ev3_motor_rotate(d_motor, allTasks[pos.street][D_MOTOR][d_motor_index][2], 100, false);
         d_task_running = 1;
         ev3_speaker_play_tone(NOTE_G4, 50);
 
     }
     //execute part 2 of task
-    if (abs((ev3_motor_get_counts(d_motor))) <= 5 && d_task_running == 1 && tasks[pos.street][0] == back_loaded) {
+    if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][1] && d_task_running == 1 && instructions.doAbrasive == 1) {
         ev3_motor_stop(d_motor, false);
-        ev3_motor_rotate(d_motor, -1*allTasks[pos.street][D_MOTOR][d_motor_index][1], 100, false);
+        ev3_motor_rotate(d_motor, -1*allTasks[pos.street][D_MOTOR][d_motor_index][2], 100, false);
         d_task_running = 0;
         d_motor_index += 1;
         ev3_speaker_play_tone(NOTE_G5, 50);
