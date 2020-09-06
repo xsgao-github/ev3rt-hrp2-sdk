@@ -58,7 +58,7 @@ int tasks[4][2] = {{-1, 0}, {-1, 0}, {-1, 0}, {-1, 0}};
  * Index 4 - data:
  * ---------------COLOR_4-[distance at read (cm), null, null]
  * ---------------A_MOTOR-[distance at execute (cm), distance at return (cm), degrees to rotate]
- * ---------------D_MOTOR-[distance at execute (cm), distance at return (cm), degrees to rotate]
+ * ---------------D_MOTOR-[distance at execute (cm), null, null]
 **/
 int allTasks[4][3][7][3] = {
     //blue
@@ -476,10 +476,10 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    //run2020();
-    //goBackToBase(false);
-    writeInstructions(1,0,0,0,1,0,1,0);
-    runRedStreet();
+    run2020();
+    goBackToBase(false);
+    //writeInstructions(1,0,0,0,1,0,1,0);
+    //runRedStreet();
 }
 
 void run2020(){
@@ -1853,7 +1853,7 @@ void readCode() {
         tslp_tsk(10);
     }
     // stop d_motor
-    ev3_motor_stop(d_motor, false);
+    //ev3_motor_stop(d_motor, false);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     int x = 0;
     while(x < 100){
@@ -2176,19 +2176,21 @@ void execute_tasks(float distance) {
     //execute part 1 of task
     if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_task_running == 0 && instructions.doAbrasive == 1) {
         ev3_motor_stop(d_motor, false);
-        ev3_motor_rotate(d_motor, allTasks[pos.street][D_MOTOR][d_motor_index][2], 100, false);
-        d_task_running = 1;
+        //ev3_motor_rotate(d_motor, allTasks[pos.street][D_MOTOR][d_motor_index][2], 100, false);
+        ev3_motor_rotate(d_motor, 360, 100, false);
+        //d_task_running = 1;
+        d_motor_index++;
         ev3_speaker_play_tone(NOTE_G4, 50);
 
     }
     //execute part 2 of task
-    if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][1] && d_task_running == 1 && instructions.doAbrasive == 1) {
-        ev3_motor_stop(d_motor, false);
-        ev3_motor_rotate(d_motor, -1*allTasks[pos.street][D_MOTOR][d_motor_index][2], 100, false);
-        d_task_running = 0;
-        d_motor_index += 1;
-        ev3_speaker_play_tone(NOTE_G5, 50);
-    }
+    //if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][1] && d_task_running == 1 && instructions.doAbrasive == 1) {
+    //    ev3_motor_stop(d_motor, false);
+    //    ev3_motor_rotate(d_motor, -1*allTasks[pos.street][D_MOTOR][d_motor_index][2], 100, false);
+    //    d_task_running = 0;
+    //    d_motor_index += 1;
+    //    ev3_speaker_play_tone(NOTE_G5, 50);
+    //}
 
     //check for color_4 task, execute if it is time
     if (distance > allTasks[pos.street][COLOR_4][color_4_index][0]) {
