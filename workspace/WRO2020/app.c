@@ -880,18 +880,16 @@ void run2020(){
                 runYellowStreet();
                 writeInstructions(1,0,0,1,0,0,0,0);
                 runGreenStreet();
-                writeInstructions(0,0,0,0,1,0,1,0);
+                writeInstructions(0,0,0,0,1,0,2,0);
                 runRedStreet();
                 writeInstructions(0,1,0,0,0,0,0,0);
                 runBlueStreet();
-                writeInstructions(0,0,0,0,0,0,0,0);
+                writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
                 writeInstructions(0,1,0,0,0,0,0,0);
                 runGreenStreet();
-                writeInstructions(0,0,1,0,0,1,2,0);
+                writeInstructions(0,0,1,0,0,1,0,0);
                 runRedStreet();
-                writeInstructions(0,0,1,0,0,0,0,0);
-                runYellowStreet();
             }
             else if(tasks[YELLOW_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
@@ -900,18 +898,16 @@ void run2020(){
                 runYellowStreet();
                 writeInstructions(1,0,0,1,0,0,0,0);
                 runGreenStreet();
-                writeInstructions(0,0,0,0,1,0,2,0);
+                writeInstructions(0,0,0,0,1,0,1,0);
                 runRedStreet();
                 writeInstructions(0,1,0,0,0,0,0,0);
                 runBlueStreet();
-                writeInstructions(0,0,0,0,0,0,0,0);
+                writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
                 writeInstructions(0,1,0,0,0,0,0,0);
                 runGreenStreet();
-                writeInstructions(0,0,1,0,0,1,1,0);
+                writeInstructions(0,0,1,0,0,1,0,0);
                 runRedStreet();
-                writeInstructions(0,0,1,0,0,0,0,0);
-                runYellowStreet();
             }
         }
     }
