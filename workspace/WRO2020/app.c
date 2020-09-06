@@ -1785,10 +1785,10 @@ void runRedStreet(){
 void goBackToBase(int fromBlueStreet){
     if (fromBlueStreet) {
         ev3_motor_steer(left_motor,right_motor,-30, 5);
-        ev3_motor_set_power(d_motor, -100);
+        //ev3_motor_set_power(d_motor, -100);
         ev3_motor_set_power(a_motor, -100);
         tslp_tsk(1200);
-        ev3_motor_stop(d_motor, false);
+        //ev3_motor_stop(d_motor, false);
         ev3_motor_stop(a_motor, false);
         ev3_motor_steer(left_motor, right_motor, -30, 5);
         tslp_tsk(1200);
@@ -1799,14 +1799,14 @@ void goBackToBase(int fromBlueStreet){
         tslp_tsk(2000);
     } else {
         ev3_motor_steer(left_motor,right_motor,-30, 3);
-        ev3_motor_set_power(d_motor, -100);
+        //ev3_motor_set_power(d_motor, -100);
         ev3_motor_set_power(a_motor, -100);
         tslp_tsk(1200);
-        ev3_motor_stop(d_motor, false);
+        //ev3_motor_stop(d_motor, false);
         ev3_motor_stop(a_motor, false);
         ev3_motor_steer(left_motor, right_motor, -30, 5);
         tslp_tsk(1200);
-        ev3_motor_steer(left_motor, right_motor, 20, -1);
+        ev3_motor_steer(left_motor, right_motor, 20, 10);
         tslp_tsk(1000);
         ev3_motor_set_power(a_motor, 100);
         ev3_motor_steer(left_motor, right_motor, -30, 2);
@@ -1959,7 +1959,7 @@ void linePID_with_tasks(int distance, int speed){
         wheelDistance = (((abs(ev3_motor_get_counts(left_motor)) + abs(ev3_motor_get_counts(right_motor))) / 2) * ((3.1415926535 * 8.1) / 360));
         float error = ev3_color_sensor_get_reflect(color_2) - ev3_color_sensor_get_reflect(color_3);
         integral = error + integral * 0.6;
-        float steer = 0.0325 * error + 0.25 * integral + 3.9 * (error - lasterror);
+        float steer = 0.03 * error + 0.2 * integral + 3.8 * (error - lasterror);
         ev3_motor_steer(left_motor, right_motor, speed, steer);
         lasterror = error;
     }
