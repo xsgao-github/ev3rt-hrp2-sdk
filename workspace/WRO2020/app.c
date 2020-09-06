@@ -1796,7 +1796,7 @@ void goBackToBase(int fromBlueStreet){
         ev3_motor_steer(left_motor, right_motor, -30, 2);
         tslp_tsk(2000);
     } else {
-        ev3_motor_steer(left_motor,right_motor,-30, 5);
+        ev3_motor_steer(left_motor,right_motor,-30, 3);
         ev3_motor_set_power(d_motor, -100);
         ev3_motor_set_power(a_motor, -100);
         tslp_tsk(1200);
