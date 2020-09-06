@@ -58,7 +58,7 @@ int tasks[4][2] = {{-1, 0}, {-1, 0}, {-1, 0}, {-1, 0}};
  * Index 4 - data:
  * ---------------COLOR_4-[distance at read (cm), null, null]
  * ---------------A_MOTOR-[distance at execute (cm), distance at return (cm), degrees to rotate]
- * ---------------D_MOTOR-[distance at execute (cm), null, null]
+ * ---------------D_MOTOR-[distance at execute (cm), number of abrasive to dispense, null]
 **/
 int allTasks[4][3][7][3] = {
     //blue
@@ -321,15 +321,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                10,40,-700
+                10,1,0
             },
             //index 1
             {
-                20,45,-900
+                20,1,0
             },
             //index 2
             {
-                5,35,-1200
+                5,2,0
             },
             //index 3
             {
@@ -1334,7 +1334,7 @@ void runYellowStreet(){
     }
     pos.street = RED_STREET;
 }
-void runRedStreet(){    
+void runRedStreet(){
     //doCar
     if(instructions.doCar == 0){
         color_4_index = 0;
@@ -2112,13 +2112,9 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
             isTurningA = 0;
             tasksLeftA -= 1;
         }
-        if(wheelDistance > next_d_motor_task[0] && tasksLeftD > 0 && isTurningD == 0 && back_loaded){
-            ev3_motor_rotate(d_motor,next_d_motor_task[2],80,false);
-            isTurningD = 1;
-        }
-        if(wheelDistance > next_d_motor_task[1] && tasksLeftD > 0 && isTurningD == 1 && back_loaded){
+        if(wheelDistance > next_d_motor_task[0] && tasksLeftD > 0 && isTurningD == 1 && back_loaded){
             ev3_speaker_play_tone(NOTE_A4,60);
-            ev3_motor_rotate(d_motor,next_d_motor_task[2] * -1,80,false);
+            ev3_motor_rotate(d_motor,360 * next_d_motor_task[1],20,false);
             d_motor_index += 1;
             for(int i = 0;i < 3;i++){
                 next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
