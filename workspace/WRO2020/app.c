@@ -478,13 +478,7 @@ void main_task(intptr_t unused) {
     readCode();
     //run2020();
     //goBackToBase(false);
-    writeInstructions(1,0,0,0,1,0,0,0);
-    runRedStreet();
-    waitforButton();
-    writeInstructions(1,0,0,0,0,1,0,0);
-    runRedStreet();
-    waitforButton();
-    writeInstructions(1,0,0,0,0,0,0,0);
+    writeInstructions(1,0,0,0,1,0,1,0);
     runRedStreet();
 }
 
@@ -1537,7 +1531,7 @@ void runRedStreet(){
     tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,10,-45);
-    tslp_tsk(1200);
+    tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
     int abrasive = 0;
     if(instructions.doAbrasive){
@@ -1549,7 +1543,7 @@ void runRedStreet(){
     ev3_speaker_play_tone(NOTE_A4,60);
     //detect line
     ev3_motor_steer(left_motor, right_motor, 15, 0);
-    while (ev3_color_sensor_get_reflect(color_3) > 25) {
+    while (ev3_color_sensor_get_reflect(color_3) > 35) {
     }
     ev3_motor_steer(left_motor,right_motor,0,0);
     if(instructions.uTurn){
@@ -1702,7 +1696,6 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,-10,0);
         tslp_tsk(1600);
         ev3_motor_steer(left_motor,right_motor,0,0);
-
     }
     
     if(instructions.collectAbrasive == 2){
