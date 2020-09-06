@@ -1539,7 +1539,7 @@ void runRedStreet(){
     }
     a_motor_index = 3;
     //Side Length
-    color4PID(35,1,abrasive);
+    color4PID(37,1,abrasive);
     ev3_speaker_play_tone(NOTE_A4,60);
     //detect line
     ev3_motor_steer(left_motor, right_motor, 15, 0);
@@ -1694,7 +1694,7 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,0,0);
         waitforButton();
         ev3_motor_steer(left_motor,right_motor,-10,0);
-        tslp_tsk(1600);
+        tslp_tsk(1700);
         ev3_motor_steer(left_motor,right_motor,0,0);
     }
     
