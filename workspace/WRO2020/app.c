@@ -478,7 +478,7 @@ void main_task(intptr_t unused) {
     //readCode();
     //run2020();
     //goBackToBase(false);
-    ev3_motor_set_power(d_motor,30);
+    ev3_motor_set_power(d_motor,10);
 }
 
 void run2020(){
