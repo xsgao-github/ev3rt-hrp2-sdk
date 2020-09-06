@@ -476,10 +476,10 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    //run2020();
-    //goBackToBase(false);
-    writeInstructions(1,0,0,0,1,0,1,0);
-    runRedStreet();
+    run2020();
+    goBackToBase(false);
+    //writeInstructions(1,0,0,0,1,0,1,0);
+    //runRedStreet();
 }
 
 void run2020(){
@@ -1857,7 +1857,7 @@ void readCode() {
         tslp_tsk(10);
     }
     // stop d_motor
-    ev3_motor_stop(d_motor, false);
+    //ev3_motor_stop(d_motor, false);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     int x = 0;
     while(x < 100){
