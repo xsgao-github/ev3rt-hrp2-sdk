@@ -475,9 +475,10 @@ int car_motor_index = 0;
 
 void main_task(intptr_t unused) {
     init();
-    readCode();
-    run2020();
-    goBackToBase(false);
+    //readCode();
+    //run2020();
+    //goBackToBase(false);
+    ev3_motor_set_power(d_motor,30);
 }
 
 void run2020(){
