@@ -969,7 +969,7 @@ void runBlueStreet(){
         ev3_motor_rotate(right_motor, 225, 20, true);
         ev3_motor_rotate(a_motor, 500, 80, true);
         tslp_tsk(100);
-        linePID_with_tasks(32, 25);
+        linePID_with_tasks(31, 25);
         ev3_motor_set_power(a_motor, -50);
     } else if (instructions.doCar == 1) {
         ev3_motor_set_power(a_motor, 50);
