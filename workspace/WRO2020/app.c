@@ -986,8 +986,8 @@ void runBlueStreet(){
         ev3_motor_rotate(right_motor, 235, 20, true);
         ev3_motor_stop(a_motor, false);
         tslp_tsk(100);
-        ev3_motor_rotate(right_motor, 75, 20, true);
-        ev3_motor_rotate(left_motor, 80, 20, true);
+        ev3_motor_rotate(right_motor, 90, 20, true);
+        ev3_motor_rotate(left_motor, 90, 20, true);
         ev3_motor_reset_counts(left_motor);
         ev3_motor_reset_counts(right_motor);
         ev3_motor_steer(left_motor, right_motor, 20, 5);
@@ -995,8 +995,8 @@ void runBlueStreet(){
             display_sensors();
         }
         ev3_motor_steer(left_motor, right_motor, 0, 0);
-        ev3_motor_rotate(left_motor, 80, 20, true);
-        ev3_motor_rotate(right_motor, 75, 20, true);
+        ev3_motor_rotate(left_motor, 90, 20, true);
+        ev3_motor_rotate(right_motor, 90, 20, true);
         tslp_tsk(100);
         linePID_with_tasks(18, 20);
         tslp_tsk(100);
@@ -1025,7 +1025,7 @@ void runBlueStreet(){
     tslp_tsk(800);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     tslp_tsk(100);
-    ev3_motor_steer(left_motor, right_motor, 20, 12);
+    ev3_motor_steer(left_motor, right_motor, 20, 15);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor, right_motor, -20, 10);
     tslp_tsk(1000);
@@ -1033,7 +1033,7 @@ void runBlueStreet(){
     tslp_tsk(700);
     ev3_motor_steer(left_motor, right_motor, -20, 0);
     tslp_tsk(200);
-    ev3_motor_steer(left_motor, right_motor, 20, 10);
+    ev3_motor_steer(left_motor, right_motor, 20, 12);
     while (ev3_color_sensor_get_reflect(color_3) > 30) {
         display_sensors();
     }
