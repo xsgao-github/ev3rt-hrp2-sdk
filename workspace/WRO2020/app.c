@@ -1112,7 +1112,7 @@ void runGreenStreet(){
         ev3_motor_rotate(right_motor, 230, 20, true);
         tslp_tsk(100);
         a_task_running = 1;
-        linePID_with_tasks(24, 25);
+        linePID_with_tasks(25, 25);
     }
     else if (instructions.doCar == 1) {
         ev3_motor_set_power(a_motor, 50);
