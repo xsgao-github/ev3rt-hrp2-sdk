@@ -1449,9 +1449,9 @@ void runRedStreet(){
         tslp_tsk(300);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back and turn
-        ev3_motor_rotate(a_motor,100,-50,true);
+        ev3_motor_rotate(a_motor,500,-50,true);
         ev3_motor_steer(left_motor,right_motor,-15,75);
-        ev3_motor_rotate(a_motor,100,-50,false);
+        ev3_motor_rotate(a_motor,500,50,false);
         tslp_tsk(1100);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back completely
@@ -2057,7 +2057,6 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
     int lastDash = 0;
     int isTurningA = 0;
     int a_motorStopped = 0;
-    int isTurningD = 0;
     float wheelDistance = -100;
     int tasksLeft4 = detectCar;
     int tasksLeftA = tasksNumA;
@@ -2078,7 +2077,6 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
             ev3_motor_stop(a_motor,false);
             a_motorStopped = 1;
         }
-        displayValues(ev3_motor_get_counts(d_motor),1,1,0);
         if(wheelDistance > next_color_4_task[0] && tasksLeft4 > 0){
             bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
             assert(val);
@@ -2112,14 +2110,13 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
             isTurningA = 0;
             tasksLeftA -= 1;
         }
-        if(wheelDistance > next_d_motor_task[0] && tasksLeftD > 0 && isTurningD == 1 && back_loaded){
+        if(wheelDistance > next_d_motor_task[0] && tasksLeftD > 0 && back_loaded){
             ev3_speaker_play_tone(NOTE_A4,60);
             ev3_motor_rotate(d_motor,360 * next_d_motor_task[1],20,false);
             d_motor_index += 1;
             for(int i = 0;i < 3;i++){
                 next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
             }
-            isTurningD = 0;
             tasksLeftD -= 1;
         }
         if(ev3_color_sensor_get_reflect(color_2) > 75 && pos.dash % 2 == 0 && wheelDistance > lastDash + 3){
