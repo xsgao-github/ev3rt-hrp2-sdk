@@ -129,7 +129,7 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,1,0
+                40,1,0
             },
             //index 1
             {
@@ -225,7 +225,7 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,1,0
+                40,1,0
             },
             //index 1
             {
@@ -988,8 +988,8 @@ void runBlueStreet(){
         ev3_motor_rotate(right_motor, 230, 20, true);
         ev3_motor_stop(a_motor, false);
         tslp_tsk(100);
-        ev3_motor_rotate(right_motor, 80, 20, true);
-        ev3_motor_rotate(left_motor, 75, 20, true);
+        ev3_motor_rotate(right_motor, 75, 20, true);
+        ev3_motor_rotate(left_motor, 80, 20, true);
         ev3_motor_reset_counts(left_motor);
         ev3_motor_reset_counts(right_motor);
         ev3_motor_steer(left_motor, right_motor, 20, 5);
@@ -1028,11 +1028,11 @@ void runBlueStreet(){
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 20, 10);
-    tslp_tsk(1500);
-    ev3_motor_steer(left_motor, right_motor, -20, 15);
-    tslp_tsk(1000);
+    tslp_tsk(1200);
+    ev3_motor_steer(left_motor, right_motor, -20, 12);
+    tslp_tsk(1200);
     ev3_motor_steer(left_motor, right_motor, -20, -10);
-    tslp_tsk(700);
+    tslp_tsk(800);
     ev3_motor_steer(left_motor, right_motor, -20, 0);
     tslp_tsk(400);
     ev3_motor_steer(left_motor, right_motor, 10, 10);
@@ -1131,8 +1131,8 @@ void runGreenStreet(){
         tslp_tsk(100);
         ev3_motor_rotate(left_motor, 80, 10, false);
         ev3_motor_rotate(right_motor, 80, 10, true);
-        ev3_motor_rotate(right_motor, 90, 20, true);
-        ev3_motor_rotate(left_motor, 85, 20, true);
+        ev3_motor_rotate(right_motor, 85, 20, true);
+        ev3_motor_rotate(left_motor, 90, 20, true);
         ev3_motor_reset_counts(left_motor);
         ev3_motor_reset_counts(right_motor);
         ev3_motor_steer(left_motor, right_motor, 20, 5);
@@ -1143,7 +1143,7 @@ void runGreenStreet(){
         ev3_motor_rotate(left_motor, 90, 20, true);
         ev3_motor_rotate(right_motor, 85, 20, true);
         tslp_tsk(100);
-        linePID_with_tasks(13, 20);
+        linePID_with_tasks(14, 20);
         tslp_tsk(100);
     }
     else if (instructions.doAbrasive == 1) {
