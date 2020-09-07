@@ -1550,7 +1550,7 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,0,0);
     if(instructions.uTurn){
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(1675);
+        tslp_tsk(1700);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,30,0);
         tslp_tsk(2500);
@@ -1582,6 +1582,10 @@ void runRedStreet(){
         ev3_motor_set_power(a_motor,-50);
         tslp_tsk(700);
         ev3_motor_set_power(a_motor,0);
+        //back up
+        ev3_motor_steer(left_motor,right_motor,-10,0);
+        tslp_tsk(1000);
+        ev3_motor_steer(left_motor,right_motor,0,0);
         //back up
         ev3_motor_steer(left_motor,right_motor,10,0);
         tslp_tsk(1500);
@@ -1930,6 +1934,7 @@ void readCode() {
     ev3_motor_steer(left_motor, right_motor, 10, 1);
     while (ev3_color_sensor_get_reflect(color_3) > 30) {
         display_sensors();
+        tslp_tsk(10);
     }
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
