@@ -425,11 +425,11 @@ int allTasks[4][3][7][3] = {
             },
             //index 2
             {
-                0,2,0
+                0,1,0
             },
             //index 3
             {
-                1000,0,0
+                15,1,0
             },
             //index 4
             {
@@ -1284,6 +1284,10 @@ void runYellowStreet(){
                 break;
         }
     }
+    //move forward
+    ev3_motor_steer(left_motor,right_motor,30,0);
+    tslp_tsk(200);
+    ev3_motor_steer(left_motor,right_motor,0,0);
     //turn 1
     ev3_motor_steer(left_motor,right_motor,30,-45);
     tslp_tsk(600);
@@ -1446,7 +1450,7 @@ void runRedStreet(){
         }
         //move backwards
         ev3_motor_steer(left_motor,right_motor,-30,0);
-        tslp_tsk(300);
+        tslp_tsk(500);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back and turn
         ev3_motor_set_power(a_motor,-50);
@@ -1465,6 +1469,10 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,0,0);
     }
     else if(instructions.carDepot){
+        //move backwards
+        ev3_motor_steer(left_motor,right_motor,-30,0);
+        tslp_tsk(300);
+        ev3_motor_steer(left_motor,right_motor,0,0);
         //turn
         ev3_motor_steer(left_motor,right_motor,-20,90);
         tslp_tsk(250);
@@ -1496,7 +1504,10 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,0,0);
     }
     else if(!instructions.snowDepot && !instructions.carDepot){
-        
+        //move backwards
+        ev3_motor_steer(left_motor,right_motor,-30,0);
+        tslp_tsk(300);
+        ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back and turn
         ev3_motor_rotate(a_motor,200,80,true);
         ev3_motor_steer(left_motor,right_motor,-15,80);
@@ -1523,7 +1534,7 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,0,0);
     int abrasive = 0;
     if(instructions.doAbrasive){
-        abrasive = 1;
+        abrasive = 2;
     }
     a_motor_index = 3;
     //Side Length
