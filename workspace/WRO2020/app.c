@@ -1449,10 +1449,11 @@ void runRedStreet(){
         tslp_tsk(300);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back and turn
-        ev3_motor_rotate(a_motor,500,-50,true);
+        ev3_motor_set_power(a_motor,-50);
         ev3_motor_steer(left_motor,right_motor,-15,75);
-        ev3_motor_rotate(a_motor,200,50,false);
-        tslp_tsk(1100);
+        tslp_tsk(400);
+        ev3_motor_set_power(a_motor,50);
+        tslp_tsk(700);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back completely
         ev3_motor_set_power(a_motor,-50);
@@ -1675,7 +1676,7 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,80);
         ev3_motor_steer(left_motor,right_motor,-15,90);
-        tslp_tsk(800);
+        tslp_tsk(825);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
         tslp_tsk(2000);
@@ -1687,14 +1688,14 @@ void runRedStreet(){
         tslp_tsk(1000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(800);
+        tslp_tsk(825);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor,right_motor,15,0);
         tslp_tsk(1700);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-15,90);
-        tslp_tsk(800);
+        tslp_tsk(825);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
         tslp_tsk(2000);
@@ -1703,7 +1704,7 @@ void runRedStreet(){
         tslp_tsk(2000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(800);
+        tslp_tsk(825);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor, right_motor, 15, 0);
@@ -1718,7 +1719,7 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,80);
         ev3_motor_steer(left_motor,right_motor,-15,90);
-        tslp_tsk(800);
+        tslp_tsk(825);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
         tslp_tsk(2000);
@@ -1730,14 +1731,14 @@ void runRedStreet(){
         tslp_tsk(1000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(800);
+        tslp_tsk(825);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor,right_motor,-15,0);
         tslp_tsk(1700);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-15,90);
-        tslp_tsk(800);
+        tslp_tsk(825);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
         tslp_tsk(2000);
@@ -1746,7 +1747,7 @@ void runRedStreet(){
         tslp_tsk(2000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(800);
+        tslp_tsk(825);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor, right_motor, 15, 0);
@@ -1761,7 +1762,7 @@ void runRedStreet(){
     ev3_motor_set_power(a_motor,0);
     //move forward
     ev3_motor_steer(left_motor,right_motor,30,0);
-    tslp_tsk(400);
+    tslp_tsk(350);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //turn
     ev3_motor_steer(left_motor,right_motor,30,-45);
@@ -1980,7 +1981,6 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
     ev3_motor_reset_counts(a_motor);
     ev3_motor_reset_counts(d_motor);
     int isTurningA = 0;
-    int isTurningD = 0;
     int a_motorStopped = 0;
     float wheelDistance = 0;
     int tasksLeftA = tasksNumA;
@@ -2012,18 +2012,13 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
             isTurningA = 0;
             tasksLeftA -= 1;
         }
-        if(wheelDistance > next_d_motor_task[0] && tasksLeftD > 0 && isTurningD == 0 && back_loaded){
-            ev3_motor_rotate(d_motor,next_d_motor_task[2],80,false);
-            isTurningD = 1;
-        }
-        if(wheelDistance > next_d_motor_task[1] && tasksLeftD > 0 && isTurningD == 1 && back_loaded){
+        if(wheelDistance > next_d_motor_task[0] && tasksLeftD > 0){
             ev3_speaker_play_tone(NOTE_A4,60);
-            ev3_motor_rotate(d_motor,next_d_motor_task[2] * -1,80,false);
+            ev3_motor_rotate(d_motor,next_d_motor_task[1] * 360,20,false);
             d_motor_index += 1;
             for(int i = 0;i < 3;i++){
                 next_d_motor_task[i] = allTasks[pos.street][2][d_motor_index][i];
             }
-            isTurningD = 0;
             tasksLeftD -= 1;
         }
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
