@@ -1026,14 +1026,14 @@ void runBlueStreet(){
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 20, 10);
-    tslp_tsk(1200);
+    tslp_tsk(1000);
     ev3_motor_steer(left_motor, right_motor, -20, 12);
-    tslp_tsk(1200);
+    tslp_tsk(1000);
     ev3_motor_steer(left_motor, right_motor, -20, -10);
-    tslp_tsk(800);
+    tslp_tsk(700);
     ev3_motor_steer(left_motor, right_motor, -20, 0);
-    tslp_tsk(400);
-    ev3_motor_steer(left_motor, right_motor, 10, 10);
+    tslp_tsk(200);
+    ev3_motor_steer(left_motor, right_motor, 20, 10);
     while (ev3_color_sensor_get_reflect(color_3) > 30) {
         display_sensors();
     }
@@ -1171,7 +1171,7 @@ void runGreenStreet(){
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 20, 3);
     tslp_tsk(1000);
-    ev3_motor_steer(left_motor, right_motor, 10, 1);
+    ev3_motor_steer(left_motor, right_motor, 20, 1);
     while (ev3_color_sensor_get_reflect(color_3) > 30) {
         display_sensors();
     }
@@ -1842,7 +1842,13 @@ void goBackToBase(int fromBlueStreet){
     ev3_speaker_set_volume(100);
     ev3_speaker_play_tone(NOTE_C5, 500);
     ev3_lcd_draw_string("Program Finished", 10, 60);
-    exit(0);
+    while (true) {
+        ev3_led_set_color(LED_GREEN);
+        tslp_tsk(200);
+        ev3_led_set_color(LED_ORANGE);
+        tslp_tsk(200);
+
+    }
 }
 
 void readCode() {
