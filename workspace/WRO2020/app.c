@@ -133,7 +133,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 1
             {
-                75,1,0
+                80,1,0
             },
             //index 2
             {
@@ -141,7 +141,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                20,2,0
+                30,2,0
             },
             //index 4
             {
@@ -229,7 +229,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 1
             {
-                75,1,0
+                80,1,0
             },
             //index 2
             {
@@ -237,7 +237,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                20,2,0
+                30,2,0
             },
             //index 4
             {
@@ -966,7 +966,7 @@ void runBlueStreet(){
         ev3_motor_steer(left_motor, right_motor, -10, 0);
         ev3_motor_set_power(a_motor, -80);
         tslp_tsk(250);
-        ev3_motor_rotate(right_motor, 230, 20, true);
+        ev3_motor_rotate(right_motor, 225, 20, true);
         ev3_motor_rotate(a_motor, 500, 80, true);
         tslp_tsk(100);
         linePID_with_tasks(32, 25);
@@ -983,7 +983,7 @@ void runBlueStreet(){
         tslp_tsk(150);
         ev3_motor_steer(left_motor, right_motor, -10, 0);
         tslp_tsk(200);
-        ev3_motor_rotate(right_motor, 230, 20, true);
+        ev3_motor_rotate(right_motor, 235, 20, true);
         ev3_motor_stop(a_motor, false);
         tslp_tsk(100);
         ev3_motor_rotate(right_motor, 75, 20, true);
@@ -1001,7 +1001,7 @@ void runBlueStreet(){
         linePID_with_tasks(18, 20);
         tslp_tsk(100);
     } else if (instructions.doAbrasive == 1) {
-        linePID_with_tasks(80, 30);
+        linePID_with_tasks(84, 30);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
         while (ev3_color_sensor_get_reflect(color_2) > 20) {
             display_sensors();
@@ -1009,7 +1009,7 @@ void runBlueStreet(){
         tslp_tsk(150);
         ev3_motor_steer(left_motor, right_motor, -10, 0);
         tslp_tsk(200);
-        ev3_motor_rotate(right_motor, 230, 20, true);
+        ev3_motor_rotate(right_motor, 235, 20, true);
         tslp_tsk(100);
         d_motor_index++;
         linePID_with_tasks(35, 30);
@@ -1107,7 +1107,7 @@ void runGreenStreet(){
         tslp_tsk(150);
         ev3_motor_steer(left_motor, right_motor, -10, 0);
         tslp_tsk(150);
-        ev3_motor_rotate(right_motor, 230, 20, true);
+        ev3_motor_rotate(right_motor, 220, 20, true);
         tslp_tsk(100);
         a_task_running = 1;
         linePID_with_tasks(25, 25);
@@ -1124,7 +1124,7 @@ void runGreenStreet(){
         tslp_tsk(150);
         ev3_motor_steer(left_motor, right_motor, -10, 0);
         tslp_tsk(200);
-        ev3_motor_rotate(right_motor, 230, 20, true);
+        ev3_motor_rotate(right_motor, 235, 20, true);
         ev3_motor_stop(a_motor, false);
         tslp_tsk(100);
         ev3_motor_rotate(left_motor, 80, 10, false);
@@ -1154,7 +1154,7 @@ void runGreenStreet(){
         tslp_tsk(150);
         ev3_motor_steer(left_motor, right_motor, -10, 0);
         tslp_tsk(150);
-        ev3_motor_rotate(right_motor, 230, 20, true);
+        ev3_motor_rotate(right_motor, 235, 20, true);
         tslp_tsk(100);
         d_motor_index++;
         linePID_with_tasks(30, 30);
@@ -2174,7 +2174,7 @@ void execute_tasks(float distance) {
     //execute task
     if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_task_running == 0 && instructions.doAbrasive == 1) {
         ev3_motor_stop(d_motor, false);
-        ev3_motor_rotate(d_motor, allTasks[pos.street][D_MOTOR][d_motor_index][1]*360, 40, false);
+        ev3_motor_rotate(d_motor, allTasks[pos.street][D_MOTOR][d_motor_index][1]*360, 30, false);
         //d_task_running = 1;
         d_motor_index++;
         ev3_speaker_play_tone(NOTE_G4, 50);
