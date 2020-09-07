@@ -476,29 +476,8 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    //run2020();
-    //goBackToBase(false);
-    writeInstructions(0,0,0,1,0,0,0,0);
-    runRedStreet();
-    waitforButton();
-    writeInstructions(0,0,0,1,0,0,0,0);
-    runYellowStreet();
-    waitforButton();
-    writeInstructions(0,1,0,0,0,1,0,0);
-    runRedStreet();
-    waitforButton();
-    writeInstructions(0,1,0,0,0,0,0,0);
-    runYellowStreet();
-    waitforButton();
-    writeInstructions(0,0,0,0,0,1,1,0);
-    runRedStreet();
-    waitforButton();
-    writeInstructions(0,0,1,0,0,0,0,0);
-    runYellowStreet();
-    waitforButton();
-    writeInstructions(0,0,1,0,0,0,0,0);
-    runRedStreet();
-    waitforButton();
+    run2020();
+    goBackToBase(false);
 }
 
 void run2020(){
@@ -969,7 +948,7 @@ void runBlueStreet(){
     if (instructions.doSnow == 1) {
         linePID_with_tasks(60, 25);
         tslp_tsk(100);
-        ev3_motor_rotate(right_motor, 70, 20, true);
+        ev3_motor_rotate(right_motor, 75, 20, true);
         a_motor_index++;
         ev3_motor_reset_counts(left_motor);
         ev3_motor_reset_counts(right_motor);
