@@ -570,7 +570,7 @@ void run2020(){
                 runRedStreet();
                 writeInstructions(1,0,0,1,0,0,0,0);
                 runBlueStreet();
-                writeInstructions(0,0,1,0,0,0,0,0);
+                writeInstructions(0,0,0,0,0,0,0,0);
                 runYellowStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runGreenStreet();
@@ -578,7 +578,7 @@ void run2020(){
                 runRedStreet();
                 writeInstructions(0,1,0,0,0,0,0,0);
                 runBlueStreet();
-                writeInstructions(0,0,0,0,0,0,0,0);
+                writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
                 writeInstructions(0,1,0,0,0,1,0,0);
                 runRedStreet();
@@ -1476,7 +1476,7 @@ void runRedStreet(){
         tslp_tsk(1100);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-30,0);
-        tslp_tsk(1000);
+        tslp_tsk(1100);
         ev3_motor_steer(left_motor,right_motor,0,0);
         if(instructions.doSnow){
             //turn amotor
