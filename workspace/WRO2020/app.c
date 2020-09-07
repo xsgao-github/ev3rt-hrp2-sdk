@@ -129,11 +129,11 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                20,0,0
+                30,0,0
             },
             //index 1
             {
-                70,0,0
+                75,0,0
             },
             //index 2
             {
@@ -141,7 +141,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                10,0,0
+                20,0,0
             },
             //index 4
             {
@@ -225,11 +225,11 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                20,0,0
+                30,0,0
             },
             //index 1
             {
-                70,0,0
+                75,0,0
             },
             //index 2
             {
@@ -237,7 +237,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                10,0,0
+                20,0,0
             },
             //index 4
             {
@@ -1850,7 +1850,7 @@ void readCode() {
     //ev3_motor_stop(d_motor, false);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     int x = 0;
-    while(x < 100){
+    while(x < 1000){
         color3color = ev3_color_sensor_get_color(color_3);
         x += 1;
         tslp_tsk(10);
