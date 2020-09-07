@@ -1788,7 +1788,7 @@ void runRedStreet(){
     ev3_motor_set_power(a_motor,0);
     //move forward
     ev3_motor_steer(left_motor,right_motor,40,0);
-    tslp_tsk(500);
+    tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //detect line
     ev3_motor_steer(left_motor, right_motor, 30, 3);
