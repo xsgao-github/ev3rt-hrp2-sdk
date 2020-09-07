@@ -920,7 +920,7 @@ void runBlueStreet(){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 40, 1);
-    wall_follow_with_tasks(77, 1, 1, 2, 0, 30);
+    wall_follow_with_tasks(77, 1, 0, 0, 0, 30);
     ev3_motor_set_power(a_motor, -50);
     tslp_tsk(100);
     ev3_motor_reset_counts(left_motor);
@@ -1057,7 +1057,7 @@ void runGreenStreet(){
     //    display_sensors();
     //}
     //ev3_motor_steer(left_motor, right_motor, 0, 0);
-    wall_follow_with_tasks(54, 1, 1, 2, 0, 30);
+    wall_follow_with_tasks(54, 1, 0, 0, 0, 30);
     tslp_tsk(100);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
