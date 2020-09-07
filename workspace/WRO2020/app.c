@@ -1837,7 +1837,7 @@ void readCode() {
     float wheelDistance = 0;
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
-    while(wheelDistance < 21){
+    while(wheelDistance < 22){
         ev3_motor_steer(left_motor,right_motor,30,5);
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
     }
@@ -1848,7 +1848,6 @@ void readCode() {
         tslp_tsk(10);
     }
     // stop d_motor
-    //ev3_motor_stop(d_motor, false);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     int x = 0;
     while(x < 50){
