@@ -1022,18 +1022,18 @@ void runBlueStreet(){
     ev3_motor_stop(a_motor, false);
     tslp_tsk(100);
     ev3_motor_steer(left_motor, right_motor, 30, -40);
-    tslp_tsk(800);
+    tslp_tsk(850);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     tslp_tsk(100);
-    ev3_motor_steer(left_motor, right_motor, 20, 15);
+    ev3_motor_steer(left_motor, right_motor, 20, 10);
     tslp_tsk(1000);
-    ev3_motor_steer(left_motor, right_motor, -20, 10);
+    ev3_motor_steer(left_motor, right_motor, -20, 12);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor, right_motor, -20, -10);
     tslp_tsk(700);
     ev3_motor_steer(left_motor, right_motor, -20, 0);
-    tslp_tsk(200);
-    ev3_motor_steer(left_motor, right_motor, 20, 12);
+    tslp_tsk(100);
+    ev3_motor_steer(left_motor, right_motor, 20, 8);
     while (ev3_color_sensor_get_reflect(color_3) > 30) {
         display_sensors();
     }
@@ -1057,7 +1057,7 @@ void runGreenStreet(){
     //    display_sensors();
     //}
     //ev3_motor_steer(left_motor, right_motor, 0, 0);
-    wall_follow_with_tasks(54, 3, 0, 1, 0, 30);
+    wall_follow_with_tasks(53, 3, 0, 1, 0, 30);
     tslp_tsk(100);
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
@@ -1841,7 +1841,7 @@ void goBackToBase(int street){
         tslp_tsk(1200);
         //ev3_motor_stop(d_motor, false);
         ev3_motor_stop(a_motor, false);
-        ev3_motor_steer(left_motor, right_motor, -30, 5);
+        ev3_motor_steer(left_motor, right_motor, -30, -5);
         tslp_tsk(1200);
         ev3_motor_steer(left_motor, right_motor, 30, 10);
         tslp_tsk(1000);
