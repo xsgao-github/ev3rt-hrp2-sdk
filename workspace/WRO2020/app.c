@@ -1850,7 +1850,7 @@ void readCode() {
     //ev3_motor_stop(d_motor, false);
     ev3_motor_steer(left_motor, right_motor, 0, 0);
     int x = 0;
-    while(x < 1000){
+    while(x < 500){
         color3color = ev3_color_sensor_get_color(color_3);
         x += 1;
         tslp_tsk(10);
