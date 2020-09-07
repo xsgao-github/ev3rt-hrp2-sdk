@@ -1697,7 +1697,7 @@ void runRedStreet(){
         tslp_tsk(1900);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,10,0);
-        tslp_tsk(900);
+        tslp_tsk(750);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
         tslp_tsk(865);
@@ -1744,7 +1744,7 @@ void runRedStreet(){
         tslp_tsk(900);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(865);
+        tslp_tsk(750);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor,right_motor,-15,0);
@@ -1788,7 +1788,7 @@ void runRedStreet(){
     ev3_motor_set_power(a_motor,0);
     //move forward
     ev3_motor_steer(left_motor,right_motor,40,0);
-    tslp_tsk(500);
+    tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //detect line
     ev3_motor_steer(left_motor, right_motor, 30, 3);
@@ -1843,7 +1843,7 @@ void goBackToBase(int street){
         ev3_motor_stop(a_motor, false);
         ev3_motor_steer(left_motor, right_motor, -30, -5);
         tslp_tsk(1200);
-        ev3_motor_steer(left_motor, right_motor, 30, 10);
+        ev3_motor_steer(left_motor, right_motor, 30, 0);
         tslp_tsk(1000);
         ev3_motor_set_power(a_motor, 100);
         ev3_motor_steer(left_motor, right_motor, -30, 2);
