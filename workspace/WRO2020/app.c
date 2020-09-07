@@ -129,11 +129,11 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,0,0
+                30,1,0
             },
             //index 1
             {
-                75,0,0
+                75,1,0
             },
             //index 2
             {
@@ -141,11 +141,11 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                20,0,0
+                20,2,0
             },
             //index 4
             {
-                30,0,0
+                1000,0,0
             },
             //index 5
             {
@@ -225,11 +225,11 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                30,0,0
+                30,1,0
             },
             //index 1
             {
-                75,0,0
+                75,1,0
             },
             //index 2
             {
@@ -237,11 +237,11 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                20,0,0
+                20,2,0
             },
             //index 4
             {
-                30,0,0
+                1000,0,0
             },
             //index 5
             {
@@ -2160,24 +2160,15 @@ void execute_tasks(float distance) {
     }
 
     //check for d_motor task, execute task if task is to dispense material and back is loaded and it is time and it is the correct material
-    //execute part 1 of task
+    //execute task
     if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][0] && d_task_running == 0 && instructions.doAbrasive == 1) {
         ev3_motor_stop(d_motor, false);
-        //ev3_motor_rotate(d_motor, allTasks[pos.street][D_MOTOR][d_motor_index][2], 100, false);
-        ev3_motor_rotate(d_motor, 360, 100, false);
+        ev3_motor_rotate(d_motor, allTasks[pos.street][D_MOTOR][d_motor_index][1]*360, 40, false);
         //d_task_running = 1;
         d_motor_index++;
         ev3_speaker_play_tone(NOTE_G4, 50);
 
     }
-    //execute part 2 of task
-    //if (distance > allTasks[pos.street][D_MOTOR][d_motor_index][1] && d_task_running == 1 && instructions.doAbrasive == 1) {
-    //    ev3_motor_stop(d_motor, false);
-    //    ev3_motor_rotate(d_motor, -1*allTasks[pos.street][D_MOTOR][d_motor_index][2], 100, false);
-    //    d_task_running = 0;
-    //    d_motor_index += 1;
-    //    ev3_speaker_play_tone(NOTE_G5, 50);
-    //}
 
     //check for color_4 task, execute if it is time
     if (distance > allTasks[pos.street][COLOR_4][color_4_index][0]) {
