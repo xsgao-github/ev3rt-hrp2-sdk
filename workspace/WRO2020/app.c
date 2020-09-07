@@ -1801,9 +1801,12 @@ void runRedStreet(){
     }
     pos.street = YELLOW_STREET;
 }
-
-void goBackToBase(int Street){
-    if (Street == BLUE_STREET) {
+/**
+ * \breif goes back to home
+ * \param street BLUE_STREET, REDSTREET, or false
+**/
+void goBackToBase(int street){
+    if (street == BLUE_STREET) {
         ev3_motor_steer(left_motor,right_motor,-30, 5);
         //ev3_motor_set_power(d_motor, -100);
         ev3_motor_set_power(a_motor, -100);
@@ -1817,7 +1820,7 @@ void goBackToBase(int Street){
         ev3_motor_set_power(a_motor, 100);
         ev3_motor_steer(left_motor, right_motor, -30, 2);
         tslp_tsk(2000);
-    } else if (Street == RED_STREET) {
+    } else if (street == RED_STREET) {
         ev3_motor_steer(left_motor,right_motor,-30, 5);
         //ev3_motor_set_power(d_motor, -100);
         ev3_motor_set_power(a_motor, -100);
