@@ -294,7 +294,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 1
             {
-                8,18,200
+                3,18,200
             },
             //index 2
             {
@@ -478,8 +478,27 @@ void main_task(intptr_t unused) {
     readCode();
     //run2020();
     //goBackToBase(false);
-    writeInstructions(1,0,0,1,1,0,0,1);
+    writeInstructions(0,0,0,1,0,0,0,0);
     runRedStreet();
+    waitforButton();
+    writeInstructions(0,0,0,1,0,0,0,0);
+    runYellowStreet();
+    waitforButton();
+    writeInstructions(0,1,0,0,0,1,0,0);
+    runRedStreet();
+    waitforButton();
+    writeInstructions(0,1,0,0,0,0,0,0);
+    runYellowStreet();
+    waitforButton();
+    writeInstructions(0,0,0,0,0,1,1,0);
+    runRedStreet();
+    waitforButton();
+    writeInstructions(0,0,1,0,0,0,0,0);
+    runYellowStreet();
+    waitforButton();
+    writeInstructions(0,0,1,0,0,0,0,0);
+    runRedStreet();
+    waitforButton();
 }
 
 void run2020(){
@@ -1469,10 +1488,6 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,0,0);
     }
     else if(instructions.carDepot){
-        //move backwards
-        ev3_motor_steer(left_motor,right_motor,-30,0);
-        tslp_tsk(300);
-        ev3_motor_steer(left_motor,right_motor,0,0);
         //turn
         ev3_motor_steer(left_motor,right_motor,-20,90);
         tslp_tsk(250);
