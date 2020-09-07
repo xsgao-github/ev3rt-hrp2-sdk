@@ -1868,7 +1868,7 @@ void readCode() {
     while(x < 50){
         color3color = ev3_color_sensor_get_color(color_3);
         x += 1;
-        tslp_tsk(10);
+        tslp_tsk(15);
         displayValues(color3color,1,1,1);
     }
     if(color3color == 5){
@@ -2281,7 +2281,7 @@ void display_sensors() {
     int value;
 
     // wait for values to be refreshed
-    tslp_tsk(3);
+    tslp_tsk(5);
 
     // read motor counts
     value = ev3_motor_get_counts(left_motor);
