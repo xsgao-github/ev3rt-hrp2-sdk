@@ -98,7 +98,7 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                8,19,280
+                8,18,280
             },
             //index 1
             {
@@ -141,7 +141,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                30,2,0
+                25,2,0
             },
             //index 4
             {
@@ -237,7 +237,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                30,2,0
+                25,2,0
             },
             //index 4
             {
@@ -1868,7 +1868,7 @@ void readCode() {
     while(x < 50){
         color3color = ev3_color_sensor_get_color(color_3);
         x += 1;
-        tslp_tsk(10);
+        tslp_tsk(15);
         displayValues(color3color,1,1,1);
     }
     if(color3color == 5){
@@ -2281,7 +2281,7 @@ void display_sensors() {
     int value;
 
     // wait for values to be refreshed
-    tslp_tsk(3);
+    tslp_tsk(5);
 
     // read motor counts
     value = ev3_motor_get_counts(left_motor);
