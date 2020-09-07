@@ -1798,8 +1798,22 @@ void runRedStreet(){
     pos.street = YELLOW_STREET;
 }
 
-void goBackToBase(int fromBlueStreet){
-    if (fromBlueStreet) {
+void goBackToBase(int Street){
+    if (Street == BLUE_STREET) {
+        ev3_motor_steer(left_motor,right_motor,-30, 5);
+        //ev3_motor_set_power(d_motor, -100);
+        ev3_motor_set_power(a_motor, -100);
+        tslp_tsk(1200);
+        //ev3_motor_stop(d_motor, false);
+        ev3_motor_stop(a_motor, false);
+        ev3_motor_steer(left_motor, right_motor, -30, 8);
+        tslp_tsk(1200);
+        ev3_motor_steer(left_motor, right_motor, 20, -1);
+        tslp_tsk(1000);
+        ev3_motor_set_power(a_motor, 100);
+        ev3_motor_steer(left_motor, right_motor, -30, 2);
+        tslp_tsk(2000);
+    } else if (Street == RED_STREET) {
         ev3_motor_steer(left_motor,right_motor,-30, 5);
         //ev3_motor_set_power(d_motor, -100);
         ev3_motor_set_power(a_motor, -100);
@@ -1808,13 +1822,13 @@ void goBackToBase(int fromBlueStreet){
         ev3_motor_stop(a_motor, false);
         ev3_motor_steer(left_motor, right_motor, -30, 5);
         tslp_tsk(1200);
-        ev3_motor_steer(left_motor, right_motor, 20, -1);
+        ev3_motor_steer(left_motor, right_motor, 30, 10);
         tslp_tsk(1000);
         ev3_motor_set_power(a_motor, 100);
         ev3_motor_steer(left_motor, right_motor, -30, 2);
         tslp_tsk(2000);
     } else {
-        ev3_motor_steer(left_motor,right_motor,-30, 3);
+        ev3_motor_steer(left_motor,right_motor,-30, 5);
         //ev3_motor_set_power(d_motor, -100);
         ev3_motor_set_power(a_motor, -100);
         tslp_tsk(1200);
@@ -1828,7 +1842,6 @@ void goBackToBase(int fromBlueStreet){
         ev3_motor_steer(left_motor, right_motor, -30, 2);
         tslp_tsk(2000);
     }
-
     ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
     ev3_motor_stop(left_motor, false);
     ev3_motor_stop(right_motor, false);
@@ -1843,7 +1856,8 @@ void goBackToBase(int fromBlueStreet){
         tslp_tsk(200);
         ev3_led_set_color(LED_ORANGE);
         tslp_tsk(200);
-
+        ev3_led_set_color(LED_RED);
+        tslp_tsk(200);
     }
 }
 
