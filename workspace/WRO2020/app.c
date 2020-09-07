@@ -1405,7 +1405,7 @@ void runRedStreet(){
                 break;
             case 3:
                 ev3_motor_steer(left_motor,right_motor,25,3);
-                while(wheelDistance < 65){
+                while(wheelDistance < 68){
                     wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
                     tslp_tsk(1);
                 }
@@ -1422,7 +1422,7 @@ void runRedStreet(){
                 ev3_motor_reset_counts(right_motor);
                 wheelDistance = 0;
                 ev3_motor_steer(left_motor,right_motor,25,5);
-                while(wheelDistance < 55){
+                while(wheelDistance < 52){
                     if(wheelDistance > 20){
                         ev3_motor_set_power(a_motor,-80);
                     }
@@ -1451,7 +1451,7 @@ void runRedStreet(){
         //turn amotor back and turn
         ev3_motor_rotate(a_motor,500,-50,true);
         ev3_motor_steer(left_motor,right_motor,-15,75);
-        ev3_motor_rotate(a_motor,500,50,false);
+        ev3_motor_rotate(a_motor,200,50,false);
         tslp_tsk(1100);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back completely
@@ -2110,7 +2110,7 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
             isTurningA = 0;
             tasksLeftA -= 1;
         }
-        if(wheelDistance > next_d_motor_task[0] && tasksLeftD > 0 && back_loaded){
+        if(wheelDistance > next_d_motor_task[0] && tasksLeftD > 0){
             ev3_speaker_play_tone(NOTE_A4,60);
             ev3_motor_rotate(d_motor,360 * next_d_motor_task[1],20,false);
             d_motor_index += 1;
