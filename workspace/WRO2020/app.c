@@ -1855,6 +1855,7 @@ void readCode() {
         color3color = ev3_color_sensor_get_color(color_3);
         x += 1;
         tslp_tsk(10);
+        displayValues(color3color,1,1,1);
     }
     if(color3color == 5){
         pos.street = RED_STREET;
