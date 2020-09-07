@@ -1475,8 +1475,8 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,30,0);
         tslp_tsk(1100);
         ev3_motor_steer(left_motor,right_motor,0,0);
-        ev3_motor_steer(left_motor,right_motor,-30,0);
-        tslp_tsk(1100);
+        ev3_motor_steer(left_motor,right_motor,-30,-10);
+        tslp_tsk(1200);
         ev3_motor_steer(left_motor,right_motor,0,0);
         if(instructions.doSnow){
             //turn amotor
