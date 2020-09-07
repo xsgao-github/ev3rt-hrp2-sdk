@@ -1527,10 +1527,10 @@ void runRedStreet(){
     tslp_tsk(1500);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,10,45);
-    tslp_tsk(1000);
+    tslp_tsk(2000);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,10,-45);
-    tslp_tsk(1000);
+    tslp_tsk(2000);
     ev3_motor_steer(left_motor,right_motor,0,0);
     int abrasive = 0;
     if(instructions.doAbrasive){
