@@ -417,15 +417,15 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                5,40,-700
+                5,1,0
             },
             //index 1
             {
-                80,120,-900
+                80,1,0
             },
             //index 2
             {
-                0,20,-1200
+                0,2,0
             },
             //index 3
             {
@@ -1294,7 +1294,7 @@ void runYellowStreet(){
     ev3_motor_steer(left_motor,right_motor,0,0);
     //turn 2
     ev3_motor_steer(left_motor,right_motor,30,-45);
-    tslp_tsk(200);
+    tslp_tsk(250);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //Side Length
     if(instructions.doAbrasive){
@@ -1675,7 +1675,7 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,80);
         ev3_motor_steer(left_motor,right_motor,-15,90);
-        tslp_tsk(900);
+        tslp_tsk(800);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
         tslp_tsk(2000);
@@ -1687,14 +1687,14 @@ void runRedStreet(){
         tslp_tsk(1000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(900);
+        tslp_tsk(800);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor,right_motor,15,0);
         tslp_tsk(1700);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-15,90);
-        tslp_tsk(900);
+        tslp_tsk(800);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
         tslp_tsk(2000);
@@ -1703,7 +1703,7 @@ void runRedStreet(){
         tslp_tsk(2000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(900);
+        tslp_tsk(800);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor, right_motor, 15, 0);
@@ -1718,7 +1718,7 @@ void runRedStreet(){
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,80);
         ev3_motor_steer(left_motor,right_motor,-15,90);
-        tslp_tsk(900);
+        tslp_tsk(800);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
         tslp_tsk(2000);
@@ -1730,14 +1730,14 @@ void runRedStreet(){
         tslp_tsk(1000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(900);
+        tslp_tsk(800);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor,right_motor,-15,0);
         tslp_tsk(1700);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-15,90);
-        tslp_tsk(900);
+        tslp_tsk(800);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
         tslp_tsk(2000);
@@ -1746,7 +1746,7 @@ void runRedStreet(){
         tslp_tsk(2000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(900);
+        tslp_tsk(800);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor, right_motor, 15, 0);
