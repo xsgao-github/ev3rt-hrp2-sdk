@@ -290,7 +290,7 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                44,60,400
+                43,60,400
             },
             //index 1
             {
@@ -1312,7 +1312,7 @@ void runYellowStreet(){
     ev3_motor_steer(left_motor,right_motor,0,0);
     //move forward
     ev3_motor_steer(left_motor,right_motor,30,0);
-    tslp_tsk(350);
+    tslp_tsk(250);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //turn
     ev3_motor_steer(left_motor,right_motor,30,-45);
@@ -1700,7 +1700,7 @@ void runRedStreet(){
         tslp_tsk(800);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(845);
+        tslp_tsk(865);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor,right_motor,15,0);
@@ -1744,7 +1744,7 @@ void runRedStreet(){
         tslp_tsk(800);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(845);
+        tslp_tsk(865);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor,right_motor,-15,0);
