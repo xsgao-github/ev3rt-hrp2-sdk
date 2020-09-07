@@ -145,7 +145,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 4
             {
-                1000,0,0
+                30,0,0
             },
             //index 5
             {
@@ -241,7 +241,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 4
             {
-                1000,0,0
+                30,0,0
             },
             //index 5
             {
@@ -968,7 +968,7 @@ void runBlueStreet(){
         ev3_motor_steer(left_motor, right_motor, -10, 0);
         ev3_motor_set_power(a_motor, -80);
         tslp_tsk(250);
-        ev3_motor_rotate(right_motor, 240, 20, true);
+        ev3_motor_rotate(right_motor, 230, 20, true);
         ev3_motor_rotate(a_motor, 500, 80, true);
         tslp_tsk(100);
         linePID_with_tasks(32, 25);
