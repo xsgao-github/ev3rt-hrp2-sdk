@@ -1830,11 +1830,11 @@ void runRedStreet(){
 **/
 void goBackToBase(int street){
     if (street == RED_STREET) {
-        ev3_motor_steer(left_motor,right_motor,-30, 3);
+        ev3_motor_steer(left_motor,right_motor,-30, 1);
         ev3_motor_set_power(a_motor, 100);
         tslp_tsk(1200);
         ev3_motor_stop(a_motor, false);
-        ev3_motor_steer(left_motor, right_motor, -30, -3);
+        ev3_motor_steer(left_motor, right_motor, -30, -1);
         tslp_tsk(1200);
         ev3_motor_steer(left_motor, right_motor, 30, 10);
         tslp_tsk(1000);
@@ -1856,7 +1856,7 @@ void goBackToBase(int street){
     ev3_speaker_set_volume(100);
     ev3_speaker_play_tone(NOTE_C5, 500);
     ev3_lcd_draw_string("Program Finished", 10, 50);
-    ev3_lcd_draw_string("Flashing Lights", 12, 65);
+    ev3_lcd_draw_string("Flashing Lights", 15, 65);
     while (true) {
         ev3_led_set_color(LED_GREEN);
         tslp_tsk(200);
