@@ -1751,11 +1751,11 @@ void runRedStreet(){
 **/
 void goBackToBase(int street){
     if (street == RED_STREET) {
-        ev3_motor_steer(left_motor,right_motor,-30, 3);
+        ev3_motor_steer(left_motor,right_motor,-30, 5);
         ev3_motor_set_power(a_motor, 100);
         tslp_tsk(1200);
         ev3_motor_stop(a_motor, false);
-        ev3_motor_steer(left_motor, right_motor, -30, -2);
+        ev3_motor_steer(left_motor, right_motor, -30, -4);
         tslp_tsk(1200);
         ev3_motor_steer(left_motor, right_motor, 30, 5);
         tslp_tsk(1000);
