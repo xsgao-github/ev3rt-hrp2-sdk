@@ -45,20 +45,22 @@ rgb_raw_t rgb4;
 position pos = {-1, -1};
 directions instructions = {0,0,0,0,0,0,0,0};
 /**
- * instructions for robot
- * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
- * Index 2 - Task or Taskdone
+ * Instructions for robot
+ * 
+ * Index_2 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
+ * Index_2 - Task or Taskdone
 **/
 int tasks[4][2] = {{-1, 0}, {-1, 0}, {-1, 0}, {-1, 0}};
 /**
  * All task directions written to here
+ * 
  * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
  * Index 2 - Sensor/Motor [COLOR_4, A_MOTOR, D_MOTOR]
  * Index 3 - index of task (0-5), with 7th spacer 6
  * Index 4 - data:
- * ---------------COLOR_4-[distance at read (cm), null, null]
- * ---------------A_MOTOR-[distance at execute (cm), distance at return (cm), degrees to rotate]
- * ---------------D_MOTOR-[distance at execute (cm), number of abrasive to dispense (int), null]
+ * ----------------COLOR_4-[distance at read (cm), null, null]
+ * ----------------A_MOTOR-[distance at execute (cm), distance at return (cm), degrees to rotate]
+ * ----------------D_MOTOR-[distance at execute (cm), number of abrasive to dispense (int), null]
 **/
 int allTasks[4][3][7][3] = {
     //blue
@@ -448,6 +450,7 @@ int allTasks[4][3][7][3] = {
 };
 /**
  * Position at where the car was detected
+ * 
  * Index 1 - Car detected [0,1,2]
 **/
 int carDetected[4] = {
@@ -1895,7 +1898,6 @@ void readCode() {
  * \brief follows a solid line using a PID and does tasks
  * \param distance Distance in cm
  * \param speed speed abs (recommended 25 with tasks, 30 without)
- * \param doCar is it a car-collecting road?
 **/
 void linePID_with_tasks(int distance, int speed){
     ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
@@ -2150,7 +2152,7 @@ void waitforButton() {
  * \brief literally writes parameters
  * \param doSnow robot collects snow on street if true
  * \param doCar robot collects cars on street if true
- * \param doAbrasive robot dispensive abrasive material on street if true
+ * \param doAbrasive robot dispenses abrasive material on street if true
  * \param detectCar robot detects cars on street if true
  * \param snowDepot robot goes to snowDepot after running street | WARNING: only supported by runRedStreet
  * \param carDepot robot goes to carDepot (parking lot) after running street | WARNING: only supported by runRedStreet
