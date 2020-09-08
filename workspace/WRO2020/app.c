@@ -486,22 +486,18 @@ void main_task(intptr_t unused) {
 void run2020(){
     if (pos.street == RED_STREET){
         if(tasks[RED_STREET][0] == 0 && tasks[YELLOW_STREET][0] == 0){
-                if(tasks[GREEN_STREET][0] == 1){
-                    writeInstructions(1,0,0,1,1,0,2,0);
-                    runRedStreet();
-                    writeInstructions(0,0,1,0,0,0,0,0);
-                    runBlueStreet();
-                    writeInstructions(1,0,0,1,0,0,0,0);
-                    runYellowStreet();
-                    writeInstructions(0,0,1,0,0,0,0,0);
-                    runGreenStreet();
-                    writeInstructions(0,0,0,0,1,0,0,0);
-                    runRedStreet();
-                    writeInstructions(0,1,0,0,0,0,0,0);
-                    runYellowStreet();
-                    writeInstructions(0,1,0,0,0,1,0,0);
-                    runRedStreet();
-                    goBackToBase(RED_STREET);
+            if(tasks[GREEN_STREET][0] == 1){
+                writeInstructions(1,0,0,1,1,0,2,0);
+                runRedStreet();
+                writeInstructions(0,0,1,0,0,0,0,0);
+                runBlueStreet();
+                writeInstructions(1,0,0,1,0,0,0,0);
+                runYellowStreet();
+                writeInstructions(0,0,1,0,0,0,0,0);
+                runGreenStreet();
+                writeInstructions(0,0,0,0,1,0,0,0);
+                runRedStreet();
+                goBackToBase(RED_STREET);
             }
             else if(tasks[BLUE_STREET][0] == 1){
                 writeInstructions(1,0,0,1,1,0,1,0);
@@ -513,10 +509,6 @@ void run2020(){
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runGreenStreet();
                 writeInstructions(0,0,0,0,1,0,0,0);
-                runRedStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runYellowStreet();
-                writeInstructions(0,1,0,0,0,1,0,0);
                 runRedStreet();
                 goBackToBase(RED_STREET);
             }
@@ -531,10 +523,6 @@ void run2020(){
                 runBlueStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runGreenStreet();
-                writeInstructions(0,1,0,0,0,1,0,0);
-                runRedStreet();
                 goBackToBase(RED_STREET);
             }
             else if(tasks[BLUE_STREET][0] == 1){
@@ -546,10 +534,6 @@ void run2020(){
                 runBlueStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runGreenStreet();
-                writeInstructions(0,1,0,0,0,1,0,0);
-                runRedStreet();
                 goBackToBase(RED_STREET);
             }
         }
@@ -559,17 +543,11 @@ void run2020(){
                 runRedStreet();
                 writeInstructions(1,0,0,1,0,0,0,0);
                 runBlueStreet();
-                writeInstructions(0,0,0,0,0,0,0,0);
+                writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runGreenStreet();
                 writeInstructions(0,0,0,0,1,0,0,0);
-                runRedStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runBlueStreet();
-                writeInstructions(0,0,1,0,0,0,0,0);
-                runYellowStreet();
-                writeInstructions(0,1,0,0,0,1,0,0);
                 runRedStreet();
                 goBackToBase(RED_STREET);
             }
@@ -578,17 +556,11 @@ void run2020(){
                 runRedStreet();
                 writeInstructions(1,0,0,1,0,0,0,0);
                 runBlueStreet();
-                writeInstructions(0,0,0,0,0,0,0,0);
+                writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runGreenStreet();
                 writeInstructions(0,0,0,0,1,0,0,0);
-                runRedStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runBlueStreet();
-                writeInstructions(0,0,1,0,0,0,0,0);
-                runYellowStreet();
-                writeInstructions(0,1,0,0,0,1,0,0);
                 runRedStreet();
                 goBackToBase(RED_STREET);
             }
@@ -603,13 +575,7 @@ void run2020(){
                 runBlueStreet();
                 writeInstructions(1,0,0,1,0,0,0,0);
                 runYellowStreet();
-                writeInstructions(0,0,0,0,1,0,0,0);
-                runRedStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runYellowStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runGreenStreet();
-                writeInstructions(0,0,1,0,0,1,0,0);
+                writeInstructions(0,0,1,0,1,0,0,0);
                 runRedStreet();
                 goBackToBase(RED_STREET);
             }
@@ -623,12 +589,6 @@ void run2020(){
                 writeInstructions(1,0,0,1,0,0,0,0);
                 runYellowStreet();
                 writeInstructions(0,0,1,0,1,0,0,0);
-                runRedStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runYellowStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runGreenStreet();
-                writeInstructions(0,0,0,0,0,1,0,0);
                 runRedStreet();
                 goBackToBase(RED_STREET);
             }
@@ -643,18 +603,12 @@ void run2020(){
                 runYellowStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runGreenStreet();
-                writeInstructions(0,0,0,0,1,0,0,0);
-                runRedStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runBlueStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runYellowStreet();
-                writeInstructions(0,0,1,0,0,1,0,0);
+                writeInstructions(0,0,1,0,1,0,0,0);
                 runRedStreet();
                 goBackToBase(RED_STREET);
             }
             else if(tasks[GREEN_STREET][0] == 1){
-                writeInstructions(0,0,0,0,0,0,2,0);
+                writeInstructions(0,0,0,0,0,0,1,0);
                 runRedStreet();
                 writeInstructions(1,0,0,1,0,0,0,0);
                 runBlueStreet();
@@ -663,12 +617,6 @@ void run2020(){
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runGreenStreet();
                 writeInstructions(0,0,1,0,1,0,0,0);
-                runRedStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runBlueStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runYellowStreet();
-                writeInstructions(0,0,0,0,0,1,0,0);
                 runRedStreet();
                 goBackToBase(RED_STREET);
             }
@@ -681,17 +629,9 @@ void run2020(){
                 runRedStreet();
                 writeInstructions(1,0,0,1,0,0,0,0);
                 runBlueStreet();
-                writeInstructions(0,0,0,0,0,0,0,0);
-                runYellowStreet();
-                writeInstructions(0,0,0,0,1,0,0,0);
-                runRedStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runBlueStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runGreenStreet();
-                writeInstructions(0,0,1,0,0,1,0,0);
+                writeInstructions(0,0,1,0,1,0,0,0);
                 runRedStreet();
                 goBackToBase(RED_STREET);
             }
@@ -706,14 +646,6 @@ void run2020(){
                 runYellowStreet();
                 writeInstructions(0,0,1,0,1,0,0,0);
                 runRedStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runBlueStreet();
-                writeInstructions(0,0,0,0,0,0,0,0);
-                runYellowStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runGreenStreet();
-                writeInstructions(0,0,0,0,0,1,0,0);
-                runRedStreet();
                 goBackToBase(RED_STREET);
             }
         }
@@ -727,11 +659,9 @@ void run2020(){
                 runRedStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runBlueStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runYellowStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runGreenStreet();
-                writeInstructions(0,1,0,0,0,1,0,0);
+                writeInstructions(0,0,0,0,0,1,0,0);
                 runRedStreet();
                 goBackToBase(RED_STREET);
             }
@@ -742,11 +672,9 @@ void run2020(){
                 runRedStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runBlueStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runYellowStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runGreenStreet();
-                writeInstructions(0,1,0,0,0,1,0,0);
+                writeInstructions(0,0,0,0,0,1,0,0);
                 runRedStreet();
                 goBackToBase(RED_STREET);
             }
@@ -757,15 +685,13 @@ void run2020(){
                 runYellowStreet();
                 writeInstructions(1,0,0,1,0,0,0,0);
                 runGreenStreet();
-                writeInstructions(1,0,0,1,1,0,2,1);
+                writeInstructions(1,0,0,1,1,0,2,0);
                 runRedStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runBlueStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runGreenStreet();
-                writeInstructions(0,1,0,0,0,1,0,0);
+                writeInstructions(0,0,0,0,0,1,0,0);
                 runRedStreet();
                 goBackToBase(RED_STREET);
             }
@@ -774,15 +700,13 @@ void run2020(){
                 runYellowStreet();
                 writeInstructions(1,0,0,1,0,0,0,0);
                 runGreenStreet();
-                writeInstructions(1,0,0,1,1,0,1,1);
+                writeInstructions(1,0,0,1,1,0,1,0);
                 runRedStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runBlueStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runGreenStreet();
-                writeInstructions(0,1,0,0,0,1,0,0);
+                writeInstructions(0,0,0,0,0,1,0,0);
                 runRedStreet();
                 goBackToBase(RED_STREET);
             }
@@ -1761,6 +1685,8 @@ void goBackToBase(int street){
         tslp_tsk(1000);
         ev3_motor_steer(left_motor, right_motor, -30, 2);
         tslp_tsk(2000);
+    } else if (street == YELLOW_STREET) {
+        //empty
     } else {
         ev3_motor_steer(left_motor,right_motor,-30, 0);
         ev3_motor_set_power(a_motor, 100);
@@ -1768,6 +1694,7 @@ void goBackToBase(int street){
         ev3_motor_stop(a_motor, false);
         tslp_tsk(4200);
     }
+
     ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
     ev3_motor_stop(left_motor, false);
     ev3_motor_stop(right_motor, false);
