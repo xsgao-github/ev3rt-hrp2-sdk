@@ -1638,7 +1638,7 @@ void runRedStreet(){
         tslp_tsk(1900);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,10,0);
-        tslp_tsk(750);
+        tslp_tsk(780);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
         tslp_tsk(865);
@@ -1669,7 +1669,7 @@ void runRedStreet(){
     
     if(instructions.collectAbrasive == 2){
         ev3_motor_steer(left_motor,right_motor,-15,0);
-        tslp_tsk(600);
+        tslp_tsk(650);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,80);
         ev3_motor_steer(left_motor,right_motor,-15,90);
@@ -1685,11 +1685,11 @@ void runRedStreet(){
         tslp_tsk(900);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(750);
+        tslp_tsk(780);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor,right_motor,-15,0);
-        tslp_tsk(1700);
+        tslp_tsk(1650);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-15,90);
         tslp_tsk(845);
