@@ -45,20 +45,22 @@ rgb_raw_t rgb4;
 position pos = {-1, -1};
 directions instructions = {0,0,0,0,0,0,0,0};
 /**
- * instructions for robot
- * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
- * Index 2 - Task or Taskdone
+ * Instructions for robot
+ * 
+ * Index_2 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
+ * Index_2 - Task or Taskdone
 **/
 int tasks[4][2] = {{-1, 0}, {-1, 0}, {-1, 0}, {-1, 0}};
 /**
  * All task directions written to here
+ * 
  * Index 1 - Street [BLUE_STREET, GREEN_STREET, YELLOW_STREET, RED_STREET]
  * Index 2 - Sensor/Motor [COLOR_4, A_MOTOR, D_MOTOR]
  * Index 3 - index of task (0-5), with 7th spacer 6
  * Index 4 - data:
- * ---------------COLOR_4-[distance at read (cm), null, null]
- * ---------------A_MOTOR-[distance at execute (cm), distance at return (cm), degrees to rotate]
- * ---------------D_MOTOR-[distance at execute (cm), number of abrasive to dispense (int), null]
+ * ----------------COLOR_4-[distance at read (cm), null, null]
+ * ----------------A_MOTOR-[distance at execute (cm), distance at return (cm), degrees to rotate]
+ * ----------------D_MOTOR-[distance at execute (cm), number of abrasive to dispense (int), null]
 **/
 int allTasks[4][3][7][3] = {
     //blue
@@ -98,7 +100,7 @@ int allTasks[4][3][7][3] = {
         {
             //index 0
             {
-                8,18,280
+                5,18,280
             },
             //index 1
             {
@@ -448,6 +450,7 @@ int allTasks[4][3][7][3] = {
 };
 /**
  * Position at where the car was detected
+ * 
  * Index 1 - Car detected [0,1,2]
 **/
 int carDetected[4] = {
@@ -982,7 +985,7 @@ void runBlueStreet(){
         ev3_motor_steer(left_motor, right_motor, 0, 0);
         tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
-        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+        while (ev3_color_sensor_get_reflect(color_2) > 15) {
             display_sensors();
         }
         tslp_tsk(150);
@@ -1000,7 +1003,7 @@ void runBlueStreet(){
         ev3_motor_set_power(a_motor, -50);
         tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
-        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+        while (ev3_color_sensor_get_reflect(color_2) > 15) {
             display_sensors();
         }
         tslp_tsk(150);
@@ -1026,7 +1029,7 @@ void runBlueStreet(){
     } else if (instructions.doAbrasive == 1) {
         linePID_with_tasks(84, 30);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
-        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+        while (ev3_color_sensor_get_reflect(color_2) > 15) {
             display_sensors();
         }
         tslp_tsk(150);
@@ -1124,7 +1127,7 @@ void runGreenStreet(){
         tslp_tsk(100);
         ev3_motor_rotate(a_motor, 300, 80, false);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
-        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+        while (ev3_color_sensor_get_reflect(color_2) > 15) {
             display_sensors();
         }
         tslp_tsk(150);
@@ -1141,7 +1144,7 @@ void runGreenStreet(){
         ev3_motor_set_power(a_motor, -50);
         tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
-        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+        while (ev3_color_sensor_get_reflect(color_2) > 15) {
             display_sensors();
         }
         tslp_tsk(150);
@@ -1171,7 +1174,7 @@ void runGreenStreet(){
         linePID_with_tasks(84, 30);
         tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
-        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+        while (ev3_color_sensor_get_reflect(color_2) > 15) {
             display_sensors();
         }
         tslp_tsk(150);
@@ -1748,15 +1751,15 @@ void runRedStreet(){
 **/
 void goBackToBase(int street){
     if (street == RED_STREET) {
-        ev3_motor_steer(left_motor,right_motor,-30, 1);
+        ev3_motor_steer(left_motor,right_motor,-30, 5);
         ev3_motor_set_power(a_motor, 100);
         tslp_tsk(1200);
         ev3_motor_stop(a_motor, false);
-        ev3_motor_steer(left_motor, right_motor, -30, -1);
+        ev3_motor_steer(left_motor, right_motor, -30, -4);
         tslp_tsk(1200);
-        ev3_motor_steer(left_motor, right_motor, 30, 10);
+        ev3_motor_steer(left_motor, right_motor, 30, 5);
         tslp_tsk(1000);
-        ev3_motor_steer(left_motor, right_motor, -30, 0);
+        ev3_motor_steer(left_motor, right_motor, -30, 2);
         tslp_tsk(2000);
     } else {
         ev3_motor_steer(left_motor,right_motor,-30, 0);
@@ -1895,7 +1898,6 @@ void readCode() {
  * \brief follows a solid line using a PID and does tasks
  * \param distance Distance in cm
  * \param speed speed abs (recommended 25 with tasks, 30 without)
- * \param doCar is it a car-collecting road?
 **/
 void linePID_with_tasks(int distance, int speed){
     ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
@@ -2150,7 +2152,7 @@ void waitforButton() {
  * \brief literally writes parameters
  * \param doSnow robot collects snow on street if true
  * \param doCar robot collects cars on street if true
- * \param doAbrasive robot dispensive abrasive material on street if true
+ * \param doAbrasive robot dispenses abrasive material on street if true
  * \param detectCar robot detects cars on street if true
  * \param snowDepot robot goes to snowDepot after running street | WARNING: only supported by runRedStreet
  * \param carDepot robot goes to carDepot (parking lot) after running street | WARNING: only supported by runRedStreet

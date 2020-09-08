@@ -18,14 +18,14 @@
 
 /**
  * \brief Struct for runStreets
- * Index 1: doSnow
- * Index 2: doCar
- * Index 3: doAbrasive
- * Index 4: detectCar
- * Index 5: snowDepot (Only for red street)
- * Index 6: carDepot (Only for red street)
- * Index 7: collectAbrasive (Only for red street)
- * Index 8: uTurn (Only for red street)
+ * \param Index_1: doSnow
+ * \param Index_2: doCar
+ * \param Index_3: doAbrasive
+ * \param Index_4: detectCar
+ * \param Index_5: snowDepot (Only for red street)
+ * \param Index_6: carDepot (Only for red street)
+ * \param Index_7: collectAbrasive (Only for red street)
+ * \param Index_8: uTurn (Only for red street)
 **/
 typedef struct {
     int doSnow;
