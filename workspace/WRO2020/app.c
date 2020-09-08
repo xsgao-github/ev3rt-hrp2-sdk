@@ -477,7 +477,6 @@ void main_task(intptr_t unused) {
     init();
     readCode();
     run2020();
-    goBackToBase(false);
 }
 
 void run2020(){
@@ -1808,46 +1807,32 @@ void runRedStreet(){
 void goBackToBase(int street){
     if (street == BLUE_STREET) {
         ev3_motor_steer(left_motor,right_motor,-30, 8);
-        //ev3_motor_set_power(d_motor, -100);
-        ev3_motor_set_power(a_motor, -100);
+        ev3_motor_set_power(a_motor, 100);
         tslp_tsk(1200);
-        //ev3_motor_stop(d_motor, false);
         ev3_motor_stop(a_motor, false);
         ev3_motor_steer(left_motor, right_motor, -30, -5);
         tslp_tsk(1200);
         ev3_motor_steer(left_motor, right_motor, 20, 10);
         tslp_tsk(1000);
-        ev3_motor_set_power(a_motor, 100);
         ev3_motor_steer(left_motor, right_motor, -30, 3);
         tslp_tsk(2000);
     } else if (street == RED_STREET) {
-        ev3_motor_steer(left_motor,right_motor,-30, 5);
-        //ev3_motor_set_power(d_motor, -100);
-        ev3_motor_set_power(a_motor, -100);
+        ev3_motor_steer(left_motor,right_motor,-30, 3);
+        ev3_motor_set_power(a_motor, 100);
         tslp_tsk(1200);
-        //ev3_motor_stop(d_motor, false);
         ev3_motor_stop(a_motor, false);
-        ev3_motor_steer(left_motor, right_motor, -30, -5);
+        ev3_motor_steer(left_motor, right_motor, -30, -3);
         tslp_tsk(1200);
         ev3_motor_steer(left_motor, right_motor, 30, 10);
         tslp_tsk(1000);
-        ev3_motor_set_power(a_motor, 100);
-        ev3_motor_steer(left_motor, right_motor, -30, 2);
+        ev3_motor_steer(left_motor, right_motor, -30, 0);
         tslp_tsk(2000);
     } else {
-        ev3_motor_steer(left_motor,right_motor,-30, 5);
-        //ev3_motor_set_power(d_motor, -100);
-        ev3_motor_set_power(a_motor, -100);
-        tslp_tsk(1200);
-        //ev3_motor_stop(d_motor, false);
-        ev3_motor_stop(a_motor, false);
-        ev3_motor_steer(left_motor, right_motor, -30, -5);
-        tslp_tsk(1200);
-        ev3_motor_steer(left_motor, right_motor, 30, 10);
-        tslp_tsk(1000);
+        ev3_motor_steer(left_motor,right_motor,-30, 0);
         ev3_motor_set_power(a_motor, 100);
-        ev3_motor_steer(left_motor, right_motor, -30, 2);
-        tslp_tsk(2000);
+        tslp_tsk(1200);
+        ev3_motor_stop(a_motor, false);
+        tslp_tsk(4200);
     }
     ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
     ev3_motor_stop(left_motor, false);
