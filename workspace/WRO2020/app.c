@@ -1565,7 +1565,7 @@ void runRedStreet(){
         tslp_tsk(10);
     }
     ev3_motor_steer(left_motor,right_motor,0,0);
-    if(instructions.uTurn){
+    if(instructions.uTurn && 0){
         ev3_motor_steer(left_motor,right_motor,15,90);
         tslp_tsk(1700);
         ev3_motor_steer(left_motor,right_motor,0,0);
@@ -1728,7 +1728,7 @@ void runRedStreet(){
     tslp_tsk(700);
     ev3_motor_set_power(a_motor,0);
     //move forward
-    ev3_motor_steer(left_motor,right_motor,40,3);
+    ev3_motor_steer(left_motor,right_motor,20,5);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //detect line
@@ -1987,7 +1987,7 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
         float error = (rgb4.r + rgb4.g + rgb4.b) / 3 - 40;
         integral = error + integral * 0.5;
         float steer = 0.5 * error + 0 * integral + 0.3 * (error - lasterror);
-        ev3_motor_steer(left_motor, right_motor, 15, steer);
+        ev3_motor_steer(left_motor, right_motor, 20, steer);
         lasterror = error;
         tslp_tsk(10);
     }
