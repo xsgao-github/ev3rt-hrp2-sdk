@@ -985,7 +985,7 @@ void runBlueStreet(){
         ev3_motor_steer(left_motor, right_motor, 0, 0);
         tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
-        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+        while (ev3_color_sensor_get_reflect(color_2) > 15) {
             display_sensors();
         }
         tslp_tsk(150);
@@ -1003,7 +1003,7 @@ void runBlueStreet(){
         ev3_motor_set_power(a_motor, -50);
         tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
-        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+        while (ev3_color_sensor_get_reflect(color_2) > 15) {
             display_sensors();
         }
         tslp_tsk(150);
@@ -1029,7 +1029,7 @@ void runBlueStreet(){
     } else if (instructions.doAbrasive == 1) {
         linePID_with_tasks(84, 30);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
-        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+        while (ev3_color_sensor_get_reflect(color_2) > 15) {
             display_sensors();
         }
         tslp_tsk(150);
@@ -1127,7 +1127,7 @@ void runGreenStreet(){
         tslp_tsk(100);
         ev3_motor_rotate(a_motor, 300, 80, false);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
-        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+        while (ev3_color_sensor_get_reflect(color_2) > 15) {
             display_sensors();
         }
         tslp_tsk(150);
@@ -1144,7 +1144,7 @@ void runGreenStreet(){
         ev3_motor_set_power(a_motor, -50);
         tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
-        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+        while (ev3_color_sensor_get_reflect(color_2) > 15) {
             display_sensors();
         }
         tslp_tsk(150);
@@ -1174,7 +1174,7 @@ void runGreenStreet(){
         linePID_with_tasks(84, 30);
         tslp_tsk(100);
         ev3_motor_steer(left_motor, right_motor, 10, -1);
-        while (ev3_color_sensor_get_reflect(color_2) > 20) {
+        while (ev3_color_sensor_get_reflect(color_2) > 15) {
             display_sensors();
         }
         tslp_tsk(150);
