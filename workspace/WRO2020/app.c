@@ -27,7 +27,7 @@ void runRedStreet();
 void goBackToBase(int fromBlueStreet);
 void readCode();
 void linePID_with_tasks(int distance, int speed);
-void color4PID(int distance,int tasksNumA,int tasksNumD);
+void color3PID(int distance,int tasksNumA,int tasksNumD);
 void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,int tasksNumD,int speed);
 void execute_tasks(float distance);
 void waitforButton();
@@ -479,7 +479,9 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    run2020();
+    writeInstructions(1,0,0,1,1,0,1,0);
+    runRedStreet();
+    //run2020();
     goBackToBase(false);
 }
 
@@ -1450,8 +1452,16 @@ void runRedStreet(){
     ev3_motor_steer(left_motor,right_motor,10,45);
     tslp_tsk(1700);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor, right_motor, 20, 0);
+    while (ev3_color_sensor_get_reflect(color_3) > 35) {
+        tslp_tsk(10);
+    }
+    ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_steer(left_motor, right_motor, -20, 0);
+    tslp_tsk(150);
+    ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_steer(left_motor,right_motor,10,-45);
-    tslp_tsk(1800);
+    tslp_tsk(1700);
     ev3_motor_steer(left_motor,right_motor,0,0);
     int abrasive = 0;
     if(instructions.doAbrasive){
@@ -1459,12 +1469,12 @@ void runRedStreet(){
     }
     a_motor_index = 3;
     //Side Length
-    color4PID(37,0,abrasive);
+    color3PID(37,0,abrasive);
     ev3_motor_rotate(a_motor,400,-50,false);
     ev3_speaker_play_tone(NOTE_A4,60);
     //detect line
     ev3_motor_steer(left_motor, right_motor, 15, 0);
-    while (ev3_color_sensor_get_reflect(color_3) > 35) {
+    while (ev3_color_sensor_get_reflect(color_2) > 35) {
         tslp_tsk(10);
     }
     ev3_motor_steer(left_motor,right_motor,0,0);
@@ -1518,7 +1528,7 @@ void runRedStreet(){
         tslp_tsk(1400);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //Side Length
-        color4PID(37,0,0);
+        color3PID(37,0,0);
         //detect line
         ev3_motor_steer(left_motor, right_motor, 15, 0);
         while (ev3_color_sensor_get_reflect(color_3) > 35) {
@@ -1528,36 +1538,32 @@ void runRedStreet(){
     }
     if(instructions.collectAbrasive == 1){
         ev3_motor_steer(left_motor,right_motor,-15,0);
-        tslp_tsk(2300);
+        tslp_tsk(2700);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,80);
-        ev3_motor_steer(left_motor,right_motor,-15,90);
-        tslp_tsk(845);
+        ev3_motor_steer(left_motor,right_motor,15,-45);
+        tslp_tsk(1690);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
         tslp_tsk(1900);
         ev3_motor_steer(left_motor,right_motor,0,0);
-        ev3_motor_steer(left_motor,right_motor,5,0);
+        ev3_motor_steer(left_motor,right_motor,10,0);
         tslp_tsk(1900);
         ev3_motor_steer(left_motor,right_motor,0,0);
-        ev3_motor_steer(left_motor,right_motor,10,0);
-        tslp_tsk(780);
-        ev3_motor_steer(left_motor,right_motor,0,0);
-        ev3_motor_steer(left_motor,right_motor,15,90);
-        tslp_tsk(865);
+        ev3_motor_steer(left_motor,right_motor,-15,-45);
+        tslp_tsk(1690);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
-        ev3_motor_steer(left_motor,right_motor,15,0);
-        tslp_tsk(1700);
-        ev3_motor_steer(left_motor,right_motor,0,0);
+        color3PID(20,0,0);
+        waitforButton();
         ev3_motor_steer(left_motor,right_motor,-15,90);
         tslp_tsk(845);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-10,0);
-        tslp_tsk(1900);
+        tslp_tsk(1000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,10,0);
-        tslp_tsk(1900);
+        tslp_tsk(1000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,15,90);
         tslp_tsk(845);
@@ -1568,6 +1574,7 @@ void runRedStreet(){
             tslp_tsk(10);
         }
         ev3_motor_steer(left_motor,right_motor,0,0);
+        waitforButton();
     }
     
     if(instructions.collectAbrasive == 2){
@@ -1873,7 +1880,7 @@ void linePID_with_tasks(int distance, int speed){
  * \param tasksNumA amount of tasks for A_Motor
  * \param tasksNumD amount of tasks for D_Motor
 **/
-void color4PID(int distance,int tasksNumA,int tasksNumD){
+void color3PID(int distance,int tasksNumA,int tasksNumD){
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_reset_counts(a_motor);
@@ -1920,12 +1927,10 @@ void color4PID(int distance,int tasksNumA,int tasksNumD){
             tasksLeftD -= 1;
         }
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
-        bool_t val = ht_nxt_color_sensor_measure_rgb(color_4,  &rgb4);
-        assert(val);
-        float error = (rgb4.r + rgb4.g + rgb4.b) / 3 - 40;
+        float error = ev3_color_sensor_get_reflect(color_3) - 37;
         integral = error + integral * 0.5;
-        float steer = 0.5 * error + 0 * integral + 0.3 * (error - lasterror);
-        ev3_motor_steer(left_motor, right_motor, 20, steer);
+        float steer = 0.3 * error + 0.2 * integral + 0.1 * (error - lasterror);
+        ev3_motor_steer(left_motor, right_motor, 15, steer);
         lasterror = error;
         tslp_tsk(10);
     }
@@ -2109,8 +2114,8 @@ void writeInstructions(int doSnow, int doCar, int doAbrasive, int detectCar, int
 void init() {
     // Register button handlers
     ev3_button_set_on_clicked(BACK_BUTTON, button_clicked_handler, BACK_BUTTON);
-    ev3_button_set_on_clicked(DOWN_BUTTON, button_clicked_handler, DOWN_BUTTON);
-    ev3_button_set_on_clicked(UP_BUTTON, button_clicked_handler, UP_BUTTON);
+    //ev3_button_set_on_clicked(DOWN_BUTTON, button_clicked_handler, DOWN_BUTTON);
+    //ev3_button_set_on_clicked(UP_BUTTON, button_clicked_handler, UP_BUTTON);
     
     // Configure motors
     ev3_motor_config(left_motor, LARGE_MOTOR);
