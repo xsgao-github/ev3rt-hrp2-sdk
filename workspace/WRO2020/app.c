@@ -719,14 +719,10 @@ void run2020(){
                 runYellowStreet();
                 writeInstructions(1,0,0,1,1,0,1,1);
                 runRedStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runBlueStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runGreenStreet();
-                writeInstructions(0,1,0,0,0,1,0,0);
-                runRedStreet();
                 goBackToBase(RED_STREET);
             }
             else if(tasks[GREEN_STREET][0] == 1){
@@ -734,16 +730,12 @@ void run2020(){
                 runBlueStreet();
                 writeInstructions(0,0,0,0,0,0,0,0);
                 runYellowStreet();
-                writeInstructions(1,0,0,1,1,0,1,2);
+                writeInstructions(1,0,0,1,1,0,2,1);
                 runRedStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runBlueStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runGreenStreet();
-                writeInstructions(0,1,0,0,0,1,0,0);
-                runRedStreet();
                 goBackToBase(RED_STREET);
             }
         }
@@ -757,11 +749,9 @@ void run2020(){
                 runRedStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runBlueStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
+                writeInstructions(0,0,0,0,0,0,0,0);
                 runYellowStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runGreenStreet();
-                writeInstructions(0,0,1,0,0,1,0,0);
+                writeInstructions(0,0,1,0,0,0,0,0);
                 runRedStreet();
                 goBackToBase(RED_STREET);
             }
@@ -774,11 +764,9 @@ void run2020(){
                 runRedStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runBlueStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
+                writeInstructions(0,0,0,0,0,0,0,0);
                 runYellowStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runGreenStreet();
-                writeInstructions(0,0,1,0,0,1,0,0);
+                writeInstructions(0,0,1,0,0,0,0,0);
                 runRedStreet();
                 goBackToBase(RED_STREET);
             }
@@ -791,9 +779,7 @@ void run2020(){
                 runYellowStreet();
                 writeInstructions(0,0,0,0,1,0,2,0);
                 runRedStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runBlueStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
+                writeInstructions(0,0,0,0,0,0,0,0);
                 runYellowStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runGreenStreet();
@@ -808,9 +794,7 @@ void run2020(){
                 runYellowStreet();
                 writeInstructions(0,0,0,0,1,0,1,0);
                 runRedStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runBlueStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
+                writeInstructions(0,0,0,0,0,0,0,0);
                 runYellowStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runGreenStreet();
@@ -829,12 +813,8 @@ void run2020(){
                 runGreenStreet();
                 writeInstructions(0,0,0,0,1,0,2,0);
                 runRedStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runBlueStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runGreenStreet();
                 writeInstructions(0,0,1,0,0,1,0,0);
                 runRedStreet();
                 goBackToBase(RED_STREET);
@@ -848,12 +828,8 @@ void run2020(){
                 runGreenStreet();
                 writeInstructions(0,0,0,0,1,0,1,0);
                 runRedStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runBlueStreet();
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runYellowStreet();
-                writeInstructions(0,1,0,0,0,0,0,0);
-                runGreenStreet();
                 writeInstructions(0,0,1,0,0,1,0,0);
                 runRedStreet();
                 goBackToBase(RED_STREET);
@@ -962,7 +938,7 @@ void runBlueStreet(){
         ev3_motor_rotate(right_motor, 235, 20, true);
         tslp_tsk(100);
         d_motor_index++;
-        linePID_with_tasks(35, 30);
+        linePID_with_tasks(32, 30);
     } else {
         ev3_speaker_play_tone(NOTE_G6, -1);
         while (true);
