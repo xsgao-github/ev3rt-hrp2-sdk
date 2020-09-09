@@ -1702,10 +1702,11 @@ void readCode() {
     // define array & variable
     int values[8] = {-1, -1, -1, -1, -1, -1, -1, -1};
     int i;
+    rgb_raw_t rgb3;
 
     //leave start
 
-    //readColorCode start
+    /*readColorCode start
     float wheelDistance = 0;
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
@@ -1736,6 +1737,39 @@ void readCode() {
         pos.street = YELLOW_STREET;
         ev3_speaker_play_tone(NOTE_G5, 40);
     }
+    */
+    ///*readCode start
+    ev3_motor_reset_counts(left_motor);
+    ev3_motor_reset_counts(right_motor);
+    ev3_motor_steer(left_motor, right_motor, 30, 2);
+    while (abs(((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2)) < 280) {
+        display_sensors();
+    }
+
+    // detect line
+    ev3_motor_steer(left_motor, right_motor, 15, 1);
+    while (rgb4.b > 70) {
+        display_sensors();
+    }
+    ev3_motor_steer(left_motor, right_motor, 0, 0);
+
+    // stop d_motor
+    ev3_motor_stop(d_motor, false);
+
+    // write down road
+    for (i = 0; x < 20; i++) {
+       ev3_color_sensor_get_rgb_raw(color_3, &rgb3);
+       displayValues(rgb3.g, 0, 0, 1);
+       tslp_tsk(10);
+    }
+    if (rgb3.g < 100) {
+        pos.street = RED_STREET;
+        ev3_speaker_play_tone(NOTE_G4, 40);
+    } else {
+        pos.street = YELLOW_STREET;
+        ev3_speaker_play_tone(NOTE_G5, 40);
+    }
+    //*/
 
     //ok back to readCode
     ev3_motor_rotate(left_motor, 15, 10, false);
