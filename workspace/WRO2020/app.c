@@ -1771,7 +1771,6 @@ void readCode() {
     }
     //*/
 
-    //ok back to readCode
     ev3_motor_rotate(left_motor, 15, 10, false);
     ev3_motor_rotate(right_motor, 15, 10, true);
 
