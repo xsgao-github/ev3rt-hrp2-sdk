@@ -20,10 +20,10 @@ const int color_1 = EV3_PORT_2, color_2 = EV3_PORT_2, color_3 = EV3_PORT_3, colo
 
 // declare methods
 void run2020();
-void runBlueStreet();
-void runGreenStreet();
-void runYellowStreet();
-void runRedStreet();
+void runBlueStreet(int backToBase);
+void runGreenStreet(int backToBase);
+void runYellowStreet(int backToBase);
+void runRedStreet(int backToBase);
 void goBackToBase(int fromBlueStreet);
 void readCode();
 void linePID_with_tasks(int distance, int speed);
@@ -479,9 +479,7 @@ int car_motor_index = 0;
 void main_task(intptr_t unused) {
     init();
     readCode();
-    writeInstructions(1,0,0,1,1,0,2,0);
-    runRedStreet();
-    //run2020();
+    run2020();
     goBackToBase(false);
 }
 
@@ -839,7 +837,7 @@ void run2020() {
         }
     }
 }
-void runBlueStreet() {
+void runBlueStreet(int backToBase) {
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -975,7 +973,7 @@ void runBlueStreet() {
     }
     pos.street = YELLOW_STREET;
 }
-void runGreenStreet() {
+void runGreenStreet(int backToBase) {
     color_4_index = 0;
     a_motor_index = 0;
     d_motor_index = 0;
@@ -1108,7 +1106,7 @@ void runGreenStreet() {
     }
     pos.street = RED_STREET;
 }
-void runYellowStreet() {
+void runYellowStreet(int backToBase) {
     //doCar
     if(instructions.doCar == 0){
         color_4_index = 0;
@@ -1262,7 +1260,7 @@ void runYellowStreet() {
     }
     pos.street = RED_STREET;
 }
-void runRedStreet() {
+void runRedStreet(int backToBase) {
     //doCar
     if(instructions.doCar == 0){
         color_4_index = 0;
@@ -1369,7 +1367,7 @@ void runRedStreet() {
         ev3_motor_set_power(a_motor,0);
         //detect line
         ev3_motor_steer(left_motor, right_motor, 10, 5);
-        while(ev3_color_sensor_get_reflect(color_3) > 40){
+        while(ev3_color_sensor_get_reflect(color_3) > 35){
             
         }
         //move backwards
@@ -1426,7 +1424,7 @@ void runRedStreet() {
     else if(!instructions.snowDepot && !instructions.carDepot){
         //move backwards
         ev3_motor_steer(left_motor,right_motor,-30,0);
-        tslp_tsk(300);
+        tslp_tsk(100);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back and turn
         ev3_motor_rotate(a_motor,200,80,true);
@@ -1575,7 +1573,7 @@ void runRedStreet() {
     
     if(instructions.collectAbrasive == 2){
         ev3_motor_steer(left_motor,right_motor,-15,0);
-        tslp_tsk(1200);
+        tslp_tsk(1000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,80);
         ev3_motor_steer(left_motor,right_motor,15,-45);
@@ -1592,7 +1590,7 @@ void runRedStreet() {
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor,right_motor,-15,0);
-        tslp_tsk(800);
+        tslp_tsk(1000);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-15,90);
         tslp_tsk(845);
@@ -1607,6 +1605,7 @@ void runRedStreet() {
         tslp_tsk(845);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
+        color3PID(25,0,0);
         ev3_motor_steer(left_motor, right_motor, 15, 0);
         while (ev3_color_sensor_get_reflect(color_3) > 35) {
             tslp_tsk(10);
@@ -1628,12 +1627,11 @@ void runRedStreet() {
     ev3_motor_steer(left_motor,right_motor,0,0);
     //turn amotor back completely
     ev3_motor_set_power(a_motor,-50);
-    tslp_tsk(700);
-    ev3_motor_set_power(a_motor,0);
     //move forward
     ev3_motor_steer(left_motor,right_motor,20,5);
     tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
+    ev3_motor_set_power(a_motor,0);
     //detect line
     ev3_motor_steer(left_motor, right_motor, 30, 3);
     while (ev3_color_sensor_get_reflect(color_3) > 30) {
