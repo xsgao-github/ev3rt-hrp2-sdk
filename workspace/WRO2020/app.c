@@ -488,164 +488,164 @@ void run2020() {
         if(tasks[RED_STREET][0] == 0 && tasks[YELLOW_STREET][0] == 0){
             if(tasks[GREEN_STREET][0] == 1){
                 writeInstructions(1,0,0,1,1,0,2,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,0,0,1,0,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
             else if(tasks[BLUE_STREET][0] == 1){
                 writeInstructions(1,0,0,1,1,0,1,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,0,0,1,0,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
         }
         else if(tasks[RED_STREET][0] == 0 && tasks[GREEN_STREET][0] == 0){
             if(tasks[YELLOW_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(1,0,0,1,1,0,2,1);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(1);
                 goBackToBase(RED_STREET);
             }
             else if(tasks[BLUE_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(1,0,0,1,1,0,1,1);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(1);
                 goBackToBase(RED_STREET);
             }
         }
         else if(tasks[RED_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
             if(tasks[YELLOW_STREET][0] == 1){
                 writeInstructions(1,0,0,1,1,0,1,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,0,0,1,0,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
             else if(tasks[GREEN_STREET][0] == 1){
                 writeInstructions(1,0,0,1,1,0,2,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,0,0,1,0,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
         }
         else if(tasks[YELLOW_STREET][0] == 0 && tasks[GREEN_STREET][0] == 0){
             if(tasks[RED_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,0,0,1,0,2,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,1,0,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
             else if(tasks[BLUE_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,0,0,1,0,1,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,1,0,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
         }
         else if(tasks[YELLOW_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
             if(tasks[RED_STREET][0] == 1){
                 writeInstructions(0,0,0,0,0,0,2,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,1,0,1,0,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
             else if(tasks[GREEN_STREET][0] == 1){
                 writeInstructions(0,0,0,0,0,0,1,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,1,0,1,0,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
         }
         else if(tasks[GREEN_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
             if(tasks[RED_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,0,0,1,0,2,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,1,0,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
             else if(tasks[YELLOW_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,0,0,1,0,1,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,1,0,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
         }
@@ -654,184 +654,184 @@ void run2020() {
         if(tasks[RED_STREET][0] == 0 && tasks[YELLOW_STREET][0] == 0){
             if(tasks[GREEN_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(1,0,0,1,1,0,2,1);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,0,0,0,1,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
             else if(tasks[BLUE_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(1,0,0,1,1,0,1,1);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,0,0,0,1,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
         }
         else if(tasks[RED_STREET][0] == 0 && tasks[GREEN_STREET][0] == 0){
             if(tasks[YELLOW_STREET][0] == 1){
                 writeInstructions(0,0,0,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(1,0,0,1,1,0,2,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,0,0,0,1,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
             else if(tasks[BLUE_STREET][0] == 1){
                 writeInstructions(0,0,0,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(1,0,0,1,1,0,1,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,0,0,0,1,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
         }
         else if(tasks[RED_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
             if(tasks[YELLOW_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(0,0,0,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(1,0,0,1,1,0,1,1);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(1);
                 goBackToBase(RED_STREET);
             }
             else if(tasks[GREEN_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(0,0,0,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(1,0,0,1,1,0,2,1);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(1);
                 goBackToBase(RED_STREET);
             }
         }
         else if(tasks[YELLOW_STREET][0] == 0 && tasks[GREEN_STREET][0] == 0){
             if(tasks[RED_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,0,0,1,0,2,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(0,0,0,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
             else if(tasks[BLUE_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,0,0,1,0,1,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(0,0,0,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
         }
         else if(tasks[YELLOW_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
             if(tasks[RED_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,0,0,1,0,2,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,0,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,1,0,0,1,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
             else if(tasks[GREEN_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,0,0,1,0,1,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,0,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,1,0,0,1,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
         }
         else if(tasks[GREEN_STREET][0] == 0 && tasks[BLUE_STREET][0] == 0){
             if(tasks[RED_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(0,0,0,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,0,0,1,0,2,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,0,1,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
             else if(tasks[YELLOW_STREET][0] == 1){
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runBlueStreet();
+                runBlueStreet(0);
                 writeInstructions(0,0,0,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(1,0,0,1,0,0,0,0);
-                runGreenStreet();
+                runGreenStreet(0);
                 writeInstructions(0,0,0,0,1,0,1,0);
-                runRedStreet();
+                runRedStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
-                runYellowStreet();
+                runYellowStreet(0);
                 writeInstructions(0,0,1,0,0,1,0,0);
-                runRedStreet();
+                runRedStreet(1);
                 goBackToBase(RED_STREET);
             }
         }
