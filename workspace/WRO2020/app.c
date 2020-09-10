@@ -1649,7 +1649,7 @@ void runRedStreet() {
  * \brief goes back to home
  * \param street RED_STREET or false
 **/
-void goBackToBase(int street){
+void goBackToBase(int street) {
     if (street == RED_STREET) {
         ev3_motor_steer(left_motor,right_motor,-30, 5);
         ev3_motor_set_power(a_motor, 100);
