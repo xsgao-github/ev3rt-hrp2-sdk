@@ -892,7 +892,7 @@ void runBlueStreet(int backToBase) {
         ev3_motor_steer(left_motor, right_motor, -10, 0);
         ev3_motor_set_power(a_motor, -80);
         tslp_tsk(250);
-        ev3_motor_rotate(right_motor, 225, 20, true);
+        ev3_motor_rotate(right_motor, 235, 20, true);
         ev3_motor_rotate(a_motor, 500, 80, true);
         tslp_tsk(100);
         linePID_with_tasks(31, 25);
@@ -1664,7 +1664,7 @@ void runRedStreet(int backToBase) {
  * \brief goes back to home
  * \param street RED_STREET or false
 **/
-void goBackToBase(int street){
+void goBackToBase(int street) {
     if (street == RED_STREET) {
         ev3_motor_steer(left_motor,right_motor,-30, 5);
         ev3_motor_set_power(a_motor, 100);
