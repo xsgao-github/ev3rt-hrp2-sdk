@@ -1580,7 +1580,7 @@ void runRedStreet() {
     
     if(instructions.collectAbrasive == 2){
         ev3_motor_steer(left_motor,right_motor,-15,0);
-        tslp_tsk(1000);
+        tslp_tsk(1200);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,80);
         ev3_motor_steer(left_motor,right_motor,15,-45);
@@ -1597,7 +1597,7 @@ void runRedStreet() {
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_set_power(a_motor,-80);
         ev3_motor_steer(left_motor,right_motor,-15,0);
-        tslp_tsk(1000);
+        tslp_tsk(800);
         ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-15,90);
         tslp_tsk(845);
@@ -1748,7 +1748,7 @@ void readCode() {
 
     // detect line
     ev3_motor_steer(left_motor, right_motor, 7, 1);
-    while (rgb3.b > 50) {
+    while (rgb3.b > 60) {
         ev3_color_sensor_get_rgb_raw(color_3, &rgb3);
         displayValues(rgb3.g, 1, 1, 1);
         tslp_tsk(10);
