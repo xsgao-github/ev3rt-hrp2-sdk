@@ -296,7 +296,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 1
             {
-                3,18,200
+                3,16,200
             },
             //index 2
             {
@@ -1450,7 +1450,7 @@ void runRedStreet(int backToBase) {
         ev3_motor_steer(left_motor,right_motor,0,0);
     }
     ev3_motor_steer(left_motor,right_motor,10,0);
-    tslp_tsk(1500);
+    tslp_tsk(1000);
     ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_rotate(a_motor,400,50,false);
     ev3_motor_steer(left_motor,right_motor,10,45);
@@ -1467,9 +1467,6 @@ void runRedStreet(int backToBase) {
     ev3_motor_steer(left_motor,right_motor,10,-45);
     tslp_tsk(1800);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_steer(left_motor,right_motor,-10,0);
-    tslp_tsk(250);
-    ev3_motor_steer(left_motor,right_motor,0,0);
     ev3_motor_rotate(a_motor,400,-50,false);
     int abrasive = 0;
     if(instructions.doAbrasive){
@@ -1477,7 +1474,7 @@ void runRedStreet(int backToBase) {
     }
     a_motor_index = 3;
     //Side Length
-    color3PID(39,0,abrasive);
+    color3PID(40,0,abrasive);
     ev3_speaker_play_tone(NOTE_A4,60);
     //detect line
     ev3_motor_steer(left_motor, right_motor, 15, 0);
