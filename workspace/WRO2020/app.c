@@ -981,11 +981,6 @@ void runGreenStreet(int backToBase) {
 
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
-    //ev3_motor_steer(left_motor, right_motor, 40, 1);
-    //while (((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2) < 615) {
-    //    display_sensors();
-    //}
-    //ev3_motor_steer(left_motor, right_motor, 0, 0);
     wall_follow_with_tasks(53, 3, 0, 1, 0, 30);
     tslp_tsk(100);
     ev3_motor_reset_counts(left_motor);
@@ -1740,7 +1735,7 @@ void readCode() {
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
     ev3_motor_steer(left_motor, right_motor, 30, 2);
-    while (abs(((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2)) < 250) {
+    while (abs(((ev3_motor_get_counts(left_motor) + ev3_motor_get_counts(right_motor)) / 2)) < 280) {
         display_sensors();
     }
 
@@ -1749,7 +1744,7 @@ void readCode() {
     while (rgb3.b > 60) {
         ev3_color_sensor_get_rgb_raw(color_3, &rgb3);
         displayValues(rgb3.g, 1, 1, 1);
-        tslp_tsk(10);
+        tslp_tsk(15);
     }
     ev3_motor_steer(left_motor, right_motor, 0, 0);
 
@@ -1760,7 +1755,7 @@ void readCode() {
     for (i = 0; i < 50; i++) {
         ev3_color_sensor_get_rgb_raw(color_3, &rgb3);
         displayValues(rgb3.g, 0, 0, 1);
-        tslp_tsk(10);
+        tslp_tsk(15);
     }
     if (rgb3.g < 110) {
         pos.street = RED_STREET;
@@ -2165,7 +2160,7 @@ void display_sensors() {
     int value;
 
     // wait for values to be refreshed
-    tslp_tsk(5);
+    tslp_tsk(10);
 
     // read motor counts
     value = ev3_motor_get_counts(left_motor);
