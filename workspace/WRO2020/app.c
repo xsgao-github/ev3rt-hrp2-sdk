@@ -1634,6 +1634,10 @@ void runRedStreet(int backToBase) {
     tslp_tsk(650);
     ev3_motor_steer(left_motor,right_motor,0,0);
     if(backToBase){
+        //move forward
+        ev3_motor_steer(left_motor,right_motor,30,3);
+        tslp_tsk(500);
+        ev3_motor_steer(left_motor,right_motor,0,0);
         ev3_motor_steer(left_motor,right_motor,-30, 0);
         ev3_motor_set_power(a_motor, 100);
         tslp_tsk(1200);
@@ -1936,7 +1940,7 @@ void color3PID(int distance,int tasksNumA,int tasksNumD){
             tasksLeftD -= 1;
         }
         wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
-        float error = ev3_color_sensor_get_reflect(color_3) - 40;
+        float error = ev3_color_sensor_get_reflect(color_3) - 43;
         integral = error + integral * 0.5;
         float steer = 0.5 * error + 0.01 * integral + 0.1 * (error - lasterror);
         ev3_motor_steer(left_motor, right_motor, 15, steer);
