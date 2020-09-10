@@ -1234,31 +1234,39 @@ void runYellowStreet(int backToBase) {
     while (ev3_color_sensor_get_reflect(color_3) > 30) {
     }
     ev3_motor_steer(left_motor,right_motor,0,0);
-    //move forward
-    ev3_motor_steer(left_motor,right_motor,30,0);
-    tslp_tsk(250);
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    //turn
-    ev3_motor_steer(left_motor,right_motor,30,-45);
-    tslp_tsk(800);
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    //move forward
-    ev3_motor_reset_counts(left_motor);
-    ev3_motor_reset_counts(right_motor);
-    float wheelDistance = 0;
-    ev3_motor_steer(left_motor,right_motor,40,3);
-    while(wheelDistance < 42){
-        wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
+    if(backToBase){
+        //move forward
+        ev3_motor_steer(left_motor,right_motor,30,0);
+        tslp_tsk(1000);
+        ev3_motor_steer(left_motor,right_motor,0,0);
     }
-    ev3_motor_steer(left_motor,right_motor,30,3);
-    //detect line
-    while (ev3_color_sensor_get_reflect(color_3) > 30) {
+    else{
+        //move forward
+        ev3_motor_steer(left_motor,right_motor,30,0);
+        tslp_tsk(250);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        //turn
+        ev3_motor_steer(left_motor,right_motor,30,-45);
+        tslp_tsk(800);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        //move forward
+        ev3_motor_reset_counts(left_motor);
+        ev3_motor_reset_counts(right_motor);
+        float wheelDistance = 0;
+        ev3_motor_steer(left_motor,right_motor,40,3);
+        while(wheelDistance < 42){
+            wheelDistance = (ev3_motor_get_counts(left_motor) / 2 + ev3_motor_get_counts(right_motor) / 2) * ((3.1415926535 * 8.1) / 360);
+        }
+        ev3_motor_steer(left_motor,right_motor,30,3);
+        //detect line
+        while (ev3_color_sensor_get_reflect(color_3) > 30) {
+        }
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        if(carDetected[pos.street] == -1 && instructions.detectCar){
+            carDetected[pos.street] = 3;
+        }
+        pos.street = RED_STREET;
     }
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    if(carDetected[pos.street] == -1 && instructions.detectCar){
-        carDetected[pos.street] = 3;
-    }
-    pos.street = RED_STREET;
 }
 void runRedStreet(int backToBase) {
     //doCar
@@ -1625,23 +1633,32 @@ void runRedStreet(int backToBase) {
     ev3_motor_steer(left_motor,right_motor,30,-45);
     tslp_tsk(650);
     ev3_motor_steer(left_motor,right_motor,0,0);
-    //turn amotor back completely
-    ev3_motor_set_power(a_motor,-50);
-    //move forward
-    ev3_motor_steer(left_motor,right_motor,20,5);
-    tslp_tsk(1000);
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    ev3_motor_set_power(a_motor,0);
-    //detect line
-    ev3_motor_steer(left_motor, right_motor, 30, 3);
-    while (ev3_color_sensor_get_reflect(color_3) > 30) {
-        tslp_tsk(10);
+    if(backToBase){
+        ev3_motor_steer(left_motor,right_motor,-30, 0);
+        ev3_motor_set_power(a_motor, 100);
+        tslp_tsk(1200);
+        ev3_motor_stop(a_motor, false);
+        tslp_tsk(4200);
     }
-    ev3_motor_steer(left_motor,right_motor,0,0);
-    if(carDetected[pos.street] == -1 && instructions.detectCar){
-        carDetected[pos.street] = 3;
+    else{
+        //turn amotor back completely
+        ev3_motor_set_power(a_motor,-50);
+        //move forward
+        ev3_motor_steer(left_motor,right_motor,20,5);
+        tslp_tsk(1000);
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_set_power(a_motor,0);
+        //detect line
+        ev3_motor_steer(left_motor, right_motor, 30, 3);
+        while (ev3_color_sensor_get_reflect(color_3) > 30) {
+            tslp_tsk(10);
+        }
+        ev3_motor_steer(left_motor,right_motor,0,0);
+        if(carDetected[pos.street] == -1 && instructions.detectCar){
+            carDetected[pos.street] = 3;
+        }
+        pos.street = YELLOW_STREET;
     }
-    pos.street = YELLOW_STREET;
 }
 /**
  * \brief goes back to home
