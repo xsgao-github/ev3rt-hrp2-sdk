@@ -305,7 +305,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 3
             {
-                0,30,300
+                0,30,200
             },
             //index 4
             {
@@ -332,7 +332,7 @@ int allTasks[4][3][7][3] = {
             },
             //index 2
             {
-                5,2,0
+                20,2,0
             },
             //index 3
             {
@@ -765,7 +765,7 @@ void run2020() {
                 runYellowStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runGreenStreet(0);
-                writeInstructions(0,0,1,0,0,1,0,0);
+                writeInstructions(0,0,1,0,0,0,0,0);
                 runRedStreet(1);
             }
             else if(tasks[GREEN_STREET][0] == 1){
@@ -779,7 +779,7 @@ void run2020() {
                 runYellowStreet(0);
                 writeInstructions(0,0,1,0,0,0,0,0);
                 runGreenStreet(0);
-                writeInstructions(0,0,1,0,0,1,0,0);
+                writeInstructions(0,0,1,0,0,0,0,0);
                 runRedStreet(1);
             }
         }
@@ -1137,7 +1137,7 @@ void runYellowStreet(int backToBase) {
         }
         if(instructions.doSnow){
             wall_follow_with_tasks(90,3,car,1,abrasive,30);
-            wall_follow_with_tasks(42,3,car,2,abrasive,15);
+            wall_follow_with_tasks(44,3,car,2,abrasive,12);
         }
         else{
             a_motor_index = 3;
@@ -1211,6 +1211,7 @@ void runYellowStreet(int backToBase) {
                 ev3_motor_steer(left_motor,right_motor,20,45);
                 tslp_tsk(800);
                 ev3_motor_steer(left_motor,right_motor,0,0);
+                //half
                 ev3_motor_steer(left_motor,right_motor,20,-45);
                 tslp_tsk(500);
                 ev3_motor_steer(left_motor,right_motor,0,0);
@@ -1230,7 +1231,6 @@ void runYellowStreet(int backToBase) {
                 break;
         }
     }
-    //move forward
     //ev3_motor_steer(left_motor,right_motor,30,0);
     //tslp_tsk(100);
     //ev3_motor_steer(left_motor,right_motor,0,0);
@@ -1240,7 +1240,7 @@ void runYellowStreet(int backToBase) {
     ev3_motor_steer(left_motor,right_motor,0,0);
     //move forward
     ev3_motor_steer(left_motor,right_motor,30,0);
-    tslp_tsk(800);
+    tslp_tsk(700);
     ev3_motor_steer(left_motor,right_motor,0,0);
     //turn 2
     ev3_motor_steer(left_motor,right_motor,30,-45);
@@ -1458,7 +1458,7 @@ void runRedStreet(int backToBase) {
     else if(!instructions.snowDepot && !instructions.carDepot){
         //move backwards
         ev3_motor_steer(left_motor,right_motor,-30,0);
-        tslp_tsk(100);
+        tslp_tsk(300);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back and turn
         ev3_motor_rotate(a_motor,200,80,true);
@@ -1478,7 +1478,9 @@ void runRedStreet(int backToBase) {
     if(backToBase){
         //move forward
         ev3_motor_steer(left_motor,right_motor,30,2);
-        tslp_tsk(2800);
+        tslp_tsk(1000);
+        ev3_motor_rotate(d_motor,1080,40,false);
+        tslp_tsk(1800);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back completely
         ev3_motor_set_power(a_motor,80);
@@ -1489,13 +1491,13 @@ void runRedStreet(int backToBase) {
         ev3_motor_steer(left_motor,right_motor,0,0);
         //move forward
         ev3_motor_steer(left_motor,right_motor,30,0);
-        tslp_tsk(500);
+        tslp_tsk(550);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //turn amotor back completely
         ev3_motor_set_power(a_motor,-80);
         //turn
         ev3_motor_steer(left_motor,right_motor,30,45);
-        tslp_tsk(600);
+        tslp_tsk(500);
         ev3_motor_steer(left_motor,right_motor,0,0);
         //move forward
         ev3_motor_steer(left_motor,right_motor,30,0);
@@ -1504,6 +1506,8 @@ void runRedStreet(int backToBase) {
         ev3_motor_set_power(a_motor,-80);
         tslp_tsk(1000);
         ev3_motor_steer(left_motor,right_motor,0,0);
+        ev3_motor_rotate(right_motor,50,-20,false);
+        ev3_motor_rotate(left_motor,1000,40,true);
     }
     else{
         ev3_motor_steer(left_motor,right_motor,10,0);
@@ -1605,7 +1609,7 @@ void runRedStreet(int backToBase) {
         }
         if(instructions.collectAbrasive == 1){
             ev3_motor_steer(left_motor,right_motor,-15,0);
-            tslp_tsk(2700);
+            tslp_tsk(2600);
             ev3_motor_steer(left_motor,right_motor,0,0);
             ev3_motor_set_power(a_motor,80);
             ev3_motor_rotate(right_motor,220,10,true);
@@ -1621,7 +1625,7 @@ void runRedStreet(int backToBase) {
             ev3_motor_steer(left_motor,right_motor,0,0);
             ev3_motor_rotate(right_motor,220,-10,true);
             ev3_motor_set_power(a_motor,-80);
-            color3PID(25,0,0);
+            color3PID(23,0,0);
             ev3_motor_steer(left_motor,right_motor,-15,90);
             tslp_tsk(845);
             ev3_motor_steer(left_motor,right_motor,0,0);
@@ -1638,11 +1642,12 @@ void runRedStreet(int backToBase) {
             ev3_motor_steer(left_motor,right_motor,15,90);
             tslp_tsk(845);
             ev3_motor_steer(left_motor,right_motor,0,0);
-            ev3_motor_set_power(a_motor,-80);
+            ev3_motor_set_power(a_motor,80);
             ev3_motor_steer(left_motor, right_motor, 15, 0);
             while (ev3_color_sensor_get_reflect(color_3) > 35) {
                 tslp_tsk(10);
             }
+            ev3_motor_set_power(a_motor,0);
             ev3_motor_steer(left_motor,right_motor,0,0);
         }
         if(instructions.collectAbrasive == 2){
@@ -1664,7 +1669,7 @@ void runRedStreet(int backToBase) {
             ev3_motor_rotate(right_motor,220,-10,true);
             ev3_motor_set_power(a_motor,-80);
             ev3_motor_steer(left_motor,right_motor,-15,0);
-            tslp_tsk(1900);
+            tslp_tsk(1800);
             ev3_motor_steer(left_motor,right_motor,0,0);
             ev3_motor_rotate(right_motor,220,10,true);
             ev3_motor_steer(left_motor,right_motor,-10,0);
@@ -1678,8 +1683,9 @@ void runRedStreet(int backToBase) {
             tslp_tsk(1500);
             ev3_motor_steer(left_motor,right_motor,0,0);
             ev3_motor_rotate(right_motor,220,-10,true);
-            ev3_motor_set_power(a_motor,-80);
+            ev3_motor_set_power(a_motor,80);
             color3PID(27,0,0);
+            ev3_motor_set_power(a_motor,0);
             ev3_motor_steer(left_motor, right_motor, 15, 0);
             while (ev3_color_sensor_get_reflect(color_3) > 35) {
                 tslp_tsk(10);
@@ -2197,21 +2203,21 @@ void wall_follow_with_tasks(int distance,int steer,int detectCar,int tasksNumA,i
 void execute_tasks(float distance) {
     display_sensors();
 
-    //check for a_motor task, execute task if task is to collect snow and it is time and collect cars is false
-    //execute part 1 of task
-    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && a_task_running == 0 && tasks[pos.street][0] == COLLECTSNOW && instructions.doSnow == 1) {
-        ev3_motor_stop(a_motor, false);
-        ev3_motor_rotate(a_motor, allTasks[pos.street][A_MOTOR][a_motor_index][2], 80, false);
-        a_task_running = 1;
-        ev3_speaker_play_tone(NOTE_C4, 50);
-    }
     //execute part 2 of task
     if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][1] && a_task_running == 1 && tasks[pos.street][0] == COLLECTSNOW && instructions.doSnow == 1) {
-        ev3_motor_stop(a_motor, false);
+        //ev3_motor_stop(a_motor, false);
         ev3_motor_rotate(a_motor, -1*allTasks[pos.street][A_MOTOR][a_motor_index][2], 80, false);
         a_task_running = 0;
         a_motor_index++;
         ev3_speaker_play_tone(NOTE_C5, 50);
+    }
+    //check for a_motor task, execute task if task is to collect snow and it is time and collect cars is false
+    //execute part 1 of task
+    if (distance > allTasks[pos.street][A_MOTOR][a_motor_index][0] && a_task_running == 0 && tasks[pos.street][0] == COLLECTSNOW && instructions.doSnow == 1) {
+        //ev3_motor_stop(a_motor, false);
+        ev3_motor_rotate(a_motor, allTasks[pos.street][A_MOTOR][a_motor_index][2], 80, false);
+        a_task_running = 1;
+        ev3_speaker_play_tone(NOTE_C4, 50);
     }
 
     //check for d_motor task, execute task if task is to dispense material and back is loaded and it is time and it is the correct material
