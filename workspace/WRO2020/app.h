@@ -12,6 +12,8 @@
 #define BLUEMATERIAL 1
 #define BLACKMATERIAL 2
 
+#define PURPLE 100
+
 #define COLOR_4 0
 #define A_MOTOR 1
 #define D_MOTOR 2
@@ -49,6 +51,8 @@ typedef struct {
 typedef struct {
     double value;
 } var;
+
+
 
 
 extern void	main_task(intptr_t exinf);
